@@ -1,4 +1,4 @@
-# lycos-bot
+# Lycos Bot
 
 ## Contributing
 
