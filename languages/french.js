@@ -3,7 +3,7 @@ const e = require("../config.js").emotes;
 module.exports = class {
 	constructor(...args) {
 		this.language = {
-			NO_DESCRIPTION_PROVIDED: "Aucune description défénie",
+			NO_DESCRIPTION_PROVIDED: "Aucune description définie",
 			NO_USAGE_PROVIDED: "Aucune utilisation définie",
 			NO_EXAMPLES_PROVIDED: "Aucun exemple défini",
 			ERROR: (error) => `Quelque chose s'est mal passé. Veuillez réessayer.\n\`\`\`\n${error}\`\`\``,
