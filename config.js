@@ -1,5 +1,5 @@
 module.exports = {
-	token: "NjI4MTg2MDIyOTkxMjMzMDI1.XgpjgA.X18BoTNOqlrAESfREyoVtV-SX9k",
+	token: "",
 	defaultLanguage: "english",
 	prefix: "l!",
 	clientModules: {
