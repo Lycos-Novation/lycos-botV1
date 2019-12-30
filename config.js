@@ -1,20 +1,23 @@
 module.exports = {
-	token: "",
+	token: "NjI4MTg2MDIyOTkxMjMzMDI1.XgpjgA.X18BoTNOqlrAESfREyoVtV-SX9k",
 	defaultLanguage: "english",
 	prefix: "l!",
 	clientModules: {
 		music: true,
 		dashboard: true,
 	},
+	/*
 	lavalink: {
 		nodes: [
 			{ "host": "localhost", "port": 2333, "password": "denver.botdiscord.37518" },
 		],
 		queues: {},
 	},
+	
 	apiTokens: {
 		dbl: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM5MDIzMTcyNzU1NDk1MzIxNiIsImJvdCI6dHJ1ZSwiaWF0IjoxNTMwODEyMjQ2fQ.Futhm4CIPAZC7E08N5J8DiLI2cymy-FdWrkl_seqKkE",
 	},
+	*/
 	permLevels: [
 		{
 			level: 0,
