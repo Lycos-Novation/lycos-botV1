@@ -8,10 +8,10 @@ const Enmap = require("enmap");
 const { Provider, Client: PictURLClient } = require("pict-url");
 
 /**
- * @class Denver
+ * @class Lycos
  * @extends {Client}
- */
-class Denver extends Client {
+**/
+class Lycos extends Client {
 	constructor(options) {
 		super(options);
 		// This will load the config.js file that contains our basic setup.
@@ -25,7 +25,7 @@ class Denver extends Client {
 		// Here we load all our functions stored in functions.js
 		this.functions = require("./utils/functions");
 		// Here we load all our Lavalink functions stored in lavalinkFunctions.js
-		this.lavalink = require("./utils/lavalinkFunctions");
+		/*this.lavalink = require("./utils/lavalinkFunctions");*/
 		// This will load our custom Logger class.
 		this.logger = require("./utils/logger");
 		// This will load our errors file.
@@ -144,7 +144,7 @@ class Denver extends Client {
 	}
 }
 
-module.exports.client = new Denver({
+module.exports.client = new Lycos({
 	sync: true,
 	autoReconnect: true,
 	fetchAllMembers: true,
