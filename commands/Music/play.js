@@ -21,26 +21,26 @@ class Play extends Command {
 				message.delete();
 			}, 5000);
 
-			if(!message.member.voice.channel) {
-				return message.channel.send("You need to be in a voice channel to play music! ");
+			if(!message.member.voiceChannel) {
+				return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"))
 			}
-			const permissions = message.member.voice.channel.permissionsFor(message.bot.user);
+			const permissions = message.member.voiceChannel.permissionsFor(message.bot.user);
 			if (!permissions.has("CONNECT")) {
-				return message.channel.send("I cannot connect to your voice channel, make sure I have the require permissions!");
+				return message.channel.send(message.language.get("PLAY_BOT_CANT_CONNECT"));
 			}
 			else if(!permissions.has("SPEAK")) {
-				return message.channel.send("I cannot speak in this voice channel, make sure I have the require permissions!");
+				return message.channel.send(message.language.get("PLAY_BOT_CANT_SPEAK"));
 			}
 
 			const song = args.join(" ");
 			if(!song) {
-				return message.channel.send("Provide a song to play.");
+				return message.channel.send(message.language.get("PLAY_NO_ARGS"));
 			}
 
 			if (!message.bot.player.get(message.guild.id)) {
 				message.bot.player.join({
 					guild: message.guild.id,
-					channel: message.member.voice.channel.id,
+					channel: message.member.voiceChannel.id,
 					host: message.bot.player.nodes.first().host,
 				}, { selfdeaf: true });
 			}
