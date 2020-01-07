@@ -324,7 +324,7 @@ module.exports = class {
 			WEATHERINFO_NOT_FOUND: "Can't find weather data about this city.",
 			WEATHER_LANGUAGE: "en-EN",
 			WEATHERINFO_EMBED_TITLE: (result) => `Weather of ${result[0].location.name} on ${result[0].current.day} ${result[0].current.date} at ${result[0].current.observationtime}`,
-			WEATHERINFO_EMBED_DESCRIPTION: (result) => `**Coordonnées** - __Longitude :__ ${result[0].location.long} - __Latitude :__ ${result[0].location.lat}
+			WEATHERINFO_EMBED_DESCRIPTION: (result) => `**Coordinates** - __Longitude :__ ${result[0].location.long} - __Latitude :__ ${result[0].location.lat}
 **Weather :** ${result[0].current.skytext}
 **Temperature :** ${result[0].current.temperature}°C
 **Feels like :** ${result[0].current.feelslike}°C
@@ -332,31 +332,31 @@ module.exports = class {
 **Wind display :** ${result[0].current.winddisplay}
 **Time Zone :** UTC${result[0].location.timezone >= 0 ? `+${result[0].location.timezone}` : `${result[0].location.timezone}`}
 
-**__Forecast for ${result[0].forecast[0].day} ${date(result[0].forecast[0].date)}__**
+**__Forecast for ${result[0].forecast[0].day} ${result[0].forecast[0].date}__**
 
 **Temperature Max/Min** : ${result[0].forecast[0].high}°C/${result[0].forecast[0].low}°C
 **Weather :** ${result[0].forecast[0].skytextday}
 **Rainfall :** ${result[0].forecast[0].precip !== "" ? `${result[0].forecast[0].precip}` : `0`}%
 
-**__Forecast for ${result[0].forecast[1].day} ${date(result[0].forecast[1].date)}__**
+**__Forecast for ${result[0].forecast[1].day} ${result[0].forecast[1].date}__**
 
 **Temperature Max/Min** : ${result[0].forecast[1].high}°C/${result[0].forecast[1].low}°C
 **Weather :** ${result[0].forecast[1].skytextday}
 **Rainfall :** ${result[0].forecast[1].precip}%
 
-**__Forecast for ${result[0].forecast[2].day} ${date(result[0].forecast[2].date)}__**
+**__Forecast for ${result[0].forecast[2].day} ${result[0].forecast[2].date}__**
 
 **Temperature Max/Min** : ${result[0].forecast[2].high}°C/${result[0].forecast[2].low}°C
 **Weather :** ${result[0].forecast[2].skytextday}
 **Rainfall :** ${result[0].forecast[2].precip}%
 
-**__Forecast for ${result[0].forecast[3].day} ${date(result[0].forecast[3].date)}__**
+**__Forecast for ${result[0].forecast[3].day} ${result[0].forecast[3].date}__**
 
 **Temperature Max/Min** : ${result[0].forecast[3].high}°C/${result[0].forecast[3].low}°C
 **Weather :** ${result[0].forecast[3].skytextday}
 **Rainfall :** ${result[0].forecast[3].precip}%
 
-**__Forecast for ${result[0].forecast[4].day} ${date(result[0].forecast[0].date)}__**
+**__Forecast for ${result[0].forecast[4].day} ${result[0].forecast[0].date}__**
 
 **Temperature Max/Min** : ${result[0].forecast[4].high}°C/${result[0].forecast[4].low}°C
 **Weather :** ${result[0].forecast[4].skytextday}
