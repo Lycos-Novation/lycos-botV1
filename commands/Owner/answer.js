@@ -21,7 +21,7 @@ class Answer extends Command {
 		try {
 			const support = message.bot.functions.getSupport(message, args[0]);
 			if (support === false) {
-				return message.channel.send("This support ID is unknown.")
+				return message.channel.send(message.language("ANSWER_UNKNOWN_ID"))
 			}
 			else {
 				message.bot.shard.broadcastEval(`
@@ -44,7 +44,7 @@ class Answer extends Command {
 							false;
 						}
 					`);
-				return message.channel.send(`Your answer was successfully sent.(${support.id} done)`).then(() =>{
+				return message.channel.send(message.language.get("ANSWER_SENT", support)).then(() =>{
 					message.delete();
 					message.bot.supportsData.delete(args[0])
 				})

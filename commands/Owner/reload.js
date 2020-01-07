@@ -19,7 +19,7 @@ class Reload extends Command {
 
 	async run(message, args) {
 		try {
-			if (!args || args.length < 1) return message.channel.send("You must provide a command to reload.");
+			if (!args || args.length < 1) return message.channel.send(message.language.get("RELOAD_NO_COMMAND"));
 			let path;
 			let commandName;
 			if (message.bot.commands && message.bot.commands.has(args[0]) || message.bot.commands.get(message.bot.aliases.get(args[0]))) {
@@ -33,15 +33,15 @@ class Reload extends Command {
 				}
 
 				let response = await message.bot._unloadCommand(path, commandName);
-				if (response) return message.channel.send(`Error Unloading: ${response}`);
+				if (response) return message.channel.send(message.language.get("RELOAD_ERROR_UNLOADING", response));
 
 				response = message.bot._loadCommand(path, commandName);
-				if (response) return message.channel.send(`Error Loading: ${response}`);
+				if (response) return message.channel.send(message.language.get("RELOAD_ERROR_LOADING", response));
 
-				return message.channel.send(`The command \`${commandName}\` has been reloaded`);
+				return message.channel.send(message.language.get("RELOAD_COMMAND_RELOADED", commandName));
 			}
 			else {
-				return message.channel.send(`The command \`${args[0]}\` doesn't seem to exist. Try again!`);
+				return message.channel.send(message.language.get("RELOAD_COMMAND_DOESNT_EXIST", args));
 			}
 		}
 		catch (error) {
