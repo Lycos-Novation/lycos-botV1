@@ -22,34 +22,34 @@ class RPS extends Command {
 	run(message, args) {
 		try {
 			if (args.length >= 1) {
-				var choices = ["pierre", "feuille", "ciseau"];
+				var choices = ["pierre", "feuille", "ciseaux"];
 				var choixJ = args[0].toLowerCase();
 				if (choices.includes(choixJ)) {
 					var choixO = choices[Math.floor(Math.random() * choices.length)];
 					var result;
 					if (choixO === choixJ) {
 						result = 0;
-				  	} else if ((choixO === "pierre" && choixJ === "ciseau") || (choixO === "feuille" && choixJ === "pierre") || (choixO === "ciseau" && choixJ === "feuille")) {
+				  	} else if ((choixO === "pierre" && choixJ === "ciseaux") || (choixO === "feuille" && choixJ === "pierre") || (choixO === "ciseaux" && choixJ === "feuille")) {
 						result = -1;
 				  	} else {
 						result = 1;
 				  	}
-				  	message.channel.send("Choix de Denver : " + choixO);
+				  	message.channel.send(message.language.get("RPS_LYCOS_CHOICE", choixO));
 				  	if (result === 0) {
-						message.channel.send(":flag_white: | Match nul !");
+						message.channel.send(message.language.get("RPS_MATCH_EQUAL"));
 					}
 					else if (result === 1) {
-						message.channel.send(":dagger: | Victoire de " + message.author.username + " !");
+						message.channel.send(message.language.get("RPS_PLAYER_WIN", message));
 				  	}
 				  	else {
-						message.channel.send(":skull_crossbones: | Victoire de Denver !");
+						message.channel.send(message.language.get("RPS_LYCOS_WIN"));
 				  	}
 				}
 				else {
-				  errors.run(client, message, "Choisissez entre 'pierre', 'feuille', 'ciseau'");
+				  message.channel.send(message.language.get("RPS_CHOICES"));
 				}
 			} else {
-				errors.run(client, message, "Choisissez entre 'pierre', 'feuille', 'ciseau'");
+				message.channel.send(message.language.get("RPS_CHOICES"));
 			}
 		}
 		catch (error) {
