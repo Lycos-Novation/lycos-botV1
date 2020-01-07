@@ -25,7 +25,7 @@ class Ping extends Command {
 					"fields" : [
 						{
 							"name" : message.language.get("PING_APILATENCY"),
-							"value" :  `${Math.round(message.bot.ws.ping)} ms`,
+							"value" :  `${Math.round(message.bot.ping)} ms`,
 							"inline" : true,
 						},
 					],

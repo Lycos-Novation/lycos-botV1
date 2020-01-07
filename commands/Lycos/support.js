@@ -22,7 +22,7 @@ class Support extends Command {
 	async run(message, args) {
 		try {
 			if (args.join(" ").length < 10 || args.join(" ").length > 1900) {
-				message.channel.send("Please describe your problem at least with 10 characters or fewer than 1900 characters.");
+				message.channel.send(message.language.get("SUPPORT_NO_ARGS"))
 			}
 			else {
 				const question = args.join(" ");
@@ -61,7 +61,7 @@ class Support extends Command {
 						question: question,
 						channelID: message.channel.id,
 					});
-					return message.channel.send("Your question was sent to the support. Please wait for an answer.");
+					return message.channel.send(message.language.get("SUPPORT_QUESTION_SEND"));
 				}
 				catch (e) {
 					return message.channel.send(message.language.get("ERROR", e));

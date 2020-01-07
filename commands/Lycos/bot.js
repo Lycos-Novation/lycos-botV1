@@ -36,13 +36,16 @@ class Bot extends Command {
 			}
 			return message.channel.send({
 				embed: {
-					author : { name: message.bot.user.username, icon_url: message.bot.user.displayAvatarURL() },
+					author : {
+						name: message.bot.user.username,
+						icon_url: message.bot.user.displayAvatarURL
+					},
 					color: message.config.embed.color,
 					fields: [
-						{
+						/*{
 							name: message.language.get("BOT_FIELDS")[0],
 							value: message.language.get("BOT_FIELDS_CONTENT_GENERALINFO", message, version),
-						},
+						},*/
 						{
 							name: message.language.get("BOT_FIELDS")[1],
 							value: message.language.get("BOT_FIELDS_CONTENT_GENERALSTATS", guilds, users, channels),

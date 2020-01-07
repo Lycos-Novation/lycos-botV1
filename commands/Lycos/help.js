@@ -26,9 +26,14 @@ class Help extends Command {
 				if(command) {
 					return message.channel.send({
 						embed: {
-							author: { name: message.language.get("HELP_TITLE", command.help.name), icon_url: message.bot.user.displayAvatarURL() },
+							author: {
+								name: message.language.get("HELP_TITLE", command.help.name),
+								icon_url: message.bot.user.displayAvatarURL
+							},
 							color: message.config.embed.color,
-							footer: { text: message.config.embed.footer },
+							footer: {
+								text: message.config.embed.footer
+							},
 							fields: [
 								{
 									name: message.language.get("HELP_FIELDS")[0],
@@ -116,11 +121,18 @@ class Help extends Command {
 
 				return message.channel.send({
 					embed: {
-						author : { name :  message.language.get("HELPGLOBAL_TITLE"), icon_url : message.bot.user.displayAvatarURL() },
+						author : {
+							name :  message.language.get("HELPGLOBAL_TITLE"),
+							icon_url: message.bot.user.displayAvatarURL
+						},
 						color: message.config.embed.color,
-						thumbnail: { url: message.bot.user.displayAvatarURL },
+						thumbnail: {
+							url: message.bot.user.displayAvatarURL
+						},
 						description: message.language.get("HELP_EMBED_DESCRIPTION", message),
-						footer: { text: message.config.embed.footer, icon_url: message.bot.user.displayAvatarURL },
+						footer: {
+							text: message.config.embed.footer, icon_url: message.bot.user.displayAvatarURL
+						},
 						fields: embedFields,
 					},
 				});
