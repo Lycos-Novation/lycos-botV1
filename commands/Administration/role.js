@@ -43,7 +43,7 @@ class Role extends Command {
 						return message.channel.send(message.language.get("ERROR_ROLE_INVALID"));
 					}
 					else {
-						return member.roles.add(role)
+						return member.addRole(role)
 							.then(message.channel.send(message.language.get("ROLE_GIVE", member, role)))
 							.catch((error) => message.channel.send(message.language.get("ERROR", error)));
 					}
@@ -67,7 +67,7 @@ class Role extends Command {
 						return message.channel.send(message.language.get("ERROR_ROLE_INVALID"));
 					}
 					else {
-						return member.roles.remove(role)
+						return member.removeRole(role)
 							.then(message.channel.send(message.language.get("ROLE_REMOVE", member, role)))
 							.catch((error) => message.channel.send(message.language.get("ERROR", error)));
 					}

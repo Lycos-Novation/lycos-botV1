@@ -27,7 +27,7 @@ class Modules extends Command {
 				return message.channel.send(message.language.get("MODULES_INFO", message.settings.prefix));
 			}
 			if (args[0] === "list") {
-				return message.channel.send(`Here is the list of available modules:\n> \`${modules.join("\`, \`")}\``);
+				return message.channel.send(message.language.get("MODULES_LIST", modules));
 			}
 			if (args[0] === "set") {
 				if(!args[1]) {

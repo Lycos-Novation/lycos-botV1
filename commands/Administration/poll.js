@@ -27,7 +27,7 @@ class Poll extends Command {
 				return message.channel.send({
 					embed: {
 						color: message.config.embed.color,
-						author: { name: "Poll", icon_url: message.guild.iconURL() },
+						author: { name: "Poll", icon_url: message.guild.iconURL},
 						description: args.join(" "),
 						timestamp: new Date(),
 						footer : { text : message.language.get("POLL_REACT") },
