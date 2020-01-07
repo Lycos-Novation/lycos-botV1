@@ -1,7 +1,7 @@
 module.exports = {
 	token: "",
 	defaultLanguage: "english",
-	prefix: "l!",
+	prefix: ".",
 	clientModules: {
 		music: true,
 		dashboard: true,
@@ -66,7 +66,7 @@ module.exports = {
 		administration: "",
 	},
 	embed: {
-		color: "#7289da",
+		color: 0x7289DA,
 		footer: "Lycos Novation Bot",
 	},
 };
