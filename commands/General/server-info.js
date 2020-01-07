@@ -1,5 +1,6 @@
 const Command = require("../../base/Command.js");
-
+const moment = require("moment-timezone");
+moment.locale('fr');
 class ServerInformation extends Command {
 	constructor(client) {
 		super(client, {
@@ -18,33 +19,39 @@ class ServerInformation extends Command {
 
 	run(message) {
 		try {
-			const verificationLevels = ["None", "Low", "Medium", "(╯°□°）╯︵  ┻━┻", "┻━┻ミヽ(ಠ益ಠ)ノ彡┻━┻"];
+			const verificationLevels = [
+				"None",
+				"Low",
+				"Medium",
+				"(╯°□°）╯︵  ┻━┻",
+				"┻━┻ミヽ(ಠ益ಠ)ノ彡┻━┻",
+			];
 			const region = {
-				"brazil": ":flag_br: Brazil",
-				"eu-central": ":flag_eu: Central Europe",
-				"singapore": ":flag_sg: Singapore",
-				"us-central": ":flag_us: U.S. Central",
-				"sydney": ":flag_au: Sydney",
-				"us-east": ":flag_us: U.S. East",
-				"us-south": ":flag_us: U.S. South",
-				"us-west": ":flag_us: U.S. West",
-				"eu-west": ":flag_eu: Western Europe",
-				"vip-us-east": ":flag_us: VIP U.S. East",
-				"london": ":flag_gb: London",
-				"amsterdam": ":flag_nl: Amsterdam",
-				"hongkong": ":flag_hk: Hong Kong",
-				"russia": ":flag_ru: Russia",
-				"southafrica": ":flag_za:  South Africa",
+				"brazil": message.language.get("SERVERINFO_REGIONS")[0],
+				"eu-central": message.language.get("SERVERINFO_REGIONS")[1],
+				"singapore": message.language.get("SERVERINFO_REGIONS")[2],
+				"us-central": message.language.get("SERVERINFO_REGIONS")[3],
+				"sydney": message.language.get("SERVERINFO_REGIONS")[4],
+				"us-east": message.language.get("SERVERINFO_REGIONS")[5],
+				"us-south": message.language.get("SERVERINFO_REGIONS")[6],
+				"us-west": message.language.get("SERVERINFO_REGIONS")[7],
+				"eu-west": message.language.get("SERVERINFO_REGIONS")[8],
+				"vip-us-east": message.language.get("SERVERINFO_REGIONS")[9],
+				"london": message.language.get("SERVERINFO_REGIONS")[10],
+				"amsterdam": message.language.get("SERVERINFO_REGIONS")[11],
+				"hongkong": message.language.get("SERVERINFO_REGIONS")[12],
+				"russia": message.language.get("SERVERINFO_REGIONS")[13],
+				"southafrica": message.language.get("SERVERINFO_REGIONS")[14],
 			};
 			return message.channel.send({
 				embed: {
 					"color": message.config.embed.color,
 					"author": {
 						"name": message.language.get("SERVERINFO_PROFIL"),
-						"icon_url": message.guild.iconURL(),
+						"icon_url": message.guild.iconURL,
 					},
 					"thumbnail": {
-						"url": message.guild.iconURL({ format: "png" }),
+						"url": message.guild.iconURL,
 					},
 					"fields": [{
 						"name": message.language.get("SERVERINFO_TITLES")[0],
@@ -53,7 +60,7 @@ class ServerInformation extends Command {
 					},
 					{
 						"name": message.language.get("SERVERINFO_TITLES")[1],
-						"value": `${message.channel.guild.createdAt.toUTCString().substr(0, 16)} (${message.bot.functions.checkDays(message.channel.guild.createdAt)}`,
+						"value": `${moment(message.channel.guild.createdAt.toUTCString()).format("LLLL")} (${message.bot.functions.checkDays(message.channel.guild.createdAt)}`,
 						"inline": true,
 					},
 					{

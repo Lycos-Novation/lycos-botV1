@@ -1,5 +1,6 @@
 const Command = require("../../base/Command.js");
-const moment = require("moment");
+const moment = require("moment-timezone");
+moment.locale('fr');
 
 class RoleInformation extends Command {
 	constructor(client) {
@@ -22,46 +23,46 @@ class RoleInformation extends Command {
 	run(message, args) {
 		try {
 			if(!args[0]) {
-				return message.channel.send("Please specify a role.")
+				return message.channel.send(message.language.get("ROLE_INFO_SPECIFY"))
 			}
 			else {
 				const role = message.guild.roles.get(args[0]) || message.guild.roles.find((r) => r.name.toLowerCase() === args[0].toLowerCase()) || message.mentions.roles.first();
 				if (!role) {
-					return message.channel.send("I can't find this role.");
+					return message.channel.send(message.language.get("ROLE_INFO_NOT_FOUND"))
 				}
 
 				return message.channel.send({
 					embed: {
 						"author": {
-							"name": `Information about ${role.name} (Role)`,
-							"icon_url": message.guild.iconURL(),
+							"name": message.language.get("ROLE_INFO_EMBED_NAME", role),
+							"icon_url": message.guild.iconURL,
 						},
-						"color": role.hexColor,
+						"color": role.color,
 						"fields" : [
 							{
-								"name" : "Color",
+								"name" : message.language.get("ROLE_INFO_FIELDS")[0],
 								"value" : role.hexColor,
 								"inline" : true,
 							},
 							{
-								"name" : "Position",
+								"name" : message.language.get("ROLE_INFO_FIELDS")[1],
 								"value" : role.position,
 								"inline" : true,
 							},
 							{
-								"name" : "Mentionable",
+								"name" : message.language.get("ROLE_INFO_FIELDS")[2],
 								"value" : role.mentionable ? "<:valid:536968393367224320>" : "<:nop:536968387956310046>",
 								"inline" : true,
 							},
 							{
-								"name" : "Created on the",
-								"value" : moment(role.createdTimestamp).format("DD/MM/YY, HH:mm:ss"),
+								"name" : message.language.get("ROLE_INFO_FIELDS")[3],
+								"value" : moment(role.createdTimestamp).format("LLLL"),
 								"inline" : true,
 							},
 						],
 						"timestamp": new Date(),
 						"footer" : {
-							"text" : `Role ID: ${role.id}`,
+							"text" : message.language.get("ROLE_INFO_ID", role),
 						},
 					},
 				});

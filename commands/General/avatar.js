@@ -20,24 +20,19 @@ class Avatar extends Command {
 
 	run(message, args) {
 		try {
-			const searchArgs = args.join(" ");
-			let { member } = message;
-			if (message.mentions.members.size > 0) {member = message.mentions.members.first();}
-			else if (searchArgs) {
-				member = message.bot.functions.fetchMembers(message.guild, searchArgs);
-				if (member.size === 0) return message.channel.send(message.language.get("ERROR_NOUSER_FOUND"));
-				else if (member.size === 1) member = member.first();
-				else return message.channel.send(message.language.get("ERROR_MUCH_USER_FOUND"));
+			let looked = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[1]));
+			if (!looked) {
+				looked = message.member
 			}
 			return message.channel.send({
 				embed: {
 					"color": message.config.embed.color,
 					"author": {
-						"name": message.language.get("AVATAR_TITLE", member),
-						"icon_url": member.user.displayAvatarURL(),
+						"name": message.language.get("AVATAR_TITLE", looked),
+						"icon_url": looked.user.displayAvatarURL,
 					},
 					"image" : {
-						"url": member.user.displayAvatarURL({ size: 512 }),
+						"url": looked.user.displayAvatarURL,
 					},
 					"timestamp": new Date(),
 					"footer" : {

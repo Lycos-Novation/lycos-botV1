@@ -59,10 +59,10 @@ class UserInformation extends Command {
 					"color": message.config.embed.color,
 					"author": {
 						"name": message.language.get("USERINFO_PROFIL"),
-						"icon_url": message.bot.user.displayAvatarURL(),
+						"icon_url": message.bot.user.displayAvatarURL,
 					},
 					"thumbnail": {
-						"url" : member.user.displayAvatarURL({ format: "png" }),
+						"url" : member.user.displayAvatarURL,
 					},
 					"fields" : [
 						{
