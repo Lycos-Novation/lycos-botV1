@@ -353,7 +353,7 @@ module.exports = class {
 **Météo :** ${result[0].forecast[3].skytextday}
 **Précipitaions :** ${result[0].forecast[3].precip}%
 
-**__Prévisions du ${result[0].forecast[0].day} ${date(result[0].forecast[0].date)}__**
+**__Prévisions du ${result[0].forecast[4].day} ${date(result[0].forecast[0].date)}__**
 
 **Température Max/Min** : ${result[0].forecast[4].high}°C/${result[0].forecast[4].low}°C
 **Météo :** ${result[0].forecast[4].skytextday}
