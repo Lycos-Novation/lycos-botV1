@@ -235,7 +235,7 @@ module.exports = class {
 			PARTNERS_DESCRIPTION: "Regardez nos partenaires.",
 			PARTNERS_USAGE: ".partners",
 			PARTNERS_EXAMPLES: ".partners",
-			PARTNERS_TITLE: "Lycos partenaires",
+			PARTNERS_TITLE: "Partenaires de lycos",
 			ANIME_DESCRIPTION: "Cherchez les meilleurs animes.",
 			ANIME_USAGE: ".anime <animeName>",
 			ANIME_EXAMPLES: ".anime Dragon Ball",
@@ -313,6 +313,9 @@ module.exports = class {
 			KICK_NOREASON: "Merci d'indiquer une raison",
 			KICK_ERROR: "Je n'ai pas pu expulser l'utilisateur car: ",
 			KICK_INFO: (member, message) => `${member} a été expulsé(e) par ${message.author}`,
+			FUCKMYLIFE_DESCRIPTION: "Histoires marrantes sur la vie de tous les jours",
+			FUCKMYLIFE_USAGE: (prefix) => `${prefix}fuck-my-life | ${prefix}fml`,
+			FUCKMYLIFE_EXAMPLES: (prefix) => `${prefix}fuck-my-life | ${prefix}fml`,
 			NSFW_URL: "Si l'image ne s'affiche pas cliquez ici.",
 			WEATHERINFO_DESCRIPTION: "Affiche la météo de la ville demandée",
 			WEATHERINFO_USAGE: (prefix) => `${prefix}weather-info [Nom/Code Postal]`,
@@ -333,31 +336,31 @@ module.exports = class {
 
 **Température Max/Min** : ${result[0].forecast[0].high}°C/${result[0].forecast[0].low}°C
 **Météo :** ${result[0].forecast[0].skytextday}
-**Précipitaions :** ${result[0].forecast[0].precip !== "" ? `${result[0].forecast[0].precip}` : `0`}%
+**Précipitations :** ${result[0].forecast[0].precip !== "" ? `${result[0].forecast[0].precip}` : `0`}%
 
 **__Prévisions du ${result[0].forecast[1].day} ${date(result[0].forecast[1].date)}__**
 
 **Température Max/Min** : ${result[0].forecast[1].high}°C/${result[0].forecast[1].low}°C
 **Météo :** ${result[0].forecast[1].skytextday}
-**Précipitaions :** ${result[0].forecast[1].precip}%
+**Précipitations :** ${result[0].forecast[1].precip}%
 
 **__Prévisions du ${result[0].forecast[2].day} ${date(result[0].forecast[2].date)}__**
 
 **Température Max/Min** : ${result[0].forecast[2].high}°C/${result[0].forecast[2].low}°C
 **Météo :** ${result[0].forecast[2].skytextday}
-**Précipitaions :** ${result[0].forecast[2].precip}%
+**Précipitations :** ${result[0].forecast[2].precip}%
 
 **__Prévisions du ${result[0].forecast[3].day} ${date(result[0].forecast[3].date)}__**
 
 **Température Max/Min** : ${result[0].forecast[3].high}°C/${result[0].forecast[3].low}°C
 **Météo :** ${result[0].forecast[3].skytextday}
-**Précipitaions :** ${result[0].forecast[3].precip}%
+**Précipitations :** ${result[0].forecast[3].precip}%
 
 **__Prévisions du ${result[0].forecast[4].day} ${date(result[0].forecast[0].date)}__**
 
 **Température Max/Min** : ${result[0].forecast[4].high}°C/${result[0].forecast[4].low}°C
 **Météo :** ${result[0].forecast[4].skytextday}
-**Précipitaions :** ${result[0].forecast[4].precip}%`,
+**Précipitations :** ${result[0].forecast[4].precip}%`,
 			RPS_LYCOS_CHOICE: (choixO) => `Choix de Lycos : ${choixO}`,
 			RPS_MATCH_EQUAL: `:flag_white: | Match nul !`,
 			RPS_PLAYER_WIN: (message) => `:dagger: | Victoire de ${message.author.username} !`,
