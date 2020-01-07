@@ -22,21 +22,16 @@ class Purge extends Command {
 		try {
 			const amount = parseInt(args[0]) ? parseInt(args[0]) : parseInt(args[1]);
 			if (!amount) {
-				return message.channel.send("Must specify an amount to delete!");
+				return message.channel.send(message.language.get("PURGE_SPECIFY_AMOUNT"))
 			}
 			else if (amount > 100) {
-				return message.channel.send("I can't delete more than 100 messages.");
+				return message.channel.send(message.language.get("PURGE_TOO_MUCH_AMOUNT"))
 			}
 			else {
-				message.channel.messages.fetch({ limit: amount }).then((messages) => {
-					message.channel.bulkDelete(messages).then(() => {
-						message.channel.send(`\`${messages.size}\` message${messages.size > 1 ? "s" : ""} deleted.`).then((msg) => {
-							setTimeout(() => {
-								msg.delete();
-							}, 5000);
-						});
-					}).catch((error) => console.log(error));
-				});
+				message.delete().then(message.channel.bulkDelete(amount).then(messages => {
+					message.channel.send(`**:wastebasket: | ${messages.size}/${amount} messages supprimés**`).then(msg => msg.delete(5000))
+				})
+				)
 			}
 		}
 		catch (error) {
