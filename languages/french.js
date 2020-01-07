@@ -62,7 +62,7 @@ module.exports = class {
 				congrat: "ðŸŽ‰ Nouveau gagnant(s) : {winners}! Félicitations!",
 				error: "Aucune inscription valide, aucun gagnant ne peut être choisi!",
 			},
-			LANGUAGE_DESCRIPTION: "Traduire Denver dans une autre langue.",
+			LANGUAGE_DESCRIPTION: "Traduire Lycos dans une autre langue.",
 			LANGUAGE_USAGE: ".language <language>",
 			LANGUAGE_EXAMPLES: ".language french",
 			LANGUAGE_INFO: (language, prefix) => `Ma langue sur ce serveur est \`${language}\` !\n> Pour changer la langue, faites \`${prefix}language set <value>\`\n> Pour voir combien de langues je peux parler, faites \`${prefix}language list\``,
@@ -71,10 +71,11 @@ module.exports = class {
 			LANGUAGE_ALREADY_SET: (args) => `Je suis déjà en \`${args[1].toLowerCase()}\`.`,
 			LANGUAGE_GUILD_INFO: (args) => `La langue sur ce serveur est maintenant \`${args[1].toLowerCase()}\`.`,
 			ERROR_LANGUAGE_INCORRECT: "Je ne pense pas que je connaisse cette langue. Pouvez-vous m'aider à l'apprendre ?",
-			MODULES_DESCRIPTION: "Traduire Denver dans une autre langue.",
+			MODULES_DESCRIPTION: "Traduire Lycos dans une autre langue.",
 			MODULES_USAGE: (prefix) => `${prefix}modules set <module> <on/off>`,
 			MODULES_EXAMPLES: (prefix) => `${prefix}modules set games on`,
-			MODULES_INFO: (prefix) => `Certains modules ne sont pas disponibles par défaut sur Denver.\n> Pour activer faites \`${prefix}modules set <module> <on/off>\`\n> Pour voir combien de modules j'ai, faire \`${prefix}modules list\``,
+			MODULES_INFO: (prefix) => `Certains modules ne sont pas disponibles par défaut sur Lycos.\n> Pour activer faites \`${prefix}modules set <module> <on/off>\`\n> Pour voir combien de modules j'ai, faire \`${prefix}modules list\``,
+			MODULES_LIST: (modules) => `Voici la liste des modules disponibles :\n> \`${modules.join("\`, \`")}\``,
 			MODULES_NULL: "Vous devez indiquer le module que vous souhaitez modifier.",
 			MODULES_ALREADY_ACTIVATED: "Ce module est déjà activé.",
 			MODULES_ALREADY_DEACTIVATED: "Ce module est déjà désactivé.",
@@ -83,7 +84,7 @@ module.exports = class {
 			ERROR_MODULES_INCORRECT: (prefix) => `Je ne pense pas que je connaisse ce module. Faites \`${prefix}modules list\``,
 			POLL_DESCRIPTION: "Faire un sondage pour les membres de votre serveur.",
 			POLL_USAGE: ".poll <text>",
-			POLL_EXAMPLES: ".poll Denver est-il bon??",
+			POLL_EXAMPLES: ".poll Lycos est-il bon??",
 			POLL_TEXT_NULL: "Vous devez insérer un texte pour faire un sondage.",
 			POLL_REACT: "Réagissez avec les réactions en bas pour entrer dans le sondage.",
 			PREFIX_DESCRIPTION: "Gérer le préfixe de bot sur le serveur.",
@@ -92,15 +93,15 @@ module.exports = class {
 			PREFIX_INFO: (prefix) => `Mon préfixe sur ce serveur est \`${prefix}\` ! \n> Pour changer ce préfixe faite \`${prefix}prefix set <value>\`\n> Pour réinitialiser ce préfixe, faites \`${prefix}prefix reset\``,
 			PREFIX_NULL: "Le préfixe ne peut pas être vide.",
 			PREFIX_CHANGE: (args) => `Le préfixe est maintenant \`${args[1]}\`.`,
-			PREFIX_RESET: "Le préfixe a été réinitialisé maintenant `.`",
+			PREFIX_RESET: "Le préfixe a été réinitialisé. Il est maintenant `.`",
 			ROLE_DESCRIPTION: "Gérer les rôles facilement.",
 			ROLE_USAGE: ".role <add/remove> <user> <role>",
-			ROLE_EXAMPLES: ".role add Denver Bot",
+			ROLE_EXAMPLES: ".role add Lycos Bot",
 			ROLE_INFO: (prefix) => `> Pour ajouter un rôle à un utilisateur, faites \`${prefix}role add <user> <role>\` \n> Pour supprimer un rôle à un utilisateur, faites \`${prefix}role remove <user> <role>\``,
 			ROLE_NOUSER_FOUND: "Aucun utilisateur n'a été trouvé.",
 			ROLE_GIVE: (member, role) => `${member.user.username} a maintenant le rôle ${role.name}.`,
 			ROLE_REMOVE: (member, role) => `${member.user.username} n'a plus le rôle ${role.name}.`,
-			BOT_DESCRIPTION: "Afficher des informations sur Denver.",
+			BOT_DESCRIPTION: "Afficher des informations sur Lycos.",
 			BOT_USAGE: ".bot",
 			BOT_EXAMPLES: ".bot",
 			BOT_FIELDS: [
@@ -109,9 +110,9 @@ module.exports = class {
 				"Autres renseignements",
 				"\u200B",
 			],
-			BOT_FIELDS_CONTENT_GENERALINFO: (message, version) => `**Créateur:** \`${message.bot.users.get("169146903462805504").tag}\`\n**Développeurs:** \`${message.bot.users.get("296693247856607263").tag}\` - \`${message.bot.users.get("291860794163855360").tag}\` - \`${message.bot.users.get("169146903462805504").tag}\`\n**Contributeurs:** \`${message.bot.users.get("422820341791064085") ? message.bot.users.get("422820341791064085").tag : "Androz"}\`\nCréé le \`12/12/2017\`, le bot tourne actuellement sur la version \`${version}\`.`,
-			BOT_FIELDS_CONTENT_GENERALSTATS: (guilds, users, channels) => `** Nombre de serveurs:** \`${guilds}\`.\n**Utilisateurs:** \`${users}\` en mémoire.\n**Nombre de channels:** \`${channels}\`.`,
-			BOT_FIELDS_CONTENT_OTHERINFO: (process, moment, message) => `**Machine:** \`${process.platform}\` - \`(${process.arch})\` [[Skoali]](https://skoali.fr/)\n**Heap:** \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}\`\n**Bot's uptime:** \`${moment.duration(message.bot.uptime).format("M[m] W[w] D[d] H[h] m[m] s[s]")}\``,
+			BOT_FIELDS_CONTENT_GENERALINFO: (message, version) => `**Créateur :** \`${message.bot.users.get("169146903462805504").tag}\`\n**Développeurs :** \`${message.bot.users.get("296693247856607263").tag}\` - \`${message.bot.users.get("291860794163855360").tag}\` - \`${message.bot.users.get("169146903462805504").tag}\`\n**Contributeurs :** \`${message.bot.users.get("422820341791064085") ? message.bot.users.get("422820341791064085").tag : "Androz"}\`\nCréé le \`12/12/2017\`, le bot tourne actuellement sur la version \`${version}\`.`,
+			BOT_FIELDS_CONTENT_GENERALSTATS: (guilds, users, channels) => `** Nombre de serveurs :** \`${guilds}\`.\n**Utilisateurs :** \`${users}\` en mémoire.\n**Nombre de salons :** \`${channels}\`.`,
+			BOT_FIELDS_CONTENT_OTHERINFO: (process, moment, message) => `**Machine :** \`${process.platform}\` - \`(${process.arch})\` \n**TAS :** \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}\`\n**Durée de connection du bot :** \`${moment.duration(message.bot.uptime).format("M[m] W[w] D[d] H[h] m[m] s[s]")}\``,
 			BOT_FIELDS_CONTENT_LINKS: "[Invitation](https://discordapp.com/oauth2/authorize?client_id=390231727554953216&scope=bot&permissions=0) - [Server](https://discord.gg/ZvJpUpt) - [Dons](https://paypal.me/denverbot) - [Site](https://denverbot.fr/) - [Vote](https://discordbots.org/bot/390231727554953216) - [Twitter](https://twitter.com/BOT_Denver)",
 			HELP_DESCRIPTION: "Affiche la liste des commandes",
 			HELP_USAGE: (prefix) => `${prefix}help (command)`,
@@ -119,7 +120,7 @@ module.exports = class {
 			HELP_NOT_FOUND: (args) => `${e.error} | La commande \`${args}\` n'existe pas!`,
 			HELP_TITLE: (command) => `Help : ${command}`,
 			HELP_TITLE1: (category) => `Catégorie : ${category}`,
-			HELP_EMBED_DESCRIPTION: (message) => `Bonjour, voici la documentation de DenverBot. Certaines commandes ne sont pas disponible sur la documentation parce qu'elles doivent être activer.\nPour voir ce que vous pouvez activer faites \`${message.settings.prefix}modules\`.`,
+			HELP_EMBED_DESCRIPTION: (message) => `Bonjour, voici la documentation de Lycos. Certaines commandes ne sont pas disponible sur la documentation parce qu'elles doivent être activer.\nPour voir ce que vous pouvez activer faites \`${message.settings.prefix}modules\`.`,
 			HELP_FIELDS: [
 				"Description",
 				"Usage",
@@ -128,7 +129,7 @@ module.exports = class {
 			],
 			HELPGLOBAL_FIELDS: [
 				"Administration",
-				"Denver",
+				"Lycos",
 				"Divertissement",
 				"Générale",
 				"Modération",
@@ -153,24 +154,41 @@ module.exports = class {
 			DOG_EXAMPLES: (prefix) => `${prefix}dog`,
 			AVATAR_DESCRIPTION: "Donne l'avatar de l'utilisateur demandé.",
 			AVATAR_USAGE: (prefix) => `${prefix}avatar (@user)`,
-			AVATAR_EXAMPLES: (prefix) => `${prefix}avatar @Denver`,
-			AVATAR_TITLE: (member) => `Avatar de ${member.user.username}`,
+			AVATAR_EXAMPLES: (prefix) => `${prefix}avatar @Lycos`,
+			AVATAR_TITLE: (looked) => `Avatar de ${looked.user.username}`,
 			SERVERINFO_DESCRIPTION: "Affiche les informations du serveur.",
 			SERVERINFO_USAGE: (prefix) => `${prefix}serverinfo`,
-			SERVERINFO_EXAMPLES: (prefix) => `${prefix}serverinfo @Denver`,
+			SERVERINFO_EXAMPLES: (prefix) => `${prefix}serverinfo`,
+			SERVERINFO_REGIONS: [
+				":flag_br: Brésil",
+				":flag_eu: Europe Centrale",
+				":flag_sg: Singapour",
+				":flag_us: USA - Centre",
+				":flag_au: Sydney",
+				":flag_us: USA - Est",
+				":flag_us: USA - Sud",
+				":flag_us: USA - Ouest",
+				":flag_eu: Europe de l'Ouest",
+				":flag_us: USA - Est VIP",
+				":flag_gb: Londres",
+				":flag_nl: Amsterdam",
+				":flag_hk: Hong Kong",
+				":flag_ru: Russie",
+				":flag_za: Afrique du Sud",
+			],
 			SERVERINFO_TITLES: [
 				"Nom",
 				"Création",
 				"Total | Humains | Bots",
-				"Channels",
+				"Salons",
 				"ID",
 				"Propriétaire",
 				"Région",
 				"Niveau de vérification",
 			],
-			SERINFO_DESCRIPTION: "Affiche les informations utilisateur.",
+			USERINFO_DESCRIPTION: "Affiche les informationssur l'utilisateur.",
 			USERINFO_USAGE: (prefix) => `${prefix}userinfo (@user)`,
-			USERINFO_EXAMPLES: (prefix) => `${prefix}userinfo @Denver`,
+			USERINFO_EXAMPLES: (prefix) => `${prefix}userinfo @Lycos`,
 			USERINFO_TITLES: [
 				"Nom",
 				"En train de jouer",
@@ -217,7 +235,7 @@ module.exports = class {
 			PARTNERS_DESCRIPTION: "Regardez nos partenaires.",
 			PARTNERS_USAGE: ".partners",
 			PARTNERS_EXAMPLES: ".partners",
-			PARTNERS_TITLE: "DenverBot partenaires",
+			PARTNERS_TITLE: "Lycos partenaires",
 			ANIME_DESCRIPTION: "Cherchez les meilleurs animes.",
 			ANIME_USAGE: ".anime <animeName>",
 			ANIME_EXAMPLES: ".anime Dragon Ball",
@@ -262,7 +280,8 @@ module.exports = class {
 				"Mentionnable",
 				"Date de création",
 			],
-			ROLE_INFO_ID: (role) => `Role ID: ${role.id}`,
+			ROLE_INFO_ID: (role) => `ID du rôle : ${role.id}`,
+			ROLE_INFO_EMBED_NAME: (role) => `Informations à propos du role ${role.name}`,
 			FLIP_DESCRIPTION: "Amusez-vous à jouer avec le flip.",
 			FLIP_USAGE: ".flip",
 			FLIP_EXAMPLES: ".flip",
@@ -273,30 +292,103 @@ module.exports = class {
 			PERMISSIONS_EXAMPLES: (prefix) => `${prefix}permissions\n${prefix}permissions @user#1234`,
 			PERMISSIONS_TITLE: (username, channel) => `Permissions of ${username} in #${channel}`,
 			PURGE_DESCRIPTION: "Permet de supprimer plusieurs messages à la fois.",
-			PURGE_USAGE: ".purge <messagesNumber>",
-			PURGE_EXAMPLES: ".purge 28",
+			PURGE_USAGE: (prefix) => `${prefix}purge [messagesNumber]`,
+			PURGE_EXAMPLES: (prefix) => `${prefix}purge 28`,
 			PURGE_SPECIFY_AMOUNT: "Tu dois spécifier un montant à supprimer!",
 			PURGE_TOO_MUCH_AMOUNT: "Je ne peux pas supprimer plus de 100 messages.",
 			BAN_DESCRIPTION: "Banni l'utilisateur mentionné",
 			BAN_USAGE: (prefix) => `${prefix}ban [@user] (reason)`,
-			BAN_EXAMPLES: (prefix) => `${prefix}ban @Denver#8124 Spam`,
+			BAN_EXAMPLES: (prefix) => `${prefix}ban @Lycos Spam`,
 			BAN_ERRORARGS : "Merci d'indiquer un utilisateur!",
-			BAN_ALREADY: "Cet utilisateur est déjà expulsé définitivement!",
-			BAN_BANNABLE: "Je ne peux pas expulser définitivement cet utilisateur, veuillez vérifier ses rôles et ses permissions",
-			BAN_NOREASON: "Aucune raison indiquée",
+			BAN_ALREADY: "Cet utilisateur est déjà banni !",
+			BAN_BANNABLE: "Je ne peux pas bannir cet utilisateur, veuillez vérifier ses rôles et ses permissions",
+			BAN_NOREASON: "Merci d'indiquer une raison",
 			BAN_ERROR: "Je ne peux ban car : ",
-			BAN_INFO: (member, message) => `${member} a été expulsé(é) définitivement par ${message.author}`,
-			KICK_DESCRIPTION: "Exclu l'utilisateur mentionné",
+			BAN_INFO: (member, message) => `${member} a été banni(e) par ${message.author}`,
+			KICK_DESCRIPTION: "Expulse l'utilisateur mentionné",
 			KICK_USAGE: (prefix) => `${prefix}kick [@user] (reason)`,
-			KICK_EXAMPLES: (prefix) => `${prefix}kick @Denver#8124 Spam`,
+			KICK_EXAMPLES: (prefix) => `${prefix}kick @Lycos Spam`,
 			KICK_ERRORARGS: "Merci d'indiquer un utilisateur!",
-			KICK_BANNABLE: "Je ne peux pas expulsé cet utilisateur, veuillez vérifier ses rôles et ses permissions",
-			KICK_NOREASON: "Aucune raison indiquée",
-			KICK_ERROR: "Je n'ai pas pu expulsé l'utilisateur car: ",
-			KICK_INFO: (member, message) => `${member} a été expulsé par ${message.author}`,
+			KICK_BANNABLE: "Je ne peux pas expulser cet utilisateur, veuillez vérifier ses rôles et ses permissions",
+			KICK_NOREASON: "Merci d'indiquer une raison",
+			KICK_ERROR: "Je n'ai pas pu expulser l'utilisateur car: ",
+			KICK_INFO: (member, message) => `${member} a été expulsé(e) par ${message.author}`,
 			NSFW_URL: "Si l'image ne s'affiche pas cliquez ici.",
+			WEATHERINFO_DESCRIPTION: "Affiche la météo de la ville demandée",
+			WEATHERINFO_USAGE: (prefix) => `${prefix}weather-info [Nom/Code Postal]`,
+			WEATHERINFO_EXAMPLES: (prefix) => `${prefix}weather-info Paris`,
+			WEATHERINFO_NO_CITY: "merci d'indiquer un nom de ville ou un code postal.",
+			WEATHERINFO_NOT_FOUND: "Impossible de trouver les données météo pour cette ville.",
+			WEATHER_LANGUAGE: "fr-FR",
+			WEATHERINFO_EMBED_TITLE: (result) => `Météo de ${result[0].location.name} le ${result[0].current.day} ${date(result[0].current.date)} à ${result[0].current.observationtime}`,
+			WEATHERINFO_EMBED_DESCRIPTION: (result) => `**Coordonnées** - __Longitude :__ ${result[0].location.long} - __Latitude :__ ${result[0].location.lat}
+**Météo :** ${result[0].current.skytext}
+**Température :** ${result[0].current.temperature}°C
+**Ressenti :** ${result[0].current.feelslike}°C
+**Humidité :** ${result[0].current.humidity}%
+**Vent :** ${result[0].current.winddisplay}
+**Zone horaire :** UTC${result[0].location.timezone >= 0 ? `+${result[0].location.timezone}` : `${result[0].location.timezone}`}
+
+**__Prévisions du ${result[0].forecast[0].day} ${date(result[0].forecast[0].date)}__**
+
+**Température Max/Min** : ${result[0].forecast[0].high}°C/${result[0].forecast[0].low}°C
+**Météo :** ${result[0].forecast[0].skytextday}
+**Précipitaions :** ${result[0].forecast[0].precip !== "" ? `${result[0].forecast[0].precip}` : `0`}%
+
+**__Prévisions du ${result[0].forecast[1].day} ${date(result[0].forecast[1].date)}__**
+
+**Température Max/Min** : ${result[0].forecast[1].high}°C/${result[0].forecast[1].low}°C
+**Météo :** ${result[0].forecast[1].skytextday}
+**Précipitaions :** ${result[0].forecast[1].precip}%
+
+**__Prévisions du ${result[0].forecast[2].day} ${date(result[0].forecast[2].date)}__**
+
+**Température Max/Min** : ${result[0].forecast[2].high}°C/${result[0].forecast[2].low}°C
+**Météo :** ${result[0].forecast[2].skytextday}
+**Précipitaions :** ${result[0].forecast[2].precip}%
+
+**__Prévisions du ${result[0].forecast[3].day} ${date(result[0].forecast[3].date)}__**
+
+**Température Max/Min** : ${result[0].forecast[3].high}°C/${result[0].forecast[3].low}°C
+**Météo :** ${result[0].forecast[3].skytextday}
+**Précipitaions :** ${result[0].forecast[3].precip}%
+
+**__Prévisions du ${result[0].forecast[0].day} ${date(result[0].forecast[0].date)}__**
+
+**Température Max/Min** : ${result[0].forecast[4].high}°C/${result[0].forecast[4].low}°C
+**Météo :** ${result[0].forecast[4].skytextday}
+**Précipitaions :** ${result[0].forecast[4].precip}%`,
+			RPS_LYCOS_CHOICE: (choixO) => `Choix de Lycos : ${choixO}`,
+			RPS_MATCH_EQUAL: `:flag_white: | Match nul !`,
+			RPS_PLAYER_WIN: (message) => `:dagger: | Victoire de ${message.author.username} !`,
+			RPS_LYCOS_WIN: `:skull_crossbones: | Victoire de Lycos !`,
+			RPS_CHOICES: "Choisissez entre `pierre`, `feuille` et `ciseaux`",
+			SUPPORT_NO_ARGS: "Veuillez décrire votre problème avec au moins 10 cractères et 1900 au maximum.",
+			SUPPORT_QUESTION_SEND: "Votre question a été envoyée au support. Veuillez attendre une réponse.",
+			PLAY_DESCRIPTION: "Joue la musique demandée",
+			PLAY_USAGE: ".play [Musique/Lien]",
+			PLAY_EXAMPLES: ".play Younger Dreams",
+			PLAY_NO_VOICECHANNEL: "Vous devez être dans un salon vocal pour jouer de la musique",
+			PLAY_BOT_CANT_CONNECT: "Je ne peux pas me connecter au salon, vérifiez que j'aie bien la permission requise !",
+			PLAY_BOT_CANT_SPEAK: "Je ne peux pas parler dans ce salon, vérifiez que j'aie bien la permission requise !",
+			PLAY_NO_ARGS: "Veuillez indiquer une musique à jouer",
+			ANSWER_UNKNOWN_ID: "C'est ID de support n'est pas connu",
+			ANSWER_SENT: (support) => `Votre réponse a été envoyée avec succès.(${support.id} terminé)`,
+			RELOAD_NO_COMMAND: "Vous devez indiquer une commande a reload",
+			RELOAD_ERROR_UNLOADING: (response) => `Erreur déchargement : ${response}`,
+			RELOAD_ERROR_LOADING: (response) => `Erreur chargement : ${response}`,
+			RELOAD_COMMAND_RELOADED: (commandName) => `The command \`${commandName}\` has been reloaded`,
+			RELOAD_COMMAND_DOESNT_EXIST: (args) => `The command \`${args[0]}\` doesn't seem to exist. Try again!`
 		};
+		function date(date1){
+			let d = date1.split("-");
+			let an = d[0];
+			let mois = d[1];
+			let jour = d[2];
+			return `${jour}/${mois}/${an}`;
+		}
 	}
+
 	/**
 	 * The method to get language strings
 	 * @param {string} term The string or function to look up
