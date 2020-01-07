@@ -62,7 +62,7 @@ module.exports = class {
 				congrat: "ðŸŽ‰ New winner(s) : {winners}! Congratulations!",
 				error: "No valid entries, no winners can be chosen!",
 			},
-			LANGUAGE_DESCRIPTION: "Translate Denver into another language.",
+			LANGUAGE_DESCRIPTION: "Translate Lycos into another language.",
 			LANGUAGE_USAGE: ".language <language>",
 			LANGUAGE_EXAMPLES: ".language french",
 			LANGUAGE_INFO: (language, prefix) => `My language on this guild is \`${language}\` !\n> To change the language do \`${prefix}language set <value>\`\n> To see how many languages I can speak do \`${prefix}language list\``,
@@ -71,12 +71,12 @@ module.exports = class {
 			LANGUAGE_ALREADY_SET: (args) => `I'm already in \`${args[1].toLowerCase()}\`.`,
 			LANGUAGE_GUILD_INFO: (args) => `The language on this guild is now \`${args[1].toLowerCase()}\`.`,
 			ERROR_LANGUAGE_INCORRECT: "I don't think that I know this language. Can you help me to learn it ?",
-			MODULES_DESCRIPTION: "Translate Denver into another language.",
+			MODULES_DESCRIPTION: "Translate Lycos into another language.",
 			MODULES_USAGE: (prefix) => `${prefix}modules set <module> <on/off>`,
 			MODULES_EXAMPLES: (prefix) => `${prefix}modules set games on`,
-			MODULES_INFO: (prefix) => `Some modules are unavailable by default on Denver.\n> To activate then do \`${prefix}modules set <module> <on/off>\`\n> To see how many modules I have do \`${prefix}modules list\``,
-			MODULES_NULL: "You should indicate the module you want to modify.",
+			MODULES_INFO: (prefix) => `Some modules are unavailable by default on Lycos.\n> To activate then do \`${prefix}modules set <module> <on/off>\`\n> To see how many modules I have do \`${prefix}modules list\``,
 			MODULES_LIST: (modules) => `Here is the list of available modules:\n> \`${modules.join("\`, \`")}\``,
+			MODULES_NULL: "You should indicate the module you want to modify.",
 			MODULES_ALREADY_ACTIVATED: "This module is already activated.",
 			MODULES_ALREADY_DEACTIVATED: "This module is already deactivated.",
 			MODULES_ACTIVATED: (args) => `The module ${args[1]} is now activated on this guild.`,
@@ -101,7 +101,7 @@ module.exports = class {
 			ROLE_NOUSER_FOUND: "No users were found.",
 			ROLE_GIVE: (member, role) => `${member.user.username} has now the role ${role.name}.`,
 			ROLE_REMOVE: (member, role) => `${member.user.username} no longer has the role ${role.name}.`,
-			BOT_DESCRIPTION: "View information about Denver.",
+			BOT_DESCRIPTION: "View information about Lycos.",
 			BOT_USAGE: ".bot",
 			BOT_EXAMPLES: ".bot",
 			BOT_FIELDS: [
@@ -159,6 +159,23 @@ module.exports = class {
 			SERVERINFO_DESCRIPTION: "Displays server information",
 			SERVERINFO_USAGE: (prefix) => `${prefix}serverinfo`,
 			SERVERINFO_EXAMPLES: (prefix) => `${prefix}serverinfo @Denver`,
+			SERVERINFO_REGIONS: [
+				":flag_br: Brazil",
+				":flag_eu: Central Europe",
+				":flag_sg: Singapore",
+				":flag_us: U.S. Centre",
+				":flag_au: Sydney",
+				":flag_us: U.S. East",
+				":flag_us: U.S. South",
+				":flag_us: U.S. West",
+				":flag_eu: Western Europe",
+				":flag_us: V.I.P. U.S. East",
+				":flag_gb: London",
+				":flag_nl: Amsterdam",
+				":flag_hk: Hong Kong",
+				":flag_ru: Russia",
+				":flag_za: South Africa",
+			],
 			SERVERINFO_TITLES: [
 				"Name",
 				"Creation",
@@ -218,7 +235,7 @@ module.exports = class {
 			PARTNERS_DESCRIPTION: "Look at our partners.",
 			PARTNERS_USAGE: ".partners",
 			PARTNERS_EXAMPLES: ".partners",
-			PARTNERS_TITLE: "DenverBot's partner",
+			PARTNERS_TITLE: "Lycos's partner",
 			ANIME_DESCRIPTION: "Look for the best animes.",
 			ANIME_USAGE: ".anime <animeName>",
 			ANIME_EXAMPLES: ".anime Dragon Ball",
@@ -243,7 +260,7 @@ module.exports = class {
 				"Kills",
 				"Matchs played",
 				"Victories",
-				"Kills ratio per party",
+				"Kills ratio per game",
 			],
 			FORTNITE_FIELDS_CONTENT_KILL: (data) => `${data.stats.lifetime.kills} (${data.stats.squad["kills"]} in section, ${data.stats.duo["kills"]} in duo, ${data.stats.solo["kills"]} in solo)`,
 			FORTNITE_FIELDS_CONTENT_MATCHSPLAYED: (data) => `${data.stats.lifetime.matches} (${data.stats.squad["matches"]} in section, ${data.stats.duo["matches"]} in duo, ${data.stats.solo["matches"]} in solo)`,
@@ -264,6 +281,7 @@ module.exports = class {
 				"Creation date",
 			],
 			ROLE_INFO_ID: (role) => `Role ID: ${role.id}`,
+			ROLE_INFO_EMBED_NAME: (role) => `Informations about ${role.name} role`,
 			FLIP_DESCRIPTION: "Have fun playing heads or tails.",
 			FLIP_USAGE: ".flip",
 			FLIP_EXAMPLES: ".flip",
@@ -274,8 +292,8 @@ module.exports = class {
 			PERMISSIONS_EXAMPLES: (prefix) => `${prefix}permissions\n${prefix}permissions @user#1234`,
 			PERMISSIONS_TITLE: (username, channel) => `Permissions of ${username} in #${channel}`,
 			PURGE_DESCRIPTION: "Allows you to delete several messages at once.",
-			PURGE_USAGE: ".purge <messagesNumber>",
-			PURGE_EXAMPLES: ".purge 28",
+			PURGE_USAGE: (prefix) => `${prefix}purge [messagesNumber]`,
+			PURGE_EXAMPLES: (prefix) => `${prefix}purge 28`,
 			PURGE_SPECIFY_AMOUNT: "Must specify an amount to delete!",
 			PURGE_TOO_MUCH_AMOUNT: "I can't delete more than 100 messages.",
 			BAN_DESCRIPTION: "Banishes the mentioned user",
@@ -299,6 +317,71 @@ module.exports = class {
 			FUCKMYLIFE_USAGE: (prefix) => `${prefix}fuck-my-life | ${prefix}fml`,
 			FUCKMYLIFE_EXAMPLES: (prefix) => `${prefix}fuck-my-life | ${prefix}fml`,
 			NSFW_URL: "If the image doesn't display click here.",
+			WEATHERINFO_DESCRIPTION: "Affiche la météo de la ville demandée",
+			WEATHERINFO_USAGE: (prefix) => `${prefix}weather-info [Name/ZipCode]`,
+			WEATHERINFO_EXAMPLES: (prefix) => `${prefix}weather-info Paris`,
+			WEATHERINFO_NO_CITY: "Please give a name or Zip Code.",
+			WEATHERINFO_NOT_FOUND: "Can't find weather data about this city.",
+			WEATHER_LANGUAGE: "en-EN",
+			WEATHERINFO_EMBED_TITLE: (result) => `Weather of ${result[0].location.name} on ${result[0].current.day} ${result[0].current.date} at ${result[0].current.observationtime}`,
+			WEATHERINFO_EMBED_DESCRIPTION: (result) => `**Coordonnées** - __Longitude :__ ${result[0].location.long} - __Latitude :__ ${result[0].location.lat}
+**Weather :** ${result[0].current.skytext}
+**Temperature :** ${result[0].current.temperature}°C
+**Feels like :** ${result[0].current.feelslike}°C
+**Humidity :** ${result[0].current.humidity}%
+**Wind display :** ${result[0].current.winddisplay}
+**Time Zone :** UTC${result[0].location.timezone >= 0 ? `+${result[0].location.timezone}` : `${result[0].location.timezone}`}
+
+**__Forecast for ${result[0].forecast[0].day} ${date(result[0].forecast[0].date)}__**
+
+**Temperature Max/Min** : ${result[0].forecast[0].high}°C/${result[0].forecast[0].low}°C
+**Weather :** ${result[0].forecast[0].skytextday}
+**Rainfall :** ${result[0].forecast[0].precip !== "" ? `${result[0].forecast[0].precip}` : `0`}%
+
+**__Forecast for ${result[0].forecast[1].day} ${date(result[0].forecast[1].date)}__**
+
+**Temperature Max/Min** : ${result[0].forecast[1].high}°C/${result[0].forecast[1].low}°C
+**Weather :** ${result[0].forecast[1].skytextday}
+**Rainfall :** ${result[0].forecast[1].precip}%
+
+**__Forecast for ${result[0].forecast[2].day} ${date(result[0].forecast[2].date)}__**
+
+**Temperature Max/Min** : ${result[0].forecast[2].high}°C/${result[0].forecast[2].low}°C
+**Weather :** ${result[0].forecast[2].skytextday}
+**Rainfall :** ${result[0].forecast[2].precip}%
+
+**__Forecast for ${result[0].forecast[3].day} ${date(result[0].forecast[3].date)}__**
+
+**Temperature Max/Min** : ${result[0].forecast[3].high}°C/${result[0].forecast[3].low}°C
+**Weather :** ${result[0].forecast[3].skytextday}
+**Rainfall :** ${result[0].forecast[3].precip}%
+
+**__Forecast for ${result[0].forecast[4].day} ${date(result[0].forecast[0].date)}__**
+
+**Temperature Max/Min** : ${result[0].forecast[4].high}°C/${result[0].forecast[4].low}°C
+**Weather :** ${result[0].forecast[4].skytextday}
+**Rainfall :** ${result[0].forecast[4].precip}%`,
+			RPS_LYCOS_CHOICE: (choixO) => `Lycos's choice : ${choixO}`,
+			RPS_MATCH_EQUAL: `:flag_white: | Draw !`,
+			RPS_PLAYER_WIN: (message) => `:dagger: | Win of ${message.author.username} !`,
+			RPS_LYCOS_WIN: `:skull_crossbones: | Win of Lycos !`,
+			RPS_CHOICES: "Choose beetween `rock`, `paper` and `scissors`",
+			SUPPORT_NO_ARGS: "Please describe your problem with at least 10 caracters to 1900",
+			SUPPORT_QUESTION_SEND: "Your question was sent to support. Please wait an answer.",
+			PLAY_DESCRIPTION: "Plays music",
+			PLAY_USAGE: ".play [Music/Link]",
+			PLAY_EXAMPLES: ".play Younger Dreams",
+			PLAY_NO_VOICECHANNEL: "You must be in a voice channel to play music",
+			PLAY_BOT_CANT_CONNECT: "I can't connect to the channel, please check my permissions !",
+			PLAY_BOT_CANT_SPEAK: "I can't speak in the channel, please check my permissions !",
+			PLAY_NO_ARGS: "Please give a music to play",
+			ANSWER_UNKNOWN_ID: "This support ID isn't known",
+			ANSWER_SENT: (support) => `Your answer have been successfully sent.(${support.id} ended)`,
+			RELOAD_NO_COMMAND: "You must give a command to reload",
+			RELOAD_ERROR_UNLOADING: (response) => `Error unloading : ${response}`,
+			RELOAD_ERROR_LOADING: (response) => `Error loading : ${response}`,
+			RELOAD_COMMAND_RELOADED: (commandName) => `The command \`${commandName}\` has been reloaded`,
+			RELOAD_COMMAND_DOESNT_EXIST: (args) => `The command \`${args[0]}\` doesn't seem to exist. Try again!`
 		};
 	}
 	/**

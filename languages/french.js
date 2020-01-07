@@ -336,7 +336,7 @@ module.exports = class {
 
 **Température Max/Min** : ${result[0].forecast[0].high}°C/${result[0].forecast[0].low}°C
 **Météo :** ${result[0].forecast[0].skytextday}
-**Précipitations :** ${result[0].forecast[0].precip !== "" ? `${result[0].forecast[0].precip}` : `0`}%
+**Précipitaitons :** ${result[0].forecast[0].precip !== "" ? `${result[0].forecast[0].precip}` : `0`}%
 
 **__Prévisions du ${result[0].forecast[1].day} ${date(result[0].forecast[1].date)}__**
 
@@ -375,7 +375,7 @@ module.exports = class {
 			PLAY_BOT_CANT_CONNECT: "Je ne peux pas me connecter au salon, vérifiez que j'aie bien la permission requise !",
 			PLAY_BOT_CANT_SPEAK: "Je ne peux pas parler dans ce salon, vérifiez que j'aie bien la permission requise !",
 			PLAY_NO_ARGS: "Veuillez indiquer une musique à jouer",
-			ANSWER_UNKNOWN_ID: "C'est ID de support n'est pas connu",
+			ANSWER_UNKNOWN_ID: "Cet ID de support n'est pas connu",
 			ANSWER_SENT: (support) => `Votre réponse a été envoyée avec succès.(${support.id} terminé)`,
 			RELOAD_NO_COMMAND: "Vous devez indiquer une commande a reload",
 			RELOAD_ERROR_UNLOADING: (response) => `Erreur déchargement : ${response}`,
