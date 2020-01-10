@@ -381,7 +381,18 @@ module.exports = class {
 			RELOAD_ERROR_UNLOADING: (response) => `Error unloading : ${response}`,
 			RELOAD_ERROR_LOADING: (response) => `Error loading : ${response}`,
 			RELOAD_COMMAND_RELOADED: (commandName) => `The command \`${commandName}\` has been reloaded`,
-			RELOAD_COMMAND_DOESNT_EXIST: (args) => `The command \`${args[0]}\` doesn't seem to exist. Try again!`
+			RELOAD_COMMAND_DOESNT_EXIST: (args) => `The command \`${args[0]}\` doesn't seem to exist. Try again!`,
+			ERROR_CREATING_ROLE: "I couldn't create ``muted`` role. Please check my permissions!",
+			MUTE_DESCRIPTION: "Mute choosen member",
+			MUTE_USAGE: (prefix) => `${prefix}mute [@User or UserID] [Duration] [Reason]`,
+			MUTE_EXAMPLE: (prefix) => `${prefix}mute @Lycos 1d Spam emotes`,
+			MUTE_ERRORARGS : "Please give a member to mute!",
+			MUTE_NO_MUTETIME: "You havn't gave mute duration!",
+			MUTE_USER_ALREADY_MUTED: "This user is already muted!",
+			MUTE_UNMUTABLE: "This user can't be mute!",
+			MUTE_NOREASON: "you don't gave reason for the mute!",
+			MUTE_ERROR: "I can't mute because:",
+			MUTE_INFO: (member, message) => `${member} has been muted by ${message.author}`
 		};
 	}
 	/**

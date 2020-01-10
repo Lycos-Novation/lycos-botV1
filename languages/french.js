@@ -372,8 +372,8 @@ module.exports = class {
 			PLAY_USAGE: ".play [Musique/Lien]",
 			PLAY_EXAMPLES: ".play Younger Dreams",
 			PLAY_NO_VOICECHANNEL: "Vous devez être dans un salon vocal pour jouer de la musique",
-			PLAY_BOT_CANT_CONNECT: "Je ne peux pas me connecter au salon, vérifiez que j'aie bien la permission requise !",
-			PLAY_BOT_CANT_SPEAK: "Je ne peux pas parler dans ce salon, vérifiez que j'aie bien la permission requise !",
+			PLAY_BOT_CANT_CONNECT: "Je ne peux pas me connecter au salon, vérifiez que j'aie la permission requise !",
+			PLAY_BOT_CANT_SPEAK: "Je ne peux pas parler dans ce salon, vérifiez que j'aie la permission requise !",
 			PLAY_NO_ARGS: "Veuillez indiquer une musique à jouer",
 			ANSWER_UNKNOWN_ID: "Cet ID de support n'est pas connu",
 			ANSWER_SENT: (support) => `Votre réponse a été envoyée avec succès.(${support.id} terminé)`,
@@ -381,7 +381,18 @@ module.exports = class {
 			RELOAD_ERROR_UNLOADING: (response) => `Erreur déchargement : ${response}`,
 			RELOAD_ERROR_LOADING: (response) => `Erreur chargement : ${response}`,
 			RELOAD_COMMAND_RELOADED: (commandName) => `The command \`${commandName}\` has been reloaded`,
-			RELOAD_COMMAND_DOESNT_EXIST: (args) => `The command \`${args[0]}\` doesn't seem to exist. Try again!`
+			RELOAD_COMMAND_DOESNT_EXIST: (args) => `The command \`${args[0]}\` doesn't seem to exist. Try again!`,
+			ERROR_CREATING_ROLE: "Je n'ai pas pu créer le rôle ``muted``. Vérifiez que j'aie la permission requise !",
+			MUTE_DESCRIPTION: "Mute le membre choisi",
+			MUTE_USAGE: (prefix) => `${prefix}mute [@User ou UserID] [Durée] [Raison]`,
+			MUTE_EXAMPLE: (prefix) => `${prefix}mute @Lycos 1d Spam emotes`,
+			MUTE_ERRORARGS : "Merci d'indiquer un utilisateur à mute !",
+			MUTE_NO_MUTETIME: "Tu n'as pas spécifié de temps !",
+			MUTE_USER_ALREADY_MUTED: "Cet utilisateur est déjà mute !",
+			MUTE_UNMUTABLE: "Cet utilisateur ne peut pas être mute !",
+			MUTE_NOREASON: "Tu n'as pas indiqué de raison au mute !",
+			MUTE_ERROR: "Je n'ai pas pu mute car :",
+			MUTE_INFO: (member, message) => `${member} a été mute par ${message.author}`
 		};
 		function date(date1){
 			let d = date1.split("-");
