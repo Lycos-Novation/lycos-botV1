@@ -393,7 +393,11 @@ module.exports = class {
 			MUTE_NOREASON: "Tu n'as pas indiqué de raison au mute !",
 			MUTE_ERROR: "Je n'ai pas pu mute car :",
 			MUTE_INFO: (member, message) => `${member} a été mute par ${message.author}`,
-			MUTE_USER_MESSAGE: (message, muteTime, reason) => `Yo ! Tu es désormais mute sur **${message.guild.name}** pour **${reason}** pendant **${muteTime}**.`
+			MUTE_USER_MESSAGE: (message, muteTime, reason) => `Yo ! Tu es désormais mute sur **${message.guild.name}** pour **${reason}** pendant **${muteTime}**.`,
+			UNMUTE_USER_NOT_MUTED: "Ce membre n'est pas mute !",
+			UNMUTE_SUCCESS: (member) => `${member} a été unmute avec succès !`,
+			UNMUTE_USER_SUCCESS: (message) => `Tu as été unmute de **${message.guild.name}**, désolé du dérangement !`,
+			UNMUTE_ERROR: "Je n'ai pas pu unmute car :"
 		};
 		function date(date1){
 			let d = date1.split("-");
