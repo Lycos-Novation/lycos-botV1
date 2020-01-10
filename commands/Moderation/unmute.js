@@ -4,9 +4,9 @@ class unmute extends Command {
     constructor(client) {
         super(client, {
             name: "mute",
-            description: (language) => language.get("MUTE_DESCRIPTION"),
-            usage: (language, prefix) => language.get("MUTE_USAGE", prefix),
-            examples: (language, prefix) => language.get("MUTE_EXAMPLE", prefix),
+            description: (language) => language.get("UNMUTE_DESCRIPTION"),
+            usage: (language, prefix) => language.get("UNMUTE_USAGE", prefix),
+            examples: (language, prefix) => language.get("UNMUTE_EXAMPLE", prefix),
             dirname: __dirname,
             enabled: true,
             guildOnly: true,
