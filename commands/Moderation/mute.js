@@ -53,6 +53,7 @@ class mute extends Command {
                 if (!member.bannable) return message.channel.send(message.language.get("MUTE_UNMUTABLE"));
 
                 await member.addRole(muteRole.id)
+                        .then(member.send(message.language.get("MUTE_USER_MESSAGE", message, muteTime, reason)))
                         .catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("MUTE_ERROR")} ${error}`));
                     setTimeout(function () {
                         member.removeRole(muteRole.id)
