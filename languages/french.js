@@ -400,7 +400,10 @@ module.exports = class {
 			UNMUTE_ERROR: "Je n'ai pas pu unmute car :",
 			UNMUTE_DESCRIPTION: "Unmute le membre choisi",
 			UNMUTE_USAGE: (prefix) => `${prefix}unmute [@User ou UserID]`,
-			UNMUTE_EXAMPLE: (prefix) => `${prefix}unmute @Lycos`
+			UNMUTE_EXAMPLE: (prefix) => `${prefix}unmute @Lycos`,
+			CLEAR_DESCRIPTION: "Supprime tous les message visibles dans le salon",
+			CLEAR_USAGE: (prefix) => `${prefix}clear`,
+			CLEAR_EXAMPLE: (prefix) => `${prefix}clear`
 		};
 		function date(date1){
 			let d = date1.split("-");

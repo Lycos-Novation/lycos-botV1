@@ -400,7 +400,10 @@ module.exports = class {
 			UNMUTE_ERROR: "I can't unmute because:",
 			UNMUTE_DESCRIPTION: "Unmute choosen member",
 			UNMUTE_USAGE: (prefix) => `${prefix}unmute [@User or UserID]`,
-			UNMUTE_EXAMPLE: (prefix) => `${prefix}unmute @Lycos`
+			UNMUTE_EXAMPLE: (prefix) => `${prefix}unmute @Lycos`,
+			CLEAR_DESCRIPTION: "Deletes all visible messages in the channel",
+			CLEAR_USAGE: (prefix) => `${prefix}clear`,
+			CLEAR_EXAMPLE: (prefix) => `${prefix}clear`
 		};
 	}
 	/**
