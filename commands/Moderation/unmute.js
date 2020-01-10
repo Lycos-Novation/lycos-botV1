@@ -34,6 +34,12 @@ class unmute extends Command {
                     else return message.channel.send(message.language.get("ERROR_MUCH_USER_FOUND"));
                 }
                 let muteRole = message.guild.roles.find(m => m.name === 'muted');
+                if(!muteRole){
+                    await message.guild.createRole({
+                        name: 'muted',
+                    }).catch(message.language.get("ERROR_CREATING_ROLE"));
+                    muteRole = message.guild.roles.find(m => m.name === 'muted')
+                }
                 if (!member.roles.some(r => r.name === 'muted')) return message.channel.send(message.language.get("UNMUTE_USER_NOT_MUTED"));
                 await member.removeRole(muteRole.id)
                     .then(r => {
