@@ -397,7 +397,10 @@ module.exports = class {
 			UNMUTE_USER_NOT_MUTED: "Ce membre n'est pas mute !",
 			UNMUTE_SUCCESS: (member) => `${member} a été unmute avec succès !`,
 			UNMUTE_USER_SUCCESS: (message) => `Tu as été unmute de **${message.guild.name}**, désolé du dérangement !`,
-			UNMUTE_ERROR: "Je n'ai pas pu unmute car :"
+			UNMUTE_ERROR: "Je n'ai pas pu unmute car :",
+			UNMUTE_DESCRIPTION: "Unmute le membre choisi",
+			UNMUTE_USAGE: (prefix) => `${prefix}unmute [@User ou UserID]`,
+			UNMUTE_EXAMPLE: (prefix) => `${prefix}unmute @Lycos`
 		};
 		function date(date1){
 			let d = date1.split("-");

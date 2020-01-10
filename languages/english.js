@@ -393,11 +393,14 @@ module.exports = class {
 			MUTE_NOREASON: "you don't gave reason for the mute!",
 			MUTE_ERROR: "I can't mute because:",
 			MUTE_INFO: (member, message) => `${member} has been muted by ${message.author}`,
-			MUTE_USER_MESSAGE: (message, muteTime, reason) => `Hey! You are now muted on **${message.guild.name}** for **${reason}** during **${muteTime}**.`
+			MUTE_USER_MESSAGE: (message, muteTime, reason) => `Hey! You are now muted on **${message.guild.name}** for **${reason}** during **${muteTime}**.`,
 			UNMUTE_USER_NOT_MUTED: "This member isn't muted",
 			UNMUTE_SUCCESS: (member) => `${member} has been successfully unmuted!`,
 			UNMUTE_USER_SUCCESS: (message) => `You have been unmuted from **${message.guild.name}**!`,
-			UNMUTE_ERROR: "I can't unmute because:"
+			UNMUTE_ERROR: "I can't unmute because:",
+			UNMUTE_DESCRIPTION: "Unmute choosen member",
+			UNMUTE_USAGE: (prefix) => `${prefix}unmute [@User or UserID]`,
+			UNMUTE_EXAMPLE: (prefix) => `${prefix}unmute @Lycos`
 		};
 	}
 	/**
