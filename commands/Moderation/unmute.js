@@ -3,7 +3,7 @@ const Command = require("../../base/Command.js");
 class unmute extends Command {
     constructor(client) {
         super(client, {
-            name: "mute",
+            name: "unmute",
             description: (language) => language.get("UNMUTE_DESCRIPTION"),
             usage: (language, prefix) => language.get("UNMUTE_USAGE", prefix),
             examples: (language, prefix) => language.get("UNMUTE_EXAMPLE", prefix),
