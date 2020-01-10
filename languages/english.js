@@ -392,7 +392,8 @@ module.exports = class {
 			MUTE_UNMUTABLE: "This user can't be mute!",
 			MUTE_NOREASON: "you don't gave reason for the mute!",
 			MUTE_ERROR: "I can't mute because:",
-			MUTE_INFO: (member, message) => `${member} has been muted by ${message.author}`
+			MUTE_INFO: (member, message) => `${member} has been muted by ${message.author}`,
+			MUTE_USER_MESSAGE: (message, muteTime, reason) => `Hey! You are now muted on **${message.guild.name}** for **${reason}** during **${muteTime}**.`
 		};
 	}
 	/**
