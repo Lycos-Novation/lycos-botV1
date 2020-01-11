@@ -6,6 +6,7 @@ const { promisify } = require("util"),
 	readdir = promisify(fs.readdir);
 const Enmap = require("enmap");
 const { Provider, Client: PictURLClient } = require("pict-url");
+const { GiveawaysManager } = require("discord-giveaways");
 const manager = new GiveawaysManager(Client, {
             storage: "./giveaways.json",
             updateCountdownEvery: 15000,
