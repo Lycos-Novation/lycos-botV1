@@ -4,9 +4,9 @@ class roleMention extends Command {
     constructor(client) {
         super(client, {
             name: "rolemention",
-            description: (language) => language.get("USERINFO_DESCRIPTION"),
-            usage: (language, prefix) => language.get("USERINFO_USAGE", prefix),
-            examples: (language, prefix) => language.get("USERINFO_EXAMPLES", prefix),
+            description: (language) => language.get("ROLEMENTION_DESCRIPTION"),
+            usage: (language, prefix) => language.get("ROLEMENTION_USAGE", prefix),
+            examples: (language, prefix) => language.get("ROLEMENTION_EXAMPLES", prefix),
             dirname: __dirname,
             enabled: true,
             guildOnly: true,
