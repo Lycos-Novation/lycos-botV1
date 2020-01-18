@@ -402,7 +402,16 @@ module.exports = class {
             ROLEMENTION_USAGE: (prefix) => `${prefix}rolemention [ID/Nom]`,
             ROLEMENTION_EXAMPLES: (prefix) => `${prefix}rolemention 627956962008629279\n${prefix}rolemention Developers`,
             ROLEMENTION_ROLE_NOT_FOUND: "Aucun rôle trouvé",
-            ROLEMENTION_ROLE_HIGHEST: "Ce rôle est supérieur au mien, je ne peux donc pas le mentionner."
+            ROLEMENTION_ROLE_HIGHEST: "Ce rôle est supérieur au mien, je ne peux donc pas le mentionner.",
+			EMOTES_DESCRIPTION: "Donne la liste des emojis du serveur",
+			EMOTES_USAGE: (prefix) => `${prefix}emotes`,
+			EMOTES_EXAMPLES: (prefix) => `${prefix}emotes`,
+			EMOTES_TITLE: "Liste des émojis du serveur",
+			EMOTES_TITLES: [
+				"Émojis",
+				"Émojis animés"
+			],
+			EMOTES_DESC: (message) => `Le serveur possède actuellement **${message.guild.emojis.size}** émojis :`,
 		};
 		function date(date1){
 			let d = date1.split("-");

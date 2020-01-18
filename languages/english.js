@@ -408,7 +408,16 @@ module.exports = class {
 			ROLEMENTION_USAGE: (prefix) => `${prefix}rolemention [ID/Name]`,
 			ROLEMENTION_EXAMPLES: (prefix) => `${prefix}rolemention 627956962008629279\n${prefix}rolemention Developers`,
             ROLEMENTION_ROLE_NOT_FOUND: "Role not found",
-            ROLEMENTION_ROLE_HIGHEST: "This role is highest than mine, so I can't mention it."
+            ROLEMENTION_ROLE_HIGHEST: "This role is highest than mine, so I can't mention it.",
+			EMOTES_DESCRIPTION: "Gives the server emotes's list",
+			EMOTES_USAGE: (prefix) => `${prefix}emotes`,
+			EMOTES_EXAMPLES: (prefix) => `${prefix}emotes`,
+			EMOTES_TITLE: "emotes list",
+			EMOTES_TITLES: [
+				"Emotes",
+				"Animated emotes"
+			],
+			EMOTES_DESC: (message) => `The server have **${message.guild.emojis.size}** emotes :`,
 		};
 	}
 	/**
