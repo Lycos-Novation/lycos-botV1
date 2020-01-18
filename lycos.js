@@ -6,19 +6,19 @@ const { promisify } = require("util"),
 	readdir = promisify(fs.readdir);
 const Enmap = require("enmap");
 const { Provider, Client: PictURLClient } = require("pict-url");
-// Init discord giveaways
-const { GiveawaysManager } = require('discord-giveaways');
-client.giveawaysManager = new GiveawaysManager(client, {
-    storage: "./giveaways.json",
-    updateCountdownEvery: 5000,
-    default: {
-        botsCanWin: false,
-        exemptPermissions: [ "MANAGE_MESSAGES", "ADMINISTRATOR" ],
-        embedColor: "#FF0000",
-        reaction: "🎉"
-    }
+const { GiveawaysManager } = require("discord-giveaways");
+const manager = new GiveawaysManager(Client, {
+	storage: "./giveaways.json",
+	updateCountdownEvery: 15000,
+	default: {
+		botsCanWin: false,
+		exemptPermissions: [],
+		embedColor: "#1A61BB",
+		embedColorEnd: "#262626",
+		reaction: "🎉",
+	}
 });
-
+this.giveawaysManager = manager;
 /**
  * @class Lycos
  * @extends {Client}
