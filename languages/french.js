@@ -398,6 +398,9 @@ module.exports = class {
 			CLEAR_DESCRIPTION: "Supprime tous les message visibles dans le salon",
 			CLEAR_USAGE: (prefix) => `${prefix}clear`,
 			CLEAR_EXAMPLE: (prefix) => `${prefix}clear`,
+            ROLEMENTION_DESCRIPTION: "Mentionne le rôle demandé",
+            ROLEMENTION_USAGE: (prefix) => `${prefix}rolemention [ID/Nom]`,
+            ROLEMENTION_EXAMPLES: (prefix) => `${prefix}rolemention 627956962008629279\n${prefix}rolemention Developers`,
             ROLEMENTION_ROLE_NOT_FOUND: "Aucun rôle trouvé",
             ROLEMENTION_ROLE_HIGHEST: "Ce rôle est supérieur au mien, je ne peux donc pas le mentionner."
 		};

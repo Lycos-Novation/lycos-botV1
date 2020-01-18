@@ -403,7 +403,12 @@ module.exports = class {
 			UNMUTE_EXAMPLE: (prefix) => `${prefix}unmute @Lycos`,
 			CLEAR_DESCRIPTION: "Deletes all visible messages in the channel",
 			CLEAR_USAGE: (prefix) => `${prefix}clear`,
-			CLEAR_EXAMPLE: (prefix) => `${prefix}clear`
+			CLEAR_EXAMPLE: (prefix) => `${prefix}clear`,
+			ROLEMENTION_DESCRIPTION: "Mention choosen role",
+			ROLEMENTION_USAGE: (prefix) => `${prefix}rolemention [ID/Name]`,
+			ROLEMENTION_EXAMPLES: (prefix) => `${prefix}rolemention 627956962008629279\n${prefix}rolemention Developers`,
+            ROLEMENTION_ROLE_NOT_FOUND: "Role not found",
+            ROLEMENTION_ROLE_HIGHEST: "This role is highest than mine, so I can't mention it."
 		};
 	}
 	/**
