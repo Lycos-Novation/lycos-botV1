@@ -41,7 +41,7 @@ class giveaway extends Command {
                 let messageID = args[1];
                 if (!messageID) return message.channel.send(message.language.get("GIVEAWAY_ERR_NO_ID"));
                 let newWinners = parseInt(args[2]);
-                if (!newWinners) return message.channel.send(message.langugae.get("GIVEAWAY_NO_WINNERCOUNT"));
+                if (!newWinners) return message.channel.send(message.language.get("GIVEAWAY_NO_WINNERCOUNT"));
                 let newTime = args[3];
                 if (!newTime) return message.channel.send(message.channel.get("GIVEAWAY_NO_NEWTIME"));
                 let newPrize = args.slice(4).join(" ");
