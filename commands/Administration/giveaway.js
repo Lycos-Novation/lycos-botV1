@@ -23,14 +23,14 @@ class giveaway extends Command {
             let method = args[0].toLowerCase();
             if (!method) return message.channel.send(message.language.get("GIVEAWAY_NO_METHOD", message.settings.prefix));
             if (method === "start"){
-                let time = ms(args[1]);
+                let time = args[1];
                 if (!time) return message.channel.send(message.language.get("GIVEAWAY_NO_TIME"));
                 let winnersCount = parseInt(args[2]);
                 if (!winnersCount) return message.channel.send(message.language.get("GIVEAWAY_NO_WINNERCOUNT"));
                 let prize = args.slice(3).join(" ");
                 if (!prize) return message.channel.send(message.language.get("GIVEAWAY_NO_PRIZE"));
                 this.giveawaysManager.start(message.channel, {
-                    time: time,
+                    time: ms(time),
                     prize: prize,
                     winnerCount: winnersCount,
                     messages: message.language.get("GIVEAWAY_CREATE_MESSAGES")
@@ -42,13 +42,13 @@ class giveaway extends Command {
                 if (!messageID) return message.channel.send(message.language.get("GIVEAWAY_ERR_NO_ID"));
                 let newWinners = parseInt(args[2]);
                 if (!newWinners) return message.channel.send(message.langugae.get("GIVEAWAY_NO_WINNERCOUNT"));
-                let newTime = ms(args[3]);
+                let newTime = args[3];
                 if (!newTime) return message.channel.send(message.channel.get("GIVEAWAY_NO_NEWTIME"));
                 let newPrize = args.slice(4).join(" ");
                 this.giveawaysManager.edit(messageID, {
                     newWinnerCount: newWinners,
                     newPrize: newPrize,
-                    addTime: newTime
+                    addTime: ms(newTime)
                 }).catch((err) => {
                     message.channel.send(message.language.get("GIVEAWAY_ERR_MESSAGE_NOT_FOUND"));
                 });
