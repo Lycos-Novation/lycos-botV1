@@ -125,7 +125,7 @@ module.exports = class {
 				"Administration",
 				"Lycos",
 				"Divertissement",
-				"Générale",
+				"Général",
 				"Modération",
 				"Musique",
 			],
