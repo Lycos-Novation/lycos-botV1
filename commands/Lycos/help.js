@@ -72,8 +72,8 @@ class Help extends Command {
 						value: message.bot.commands.filter((filters) => filters.help.category === "Administration").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
-						name: `${message.config.emotes.denver} ${message.language.get("HELPGLOBAL_FIELDS")[1]} (${message.bot.commands.filter((filters) => filters.help.category === "Denver").size})`,
-						value: message.bot.commands.filter((filters) => filters.help.category === "Denver").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
+						name: `${message.config.emotes.lycos} ${message.language.get("HELPGLOBAL_FIELDS")[1]} (${message.bot.commands.filter((filters) => filters.help.category === "Lycos").size})`,
+						value: message.bot.commands.filter((filters) => filters.help.category === "Lycos").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
 						name: `${message.config.emotes.fun} ${message.language.get("HELPGLOBAL_FIELDS")[2]} (${message.bot.commands.filter((filters) => filters.help.category === "Fun").size})`,
