@@ -1,5 +1,5 @@
 module.exports = {
-	token: "",
+	token: "NjYyNzAxNjM1NjA0MDU0MDI5.Xg9zBg.87COxOo7dQvmfnva25AjbUVuECg",
 	defaultLanguage: "english",
 	prefix: ".",
 	clientModules: {
@@ -69,4 +69,10 @@ module.exports = {
 		color: 0x7289DA,
 		footer: "Lycos Novation Bot",
 	},
+	defaultSettingsProject: {
+		desc: "Aucune description fournie.",
+		members: ["Aucun membre n'a été ajouté au projet."],
+		tasks: ["Aucune tâche n'a été ajoutée au projet."],
+		done: ["Aucune tâche n'a été terminée."]
+	}
 };

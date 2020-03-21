@@ -1,5 +1,4 @@
-const DBL = require("dblapi.js");
-
+const { GiveawaysManager } = require("discord-giveaways");
 module.exports = class {
 	constructor(client) {
 		this.client = client;
@@ -11,7 +10,6 @@ module.exports = class {
 		if(!client.user.bot) {
 			return process.exit(1);
 		}
-
 		// Logs some information using the logger file
 		console.log(`[Commands] - Loading a total of ${client.commands.size} command(s).`);
 		client.logger.log(`${client.user.tag}. On ${client.guilds.size} server(s).`, "ready");
@@ -39,15 +37,18 @@ module.exports = class {
 			if(games[parseInt(i + 1)]) {i++;}
 			else {i = 0;}
 		}, 35000);
-		if(client.config.apiTokens.dbl) {
-			const dbl = new DBL(client.config.apiTokens.dbl, client);
-			setInterval(async () => {
-				Promise.all([ await client.shard.broadcastEval("this.guilds.size") ]).then((results) => {
-					const totalGuilds = results[0].reduce((prev, guildCount) => prev + guildCount, 0);
-					// Post DBL stats
-					return dbl.postStats(totalGuilds);
-				});
-			}, 999000);
-		}
+		client.mongoose = require('../utils/mongoose');
+		client.mongoose.init();
+		this.giveawaysManager = new GiveawaysManager(client, {
+			storage: "./giveaways.json",
+			updateCountdownEvery: 15000,
+			default: {
+				botsCanWin: false,
+				exemptPermissions: [],
+				embedColor: "#1A61BB",
+				embedColorEnd: "#262626",
+				reaction: "🎉",
+			}
+		});
 	}
 };
