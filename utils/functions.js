@@ -118,6 +118,11 @@ module.exports = {
 			});
 	},
 
+	async delProject(project){
+		console.log(`Projet ${project} supprimé.`)
+		return Project.deleteOne({name : project})
+	},
+
 	async updateProject(project, settings){
 		let data = await getProject(project);
 

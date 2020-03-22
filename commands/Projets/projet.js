@@ -97,12 +97,12 @@ class Projet extends Command {
                     collector.on('collect', async(r) => {
                         console.log(r.emoji.name);
                         if (r.emoji.name === "✅"){
-                            await message.channel.send(`Projet \`\`${name}\`\` créé.`);
                             const newProject = {
                                 name: name,
                                 lead: mess.author.tag
                             };
                             await message.bot.functions.createProject(newProject);
+                            return message.channel.send(`Projet \`\`${name}\`\` créé.`);
                         }
                         if (r.emoji.name === "❌"){
                             await message.channel.send("Annulation...");
@@ -113,24 +113,25 @@ class Projet extends Command {
         }
 
         async function del(message){
+            let mID = message.author.id;
             await message.channel.send("Répondez avec le nom du projet à supprimer");
             const responseFilter = m => m.author.id === mID;
             const response = await message.channel.awaitMessages(responseFilter, {max: 1})
                 .then();
-            const name = response.first().content;
+            let name = response.first().content;
             if(name === "stop"){
                 return message.channel.send("Commande annulée");
             }
-            let projet = message.bot.functions.getProject(name);
+            let projet = await message.bot.functions.getProject(name);
             if(name !== projet.name){
                 return message.channel.send("Projet introuvable, vérifiez le nom du projet et réessayez");
             }
-            if(message.author !== projet.lead){
+            if(message.author.tag !== projet.lead){
                 return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
             }
             message.channel.send(`Vous avez choisi le projet \`\`${name}\`\`. Êtes-vous sûr de vouloir supprimer ce projet ?
-            ⚠️ **__Cette action est définitive et irréversible ! En cliquant sur ✅, vous supprimerez ce projet, il sera impossible de le récupérer.__**
-            Pour annuler la commande cliquez sur ❌.`)
+⚠️ **__Cette action est définitive et irréversible ! En cliquant sur ✅, vous supprimerez ce projet, il sera impossible de le récupérer.__**
+Pour annuler la commande cliquez sur ❌.`)
             .then(async (msg) => {
                 await msg.react("✅");
                 await msg.react("❌");
@@ -143,12 +144,8 @@ class Projet extends Command {
                 collector.on('collect', async(r) => {
                     console.log(r.emoji.name);
                     if (r.emoji.name === "✅"){
+                        message.bot.functions.delProject(name);
                         await message.channel.send(`Projet \`\`${name}\`\` supprimé.`);
-                        const newProject = {
-                            name: name,
-                            lead: mess.author.tag
-                        };
-                        await message.bot.functions.createProject(newProject);
                     }
                     if (r.emoji.name === "❌"){
                         return message.channel.send("Commande annulée");
