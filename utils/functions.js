@@ -1,3 +1,6 @@
+const {Project} = require('../models');
+const mongoose = require('mongoose');
+const config = require('../config');
 module.exports = {
 	/**
 	 * Gets channel settings
@@ -95,7 +98,7 @@ module.exports = {
 
 	/**
 	 * Fetch user by their ID or their username
-	 * @returns A map of users found with search arguments
+	 * @returns string map of users found with search arguments
 	 * @param date
 	 */
 	checkDays(date) {
@@ -103,5 +106,37 @@ module.exports = {
 		const diff = now.getTime() - date.getTime();
 		const days = Math.floor(diff / 86400000);
 		return days + (days === 1 ? " day" : " days") + " ago)";
+	},
+
+	async createProject(settings){
+		let merged = Object.assign({_id: mongoose.Types.ObjectId() }, settings);
+
+		const newProject = await new Project(merged);
+		return newProject.save()
+			.then(p => {
+				console.log(`Nouveau projet ${p.name} créé avec succès.`)
+			});
+	},
+
+	async updateProject(project, settings){
+		let data = await getProject(project);
+
+		if (typeof data !== 'object') data = {};
+		for (const key in settings) {
+			if (settings.hasOwnProperty(key)) {
+				if (data[key] !== settings[key]) data[key] = settings[key];
+				else return;
+			}
+		}
+		console.log(`Projet \`\`${data.name}\`\` - Modifications : \`\`${Object.keys(settings)}\`\``);
+		return await data.updateOne(settings);
+	},
+
+	async getProject(project){
+		var data = await Project.findOne({ name: project});
+		if(!data){
+			data = config.defaultSettingsProject;
+		}
+		return data;
 	},
 };

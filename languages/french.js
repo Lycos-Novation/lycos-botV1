@@ -419,17 +419,6 @@ module.exports = class {
             MEMBERCOUNT_MEMBERS: "membres",
             MEMBERCOUNT_UNVALID_METHOD: "Je n'ai pas compris dans quoi vous souhaitez faire apparaître votre compteur : channel/category",
             MEMBERCOUNT_CHANNEL_EXISTS: (salon) => `Le compteur de membres est déjà présent sur le serveur : ${salon.type === "category" ? `catégorie ${salon.name}`: `<#${salon.id}>`}`,
-			PROJECT_DESCRPTION: "Gestionnaire de projet projets",
-			PROJET_USAGE: (prefix) => `${prefix}projet [delete/member/task/NomDeProjet/change/list]`,
-			PROJET_EXAMPLES: (prefix) => `${prefix}$projet create\n ${prefix}projet delete\n${prefix}projet member\n${prefix}projet task\n${prefix}projet [NomDeProjet]\n${prefix}projet change\n${prefix}projet list`,
-			PROJECT_TITLE: "Gestionnaire de projet",
-			PROJECT_DESC: (prefix) => `\`\`${prefix}projet create\`\` : Crée un projet.
-\`\`${prefix}projet delete\`\` : Supprime un projet.
-\`\`${prefix}projet member\`\` : Permet de gérer les membres d'un projet.
-\`\`${prefix}projet task\`\` : Permet de gérer les tâches du projet.
-\`\`${prefix}projet [NomDeProjet]\`\` : Affiche un récap du projet.
-\`\`${prefix}projet change\`\` : Permet de modifier les éléments du projet.
-\`\`${prefix}projet list\`\` : Affiche la liste des projets.`,
         };
 		function date(date1){
 			let d = date1.split("-");

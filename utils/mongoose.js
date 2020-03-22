@@ -8,9 +8,12 @@ module.exports = {
             poolSize: 5,
             connectTimeoutMS: 10000,
             family:4,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            authSource: "admin",
+            user: "LePtitMetalleux",
+            pass: "lapin49160"
         };
-        mongoose.connect('mongodb://127.0.0.1:27017/LycosTest', dbOptions);
+        mongoose.connect('mongodb://LePtitMetalleux:lapin49160@127.0.0.1:27017/LycosTest', dbOptions);
         mongoose.set('useFindAndModify', false);
         mongoose.Promise = global.Promise;
 

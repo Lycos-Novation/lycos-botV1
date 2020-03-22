@@ -1,5 +1,5 @@
 module.exports = {
-	token: "NjYyNzAxNjM1NjA0MDU0MDI5.Xg9zBg.87COxOo7dQvmfnva25AjbUVuECg",
+	token: "NjYyNzAxNjM1NjA0MDU0MDI5.Xnc-eg.mQPL0CKgAFa60-UPDgJL30h0rRg",
 	defaultLanguage: "english",
 	prefix: ".",
 	clientModules: {
@@ -73,6 +73,6 @@ module.exports = {
 		desc: "Aucune description fournie.",
 		members: ["Aucun membre n'a été ajouté au projet."],
 		tasks: ["Aucune tâche n'a été ajoutée au projet."],
-		done: ["Aucune tâche n'a été terminée."]
+		done: ["Aucune tâche n'a été terminée."],
 	}
 };
