@@ -19,7 +19,7 @@ class Projet extends Command {
     async run(message, args) {
         try {
             if(!args[0]){
-               return message.channel.send({
+                return message.channel.send({
                    embed: {
                        color: message.config.embed.color,
                        author: {
@@ -62,6 +62,12 @@ class Projet extends Command {
             if(args[0] === 'delete'){
                 return await del(message)
             }
+            if(args[0] === 'list'){
+                //Faire système de pages avec réactions si trop de projets
+            }
+            if(args[0] === 'member'){
+                return await member(message);
+            }
 
         } catch(error) {
             console.error(error);
@@ -82,7 +88,11 @@ class Projet extends Command {
                 return message.channel.send("Création de projet annulée.");
             }
             if(name.toLowerCase() === "create" || name.toLowerCase() === "delete" || name.toLowerCase() === "member" || name.toLowerCase() === "task" || name.toLowerCase() === "[nomdeprojet]" || name.toLowerCase() === "change" || name.toLowerCase() === "list"){
-                return message.channel.send("Vous ne pouvez pas nommer votre projet ainsi. Veuillez en choisir un autre.")
+                return message.channel.send("Ce nom est réservé pour autre chose. Veuillez en choisir un autre.")
+            }
+            let projet = await message.bot.functions.getProject(name);
+            if(name === projet.name){
+                return message.channel.send("Ce nom est dejà utilisé par un autre projet. Veuillez en choisir un autre.");
             }
             message.channel.send(`Vous avez choisi \`\`${name}\`\` comme nom de projet. Validez ce nom avec les réactions ci dessous.`)
                 .then(async (msg) => {
@@ -152,6 +162,89 @@ Pour annuler la commande cliquez sur ❌.`)
                     }
                 });
             });
+        }
+
+        async function member(message){
+            let mID = message.author.id;
+            await message.channel.send("Répondez avec le nom du projet à modifier");
+            var responseFilter = m => m.author.id === mID;
+            var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                .then();
+            let name = response.first().content;
+            if(name === "stop"){
+                return message.channel.send("Commande annulée");
+            }
+            let projet = await message.bot.functions.getProject(name);
+            if(name !== projet.name){
+                return message.channel.send("Projet introuvable, vérifiez le nom du projet et réessayez");
+            }
+            if(message.author.tag !== projet.lead){
+                return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
+            }
+            await message.channel.send("Que voulez vous faire ? Répondez avec \`\`add\`\` ou \`\`remove\`\`");
+            var responseFilter = m => m.author.id === mID;
+            var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                .then();
+            let method = response.first().content;
+            if(method === "stop"){
+                return message.channel.send("Commande annulée");
+            }
+            if(method === "add"){
+                await message.channel.send("Quel membre voulez-vous ajouter au projet ? Répondez avec son ID.");
+                var responseFilter = m => m.author.id === mID;
+                var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                    .then();
+                let member = message.guild.member(message.guild.members.resolve(response.first().content) || message.guild.members.resolveID(response.first().content));
+                message.channel.send(`Êtes-vous sûr de vouloir ajouter ${member} ? Confirmez avec les réactions`)
+            .then(async (msg) => {
+                await msg.react("✅");
+                await msg.react("❌");
+                // On attend que la personne réagisse
+                var filter = (reaction, user) => user.id === mID;
+                var collector = msg.createReactionCollector(filter, {
+                    max: 1,
+                    maxUsers: 1
+                });
+                collector.on('collect', async(r) => {
+                    console.log(r.emoji.name);
+                    if (r.emoji.name === "✅"){
+                        await message.bot.functions.updateProject(message, name, { $push: {members: member}});
+                        return message.channel.send(`${member} a été ajouté au projet`);
+                    }
+                    if (r.emoji.name === "❌"){
+                        return message.channel.send("Commande annulée");
+                    }
+                });
+            });
+            }
+            if(method === "remove"){
+                await message.channel.send("Quel membre voulez-vous retirer du projet ? Répondez avec son ID.");
+                var responseFilter = m => m.author.id === mID;
+                var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                    .then();
+                    let member = message.guild.member(message.guild.members.resolve(response.first().content) || message.guild.members.resolveID(response.first().content));
+                message.channel.send(`Êtes-vous sûr de vouloir enlever ${member} ? Confirmez avec les réactions`)
+            .then(async (msg) => {
+                await msg.react("✅");
+                await msg.react("❌");
+                // On attend que la personne réagisse
+                var filter = (reaction, user) => user.id === mID;
+                var collector = msg.createReactionCollector(filter, {
+                    max: 1,
+                    maxUsers: 1
+                });
+                collector.on('collect', async(r) => {
+                    console.log(r.emoji.name);
+                    if (r.emoji.name === "✅"){
+                        await message.bot.functions.updateProject(message, name, { $pull: {members: member}});
+                        return message.channel.send(`${member} a été retiré du projet`);
+                    }
+                    if (r.emoji.name === "❌"){
+                        return message.channel.send("Commande annulée");
+                    }
+                });
+            });
+            }
         }
     }
 }

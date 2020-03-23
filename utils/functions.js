@@ -123,8 +123,16 @@ module.exports = {
 		return Project.deleteOne({name : project})
 	},
 
-	async updateProject(project, settings){
-		let data = await getProject(project);
+	async getProject(project){
+		var data = await Project.findOne({ name: project});
+		if(!data){
+			data = config.defaultSettingsProject;
+		}
+		return data;
+	},
+
+	async updateProject(message, project, settings){
+		let data = await message.bot.functions.getProject(project);
 
 		if (typeof data !== 'object') data = {};
 		for (const key in settings) {
@@ -133,15 +141,9 @@ module.exports = {
 				else return;
 			}
 		}
-		console.log(`Projet \`\`${data.name}\`\` - Modifications : \`\`${Object.keys(settings)}\`\``);
+		console.log(`Projet ${data.name} - Modifications : ${Object.keys(settings)}`);
 		return await data.updateOne(settings);
 	},
 
-	async getProject(project){
-		var data = await Project.findOne({ name: project});
-		if(!data){
-			data = config.defaultSettingsProject;
-		}
-		return data;
-	},
+	
 };
