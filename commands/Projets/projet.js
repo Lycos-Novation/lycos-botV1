@@ -68,6 +68,9 @@ class Projet extends Command {
             if(args[0] === 'member'){
                 return await member(message);
             }
+            if(args[0] === 'task'){
+                return await task(message);
+            }
 
         } catch(error) {
             console.error(error);
@@ -245,6 +248,122 @@ Pour annuler la commande cliquez sur ❌.`)
                 });
             });
             }
+        }
+
+        async function task(message){
+            let mID = message.author.id;
+            await message.channel.send('Répondez avec le nom du projet à modifier');
+            var responseFilter = m => m.author.id === mID;
+                var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                    .then();
+            let name = response.first().content;
+            if(name === "stop"){
+                return message.channel.send("Commande annulée");
+            }
+            let projet = await message.bot.functions.getProject(name);
+            if(name !== projet.name){
+                return message.channel.send("Projet introuvable, vérifiez le nom du projet et réessayez");
+            }
+            if(message.author.tag !== projet.lead){
+                return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
+            }
+            await message.channel.send("Que voulez vous faire ? Répondez avec \`\`add\`\`, \`\`done\`\` ou \`\`remove\`\`");
+            var responseFilter = m => m.author.id === mID;
+            var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                .then();
+            let method = response.first().content;
+            if(method === "stop"){
+                return message.channel.send("Commande annulée");
+            }
+            if(method === "add"){
+            await message.channel.send("Quel est le nom de la tâche à ajouter ?");
+            var responseFilter = m => m.author.id === mID;
+            var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                .then();
+            let taskName = response.first().content;
+            message.channel.send(`Vous avez choisi \`\`${taskName}\`\` comme nom de tâche. Validez-le avec les réactions.`)
+            .then(async (msg) => {
+                await msg.react("✅");
+                await msg.react("❌");
+                // On attend que la personne réagisse
+                var filter = (reaction, user) => user.id === mID;
+                var collector = msg.createReactionCollector(filter, {
+                    max: 1,
+                    maxUsers: 1
+                });
+                collector.on('collect', async(r) => {
+                    console.log(r.emoji.name);
+                    if (r.emoji.name === "✅"){
+                        await message.bot.functions.updateProject(message, name, { $push: {tasks: taskName}});
+                        return message.channel.send(`La tâche ${taskName} a été ajoutée au projet !`);
+                    }
+                    if (r.emoji.name === "❌"){
+                        await message.channel.send("Annulation...");
+                        return task(message);
+                    }
+                });
+            });
+            }
+            if(method === "done"){
+                await message.channel.send("Quel est le nom de la tâche terminée ?");
+                var responseFilter = m => m.author.id === mID;
+                var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                    .then();
+                let taskName = response.first().content;
+                message.channel.send(`Vous avez choisi la tâche \`\`${taskName}\`\`. Validez avec les réactions.`)
+                .then(async (msg) => {
+                    await msg.react("✅");
+                    await msg.react("❌");
+                    // On attend que la personne réagisse
+                    var filter = (reaction, user) => user.id === mID;
+                    var collector = msg.createReactionCollector(filter, {
+                        max: 1,
+                        maxUsers: 1
+                    });
+                    collector.on('collect', async(r) => {
+                        console.log(r.emoji.name);
+                        if (r.emoji.name === "✅"){
+                            await message.bot.functions.updateProject(message, name, { $pull: {tasks: taskName}});
+                            await message.bot.functions.updateProject(message, name, { $push: {done: taskName}});
+                            return message.channel.send(`La tâche ${taskName} a été définie comme terminée !`);
+                        }
+                        if (r.emoji.name === "❌"){
+                            await message.channel.send("Annulation...");
+                            return task(message);
+                        }
+                    });
+                });
+                }
+                if(method === "remove"){
+                    await message.channel.send("Quel est le nom de la tâche à retirer ?");
+                    var responseFilter = m => m.author.id === mID;
+                    var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                        .then();
+                    let taskName = response.first().content;
+                    message.channel.send(`Vous avez choisi de retirer la tâche \`\`${taskName}\`\`. Validez avec les réactions.`)
+                    .then(async (msg) => {
+                        await msg.react("✅");
+                        await msg.react("❌");
+                        // On attend que la personne réagisse
+                        var filter = (reaction, user) => user.id === mID;
+                        var collector = msg.createReactionCollector(filter, {
+                            max: 1,
+                            maxUsers: 1
+                        });
+                        collector.on('collect', async(r) => {
+                            console.log(r.emoji.name);
+                            if (r.emoji.name === "✅"){
+                                await message.bot.functions.updateProject(message, name, { $pull: {tasks: taskName}});
+                                await message.bot.functions.updateProject(message, name, { $pull: {done: taskName}});
+                                return message.channel.send(`La tâche ${taskName} a été retirée du projet !`);
+                            }
+                            if (r.emoji.name === "❌"){
+                                await message.channel.send("Annulation...");
+                                return task(message);
+                            }
+                        });
+                    });
+                    }
         }
     }
 }
