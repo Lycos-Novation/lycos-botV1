@@ -71,6 +71,9 @@ class Projet extends Command {
             if(args[0] === 'task'){
                 return await task(message);
             }
+            if(args[0] === "change"){
+                return await change(message);
+            }
 
         } catch(error) {
             console.error(error);
@@ -364,6 +367,104 @@ Pour annuler la commande cliquez sur ❌.`)
                         });
                     });
                     }
+        }
+        async function change(message){
+            let mID = message.author.id;
+            await message.channel.send('Répondez avec le nom du projet à modifier');
+            var responseFilter = m => m.author.id === mID;
+                var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                    .then();
+            let name = response.first().content;
+            if(name === "stop"){
+                return message.channel.send("Commande annulée");
+            }
+            let projet = await message.bot.functions.getProject(name);
+            if(name !== projet.name){
+                return message.channel.send("Projet introuvable, vérifiez le nom du projet et réessayez");
+            }
+            if(message.author.tag !== projet.lead){
+                return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
+            }
+            await message.channel.send("Que voulez vous faire ? Répondez avec \`\`name\`\`, \`\`description\`\` ou \`\`task name\`\`");
+            var responseFilter = m => m.author.id === mID;
+            var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                .then();
+            let method = response.first().content;
+            if(method === "stop"){
+                return message.channel.send("Commande annulée");
+            }
+            if(method === 'name'){
+                await message.channel.send("Quel sera le nouveau nom du projet ?");
+                    var responseFilter = m => m.author.id === mID;
+                    var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                        .then();
+                    let newName = response.first().content;
+                await message.bot.functions.updateProject(message, name, { name: newName});
+                return message.channel.send("Le nom du projet a été modifié !")
+            }
+            if(method === 'descritpion'){
+                await message.channel.send("Quelle sera la nouvelle description du projet ?");
+                    var responseFilter = m => m.author.id === mID;
+                    var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                        .then();
+                    let newDesc = response.first().content;
+                await message.bot.functions.updateProject(message, name, { desc: newDesc});
+                return message.channel.send("La description du projet a été modifiée !")
+            }
+            if(method === 'task name'){
+                await message.channel.send("Quel est le nom de la tâche à modifier ?");
+                    var responseFilter = m => m.author.id === mID;
+                    var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                        .then();
+                    let task = response.first().content;
+                    message.channel.send(`Vous avez choisi de modifier le nom de la tâche \`\`${taskName}\`\`. Validez avec les réactions.`)
+                    .then(async (msg) => {
+                        await msg.react("✅");
+                        await msg.react("❌");
+                        // On attend que la personne réagisse
+                        var filter = (reaction, user) => user.id === mID;
+                        var collector = msg.createReactionCollector(filter, {
+                            max: 1,
+                            maxUsers: 1
+                        });
+                        collector.on('collect', async(r) => {
+                            console.log(r.emoji.name);
+                            if (r.emoji.name === "✅"){
+                                await message.channel.send(`Quel sera le nouveau nom de la tâche ${task}?`);
+                                    var responseFilter = m => m.author.id === mID;
+                                    var response = await message.channel.awaitMessages(responseFilter, {max: 1})
+                                    .then();
+                                let newTaskName = response.first().content;
+                                message.channel.send(`Vous avez choisi \`\`${tasnewTaskNameName}\`\` comme nouveau nom de tâche. Validez avec les réactions.`)
+                    .then(async (msg) => {
+                        await msg.react("✅");
+                        await msg.react("❌");
+                        // On attend que la personne réagisse
+                        var filter = (reaction, user) => user.id === mID;
+                        var collector = msg.createReactionCollector(filter, {
+                            max: 1,
+                            maxUsers: 1
+                        });
+                        collector.on('collect', async(r) => {
+                            console.log(r.emoji.name);
+                            if (r.emoji.name === "✅"){
+                                await message.bot.functions.updateProject(message, name, { $pull: {task: task} });
+                                await message.bot.functions.updateProject(message, name, { $push: {task: newTaskName}});
+                            }
+                            if (r.emoji.name === "❌"){
+                                await message.channel.send("Annulation...");
+                                return change(message);
+                            }
+                        });
+                    });
+                            }
+                            if (r.emoji.name === "❌"){
+                                await message.channel.send("Annulation...");
+                                return change(message);
+                            }
+                        });
+                    });
+            }
         }
     }
 }
