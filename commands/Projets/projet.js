@@ -1,4 +1,6 @@
 const Command = require("../../base/Command.js");
+const moment = require("moment-timezone");
+moment.locale('fr');
 class Projet extends Command {
     constructor(client) {
         super(client, {
@@ -41,19 +43,25 @@ class Projet extends Command {
             }
             let projet = await message.bot.functions.getProject(args.slice(0).join(" "));
             if(projet.name === args.slice(0).join(" ")){
-                /*return message.channel.send({
+                if(projet.tasks.length = 1) var per = 0;
+                else per = projet.done.length/(projet.done.length + projet.tasks.length)*100;
+                return message.channel.send({
                     embed: {
                         color: message.config.embed.color,
                         author: {
-                            name: `Fiche du projet ${project.name}`,
+                            name: `Fiche du projet ${projet.name}`,
                             icon_url: message.bot.user.displayAvatarURL
                         },
                         footer: {
-                            text: message.config.embed.footer
+                            text: message.config.embed.footer + ` - ID du projet : ${projet._id}`
                         },
-                        description: ``,
+                        description: `**Chef de projet :** ${projet.lead}
+**Description du projet :** ${projet.desc}
+**Membres du projet :** ${projet.members}
+**Avancement :** ${per}%
+**Créé le :** ${moment(projet.date.toUTCString()).format("LLLL")} (${message.bot.functions.checkDays(projet.date)}`,
                     }
-                })*/
+                })
                 //Faire système de pages avec réactions.
             }
             if(args[0] === 'create'){
