@@ -118,12 +118,10 @@ class Projet extends Command {
 
 
         async function create(message) {
-            let mID = message.author.id;
             let mess = message;
             await message.channel.send("Répondez avec le nom de votre projet");
-            const responseFilter = m => m.author.id === mID;
-            const response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                .then();
+            const responseFilter = m => m.author.id === message.author.id;
+            var response = await message.channel.awaitMessages(responseFilter, {max: 1});
             const name = response.first().content;
             if(name.toLowerCase() === "stop"){
                 return message.channel.send("Création de projet annulée.");
@@ -142,8 +140,8 @@ class Projet extends Command {
                     await msg.react("✅");
                     await msg.react("❌");
                     // On attend que la personne réagisse
-                    const filter = (reaction, user) => user.id === mID;
-                    const collector = msg.createReactionCollector(filter, {
+                    const filter = (reaction, user) => user.id === message.author.id;
+                    var collector = msg.createReactionCollector(filter, {
                         max: 1,
                         maxUsers: 1
                     });
@@ -153,8 +151,7 @@ class Projet extends Command {
                             let code = message.bot.functions.makeid(30);
                             message.guild.members.find(m => m.id === '169146903462805504').send(`${message.author} veut créer le projet \`\`${name}\`\`. Veuillez lui transmettre le code de validation suivant : ||\`\`${code}\`\`||`);
                             await message.channel.send(`Un code de validation a été envoyé à ${message.guild.members.find(m => m.id === '169146903462805504')}, veuillez lui demander et répondre par celui-ci.`);
-                            const responseFilter = m => m.author.id === mID;
-                            const response = await message.channel.awaitMessages(responseFilter, {max: 1});
+                            response = await message.channel.awaitMessages(responseFilter, {max: 1});
                             const rcode = response.first().content;
                             if(code.toLowerCase() === "stop"){
                                 return message.channel.send("Création de projet annulée.");
@@ -164,8 +161,7 @@ class Projet extends Command {
                             await msg.react("✅");
                             await msg.react("❌");
                             // On attend que la personne réagisse
-                            const filter = (reaction, user) => user.id === mID;
-                            const collector = msg.createReactionCollector(filter, {
+                            collector = msg.createReactionCollector(filter, {
                                 max: 1,
                                 maxUsers: 1
                             });
@@ -195,11 +191,9 @@ class Projet extends Command {
         }
 
         async function del(message){
-            let mID = message.author.id;
             await message.channel.send("Répondez avec le nom du projet à supprimer");
-            const responseFilter = m => m.author.id === mID;
-            const response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                .then();
+            const responseFilter = m => m.author.id === message.author.id;
+            var response = await message.channel.awaitMessages(responseFilter, {max: 1});
             let name = response.first().content;
             if(name === "stop"){
                 return message.channel.send("Commande annulée");
@@ -218,7 +212,7 @@ Pour annuler la commande cliquez sur ❌.`)
                 await msg.react("✅");
                 await msg.react("❌");
                 // On attend que la personne réagisse
-                const filter = (reaction, user) => user.id === mID;
+                const filter = (reaction, user) => user.id === message.author.id;
                 const collector = msg.createReactionCollector(filter, {
                     max: 1,
                     maxUsers: 1
@@ -237,11 +231,9 @@ Pour annuler la commande cliquez sur ❌.`)
         }
 
         async function member(message){
-            let mID = message.author.id;
             await message.channel.send("Répondez avec le nom du projet à modifier");
-            var responseFilter = m => m.author.id === mID;
-            var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                .then();
+            const responseFilter = m => m.author.id === message.author.id;
+            var response = await message.channel.awaitMessages(responseFilter, {max: 1});
             let name = response.first().content;
             if(name === "stop"){
                 return message.channel.send("Commande annulée");
@@ -254,18 +246,14 @@ Pour annuler la commande cliquez sur ❌.`)
                 return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
             }
             await message.channel.send("Que voulez vous faire ? Répondez avec \`\`add\`\` ou \`\`remove\`\`");
-            var responseFilter = m => m.author.id === mID;
-            var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                .then();
+            response = await message.channel.awaitMessages(responseFilter, {max: 1});
             let method = response.first().content;
             if(method === "stop"){
                 return message.channel.send("Commande annulée");
             }
             if(method === "add"){
                 await message.channel.send("Quel membre voulez-vous ajouter au projet ? Répondez avec son ID.");
-                var responseFilter = m => m.author.id === mID;
-                var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                    .then();
+                response = await message.channel.awaitMessages(responseFilter, {max: 1});
                 if(response.first().content.toLowerCase() === "stop"){
                     return message.channel.send("Création de projet annulée.");
                 }
@@ -275,7 +263,7 @@ Pour annuler la commande cliquez sur ❌.`)
                 await msg.react("✅");
                 await msg.react("❌");
                 // On attend que la personne réagisse
-                var filter = (reaction, user) => user.id === mID;
+                const filter = (reaction, user) => user.id === message.author.id;
                 var collector = msg.createReactionCollector(filter, {
                     max: 1,
                     maxUsers: 1
@@ -294,8 +282,7 @@ Pour annuler la commande cliquez sur ❌.`)
             }
             if(method === "remove"){
                 await message.channel.send("Quel membre voulez-vous retirer du projet ? Répondez avec son ID.");
-                var responseFilter = m => m.author.id === mID;
-                var response = await message.channel.awaitMessages(responseFilter, {max: 1});
+                response = await message.channel.awaitMessages(responseFilter, {max: 1});
                 if(response.first().content.toLowerCase() === "stop"){
                     return message.channel.send("Création de projet annulée.");
                 }
@@ -305,8 +292,7 @@ Pour annuler la commande cliquez sur ❌.`)
                 await msg.react("✅");
                 await msg.react("❌");
                 // On attend que la personne réagisse
-                var filter = (reaction, user) => user.id === mID;
-                var collector = msg.createReactionCollector(filter, {
+                collector = msg.createReactionCollector(filter, {
                     max: 1,
                     maxUsers: 1
                 });
@@ -325,11 +311,9 @@ Pour annuler la commande cliquez sur ❌.`)
         }
 
         async function task(message){
-            let mID = message.author.id;
             await message.channel.send('Répondez avec le nom du projet à modifier');
-            var responseFilter = m => m.author.id === mID;
-                var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                    .then();
+            const responseFilter = m => m.author.id === message.author.id;
+            response = await message.channel.awaitMessages(responseFilter, {max: 1});
             let name = response.first().content;
             if(name === "stop"){
                 return message.channel.send("Commande annulée");
@@ -342,18 +326,14 @@ Pour annuler la commande cliquez sur ❌.`)
                 return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
             }
             await message.channel.send("Que voulez vous faire ? Répondez avec \`\`add\`\`, \`\`done\`\` ou \`\`remove\`\`");
-            var responseFilter = m => m.author.id === mID;
-            var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                .then();
+            response = await message.channel.awaitMessages(responseFilter, {max: 1});
             let method = response.first().content;
             if(method === "stop"){
                 return message.channel.send("Commande annulée");
             }
             if(method === "add"){
             await message.channel.send("Quel est le nom de la tâche à ajouter ?");
-            var responseFilter = m => m.author.id === mID;
-            var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                .then();
+            response = await message.channel.awaitMessages(responseFilter, {max: 1});
             let taskName = response.first().content;
             if(taskName === "stop"){
                 return message.channel.send("Commande annulée");
@@ -363,7 +343,7 @@ Pour annuler la commande cliquez sur ❌.`)
                 await msg.react("✅");
                 await msg.react("❌");
                 // On attend que la personne réagisse
-                var filter = (reaction, user) => user.id === mID;
+                const filter = (reaction, user) => user.id === message.author.id;
                 var collector = msg.createReactionCollector(filter, {
                     max: 1,
                     maxUsers: 1
@@ -383,9 +363,7 @@ Pour annuler la commande cliquez sur ❌.`)
             }
             if(method === "done"){
                 await message.channel.send("Quel est le nom de la tâche terminée ?");
-                var responseFilter = m => m.author.id === mID;
-                var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                    .then();
+                response = await message.channel.awaitMessages(responseFilter, {max: 1});
                 let taskName = response.first().content;
                 if(method === "stop"){
                     return message.channel.send("Commande annulée");
@@ -395,8 +373,7 @@ Pour annuler la commande cliquez sur ❌.`)
                     await msg.react("✅");
                     await msg.react("❌");
                     // On attend que la personne réagisse
-                    var filter = (reaction, user) => user.id === mID;
-                    var collector = msg.createReactionCollector(filter, {
+                    collector = msg.createReactionCollector(filter, {
                         max: 1,
                         maxUsers: 1
                     });
@@ -416,9 +393,7 @@ Pour annuler la commande cliquez sur ❌.`)
                 }
                 if(method === "remove"){
                     await message.channel.send("Quel est le nom de la tâche à retirer ?");
-                    var responseFilter = m => m.author.id === mID;
-                    var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                        .then();
+                    response = await message.channel.awaitMessages(responseFilter, {max: 1});
                     let taskName = response.first().content;
                     if(taskName === "stop"){
                         return message.channel.send("Commande annulée");
@@ -428,8 +403,7 @@ Pour annuler la commande cliquez sur ❌.`)
                         await msg.react("✅");
                         await msg.react("❌");
                         // On attend que la personne réagisse
-                        var filter = (reaction, user) => user.id === mID;
-                        var collector = msg.createReactionCollector(filter, {
+                        collector = msg.createReactionCollector(filter, {
                             max: 1,
                             maxUsers: 1
                         });
@@ -449,11 +423,9 @@ Pour annuler la commande cliquez sur ❌.`)
                     }
         }
         async function change(message){
-            let mID = message.author.id;
             await message.channel.send('Répondez avec le nom du projet à modifier');
-            var responseFilter = m => m.author.id === mID;
-                var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                    .then();
+            const responseFilter = m => m.author.id === message.author.id;
+            response = await message.channel.awaitMessages(responseFilter, {max: 1});
             let name = response.first().content;
             if(name === "stop"){
                 return message.channel.send("Commande annulée");
@@ -466,18 +438,14 @@ Pour annuler la commande cliquez sur ❌.`)
                 return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
             }
             await message.channel.send("Que voulez vous faire ? Répondez avec \`\`name\`\`, \`\`description\`\` ou \`\`task name\`\`");
-            var responseFilter = m => m.author.id === mID;
-            var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                .then();
+            response = await message.channel.awaitMessages(responseFilter, {max: 1});
             let method = response.first().content;
             if(method === "stop"){
                 return message.channel.send("Commande annulée");
             }
             if(method === 'name'){
                 await message.channel.send("Quel sera le nouveau nom du projet ?");
-                    var responseFilter = m => m.author.id === mID;
-                    var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                        .then();
+                    response = await message.channel.awaitMessages(responseFilter, {max: 1});
                     let newName = response.first().content;
                     if(newName === "stop"){
                         return message.channel.send("Commande annulée");
@@ -487,9 +455,7 @@ Pour annuler la commande cliquez sur ❌.`)
             }
             if(method === 'descritpion'){
                 await message.channel.send("Quelle sera la nouvelle description du projet ?");
-                    var responseFilter = m => m.author.id === mID;
-                    var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                        .then();
+                    response = await message.channel.awaitMessages(responseFilter, {max: 1});
                     let newDesc = response.first().content;
                     if(newDesc === "stop"){
                         return message.channel.send("Commande annulée");
@@ -499,9 +465,7 @@ Pour annuler la commande cliquez sur ❌.`)
             }
             if(method === 'task name'){
                 await message.channel.send("Quel est le nom de la tâche à modifier ?");
-                    var responseFilter = m => m.author.id === mID;
-                    var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                        .then();
+                    response = await message.channel.awaitMessages(responseFilter, {max: 1})
                     let task = response.first().content;
                     if(task === "stop"){
                         return message.channel.send("Commande annulée");
@@ -511,7 +475,7 @@ Pour annuler la commande cliquez sur ❌.`)
                         await msg.react("✅");
                         await msg.react("❌");
                         // On attend que la personne réagisse
-                        var filter = (reaction, user) => user.id === mID;
+                        const filter = (reaction, user) => user.id === message.author.id;
                         var collector = msg.createReactionCollector(filter, {
                             max: 1,
                             maxUsers: 1
@@ -520,7 +484,7 @@ Pour annuler la commande cliquez sur ❌.`)
                             console.log(r.emoji.name);
                             if (r.emoji.name === "✅"){
                                 await message.channel.send(`Quel sera le nouveau nom de la tâche ${task}?`);
-                                    var responseFilter = m => m.author.id === mID;
+                                    var responseFilter = m => m.author.id === message.author.id;
                                     var response = await message.channel.awaitMessages(responseFilter, {max: 1});
                                 let newTaskName = response.first().content;
                                 if(newTaskName === "stop"){
@@ -531,8 +495,7 @@ Pour annuler la commande cliquez sur ❌.`)
                         await msg.react("✅");
                         await msg.react("❌");
                         // On attend que la personne réagisse
-                        var filter = (reaction, user) => user.id === mID;
-                        var collector = msg.createReactionCollector(filter, {
+                        collector = msg.createReactionCollector(filter, {
                             max: 1,
                             maxUsers: 1
                         });
