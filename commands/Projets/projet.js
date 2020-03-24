@@ -266,6 +266,9 @@ Pour annuler la commande cliquez sur ❌.`)
                 var responseFilter = m => m.author.id === mID;
                 var response = await message.channel.awaitMessages(responseFilter, {max: 1})
                     .then();
+                if(response.first().content.toLowerCase() === "stop"){
+                    return message.channel.send("Création de projet annulée.");
+                }
                 let member = message.guild.member(message.guild.members.resolve(response.first().content) || message.guild.members.resolveID(response.first().content));
                 message.channel.send(`Êtes-vous sûr de vouloir ajouter ${member} ? Confirmez avec les réactions`)
             .then(async (msg) => {
@@ -292,9 +295,11 @@ Pour annuler la commande cliquez sur ❌.`)
             if(method === "remove"){
                 await message.channel.send("Quel membre voulez-vous retirer du projet ? Répondez avec son ID.");
                 var responseFilter = m => m.author.id === mID;
-                var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                    .then();
-                    let member = message.guild.member(message.guild.members.resolve(response.first().content) || message.guild.members.resolveID(response.first().content));
+                var response = await message.channel.awaitMessages(responseFilter, {max: 1});
+                if(response.first().content.toLowerCase() === "stop"){
+                    return message.channel.send("Création de projet annulée.");
+                }
+                let member = message.guild.member(message.guild.members.resolve(response.first().content) || message.guild.members.resolveID(response.first().content));
                 message.channel.send(`Êtes-vous sûr de vouloir enlever ${member} ? Confirmez avec les réactions`)
             .then(async (msg) => {
                 await msg.react("✅");
@@ -350,6 +355,9 @@ Pour annuler la commande cliquez sur ❌.`)
             var response = await message.channel.awaitMessages(responseFilter, {max: 1})
                 .then();
             let taskName = response.first().content;
+            if(taskName === "stop"){
+                return message.channel.send("Commande annulée");
+            }
             message.channel.send(`Vous avez choisi \`\`${taskName}\`\` comme nom de tâche. Validez-le avec les réactions.`)
             .then(async (msg) => {
                 await msg.react("✅");
@@ -379,6 +387,9 @@ Pour annuler la commande cliquez sur ❌.`)
                 var response = await message.channel.awaitMessages(responseFilter, {max: 1})
                     .then();
                 let taskName = response.first().content;
+                if(method === "stop"){
+                    return message.channel.send("Commande annulée");
+                }
                 message.channel.send(`Vous avez choisi la tâche \`\`${taskName}\`\`. Validez avec les réactions.`)
                 .then(async (msg) => {
                     await msg.react("✅");
@@ -409,6 +420,9 @@ Pour annuler la commande cliquez sur ❌.`)
                     var response = await message.channel.awaitMessages(responseFilter, {max: 1})
                         .then();
                     let taskName = response.first().content;
+                    if(taskName === "stop"){
+                        return message.channel.send("Commande annulée");
+                    }
                     message.channel.send(`Vous avez choisi de retirer la tâche \`\`${taskName}\`\`. Validez avec les réactions.`)
                     .then(async (msg) => {
                         await msg.react("✅");
@@ -465,6 +479,9 @@ Pour annuler la commande cliquez sur ❌.`)
                     var response = await message.channel.awaitMessages(responseFilter, {max: 1})
                         .then();
                     let newName = response.first().content;
+                    if(newName === "stop"){
+                        return message.channel.send("Commande annulée");
+                    }
                 await message.bot.functions.updateProject(message, name, { name: newName});
                 return message.channel.send("Le nom du projet a été modifié !")
             }
@@ -474,6 +491,9 @@ Pour annuler la commande cliquez sur ❌.`)
                     var response = await message.channel.awaitMessages(responseFilter, {max: 1})
                         .then();
                     let newDesc = response.first().content;
+                    if(newDesc === "stop"){
+                        return message.channel.send("Commande annulée");
+                    }
                 await message.bot.functions.updateProject(message, name, { desc: newDesc});
                 return message.channel.send("La description du projet a été modifiée !")
             }
@@ -483,6 +503,9 @@ Pour annuler la commande cliquez sur ❌.`)
                     var response = await message.channel.awaitMessages(responseFilter, {max: 1})
                         .then();
                     let task = response.first().content;
+                    if(task === "stop"){
+                        return message.channel.send("Commande annulée");
+                    }
                     message.channel.send(`Vous avez choisi de modifier le nom de la tâche \`\`${taskName}\`\`. Validez avec les réactions.`)
                     .then(async (msg) => {
                         await msg.react("✅");
@@ -498,9 +521,11 @@ Pour annuler la commande cliquez sur ❌.`)
                             if (r.emoji.name === "✅"){
                                 await message.channel.send(`Quel sera le nouveau nom de la tâche ${task}?`);
                                     var responseFilter = m => m.author.id === mID;
-                                    var response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                                    .then();
+                                    var response = await message.channel.awaitMessages(responseFilter, {max: 1});
                                 let newTaskName = response.first().content;
+                                if(newTaskName === "stop"){
+                                    return message.channel.send("Commande annulée");
+                                }
                                 message.channel.send(`Vous avez choisi \`\`${tasnewTaskNameName}\`\` comme nouveau nom de tâche. Validez avec les réactions.`)
                     .then(async (msg) => {
                         await msg.react("✅");
