@@ -1,4 +1,5 @@
 const Command = require("../../base/Command.js");
+const {Project} = require('../../models');
 const moment = require("moment-timezone");
 moment.locale('fr');
 class Projet extends Command {
@@ -62,7 +63,6 @@ class Projet extends Command {
 **Créé le :** ${moment(projet.date.toUTCString()).format("LLLL")} (${message.bot.functions.checkDays(projet.date)}`,
                     }
                 })
-                //Faire système de pages avec réactions.
             }
             if(args[0] === 'create'){
                 return await create(message);
@@ -71,7 +71,31 @@ class Projet extends Command {
                 return await del(message)
             }
             if(args[0] === 'list'){
-                //Faire système de pages avec réactions si trop de projets
+                const cursor = await Project.find({});
+                var text = "";
+                if(cursor.length === 0) {
+                    text = "• Il n'y a aucun projet en cours.";
+                } else {
+                    text = "• " + cursor[0].name;
+                    for (let index = 1; index < cursor.length; index++) {
+                        const element = cursor[index].name;
+                        text = text + "\n• " + element;
+                        console.log(element);
+                    }
+                }
+                return message.channel.send({
+                    embed: {
+                        color: message.config.embed.color,
+                        author: {
+                            name: `Liste des projets`,
+                            icon_url: message.bot.user.displayAvatarURL
+                        },
+                        footer: {
+                            text: message.config.embed.footer
+                        },
+                        description: `\`\`${text}\`\``,
+                    }
+                });
             }
             if(args[0] === 'member'){
                 return await member(message);
@@ -102,10 +126,12 @@ class Projet extends Command {
                 return message.channel.send("Création de projet annulée.");
             }
             if(name.toLowerCase() === "create" || name.toLowerCase() === "delete" || name.toLowerCase() === "member" || name.toLowerCase() === "task" || name.toLowerCase() === "[nomdeprojet]" || name.toLowerCase() === "change" || name.toLowerCase() === "list"){
-                return message.channel.send("Ce nom est réservé pour autre chose. Veuillez en choisir un autre.")
+                await create(message);
+                return message.channel.send("Ce nom est réservé pour autre chose. Veuillez en choisir un autre.");
             }
             let projet = await message.bot.functions.getProject(name);
             if(name === projet.name){
+                await create(message);
                 return message.channel.send("Ce nom est dejà utilisé par un autre projet. Veuillez en choisir un autre.");
             }
             message.channel.send(`Vous avez choisi \`\`${name}\`\` comme nom de projet. Validez ce nom avec les réactions ci dessous.`)
