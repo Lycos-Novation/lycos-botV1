@@ -120,9 +120,7 @@ class Projet extends Command {
         async function create(message) {
             let mess = message;
             await message.channel.send("Répondez avec le nom de votre projet");
-            const responseFilter = m => m.author.id === message.author.id;
-            var response = await message.channel.awaitMessages(responseFilter, {max: 1});
-            const name = response.first().content;
+            var name = await awaitResponse(message);
             if(name.toLowerCase() === "stop"){
                 return message.channel.send("Création de projet annulée.");
             }
@@ -151,9 +149,8 @@ class Projet extends Command {
                             let code = message.bot.functions.makeid(30);
                             message.guild.members.find(m => m.id === '169146903462805504').send(`${message.author} veut créer le projet \`\`${name}\`\`. Veuillez lui transmettre le code de validation suivant : ||\`\`${code}\`\`||`);
                             await message.channel.send(`Un code de validation a été envoyé à ${message.guild.members.find(m => m.id === '169146903462805504')}, veuillez lui demander et répondre par celui-ci.`);
-                            response = await message.channel.awaitMessages(responseFilter, {max: 1});
-                            const rcode = response.first().content;
-                            if(code.toLowerCase() === "stop"){
+                            var rcode = await awaitResponse(message);
+                            if(rcode.toLowerCase() === "stop"){
                                 return message.channel.send("Création de projet annulée.");
                             }
                             message.channel.send(`Vous avez saisi le code suivant : \`\`${rcode}\`\`. Validez le avec les réactions ci-dessous.`)
@@ -168,6 +165,7 @@ class Projet extends Command {
                             collector.on('collect', async(r) => {
                                 console.log(r.emoji.name);
                                 if (r.emoji.name === "✅"){
+                                    if(code !== rcode) return message.channel.send("Le code entré n'est pas le bon. Veuillez réessayer.");
                                     const newProject = {
                                         name: name,
                                         lead: mess.author.tag
@@ -192,9 +190,7 @@ class Projet extends Command {
 
         async function del(message){
             await message.channel.send("Répondez avec le nom du projet à supprimer");
-            const responseFilter = m => m.author.id === message.author.id;
-            var response = await message.channel.awaitMessages(responseFilter, {max: 1});
-            let name = response.first().content;
+            let name = await awaitResponse(message);
             if(name === "stop"){
                 return message.channel.send("Commande annulée");
             }
@@ -232,9 +228,7 @@ Pour annuler la commande cliquez sur ❌.`)
 
         async function member(message){
             await message.channel.send("Répondez avec le nom du projet à modifier");
-            const responseFilter = m => m.author.id === message.author.id;
-            var response = await message.channel.awaitMessages(responseFilter, {max: 1});
-            let name = response.first().content;
+            let name = await awaitResponse(message);
             if(name === "stop"){
                 return message.channel.send("Commande annulée");
             }
@@ -246,18 +240,17 @@ Pour annuler la commande cliquez sur ❌.`)
                 return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
             }
             await message.channel.send("Que voulez vous faire ? Répondez avec \`\`add\`\` ou \`\`remove\`\`");
-            response = await message.channel.awaitMessages(responseFilter, {max: 1});
-            let method = response.first().content;
+            let method = await awaitResponse(message);
             if(method === "stop"){
                 return message.channel.send("Commande annulée");
             }
             if(method === "add"){
                 await message.channel.send("Quel membre voulez-vous ajouter au projet ? Répondez avec son ID.");
-                response = await message.channel.awaitMessages(responseFilter, {max: 1});
-                if(response.first().content.toLowerCase() === "stop"){
+                let response = await awaitResponse(message);
+                if(response.toLowerCase() === "stop"){
                     return message.channel.send("Création de projet annulée.");
                 }
-                let member = message.guild.member(message.guild.members.resolve(response.first().content) || message.guild.members.resolveID(response.first().content));
+                let member = message.guild.member(message.guild.members.resolve(response) || message.guild.members.resolveID(response));
                 message.channel.send(`Êtes-vous sûr de vouloir ajouter ${member} ? Confirmez avec les réactions`)
             .then(async (msg) => {
                 await msg.react("✅");
@@ -282,11 +275,11 @@ Pour annuler la commande cliquez sur ❌.`)
             }
             if(method === "remove"){
                 await message.channel.send("Quel membre voulez-vous retirer du projet ? Répondez avec son ID.");
-                response = await message.channel.awaitMessages(responseFilter, {max: 1});
-                if(response.first().content.toLowerCase() === "stop"){
+                let response = await awaitResponse(message);
+                if(response.toLowerCase() === "stop"){
                     return message.channel.send("Création de projet annulée.");
                 }
-                let member = message.guild.member(message.guild.members.resolve(response.first().content) || message.guild.members.resolveID(response.first().content));
+                let member = message.guild.member(message.guild.members.resolve(response) || message.guild.members.resolveID(response));
                 message.channel.send(`Êtes-vous sûr de vouloir enlever ${member} ? Confirmez avec les réactions`)
             .then(async (msg) => {
                 await msg.react("✅");
@@ -312,9 +305,7 @@ Pour annuler la commande cliquez sur ❌.`)
 
         async function task(message){
             await message.channel.send('Répondez avec le nom du projet à modifier');
-            const responseFilter = m => m.author.id === message.author.id;
-            response = await message.channel.awaitMessages(responseFilter, {max: 1});
-            let name = response.first().content;
+            let name = await awaitResponse(message);
             if(name === "stop"){
                 return message.channel.send("Commande annulée");
             }
@@ -326,15 +317,13 @@ Pour annuler la commande cliquez sur ❌.`)
                 return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
             }
             await message.channel.send("Que voulez vous faire ? Répondez avec \`\`add\`\`, \`\`done\`\` ou \`\`remove\`\`");
-            response = await message.channel.awaitMessages(responseFilter, {max: 1});
-            let method = response.first().content;
+            let method = await awaitResponse(message);
             if(method === "stop"){
                 return message.channel.send("Commande annulée");
             }
             if(method === "add"){
             await message.channel.send("Quel est le nom de la tâche à ajouter ?");
-            response = await message.channel.awaitMessages(responseFilter, {max: 1});
-            let taskName = response.first().content;
+            let taskName = await awaitResponse(message);
             if(taskName === "stop"){
                 return message.channel.send("Commande annulée");
             }
@@ -363,8 +352,7 @@ Pour annuler la commande cliquez sur ❌.`)
             }
             if(method === "done"){
                 await message.channel.send("Quel est le nom de la tâche terminée ?");
-                response = await message.channel.awaitMessages(responseFilter, {max: 1});
-                let taskName = response.first().content;
+                let taskName = await awaitResponse(message);
                 if(method === "stop"){
                     return message.channel.send("Commande annulée");
                 }
@@ -393,8 +381,7 @@ Pour annuler la commande cliquez sur ❌.`)
                 }
                 if(method === "remove"){
                     await message.channel.send("Quel est le nom de la tâche à retirer ?");
-                    response = await message.channel.awaitMessages(responseFilter, {max: 1});
-                    let taskName = response.first().content;
+                    let taskName = await awaitResponse(message);
                     if(taskName === "stop"){
                         return message.channel.send("Commande annulée");
                     }
@@ -424,9 +411,7 @@ Pour annuler la commande cliquez sur ❌.`)
         }
         async function change(message){
             await message.channel.send('Répondez avec le nom du projet à modifier');
-            const responseFilter = m => m.author.id === message.author.id;
-            response = await message.channel.awaitMessages(responseFilter, {max: 1});
-            let name = response.first().content;
+            let name = await awaitResponse(message);
             if(name === "stop"){
                 return message.channel.send("Commande annulée");
             }
@@ -438,15 +423,13 @@ Pour annuler la commande cliquez sur ❌.`)
                 return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
             }
             await message.channel.send("Que voulez vous faire ? Répondez avec \`\`name\`\`, \`\`description\`\` ou \`\`task name\`\`");
-            response = await message.channel.awaitMessages(responseFilter, {max: 1});
-            let method = response.first().content;
+            let method = await awaitResponse(message);
             if(method === "stop"){
                 return message.channel.send("Commande annulée");
             }
             if(method === 'name'){
                 await message.channel.send("Quel sera le nouveau nom du projet ?");
-                    response = await message.channel.awaitMessages(responseFilter, {max: 1});
-                    let newName = response.first().content;
+                    let newName = await awaitResponse(message);
                     if(newName === "stop"){
                         return message.channel.send("Commande annulée");
                     }
@@ -455,8 +438,7 @@ Pour annuler la commande cliquez sur ❌.`)
             }
             if(method === 'descritpion'){
                 await message.channel.send("Quelle sera la nouvelle description du projet ?");
-                    response = await message.channel.awaitMessages(responseFilter, {max: 1});
-                    let newDesc = response.first().content;
+                    let newDesc = await awaitResponse(message);
                     if(newDesc === "stop"){
                         return message.channel.send("Commande annulée");
                     }
@@ -465,8 +447,7 @@ Pour annuler la commande cliquez sur ❌.`)
             }
             if(method === 'task name'){
                 await message.channel.send("Quel est le nom de la tâche à modifier ?");
-                    response = await message.channel.awaitMessages(responseFilter, {max: 1})
-                    let task = response.first().content;
+                    let task = await awaitResponse(message);
                     if(task === "stop"){
                         return message.channel.send("Commande annulée");
                     }
@@ -484,9 +465,7 @@ Pour annuler la commande cliquez sur ❌.`)
                             console.log(r.emoji.name);
                             if (r.emoji.name === "✅"){
                                 await message.channel.send(`Quel sera le nouveau nom de la tâche ${task}?`);
-                                    var responseFilter = m => m.author.id === message.author.id;
-                                    var response = await message.channel.awaitMessages(responseFilter, {max: 1});
-                                let newTaskName = response.first().content;
+                                let newTaskName = await awaitResponse(message);
                                 if(newTaskName === "stop"){
                                     return message.channel.send("Commande annulée");
                                 }
@@ -519,6 +498,13 @@ Pour annuler la commande cliquez sur ❌.`)
                         });
                     });
             }
+        }
+        
+        async function awaitResponse(message){
+            let responseFilter = m => m.author.id === message.author.id;
+            let response = await message.channel.awaitMessages(responseFilter, {max: 1});
+            let rescontent = response.first().content;
+            return rescontent;
         }
     }
 }
