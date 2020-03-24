@@ -108,6 +108,16 @@ module.exports = {
 		return days + (days === 1 ? " day" : " days") + " ago)";
 	},
 
+	makeid(length) {
+		var result           = '';
+		var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		var charactersLength = characters.length;
+		for ( var i = 0; i < length; i++ ) {
+		   result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		}
+		return result;
+	 },
+
 	async createProject(settings){
 		let merged = Object.assign({_id: mongoose.Types.ObjectId() }, settings);
 

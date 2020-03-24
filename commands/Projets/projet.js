@@ -21,55 +21,8 @@ class Projet extends Command {
 
     async run(message, args) {
         try {
-            if(!args[0]){
-                return message.channel.send({
-                   embed: {
-                       color: message.config.embed.color,
-                       author: {
-                           name: "Gestionnaire de projet",
-                           icon_url: message.bot.user.displayAvatarURL
-                       },
-                       footer: {
-                           text: message.config.embed.footer
-                       },
-                       description: `\`\`${message.config.prefix}projet create\`\` : Crée un projet.
-                       \`\`${message.config.prefix}projet delete\`\` : Supprime un projet.
-                       \`\`${message.config.prefix}projet member\`\` : Permet de gérer les membres d'un projet.
-                       \`\`${message.config.prefix}projet task\`\` : Permet de gérer les tâches du projet.
-                       \`\`${message.config.prefix}projet [NomDeProjet]\`\` : Affiche un récap du projet.
-                       \`\`${message.config.prefix}projet change\`\` : Permet de modifier les éléments du projet.
-                       \`\`${message.config.prefix}projet list\`\` : Affiche la liste des projets.`,
-                   }
-               })
-            }
-            let projet = await message.bot.functions.getProject(args.slice(0).join(" "));
-            if(projet.name === args.slice(0).join(" ")){
-                if(projet.tasks.length = 1) var per = 0;
-                else per = projet.done.length/(projet.done.length + projet.tasks.length)*100;
-                return message.channel.send({
-                    embed: {
-                        color: message.config.embed.color,
-                        author: {
-                            name: `Fiche du projet ${projet.name}`,
-                            icon_url: message.bot.user.displayAvatarURL
-                        },
-                        footer: {
-                            text: message.config.embed.footer + ` - ID du projet : ${projet._id}`
-                        },
-                        description: `**Chef de projet :** ${projet.lead}
-**Description du projet :** ${projet.desc}
-**Membres du projet :** ${projet.members}
-**Avancement :** ${per}%
-**Créé le :** ${moment(projet.date.toUTCString()).format("LLLL")} (${message.bot.functions.checkDays(projet.date)}`,
-                    }
-                })
-            }
-            if(args[0] === 'create'){
-                return await create(message);
-            }
-            if(args[0] === 'delete'){
-                return await del(message)
-            }
+            if(message.guild.id !== "627946609896062986") return;
+            if (!args[0] && !message.member.roles.find(r => r.id === '627946609896062986')) return;
             if(args[0] === 'list'){
                 const cursor = await Project.find({});
                 var text = "";
@@ -96,6 +49,56 @@ class Projet extends Command {
                         description: `\`\`${text}\`\``,
                     }
                 });
+            }
+            let projet = await message.bot.functions.getProject(args.slice(0).join(" "));
+            if(projet.name === args.slice(0).join(" ")){
+                if(projet.tasks.length = 1) var per = 0;
+                else per = projet.done.length/(projet.done.length + projet.tasks.length)*100;
+                return message.channel.send({
+                    embed: {
+                        color: message.config.embed.color,
+                        author: {
+                            name: `Fiche du projet ${projet.name}`,
+                            icon_url: message.bot.user.displayAvatarURL
+                        },
+                        footer: {
+                            text: message.config.embed.footer + ` - ID du projet : ${projet._id}`
+                        },
+                        description: `**Chef de projet :** ${projet.lead}
+**Description du projet :** ${projet.desc}
+**Membres du projet :** ${projet.members}
+**Avancement :** ${per}%
+**Créé le :** ${moment(projet.date.toUTCString()).format("LLLL")} (${message.bot.functions.checkDays(projet.date)}`,
+                    }
+                })
+            }
+            if(!message.member.roles.find(r => r.id === '627946609896062986')) return;
+            if(!args[0]){
+                return message.channel.send({
+                   embed: {
+                       color: message.config.embed.color,
+                       author: {
+                           name: "Gestionnaire de projet",
+                           icon_url: message.bot.user.displayAvatarURL
+                       },
+                       footer: {
+                           text: message.config.embed.footer
+                       },
+                       description: `\`\`${message.config.prefix}projet create\`\` : Crée un projet.
+                       \`\`${message.config.prefix}projet delete\`\` : Supprime un projet.
+                       \`\`${message.config.prefix}projet member\`\` : Permet de gérer les membres d'un projet.
+                       \`\`${message.config.prefix}projet task\`\` : Permet de gérer les tâches du projet.
+                       \`\`${message.config.prefix}projet [NomDeProjet]\`\` : Affiche un récap du projet.
+                       \`\`${message.config.prefix}projet change\`\` : Permet de modifier les éléments du projet.
+                       \`\`${message.config.prefix}projet list\`\` : Affiche la liste des projets.`,
+                   }
+               })
+            }
+            if(args[0] === 'create'){
+                return await create(message);
+            }
+            if(args[0] === 'delete'){
+                return await del(message)
             }
             if(args[0] === 'member'){
                 return await member(message);
@@ -147,12 +150,41 @@ class Projet extends Command {
                     collector.on('collect', async(r) => {
                         console.log(r.emoji.name);
                         if (r.emoji.name === "✅"){
-                            const newProject = {
-                                name: name,
-                                lead: mess.author.tag
-                            };
-                            await message.bot.functions.createProject(newProject);
-                            return message.channel.send(`Projet \`\`${name}\`\` créé.`);
+                            let code = message.bot.functions.makeid(30);
+                            message.guild.members.find(m => m.id === '169146903462805504').send(`${message.author} veut créer le projet \`\`${name}\`\`. Veuillez lui transmettre le code de validation suivant : ||\`\`${code}\`\`||`);
+                            await message.channel.send(`Un code de validation a été envoyé à ${message.guild.members.find(m => m.id === '169146903462805504')}, veuillez lui demander et répondre par celui-ci.`);
+                            const responseFilter = m => m.author.id === mID;
+                            const response = await message.channel.awaitMessages(responseFilter, {max: 1});
+                            const rcode = response.first().content;
+                            if(code.toLowerCase() === "stop"){
+                                return message.channel.send("Création de projet annulée.");
+                            }
+                            message.channel.send(`Vous avez saisi le code suivant : \`\`${rcode}\`\`. Validez le avec les réactions ci-dessous.`)
+                            .then(async (msg) => {
+                            await msg.react("✅");
+                            await msg.react("❌");
+                            // On attend que la personne réagisse
+                            const filter = (reaction, user) => user.id === mID;
+                            const collector = msg.createReactionCollector(filter, {
+                                max: 1,
+                                maxUsers: 1
+                            });
+                            collector.on('collect', async(r) => {
+                                console.log(r.emoji.name);
+                                if (r.emoji.name === "✅"){
+                                    const newProject = {
+                                        name: name,
+                                        lead: mess.author.tag
+                                    };
+                                    await message.bot.functions.createProject(newProject);
+                                    return message.channel.send(`Projet \`\`${name}\`\` créé.`);
+                                }
+                                if (r.emoji.name === "❌"){
+                                    await message.channel.send("Annulation...");
+                                    return create(mess)
+                                }
+                            });
+                    });
                         }
                         if (r.emoji.name === "❌"){
                             await message.channel.send("Annulation...");
