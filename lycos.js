@@ -6,6 +6,7 @@ const { promisify } = require("util"),
 	readdir = promisify(fs.readdir);
 const Enmap = require("enmap");
 const { Provider, Client: PictURLClient } = require("pict-url");
+const { GiveawaysManager } = require("discord-giveaways");
 /**
  * @class Lycos
  * @extends {Client}
@@ -23,6 +24,17 @@ class Lycos extends Client {
 		this.pictURL = new PictURLClient(Provider.Imgur);
 		// Here we load all our functions stored in functions.js
 		this.functions = require("./utils/functions");
+		this.gManager = new GiveawaysManager(this, {
+			storage: "./giveaways.json",
+			updateCountdownEvery: 15000,
+			default: {
+				botsCanWin: false,
+				exemptPermissions: [],
+				embedColor: "#1A61BB",
+				embedColorEnd: "#262626",
+				reaction: "🎉",
+			}
+		});
 		// Here we load all our Lavalink functions stored in lavalinkFunctions.js
 		/*this.lavalink = require("./utils/lavalinkFunctions");*/
 		// This will load our custom Logger class.

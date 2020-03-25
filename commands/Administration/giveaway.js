@@ -29,7 +29,7 @@ class giveaway extends Command {
                 if (!winnersCount) return message.channel.send(message.language.get("GIVEAWAY_NO_WINNERCOUNT"));
                 let prize = args.slice(3).join(" ");
                 if (!prize) return message.channel.send(message.language.get("GIVEAWAY_NO_PRIZE"));
-                this.giveawaysManager.start(message.channel, {
+                message.bot.gManager.start(message.channel, {
                     time: ms(time),
                     prize: prize,
                     winnerCount: winnersCount,
@@ -45,7 +45,7 @@ class giveaway extends Command {
                 let newTime = args[3];
                 if (!newTime) return message.channel.send(message.channel.get("GIVEAWAY_NO_NEWTIME"));
                 let newPrize = args.slice(4).join(" ");
-                this.giveawaysManager.edit(messageID, {
+                message.bot.gManager.edit(messageID, {
                     newWinnerCount: newWinners,
                     newPrize: newPrize,
                     addTime: ms(newTime)
@@ -57,7 +57,7 @@ class giveaway extends Command {
                 if (!messageID) return message.channel.send(message.language.get("GIVEAWAY_ERR_NO_ID"));
                 let winnersCount = parseInt(args[2]);
                 if (!winnersCount) return message.channel.send(message.language.get("GIVEAWAY_REROLL_NO_WINNERSCOUNT"));
-                this.giveawaysManager.reroll(messageID, {
+                message.bot.gManager.reroll(messageID, {
                     winnerCount: winnersCount,
                     messages: message.language.get("GIVEAWAY_REROLL_MESSAGES")
                 }).catch((err) => {
@@ -66,14 +66,14 @@ class giveaway extends Command {
             } else if (method === "end"){
                 let messageID = args[1];
                 if (!messageID) return message.channel.send(message.language.get("GIVEAWAY_ERR_NO_ID"));
-                this.giveawaysManager.end(messageID)
+                message.bot.gManager.end(messageID)
                     .catch((err) => {
                         message.channel.send(message.language.get("GIVEAWAY_ERR_MESSAGE_NOT_FOUND", messageID));
                     });
             } else if (method === "delete"){
                 let messageID = args[1];
                 if (!messageID) return message.channel.send(message.language.get("GIVEAWAY_ERR_NO_ID"));
-                this.giveawaysManager.delete(messageID)
+                message.bot.gManager.delete(messageID)
                     .catch((err) => {
                         message.channel.send(message.language.get("GIVEAWAY_ERR_MESSAGE_NOT_FOUND", messageID));
                 });

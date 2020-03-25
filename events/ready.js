@@ -1,4 +1,3 @@
-const { GiveawaysManager } = require("discord-giveaways");
 module.exports = class {
 	constructor(client) {
 		this.client = client;
@@ -39,16 +38,5 @@ module.exports = class {
 		}, 35000);
 		client.mongoose = require('../utils/mongoose');
 		client.mongoose.init();
-		this.giveawaysManager = new GiveawaysManager(client, {
-			storage: "./giveaways.json",
-			updateCountdownEvery: 15000,
-			default: {
-				botsCanWin: false,
-				exemptPermissions: [],
-				embedColor: "#1A61BB",
-				embedColorEnd: "#262626",
-				reaction: "🎉",
-			}
-		});
 	}
 };
