@@ -41,12 +41,14 @@ class Lycos extends Client {
 		this.logger = require("./utils/logger");
 		// This will load our errors file.
 		this.errors = require("./utils/errors");
+		
 		// This is where we'll store all guilds settings
 		this.guildsData = new Enmap({ name: "guilds", dataDir: "./database/guilds/" });
 		// This is where we'll store all users settings
 		this.usersData = new Enmap({ name: "users", dataDir: "./database/users/" });
 		// This is where we'll store all supports settings
 		this.supportsData = new Enmap({ name: "supports", dataDir: "./database/supports/" });
+		
 		this._launch();
 	}
 
