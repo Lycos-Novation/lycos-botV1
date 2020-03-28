@@ -73,7 +73,7 @@ class Projet extends Command {
                 if(projmembers.length === 1) {
                     text = projmembers[0];
                 } else {
-                    text = "• <@!" + projmembers[1] + ">";
+                    text = "\n• <@!" + projmembers[1] + ">";
                     for (let index = 2; index < projmembers.length; index++) {
                         const element = projmembers[index];
                         text = text + "\n• <@!" + element + ">";
@@ -85,13 +85,13 @@ class Projet extends Command {
                         footer: {
                             text: message.config.embed.footer + ` - ID du projet : ${projet._id}`
                         },
-                        description: `Fiche du projet \`\`${projet.name}\`\`
+                        description: `**__Fiche de projet__** | ${projet.name}
 
 **Chef de projet :** <@!${projet.lead}>
 **Description du projet :** ${projet.desc}
 **Membres du projet :** ${text}
 **Avancement :** ${per}%
-**Créé le :** ${moment(projet.date.toUTCString()).format("LLLL")} (${message.bot.functions.checkDays(projet.date)}`,
+**Créé le :** ${moment(projet.date.toUTCString()).format("LL")} (${message.bot.functions.checkDays(projet.date)}`,
                     }
                 })
             }
