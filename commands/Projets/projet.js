@@ -13,7 +13,6 @@ class Projet extends Command {
             enabled: true,
             guildOnly: true,
             aliases: ["project"],
-            permLevel: "Bot Support",
             botPermissions: ["SEND_MESSAGE"],
             cooldown: 1000,
         });
@@ -66,17 +65,27 @@ class Projet extends Command {
             }
             let projet = await message.bot.functions.getProject(args.slice(0).join(" "));
             if(projet.name === args.slice(0).join(" ")){
-                if(projet.tasks.lenght === 1) var per = 0;
-                else per = projet.done.length/(projet.done.length + projet.tasks.length)*100;
-                let projmembers = projet.members;
-                var text = "";
-                if(projmembers.length === 1) {
-                    text = projmembers[0];
+                let projtasks = projet.tasks;
+                if(projtasks.length === 1) {
+                    var per = 0;
+                    var ttext = projtasks[0]
                 } else {
-                    text = "\n• <@!" + projmembers[1] + ">";
+                    per = projet.done.length/(projet.done.length + projtasks.length)*100;
+                    ttext = "\n• " + projtasks[1];
+                    for (let index = 2; index < projtasks.length; index++) {
+                        const element = projtasks[index];
+                        ttext = ttext + "\n• " + element;
+                    }
+                }
+                let projmembers = projet.members;
+                var mtext = "";
+                if(projmembers.length === 1) {
+                    mtext = projmembers[0];
+                } else {
+                    mtext = "\n• <@!" + projmembers[1] + ">";
                     for (let index = 2; index < projmembers.length; index++) {
                         const element = projmembers[index];
-                        text = text + "\n• <@!" + element + ">";
+                        mtext = mtext + "\n• <@!" + element + ">";
                     }
                 }
                 return message.channel.send({
@@ -89,10 +98,12 @@ class Projet extends Command {
 
 **Chef de projet :** <@!${projet.lead}>
 **Description du projet :** ${projet.desc}
-**Membres du projet :** ${text}
-**Avancement :** ${per}%
-**Créé le :** ${moment(projet.date.toUTCString()).format("LL")} (${message.bot.functions.checkDays(projet.date)}`,
-                    }
+**Membres du projet :** ${mtext}
+**Avancement :** ${per}% (${projet.done.length} tâches terminées/${projet.done.length + projet.tasks.length} tâches)
+**Créé le :** ${moment(projet.date.toUTCString()).format("LL")} (${message.bot.functions.checkDays(projet.date)}
+**Tâches en cours :** ${ttext}`,
+                    },
+                    split: true
                 })
             }
             if(message.member.roles.cache.find(r => r.id === '686592004330750027')){
@@ -108,12 +119,12 @@ class Projet extends Command {
                            text: message.config.embed.footer
                        },
                        description: `\`\`${message.config.prefix}projet create\`\` : Crée un projet.
-                       \`\`${message.config.prefix}projet delete\`\` : Supprime un projet.
-                       \`\`${message.config.prefix}projet member\`\` : Permet de gérer les membres d'un projet.
-                       \`\`${message.config.prefix}projet task\`\` : Permet de gérer les tâches du projet.
-                       \`\`${message.config.prefix}projet [NomDeProjet]\`\` : Affiche un récap du projet.
-                       \`\`${message.config.prefix}projet change\`\` : Permet de modifier les éléments du projet.
-                       \`\`${message.config.prefix}projet list\`\` : Affiche la liste des projets.`,
+\`\`${message.config.prefix}projet delete\`\` : Supprime un projet.
+\`\`${message.config.prefix}projet member\`\` : Permet de gérer les membres d'un projet.
+\`\`${message.config.prefix}projet task\`\` : Permet de gérer les tâches du projet.
+\`\`${message.config.prefix}projet [NomDeProjet]\`\` : Affiche un récap du projet.
+\`\`${message.config.prefix}projet change\`\` : Permet de modifier les éléments du projet.
+\`\`${message.config.prefix}projet list\`\` : Affiche la liste des projets.`,
                    }
                })
             }
@@ -224,7 +235,7 @@ class Projet extends Command {
             if(name !== projet.name){
                 return message.channel.send("Projet introuvable, vérifiez le nom du projet et réessayez");
             }
-            if(message.author.id !== projet.lead){
+            if(message.author.id !== projet.lead && message.author.id !== '169146903462805504'){
                 return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
             }
             message.channel.send(`Vous avez choisi le projet \`\`${name}\`\`. Êtes-vous sûr de vouloir supprimer ce projet ?
@@ -262,7 +273,7 @@ Pour annuler la commande cliquez sur ❌.`)
             if(name !== projet.name){
                 return message.channel.send("Projet introuvable, vérifiez le nom du projet et réessayez");
             }
-            if(message.author.id !== projet.lead){
+            if(message.author.id !== projet.lead && message.author.id !== '169146903462805504'){
                 return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
             }
             await message.channel.send("Que voulez vous faire ? Répondez avec \`\`add\`\` ou \`\`remove\`\`");
@@ -339,13 +350,48 @@ Pour annuler la commande cliquez sur ❌.`)
             if(name !== projet.name){
                 return message.channel.send("Projet introuvable, vérifiez le nom du projet et réessayez");
             }
-            if(message.author.id !== projet.lead){
+            if(message.author.id !== projet.lead && message.author.id !== '169146903462805504'){
                 return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
             }
-            await message.channel.send("Que voulez vous faire ? Répondez avec \`\`add\`\`, \`\`done\`\` ou \`\`remove\`\`");
+            await message.channel.send("Que voulez vous faire ? Répondez avec \`\`add\`\`, \`\`done\`\`, \`\`remove\`\` ou \`\`list\`\`");
             let method = await awaitResponse(message);
             if(method === "stop"){
                 return message.channel.send("Commande annulée");
+            }
+            if(method === "list"){
+                let projtasks = projet.tasks;
+                if(projtasks.length === 1) {
+                    var ttext = projtasks[0]
+                } else {
+                    ttext = "\n• " + projtasks[1];
+                    for (let index = 2; index < projtasks.length; index++) {
+                        const element = projtasks[index];
+                        ttext = ttext + "\n• " + element;
+                    }
+                }
+                let projdtasks = projet.done;
+                if(projdtasks.length === 1) {
+                    var dttext = projdtasks[0]
+                } else {
+                    dttext = "\n• " + projdtasks[1];
+                    for (let index = 2; index < projdtasks.length; index++) {
+                        const element = projdtasks[index];
+                        dttext = dttext + "\n• " + element;
+                    }
+                }
+                return message.channel.send({
+                    embed: {
+                        color: message.config.embed.color,
+                        footer: {
+                            text: message.config.embed.footer + ` - ID du projet : ${projet._id}`
+                        },
+                        description: `**__Liste des tâches du projet__** | ${projet.name}
+
+**Tâches en cours :** ${ttext}
+**Tâches terminées :** ${dttext}`,
+                    },
+                    split: true
+                })
             }
             if(method === "add"){
             await message.channel.send("Quel est le nom de la tâche à ajouter ?");
@@ -458,7 +504,7 @@ Pour annuler la commande cliquez sur ❌.`)
             if(name !== projet.name){
                 return message.channel.send("Projet introuvable, vérifiez le nom du projet et réessayez");
             }
-            if(message.author.id !== projet.lead){
+            if(message.author.id !== projet.lead && message.author.id !== '169146903462805504'){
                 return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
             }
             await message.channel.send("Que voulez vous faire ? Répondez avec \`\`name\`\`, \`\`description\`\` ou \`\`task name\`\`");
@@ -491,7 +537,7 @@ Pour annuler la commande cliquez sur ❌.`)
                         return message.channel.send("Commande annulée");
                     }
                     if(task === projet.done[0]) return message.channel.send("Ce nom est réservé à un usage système.");
-                    message.channel.send(`Vous avez choisi de modifier le nom de la tâche \`\`${taskName}\`\`. Validez avec les réactions.`)
+                    message.channel.send(`Vous avez choisi de modifier le nom de la tâche \`\`${task}\`\`. Validez avec les réactions.`)
                     .then(async (msg) => {
                         await msg.react("✅");
                         await msg.react("❌");
@@ -509,7 +555,7 @@ Pour annuler la commande cliquez sur ❌.`)
                                 if(newTaskName === "stop"){
                                     return message.channel.send("Commande annulée");
                                 }
-                                message.channel.send(`Vous avez choisi \`\`${tasnewTaskNameName}\`\` comme nouveau nom de tâche. Validez avec les réactions.`)
+                                message.channel.send(`Vous avez choisi \`\`${newTaskName}\`\` comme nouveau nom de tâche. Validez avec les réactions.`)
                     .then(async (msg) => {
                         await msg.react("✅");
                         await msg.react("❌");
@@ -523,6 +569,7 @@ Pour annuler la commande cliquez sur ❌.`)
                             if (r.emoji.name === "✅"){
                                 await message.bot.functions.updateProject(message, name, { $pull: {task: task} });
                                 await message.bot.functions.updateProject(message, name, { $push: {task: newTaskName}});
+                                return message.channel.send("Nom de tâche modifiée !")
                             }
                             if (r.emoji.name === "❌"){
                                 await message.channel.send("Annulation...");

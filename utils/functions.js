@@ -69,7 +69,7 @@ module.exports = {
 		if(message.channel.type !== "dm") {
 			const prefixes = [
 				`<@${message.client.user.id}>`,
-				"Denver",
+				"Lycos",
 				message.settings.prefix,
 			];
 			let prefix = null;

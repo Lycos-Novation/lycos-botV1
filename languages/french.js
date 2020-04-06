@@ -180,7 +180,7 @@ module.exports = class {
 				"Région",
 				"Niveau de vérification",
 			],
-			USERINFO_DESCRIPTION: "Affiche les informationssur l'utilisateur.",
+			USERINFO_DESCRIPTION: "Affiche les informations sur l'utilisateur.",
 			USERINFO_USAGE: (prefix) => `${prefix}userinfo (@user)`,
 			USERINFO_EXAMPLES: (prefix) => `${prefix}userinfo @Lycos`,
 			USERINFO_TITLES: [
