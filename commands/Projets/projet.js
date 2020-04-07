@@ -21,22 +21,6 @@ class Projet extends Command {
     async run(message, args) {
         try {
             if(message.guild.id !== "627946609896062986") return;
-            if (!args[0] && !message.member.roles.cache.find(r => r.id === '686592004330750027')) {
-                return message.channel.send({
-                    embed: {
-                        color: message.config.embed.color,
-                        author: {
-                            name: "Gestionnaire de projet",
-                            icon_url: message.bot.user.displayAvatarURL
-                        },
-                        footer: {
-                            text: message.config.embed.footer
-                        },
-                        description: `\`\`${message.config.prefix}projet [NomDeProjet]\`\` : Affiche un récap du projet.
-                        \`\`${message.config.prefix}projet list\`\` : Affiche la liste des projets.`,
-                    }
-                })
-            }
             if (args[0] === 'list'){
                 const cursor = await Project.find({});
                 var text = "";
@@ -106,7 +90,6 @@ class Projet extends Command {
                     split: true
                 })
             }
-            if(message.member.roles.cache.find(r => r.id === '686592004330750027')){
             if(!args[0]){
                 return message.channel.send({
                    embed: {
@@ -143,9 +126,6 @@ class Projet extends Command {
             if(args[0] === "change"){
                 return await change(message);
             }
-        } else {
-            return message.channel.send(`Tu n'as pas le rôle Lead Project pour faire ça !`);
-        }
 
         } catch(error) {
             console.error(error);
@@ -235,8 +215,8 @@ class Projet extends Command {
             if(name !== projet.name){
                 return message.channel.send("Projet introuvable, vérifiez le nom du projet et réessayez");
             }
-            if(message.author.id !== projet.lead && message.author.id !== '169146903462805504'){
-                return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
+            if(message.author.id !== projet.lead && message.author.id !== '169146903462805504' && projet.members.indexOf(message.author.id) === -1){
+                return message.channel.send("Vous n'êtes pas un membre du projet !");
             }
             message.channel.send(`Vous avez choisi le projet \`\`${name}\`\`. Êtes-vous sûr de vouloir supprimer ce projet ?
 ⚠️ **__Cette action est définitive et irréversible ! En cliquant sur ✅, vous supprimerez ce projet, il sera impossible de le récupérer.__**
@@ -273,8 +253,8 @@ Pour annuler la commande cliquez sur ❌.`)
             if(name !== projet.name){
                 return message.channel.send("Projet introuvable, vérifiez le nom du projet et réessayez");
             }
-            if(message.author.id !== projet.lead && message.author.id !== '169146903462805504'){
-                return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
+            if(message.author.id !== projet.lead && message.author.id !== '169146903462805504' && projet.members.indexOf(message.author.id) === -1){
+                return message.channel.send("Vous n'êtes pas un membre du projet !");
             }
             await message.channel.send("Que voulez vous faire ? Répondez avec \`\`add\`\` ou \`\`remove\`\`");
             let method = await awaitResponse(message);
@@ -322,7 +302,8 @@ Pour annuler la commande cliquez sur ❌.`)
                 await msg.react("✅");
                 await msg.react("❌");
                 // On attend que la personne réagisse
-                collector = msg.createReactionCollector(filter, {
+                const filter = (reaction, user) => user.id === message.author.id;
+                var collector = msg.createReactionCollector(filter, {
                     max: 1,
                     maxUsers: 1
                 });
@@ -350,8 +331,8 @@ Pour annuler la commande cliquez sur ❌.`)
             if(name !== projet.name){
                 return message.channel.send("Projet introuvable, vérifiez le nom du projet et réessayez");
             }
-            if(message.author.id !== projet.lead && message.author.id !== '169146903462805504'){
-                return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
+            if(message.author.id !== projet.lead && message.author.id !== '169146903462805504' && projet.members.indexOf(message.author.id) === -1){
+                return message.channel.send("Vous n'êtes pas un membre du projet !");
             }
             await message.channel.send("Que voulez vous faire ? Répondez avec \`\`add\`\`, \`\`done\`\`, \`\`remove\`\` ou \`\`list\`\`");
             let method = await awaitResponse(message);
@@ -504,8 +485,8 @@ Pour annuler la commande cliquez sur ❌.`)
             if(name !== projet.name){
                 return message.channel.send("Projet introuvable, vérifiez le nom du projet et réessayez");
             }
-            if(message.author.id !== projet.lead && message.author.id !== '169146903462805504'){
-                return message.channel.send("Vous n'êtes pas le Lead Project de ce projet !");
+            if(message.author.id !== projet.lead && message.author.id !== '169146903462805504' && projet.members.indexOf(message.author.id) === -1){
+                return message.channel.send("Vous n'êtes pas un membre du projet !");
             }
             await message.channel.send("Que voulez vous faire ? Répondez avec \`\`name\`\`, \`\`description\`\` ou \`\`task name\`\`");
             let method = await awaitResponse(message);
