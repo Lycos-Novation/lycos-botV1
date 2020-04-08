@@ -74,5 +74,21 @@ module.exports = {
 		members: ["Aucun membre n'a été ajouté au projet."],
 		tasks: ["Aucune tâche n'a été ajoutée au projet."],
 		done: ["Aucune tâche n'a été terminée."],
+	},
+	defaultSettingsGuild: {
+		channels: {
+			welcome: null,
+			leave: null,
+			logs: null,
+			modlogs: null,
+			suggestions: null,
+		},
+		modules: {
+			welcome: false,
+			leave: false,
+			games: false,
+			nsfw: false,
+			nsfwHentai: false,
+		},
 	}
 };

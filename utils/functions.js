@@ -1,4 +1,4 @@
-const {Project} = require('../models');
+const {Project, Guild} = require('../models');
 const mongoose = require('mongoose');
 const config = require('../config');
 module.exports = {
@@ -7,36 +7,31 @@ module.exports = {
 	 * @returns The guild data
 	 * @param message
 	 */
-	getData(message) {
+	async getData(message) {
 		if (message.channel.guild) {
-			if (message.bot.guildsData.get(message.guild.id)) {
-				return ({ ...message.bot.guildsData.get("default-data"), ...message.bot.guildsData.get(message.guild.id) });
-			}
-			else if (!message.bot.guildsData.get(message.guild.id)) {
-				message.bot.guildsData.ensure("default-data", {
-					language: message.bot.config.defaultLanguage,
-					prefix: message.bot.config.prefix,
-					channels: {
-						welcome: null,
-						leave: null,
-						logs: null,
-						modlogs: null,
-						suggestions: null,
-					},
-					modules: {
-						welcome: false,
-						leave: false,
-						games: false,
-						nsfw: false,
-						nsfwHentai: false,
-					},
-				});
-				return message.bot.guildsData.get("default-data");
+			var data = await Guild.findOne({ guildId: message.guild.id});
+			if(data){
+				return data;
+			} else if (!data){
+				const settings = {
+					guildId: message.guild.id,
+					guildName: message.guild.name,
+					language: config.defaultLanguage,
+					prefix: config.prefix
+				};
+				let merged = Object.assign({_id: mongoose.Types.ObjectId() }, settings);
+
+				const newGuild = await new Guild(merged);
+				await newGuild.save()
+					.then(g => {
+						console.log(`Nouveau serveur ajouté : ${g.guildName} - ${g.guildId} `)
+					});
+				return merged
 			}
 		}
 		else {
 			return ({
-				language: message.bot.config.defaultLanguage,
+				language: config.defaultLanguage,
 				prefix: "",
 				modules: {
 					games: false,

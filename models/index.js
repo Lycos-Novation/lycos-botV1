@@ -1,3 +1,4 @@
 module.exports = {
-    Project: require('./schemaProject')
+    Project: require('./schemaProject'),
+    Guild: require('./schemaGuild')
 };
