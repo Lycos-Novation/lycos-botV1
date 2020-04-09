@@ -26,7 +26,8 @@ module.exports = {
 					.then(g => {
 						console.log(`Nouveau serveur ajouté : ${g.guildName} - ${g.guildId} `)
 					});
-				return merged
+				var data = await Guild.findOne({ guildId: message.guild.id});
+				return data
 			}
 		}
 		else {
