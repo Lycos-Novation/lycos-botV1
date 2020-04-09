@@ -29,7 +29,7 @@ module.exports = {
 				var data = await Guild.findOne({ guildId: message.guild.id});
 				return data
 			}
-		}
+		}/*
 		else {
 			return ({
 				language: config.defaultLanguage,
@@ -40,7 +40,7 @@ module.exports = {
 					nsfwHentai: false,
 				},
 			});
-		}
+		}*/
 	},
 
 	getUser(message, id) {
@@ -52,7 +52,9 @@ module.exports = {
 			if (message.bot.supportsData.get(`${args}`)) {
 				return ({ ...message.bot.supportsData.get(`${args}`) });
 			}
-			else {return false;}
+			else {
+				return false;
+			}
 		}
 	},
 
