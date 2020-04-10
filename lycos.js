@@ -7,6 +7,8 @@ const { promisify } = require("util"),
 const Enmap = require("enmap");
 const { Provider, Client: PictURLClient } = require("pict-url");
 const { GiveawaysManager } = require("discord-giveaways");
+const logs = require('discord-logs');
+
 /**
  * @class Lycos
  * @extends {Client}
@@ -35,6 +37,7 @@ class Lycos extends Client {
 				reaction: "🎉",
 			}
 		});
+		logs(this);
 		// Here we load all our Lavalink functions stored in lavalinkFunctions.js
 		/*this.lavalink = require("./utils/lavalinkFunctions");*/
 		// This will load our custom Logger class.

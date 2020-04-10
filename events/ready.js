@@ -11,7 +11,7 @@ module.exports = class {
 		}
 		// Logs some information using the logger file
 		console.log(`[Commands] - Loading a total of ${client.commands.size} command(s).`);
-		client.logger.log(`${client.user.tag}. On ${client.guilds.size} server(s).`, "ready");
+		client.logger.log(`${client.user.tag}. On ${client.guilds.cache.size} server(s).`, "ready");
 
 		// Update the game every 20s
 		const games = [

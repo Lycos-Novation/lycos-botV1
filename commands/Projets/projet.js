@@ -50,11 +50,11 @@ class Projet extends Command {
             let projet = await message.bot.functions.getProject(args.slice(0).join(" "));
             if(projet.name === args.slice(0).join(" ")){
                 let projtasks = projet.tasks;
-                if(projtasks.length === 1) {
+                if(projtasks.length === 1 || projet.done.lenght === 1) {
                     var per = 0;
                     var ttext = projtasks[0]
                 } else {
-                    per = projet.done.length/(projet.done.length + projtasks.length)*100;
+                    per = (projet.done.length-1)/(projet.done.length + projtasks.length)*100;
                     ttext = "\n• " + projtasks[1];
                     for (let index = 2; index < projtasks.length; index++) {
                         const element = projtasks[index];
@@ -83,7 +83,7 @@ class Projet extends Command {
 **Chef de projet :** <@!${projet.lead}>
 **Description du projet :** ${projet.desc}
 **Membres du projet :** ${mtext}
-**Avancement :** ${per}% (${projet.done.length} tâches terminées/${projet.done.length + projet.tasks.length} tâches)
+**Avancement :** ${per}% (${projet.done.length - 1} tâches terminées/${projet.done.length + projet.tasks.length - 2} tâches)
 **Créé le :** ${moment(projet.date.toUTCString()).format("LL")} (${message.bot.functions.checkDays(projet.date)}
 **Tâches en cours :** ${ttext}`,
                     },
@@ -165,6 +165,7 @@ class Projet extends Command {
                         if (r.emoji.name === "✅"){
                             let code = message.bot.functions.makeid(30);
                             message.guild.members.cache.find(m => m.id === '169146903462805504').send(`${message.author} veut créer le projet \`\`${name}\`\`. Veuillez lui transmettre le code de validation suivant : ||\`\`${code}\`\`||`);
+                            //console.log(code);
                             await message.channel.send(`Un code de validation a été envoyé à ${message.guild.members.cache.find(m => m.id === '169146903462805504')}, veuillez lui demander et répondre par celui-ci.`);
                             var rcode = await awaitResponse(message);
                             if(rcode.toLowerCase() === "stop"){

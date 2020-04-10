@@ -43,10 +43,6 @@ module.exports = {
 		}*/
 	},
 
-	getUser(message, id) {
-		return message.bot.usersData.get(id);
-	},
-
 	getSupport(message, args) {
 		if(message.channel.guild) {
 			if (message.bot.supportsData.get(`${args}`)) {
