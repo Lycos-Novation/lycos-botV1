@@ -7,40 +7,40 @@ module.exports = {
 	 * @returns The guild data
 	 * @param message
 	 */
-	async getData(message) {
-		if (message.channel.guild) {
-			var data = await Guild.findOne({ guildId: message.guild.id});
-			if(data){
-				return data;
-			} else if (!data){
-				const settings = {
-					guildId: message.guild.id,
-					guildName: message.guild.name,
-					language: config.defaultLanguage,
-					prefix: config.prefix
-				};
-				let merged = Object.assign({_id: mongoose.Types.ObjectId() }, settings);
-
-				const newGuild = await new Guild(merged);
-				await newGuild.save()
-					.then(g => {
-						console.log(`Nouveau serveur ajouté : ${g.guildName} - ${g.guildId} `)
-					});
-				var data = await Guild.findOne({ guildId: message.guild.id});
-				return data
-			}
-		}/*
-		else {
-			return ({
+	async getDataGuild(gd) {
+		var data = await Guild.findOne({ guildId: gd.id});
+		if(data){
+			return data;
+		} else if (!data){
+			const settings = {
+				guildId: gd.id,
+				guildName: gd.name,
 				language: config.defaultLanguage,
-				prefix: "",
-				modules: {
-					games: false,
-					nsfw: false,
-					nsfwHentai: false,
-				},
-			});
-		}*/
+				prefix: config.prefix
+			};
+			let merged = Object.assign({_id: mongoose.Types.ObjectId() }, settings);
+			const newGuild = await new Guild(merged);
+			await newGuild.save()
+				.then(g => {
+					console.log(`Nouveau serveur ajouté : ${g.guildName} - ${g.guildId} `)
+				});
+			var data = await Guild.findOne({ guildId: gd.id});
+			return data
+		}
+	},
+
+	async updateGuild(g, settings){
+		let data = g;
+
+		if (typeof data !== 'object') data = {};
+		for (const key in settings) {
+			if (settings.hasOwnProperty(key)) {
+				if (data[key] !== settings[key]) data[key] = settings[key];
+				else return;
+			}
+		}
+		console.log(`Serveur ${data.name} - Modifications : ${Object.keys(settings)}`);
+		return await data.updateOne(settings);
 	},
 
 	getSupport(message, args) {

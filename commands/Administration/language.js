@@ -19,7 +19,7 @@ class Language extends Command {
 		});
 	}
 
-	run(message, args) {
+	async run(message, args) {
 		try {
 			if (!args[0]) {
 				return message.channel.send(message.language.get("LANGUAGE_INFO", message.settings.language, message.settings.prefix));
@@ -32,13 +32,14 @@ class Language extends Command {
 					return message.channel.send(message.language.get("LANGUAGE_NULL"))
 				}
 				else if (languages.includes(args[1].toLowerCase())) {
-					if (message.settings.language === args[1].toLowerCase()) {
+					const g = await message.bot.functions.getDataGuild(message.guild);
+					if (g.language === args[1].toLowerCase()) {
 						return message.channel.send(message.language.get("LANGUAGE_ALREADY_SET", args))
 					}
 					else {
-						if (!message.bot.guildsData.has(message.guild.id)) {message.bot.guildsData.set(message.guild.id, {});}
-						message.bot.guildsData.set(message.guild.id, args[1].toLowerCase(), "language");
-						return message.channel.send(message.language.get("LANGUAGE_GUILD_INFO", args));
+						await message.bot.functions.updateGuild(g, {language: args[1].toLowerCase()})
+						.then(message.channel.send(message.language.get("LANGUAGE_GUILD_INFO", args)));
+						return;
 					}
 				}
 				else {

@@ -18,8 +18,9 @@ class Prefix extends Command {
 		});
 	}
 
-	run(message, args) {
+	async run(message, args) {
 		try {
+			const g = await message.bot.functions.getDataGuild(message.guild);
 			if (!args[0]) {
 				return message.channel.send(message.language.get("PREFIX_INFO", message.settings.prefix));
 			}
@@ -28,12 +29,12 @@ class Prefix extends Command {
 					return message.channel.send(message.language.get("PREFIX_NULL"));
 				}
 				else {
-					message.bot.guildsData.set(message.guild.id, args[1], "prefix");
+					await message.bot.functions.updateGuild(g, {prefix: args[1]});
 					return message.channel.send(message.language.get("PREFIX_CHANGE", args));
 				}
 			}
 			if (args[0] === "reset") {
-				message.bot.guildsData.set(message.guild.id, ".", "prefix");
+				await message.bot.functions.updateGuild(g, {prefix: "."});
 				return message.channel.send(message.language.get("PREFIX_RESET"));
 			}
 		}

@@ -18,7 +18,7 @@ module.exports = class {
 		message.bot = client;
 
 		// Gets settings
-		const settings = await client.functions.getData(message);
+		const settings = await client.functions.getDataGuild(message.guild);
 		message.settings = settings;
 
 		// Gets language

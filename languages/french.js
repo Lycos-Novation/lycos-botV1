@@ -418,7 +418,11 @@ module.exports = class {
             MEMBERCOUNT_NO_METHOD: "Veuillez indiquer dans quoi voulez-vous faire apparaître votre compteur : channel/category",
             MEMBERCOUNT_MEMBERS: "membres",
             MEMBERCOUNT_UNVALID_METHOD: "Je n'ai pas compris dans quoi vous souhaitez faire apparaître votre compteur : channel/category",
-            MEMBERCOUNT_CHANNEL_EXISTS: (salon) => `Le compteur de membres est déjà présent sur le serveur : ${salon.type === "category" ? `catégorie ${salon.name}`: `<#${salon.id}>`}`,
+			MEMBERCOUNT_CHANNEL_EXISTS: (salon) => `Le compteur de membres est déjà présent sur le serveur : ${salon.type === "category" ? `catégorie ${salon.name}`: `<#${salon.id}>`}`,
+			SETLOGS_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les logs. ${g.channels.logs === null ? `Il n'y a actuellement aucun salon d'affichage des logs`: `Le salon d'affichage des logs est actuellement <#${g.channels.logs}>`}`,
+			SETLOGS_SAME: (c) => `<#${c}> est déjà le salon d'affichage des logs.`,
+			SETLOGS_SUCCESS: (c) => `Les logs seront désormais affichées dans le salon <#${c}>`,
+
         };
 		function date(date1){
 			let d = date1.split("-");
