@@ -21,7 +21,7 @@ class memberCount extends Command {
     run(message, args) {
         try {
             let method = args[0];
-            let salon = message.guild.channels.find(c => c.name === `${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`);
+            let salon = message.guild.channels.cache.find(c => c.name === `${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`);
             if (!method) {
                 if (salon) {
                     salon.delete("Membercount")
@@ -33,15 +33,17 @@ class memberCount extends Command {
             } else {
                 if (salon) return message.channel.send(message.language.get("MEMBERCOUNT_CHANNEL_EXISTS", salon));
                 if (method === "category") {
-                    message.guild.createChannel(`${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`, {
-                        type: 'category'
+                    message.guild.channels.create(`${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`, {
+                        type: 'category',
+                        reason: "Membercount"
                     })
-                        .then(c => message.guild.channels.get(c.id).setPosition(0))
+                        .then(c => message.guild.channels.cache.get(c.id).setPosition(0))
                         .catch(console.error)
                 } else if (method === "channel") {
-                    message.guild.createChannel(`${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`, {
+                    message.guild.channels.create(`${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`, {
                         type: 'voice',
-                        position: 0
+                        position: 0,
+                        reason: "Membercount"
                     })
                         .then()
                         .catch(console.error)

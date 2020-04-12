@@ -448,16 +448,14 @@ module.exports = class {
 			SETMODLOGS_SUCCESS: (c) => `Les logs de modération seront désormais affichées dans le salon <#${c}>`,
 			LOGS_CHANNEL_CREATE_TITLE: `Un nouveau salon a été créé !`,
 			LOGS_CHANNEL_CREATE_DESC: (c) => `**${c.name}** - ${c} (${c.id})
-**Créé le :** ${moment(c.createdAt.toUTCString()).format("LLLL")}
-**Dans la catégorie :** ${c.parent} (${c.parent.id})
+**Créé le :** ${moment(c.createdAt.toUTCString()).format("LLLL")}${c.parent ? `\n**Dans la catégorie :** ${c.parent} (${c.parent.id})` : ``}
 **Type de salon :** ${c.type}
 **Position dans la catégorie :** ${c.position}
 **Position dans le serveur :** ${c.rawPosition}`,
 			LOGS_CHANNEL_DELETE_TITLE: "Un salon a été supprimé !",
 			LOGS_CHANNEL_DELETE_DESC: (c) => `**${c.name}** - (${c.id})
 **Créé le :** ${moment(c.createdAt.toUTCString()).format("LLLL")}
-**Supprimé le :** ${moment(new Date()).format("LLLL")}
-**Dans la catégorie :** ${c.parent} (${c.parent.id})
+**Supprimé le :** ${moment(new Date()).format("LLLL")}${c.parent ? `\n**Dans la catégorie :** ${c.parent} (${c.parent.id})` : ``}
 **Type de salon :** ${c.type}
 **Position dans la catégorie :** ${c.position}
 **Position dans le serveur :** ${c.rawPosition}`,
