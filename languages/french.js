@@ -445,6 +445,12 @@ module.exports = class {
 **Type de salon :** ${c.type}
 **Position dans la catégorie :** ${c.position}
 **Position dans le serveur :** ${c.rawPosition}`,
+			LOGS_GUILD_MEMBER_ADD_TITLE: "Arrivée d'un nouveau membre !",
+			LOGS_GUILD_MEMBER_ADD_DESC: (m) => `${m} - **${m.user.tag}** est arrivé sur **__${m.guild.name}__** !
+Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
+			LOGS_GUILD_MEMBER_REMOVE_TITLE: "Départ d'un membre !",
+			LOGS_GUILD_MEMBER_REMOVE_DESC: (m) => `${m} - **${m.user.tag}** est parti de **__${m.guild.name}__** !
+Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
         };
 		function date(date1){
 			let d = date1.split("-");

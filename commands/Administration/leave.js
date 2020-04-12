@@ -30,7 +30,7 @@ class Leave extends Command {
             if (cid === g.channels.leave) {
                 return message.channel.send(message.language.get("SETLEAVE_SAME", cid))
             }
-            await message.bot.functions.updateGuild(g, {"channels.welcome": cid});
+            await message.bot.functions.updateGuild(g, {"channels.leave": cid});
             return message.channel.send(message.language.get("SETLEAVE_SUCCESS", cid));
 		}
 		catch (error) {
