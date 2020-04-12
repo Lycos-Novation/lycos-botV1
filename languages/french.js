@@ -430,6 +430,15 @@ module.exports = class {
 			SETLEAVE_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les départs. ${g.channels.leave === null ? `Il n'y a actuellement aucun salon d'affichage des départs.`: `Le salon d'affichage des départs est actuellement <#${g.channels.leave}>`}`,
 			SETLEAVE_SAME: (c) => `<#${c}> est déjà le salon d'affichage des départs.`,
 			SETLEAVE_SUCCESS: (c) => `Les départs seront désormais affichées dans le salon <#${c}>`,
+			SETREPORTS_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les signalements. ${g.channels.reports === null ? `Il n'y a actuellement aucun salon d'affichage des signalements.`: `Le salon d'affichage des signalements est actuellement <#${g.channels.reports}>`}`,
+			SETREPORTS_SAME: (c) => `<#${c}> est déjà le salon d'affichage des signalements.`,
+			SETREPORTS_SUCCESS: (c) => `Les signalements seront désormais affichées dans le salon <#${c}>`,
+			SETNOTIF_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel créer le RoleReaction. ${g.channels.rolereaction === null ? `Il n'y a actuellement aucun salon pour le RoleReaction.`: `Le salon du RoleReaction est actuellement <#${g.channels.reporolereactionrts}>`}`,
+			SETNOTIF_SAME: (c) => `<#${c}> est déjà le salon du RoleReaction.`,
+			SETNOTIF_SUCCESS: (c) => `Le RoleReaction sera dans le salon <#${c}>`,
+			SETMODLOGS_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les logs de modération. ${g.channels.modlogs === null ? `Il n'y a actuellement aucun salon d'affichage des logs de modération.`: `Le salon d'affichage des logs de modération est actuellement <#${g.channels.modlogs}>`}`,
+			SETMODLOGS_SAME: (c) => `<#${c}> est déjà le salon d'affichage des logs de modération.`,
+			SETMODLOGS_SUCCESS: (c) => `Les logs de modération seront désormais affichées dans le salon <#${c}>`,
 			LOGS_CHANNEL_CREATE_TITLE: `Un nouveau salon a été créé !`,
 			LOGS_CHANNEL_CREATE_DESC: (c) => `**${c.name}** - ${c} (${c.id})
 **Créé le :** ${moment(c.createdAt.toUTCString()).format("LLLL")}

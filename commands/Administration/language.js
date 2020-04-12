@@ -14,6 +14,7 @@ class Language extends Command {
 			permLevel: "Server Admin",
 			botPermissions: ["EMBED_LINKS"],
 			nsfw: false,
+			aliases: ["lang"],
 			adminOnly: true,
 			cooldown: 1000,
 		});

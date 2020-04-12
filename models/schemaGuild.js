@@ -34,6 +34,14 @@ const guildSchema = new Schema({
             type: String,
             default: defaults.channels.suggestions
         },
+        rolereaction: {
+            type: String,
+            default: defaults.channels.rolereaction
+        },
+        reports: {
+            type: String,
+            default: defaults.channels.reports
+        }
     },
     modules: {
         welcome: {
