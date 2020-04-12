@@ -424,6 +424,12 @@ module.exports = class {
 			SETLOGS_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les logs. ${g.channels.logs === null ? `Il n'y a actuellement aucun salon d'affichage des logs`: `Le salon d'affichage des logs est actuellement <#${g.channels.logs}>`}`,
 			SETLOGS_SAME: (c) => `<#${c}> est déjà le salon d'affichage des logs.`,
 			SETLOGS_SUCCESS: (c) => `Les logs seront désormais affichées dans le salon <#${c}>`,
+			SETJOIN_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les arrivées. ${g.channels.welcome === null ? `Il n'y a actuellement aucun salon d'affichage des arrivées.`: `Le salon d'affichage des arrivées est actuellement <#${g.channels.welcome}>`}`,
+			SETJOIN_SAME: (c) => `<#${c}> est déjà le salon d'affichage des arrivées.`,
+			SETJOIN_SUCCESS: (c) => `Les arrivées seront désormais affichées dans le salon <#${c}>`,
+			SETLEAVE_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les départs. ${g.channels.leave === null ? `Il n'y a actuellement aucun salon d'affichage des départs.`: `Le salon d'affichage des départs est actuellement <#${g.channels.leave}>`}`,
+			SETLEAVE_SAME: (c) => `<#${c}> est déjà le salon d'affichage des départs.`,
+			SETLEAVE_SUCCESS: (c) => `Les départs seront désormais affichées dans le salon <#${c}>`,
 			LOGS_CHANNEL_CREATE_TITLE: `Un nouveau salon a été créé !`,
 			LOGS_CHANNEL_CREATE_DESC: (c) => `**${c.name}** - ${c} (${c.id})
 **Créé le :** ${moment(c.createdAt.toUTCString()).format("LLLL")}
