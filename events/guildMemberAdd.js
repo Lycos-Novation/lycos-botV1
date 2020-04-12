@@ -7,6 +7,9 @@ module.exports = class {
 
 	async run(member) {
 		const g = await functions.getDataGuild(member.guild);
+		if(g.autorole.length > 0) {
+			member.roles.add(g.autorole, "Autorole")
+		}
 		const lang = new (require(`../languages/${g.language}.js`));
 		if(g.channels.welcome === null) return;
 		return member.guild.channels.cache.find(c => c.id === g.channels.welcome).send({

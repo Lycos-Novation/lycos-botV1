@@ -13,6 +13,7 @@ const guildSchema = new Schema({
         type: String,
         default: defaults.prefix
     },
+    autorole: [],
     channels: {
         welcome: {
             type: String,
