@@ -38,13 +38,14 @@ class Role extends Command {
 						else {return message.channel.send(message.language.get("ERROR_MUCH_USERS_FOUND"));}
 					}
 
-					const role = message.guild.roles.find((r) => r.name === args.slice(2).join(" "));
-					if (!role) {
+					let r = message.guild.roles.resolve(args[2]) || message.guild.roles.resolveID(args[2]);
+            		let rid = r.toString().slice(3, r.toString().length -1) || r.id;
+					if (!r) {
 						return message.channel.send(message.language.get("ERROR_ROLE_INVALID"));
 					}
 					else {
-						return member.addRole(role)
-							.then(message.channel.send(message.language.get("ROLE_GIVE", member, role)))
+						return member.roles.add(rid)
+							.then(message.channel.send(message.language.get("ROLE_GIVE", member, rid)))
 							.catch((error) => message.channel.send(message.language.get("ERROR", error)));
 					}
 				}
@@ -62,13 +63,14 @@ class Role extends Command {
 						else return message.channel.send(message.language.get("ERROR_MUCH_USERS_FOUND"));
 					}
 
-					const role = message.guild.roles.find((r) => r.name === args.slice(2).join(" "));
-					if (!role) {
+					let r = message.guild.roles.resolve(args[2]) || message.guild.roles.resolveID(args[2]);
+            		let rid = r.toString().slice(3, r.toString().length -1) || r.id;
+					if (!r) {
 						return message.channel.send(message.language.get("ERROR_ROLE_INVALID"));
 					}
 					else {
-						return member.removeRole(role)
-							.then(message.channel.send(message.language.get("ROLE_REMOVE", member, role)))
+						return member.roles.remove(rid)
+							.then(message.channel.send(message.language.get("ROLE_REMOVE", member, rid)))
 							.catch((error) => message.channel.send(message.language.get("ERROR", error)));
 					}
 				}
