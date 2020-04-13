@@ -11,7 +11,7 @@ class roleMention extends Command {
             enabled: true,
             guildOnly: true,
             permLevel: "Server Admin",
-            botPermissions: ["MANAGE_ROLES"],
+            botPermissions: ["MANAGE_ROLES", "MENTION_EVERYONE"],
             nsfw: false,
             adminOnly: false,
             cooldown: 1000,
@@ -20,16 +20,10 @@ class roleMention extends Command {
 
     async run(message, args) {
         try {
-            let role = message.guild.roles.find(r => r.id === args[0]) || message.guild.roles.find(r => r.name === args.slice(0).join(" "));
-            if (!role) return message.channel.send(message.language.get("ROLEMENTION_ROLE_NOT_FOUND"));
-            if (role.comparePositionTo(message.guild.roles.find(r => r.name === "LycosTests")) > 0) return message.channel.send(message.language.get("ROLEMENTION_ROLE_HIGHEST"));
-            if (!role.mentionable) {
-                await role.setMentionable(true);
-                message.channel.send(`<@&${role.id}>`);
-                await role.setMentionable(false);
-            } else {
-                message.channel.send(`<@&${role.id}>`)
-            }
+            let r = message.guild.roles.resolve(args[0]) || message.guild.roles.resolveID(args[0]);
+            if (!r) return message.channel.send(message.language.get("ROLEMENTION_ROLE_NOT_FOUND"));
+            let rid = r.toString().slice(3, r.toString().length -1) || r.id;
+            return message.channel.send(`<@&${rid}>`);
         }
         catch (error) {
             console.error(error);
