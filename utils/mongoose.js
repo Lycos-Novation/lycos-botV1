@@ -10,10 +10,10 @@ module.exports = {
             family:4,
             useUnifiedTopology: true,
             authSource: "admin",
-            user: "LePtitMetalleux",
-            pass: "lapin49160"
+            user: "User",
+            pass: "Password"
         };
-        mongoose.connect('mongodb://LePtitMetalleux:lapin49160@127.0.0.1:27017/LycosTest', dbOptions);
+        mongoose.connect('mongodb://User:Password@127.0.0.1:27017/LycosTest', dbOptions);
         mongoose.set('useFindAndModify', false);
         mongoose.Promise = global.Promise;
 
