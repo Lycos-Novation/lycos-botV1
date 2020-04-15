@@ -87,7 +87,7 @@ module.exports = {
      */
 	fetchMembers(guild, args) {
 		const search = args.toLowerCase();
-		return guild.members.filter((member) => member.id === search || member.displayName.toLowerCase().includes(search));
+		return guild.members.cache.filter((member) => member.id === search || member.displayName.toLowerCase().includes(search));
 	},
 
 	/**
