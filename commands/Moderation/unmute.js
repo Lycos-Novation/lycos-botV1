@@ -33,15 +33,29 @@ class unmute extends Command {
                     else if (member.size === 1) member = member.first();
                     else return message.channel.send(message.language.get("ERROR_MUCH_USER_FOUND"));
                 }
-                let muteRole = message.guild.roles.find(m => m.name === 'muted');
+                let muteRole = message.guild.roles.cache.find(m => m.name === 'muted');
                 if(!muteRole){
-                    await message.guild.createRole({
-                        name: 'muted',
+                    await message.guild.roles.create({
+                        data: {
+                            name: 'muted',
+                            color: "BLACK",
+                            permissions: 0
+                        },
+                        reason: "Unmute - Auto create role"
                     }).catch(message.language.get("ERROR_CREATING_ROLE"));
-                    muteRole = message.guild.roles.find(m => m.name === 'muted')
+                    muteRole = message.guild.roles.cache.find(m => m.name === 'muted')
+
+                    message.guild.channels.cache.forEach(async (channel, id) => {
+                        await channel.overwritePermissions([
+                            {
+                                id: muteRole.id,
+                                deny: ["SEND_MESSAGES","ADD_REACTIONS", "SEND_TTS_MESSAGES", "ATTACH_FILES", "SPEAK"]
+                            }
+                        ], "Unmute - Auto setting up mute role")
+                    });
                 }
-                if (!member.roles.some(r => r.name === 'muted')) return message.channel.send(message.language.get("UNMUTE_USER_NOT_MUTED"));
-                await member.removeRole(muteRole.id)
+                if (!member.roles.cache.some(r => r.name === 'muted')) return message.channel.send(message.language.get("UNMUTE_USER_NOT_MUTED"));
+                await member.roles.remove(muteRole.id)
                     .then(r => {
                         message.channel.send(message.language.get("UNMUTE_SUCCESS", member));
                         member.send(message.language.get("UNMUTE_USER_SUCCESS", message))
