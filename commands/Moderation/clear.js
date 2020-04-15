@@ -20,7 +20,7 @@ class clear extends Command {
 
     async run(message) {
         try {
-            message.channel.fetchMessages()
+            message.channel.messages.fetch()
                 .then(function (list) {
                     message.channel.bulkDelete(list)
                 })
