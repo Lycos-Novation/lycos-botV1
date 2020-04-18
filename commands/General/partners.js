@@ -11,6 +11,7 @@ class Partners extends Command {
 			enabled: true,
 			guildOnly: false,
 			permLevel: "User",
+			aliases: ["partenaires", "partner", "partenaire"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 1000,
@@ -21,21 +22,21 @@ class Partners extends Command {
 		try {
 			return message.channel.send({
 				embed: {
-					"title": "DenverBot's partner",
-					"url": "https://discord.gg/TcTjgeG",
-					"author" : {
-						"name" : "Skoali",
-						"icon_url" : "https://skoali.fr/assets/img/logo.png",
+					title: message.language.get("PARTNERS_TITLE"),
+					url: "https://discord.gg/7UwmMA3",
+					author: {
+						name: "Lycos",
+						icon_url: this.client.user.displayAvatarURL(),
 					},
-					"color": message.config.embed.color,
-					"thumbnail": {
-						"url" : "https://skoali.fr/assets/img/logo.png",
+					color: message.config.embed.color,
+					thumbnail: {
+						url: this.client.user.displayAvatarURL(),
 					},
-					"description": "Skoali is a French hosting company that aims to provide services as cheaply as possible, or even free for some of them.",
-					"fields" : [
+					description: message.language.get("PARTNERS_EMBED_DESC"),
+					fields: [
 						{
-							"name": "\u200B",
-							"value": "[Discord](https://discord.gg/554DCvV) - [Site](https://skoali.fr)",
+							name: message.language.get("PARTNERS_NAMES")[0],
+							value: message.language.get("PARTNERS_VALUES")[0],
 						},
 					],
 				},
