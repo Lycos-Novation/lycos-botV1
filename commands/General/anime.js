@@ -21,55 +21,55 @@ class Anime extends Command {
 
 	run(message, args) {
 		try {
-			if(!args.join(" ")) return message.channel.send("You must include an anime name.");
+			if(!args.join(" ")) return message.channel.send(message.language.get("ANIME_NOTFOUND"));
 
 			malScraper.getInfoFromName(args.join(" ")).then((data) => {
 				return message.channel.send({
 					embed: {
-						"color": message.config.embed.color,
-						"author": {
-							"name": `Anime (${data.englishTitle})`,
-							"url": data.url,
-							"icon_url": data.picture,
+						color: message.config.embed.color,
+						author: {
+							name: `Anime (${data.englishTitle})`,
+							url: data.url,
+							icon_url: data.picture,
 						},
-						"thumbnail": {
-							"url": data.picture,
+						thumbnail: {
+							url: data.picture,
 						},
-						"fields" : [
+						fields: [
 							{
-								"name" : message.language.get("ANIME_TITLES")[0],
-								"value" : data.englishTitle,
-								"inline" : true,
+								name: message.language.get("ANIME_TITLES")[0],
+								value: data.englishTitle,
+								inline: true,
 							},
 							{
-								"name" : message.language.get("ANIME_TITLES")[1],
-								"value" : data.japaneseTitle,
-								"inline" : true,
+								name: message.language.get("ANIME_TITLES")[1],
+								value: data.japaneseTitle,
+								inline: true,
 							},
 							{
-								"name" : message.language.get("ANIME_TITLES")[2],
-								"value" : data.type,
-								"inline" : true,
+								name: message.language.get("ANIME_TITLES")[2],
+								value: data.type,
+								inline: true,
 							},
 							{
-								"name" : message.language.get("ANIME_TITLES")[3],
-								"value" : data.episodes,
-								"inline" : true,
+								name: message.language.get("ANIME_TITLES")[3],
+								value: data.episodes,
+								inline: true,
 							},
 							{
-								"name" : message.language.get("ANIME_TITLES")[4],
-								"value" : data.genres[0],
-								"inline" : true,
+								name: message.language.get("ANIME_TITLES")[4],
+								value: data.genres[0],
+								inline: true,
 							},		
 							{
-								"name" : message.language.get("ANIME_TITLES")[5],
-								"value" : data.popularity,
-								"inline" : true,
+								name: message.language.get("ANIME_TITLES")[5],
+								value: data.popularity,
+								inline: true,
 							},
 							{
-								"name": message.language.get("ANIME_TITLES")[6],
-								"value": `${data.score} (${data.scoreStats}.)`,
-								"inline": true,
+								name: message.language.get("ANIME_TITLES")[6],
+								value: `${data.score}/10 (${data.scoreStats}.)`,
+								inline: true,
 							},
 						],
 					},

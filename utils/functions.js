@@ -29,36 +29,6 @@ module.exports = {
 		}
 	},
 
-	async updateGuild(g, settings){
-		let data = g;
-
-		if (typeof data !== 'object') data = {};
-		for (const key in settings) {
-			if (settings.hasOwnProperty(key)) {
-				if (data[key] !== settings[key]) data[key] = settings[key];
-				else return;
-			}
-		}
-		console.log(`Serveur ${data.name} - Modifications : ${Object.keys(settings)}`);
-		return await data.updateOne(settings);
-	},
-
-	getSupport(message, args) {
-		if(message.channel.guild) {
-			if (message.bot.supportsData.get(`${args}`)) {
-				return ({ ...message.bot.supportsData.get(`${args}`) });
-			}
-			else {
-				return false;
-			}
-		}
-	},
-
-	/**
-     * Gets message prefix
-     * @param {object} message The Discord message
-     * @returns boolean prefix
-     */
 	getPrefix(message) {
 		if(message.channel.type !== "dm") {
 			const prefixes = [
@@ -78,6 +48,20 @@ module.exports = {
 			return true;
 		}
 	},
+	
+	async updateGuild(g, settings){
+		let data = g;
+
+		if (typeof data !== 'object') data = {};
+		for (const key in settings) {
+			if (settings.hasOwnProperty(key)) {
+				if (data[key] !== settings[key]) data[key] = settings[key];
+				else return;
+			}
+		}
+		console.log(`Serveur ${data.name} - Modifications : ${Object.keys(settings)}`);
+		return await data.updateOne(settings);
+	},
 
 	/**
      * Fetch user by their ID or their username
@@ -90,11 +74,6 @@ module.exports = {
 		return guild.members.cache.filter((member) => member.id === search || member.displayName.toLowerCase().includes(search));
 	},
 
-	/**
-	 * Fetch user by their ID or their username
-	 * @returns string map of users found with search arguments
-	 * @param date
-	 */
 	checkDays(date) {
 		const now = new Date();
 		const diff = now.getTime() - date.getTime();
