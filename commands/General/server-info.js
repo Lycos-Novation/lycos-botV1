@@ -11,7 +11,7 @@ class ServerInformation extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["serverinfo", "si"],
+			aliases: ["serverinfo", "si", "servinfo"],
 			botPermissions: ["EMBED_LINKS"],
 			nsfw: false,
 		});
@@ -19,14 +19,14 @@ class ServerInformation extends Command {
 
 	run(message) {
 		try {
-			const verificationLevels = [
-				"None",
-				"Low",
-				"Medium",
-				"(╯°□°）╯︵  ┻━┻",
-				"┻━┻ミヽ(ಠ益ಠ)ノ彡┻━┻",
-			];
-			const region = {
+			const verificationLevels = {
+				"NONE": "None",
+				"LOW": "Low",
+				"MEDIUM": "Medium",
+				"HIGH": "(╯°□°）╯︵  ┻━┻",
+				"VERY_HIGH": "┻━┻ミヽ(ಠ益ಠ)ノ彡┻━┻",
+			};
+			const regions = {
 				"brazil": message.language.get("SERVERINFO_REGIONS")[0],
 				"eu-central": message.language.get("SERVERINFO_REGIONS")[1],
 				"singapore": message.language.get("SERVERINFO_REGIONS")[2],
@@ -42,61 +42,62 @@ class ServerInformation extends Command {
 				"hongkong": message.language.get("SERVERINFO_REGIONS")[12],
 				"russia": message.language.get("SERVERINFO_REGIONS")[13],
 				"southafrica": message.language.get("SERVERINFO_REGIONS")[14],
+				"europe": message.language.get("SERVERINFO_REGIONS")[15],
 			};
 			return message.channel.send({
 				embed: {
-					"color": message.config.embed.color,
-					"author": {
-						"name": message.language.get("SERVERINFO_PROFIL"),
-						"icon_url": message.guild.iconURL,
+					color: message.config.embed.color,
+					author: {
+						name: message.language.get("SERVERINFO_PROFIL", message.guild.name),
+						icon_url: message.guild.iconURL,
 					},
-					"thumbnail": {
-						"url": message.guild.iconURL,
+					thumbnail: {
+						url: message.guild.iconURL,
 					},
-					"fields": [{
-						"name": message.language.get("SERVERINFO_TITLES")[0],
-						"value": message.guild.name,
-						"inline": true,
-					},
-					{
-						"name": message.language.get("SERVERINFO_TITLES")[1],
-						"value": `${moment(message.channel.guild.createdAt.toUTCString()).format("LLLL")} (${message.bot.functions.checkDays(message.channel.guild.createdAt)}`,
-						"inline": true,
+					fields: [{
+						name: message.language.get("SERVERINFO_TITLES")[0],
+						value: message.guild.name,
+						inline: true,
 					},
 					{
-						"name": message.language.get("SERVERINFO_TITLES")[2],
-						"value": `${message.guild.members.size} | ${message.guild.members.filter((member) => !member.user.bot).size} | ${message.guild.members.filter((member) => member.user.bot).size}`,
-						"inline": true,
+						name: message.language.get("SERVERINFO_TITLES")[1],
+						value: `${moment(message.channel.guild.createdAt.toUTCString()).format("LLLL")} (${message.bot.functions.checkDays(message.channel.guild.createdAt)}`,
+						inline: true,
 					},
 					{
-						"name": message.language.get("SERVERINFO_TITLES")[3],
-						"value": message.guild.channels.size,
-						"inline": true,
+						name: message.language.get("SERVERINFO_TITLES")[2],
+						value: `${message.guild.members.cache.size} | ${message.guild.members.cache.filter((member) => !member.user.bot).size} | ${message.guild.members.cache.filter((member) => member.user.bot).size}`,
+						inline: true,
 					},
 					{
-						"name": message.language.get("SERVERINFO_TITLES")[4],
-						"value": message.guild.id,
-						"inline": true,
+						name: message.language.get("SERVERINFO_TITLES")[3],
+						value: message.guild.channels.cache.size,
+						inline: true,
 					},
 					{
-						"name": message.language.get("SERVERINFO_TITLES")[5],
-						"value": `${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`,
-						"inline": true,
+						name: message.language.get("SERVERINFO_TITLES")[4],
+						value: message.guild.id,
+						inline: true,
 					},
 					{
-						"name": message.language.get("SERVERINFO_TITLES")[6],
-						"value": region[message.guild.region],
-						"inline": true,
+						name: message.language.get("SERVERINFO_TITLES")[5],
+						value: `${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`,
+						inline: true,
 					},
 					{
-						"name": message.language.get("SERVERINFO_TITLES")[7],
-						"value": verificationLevels[message.guild.verificationLevel],
-						"inline": true,
+						name: message.language.get("SERVERINFO_TITLES")[6],
+						value: regions[message.guild.region],
+						inline: true,
+					},
+					{
+						name: message.language.get("SERVERINFO_TITLES")[7],
+						value: verificationLevels[message.guild.verificationLevel],
+						inline: true,
 					},
 					],
-					"timestamp": new Date(),
-					"footer": {
-						"text": message.config.embed.footer,
+					timestamp: new Date(),
+					footer: {
+						text: message.config.embed.footer,
 					},
 				},
 			});

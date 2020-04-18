@@ -151,6 +151,7 @@ module.exports = class {
 			AVATAR_USAGE: (prefix) => `${prefix}avatar (@user)`,
 			AVATAR_EXAMPLES: (prefix) => `${prefix}avatar @Lycos`,
 			AVATAR_TITLE: (looked) => `Avatar de ${looked.user.username}`,
+			SERVERINFO_PROFIL: (guild) => `Informations sur le serveur | ${guild}`,
 			SERVERINFO_DESCRIPTION: "Affiche les informations du serveur.",
 			SERVERINFO_USAGE: (prefix) => `${prefix}serverinfo`,
 			SERVERINFO_EXAMPLES: (prefix) => `${prefix}serverinfo`,
@@ -170,6 +171,7 @@ module.exports = class {
 				":flag_hk: Hong Kong",
 				":flag_ru: Russie",
 				":flag_za: Afrique du Sud",
+				":flag_eu: Europe"
 			],
 			SERVERINFO_TITLES: [
 				"Nom",
