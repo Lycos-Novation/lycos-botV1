@@ -116,7 +116,7 @@ module.exports = class {
 			HELP_NOT_FOUND: (args) => `${e.error} | La commande \`${args}\` n'existe pas!`,
 			HELP_TITLE: (command) => `Help : ${command}`,
 			HELP_TITLE1: (category) => `Catégorie : ${category}`,
-			HELP_EMBED_DESCRIPTION: (message) => `Bonjour, voici la documentation de Lycos. Certaines commandes ne sont pas disponible sur la documentation parce qu'elles doivent être activer.\nPour voir ce que vous pouvez activer faites \`${message.settings.prefix}modules\`.`,
+			HELP_EMBED_DESCRIPTION: (message) => `Bonjour, voici la documentation de Lycos.`,//Certaines commandes ne sont pas disponible sur la documentation parce qu'elles doivent être activer.\nPour voir ce que vous pouvez activer faites \`${message.settings.prefix}modules\`.
 			HELP_FIELDS: [
 				"Description",
 				"Usage",
@@ -125,7 +125,6 @@ module.exports = class {
 			],
 			HELPGLOBAL_FIELDS: [
 				"Administration",
-				"Lycos",
 				"Divertissement",
 				"Général",
 				"Modération",

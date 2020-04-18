@@ -72,25 +72,21 @@ class Help extends Command {
 						value: message.bot.commands.filter((filters) => filters.help.category === "Administration").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
-						name: `${message.config.emotes.lycos} ${message.language.get("HELPGLOBAL_FIELDS")[1]} (${message.bot.commands.filter((filters) => filters.help.category === "Lycos").size})`,
-						value: message.bot.commands.filter((filters) => filters.help.category === "Lycos").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
-					},
-					{
-						name: `${message.config.emotes.fun} ${message.language.get("HELPGLOBAL_FIELDS")[2]} (${message.bot.commands.filter((filters) => filters.help.category === "Fun").size})`,
+						name: `${message.config.emotes.fun} ${message.language.get("HELPGLOBAL_FIELDS")[1]} (${message.bot.commands.filter((filters) => filters.help.category === "Fun").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "Fun").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
-						name: `${message.config.emotes.general} ${message.language.get("HELPGLOBAL_FIELDS")[3]} (${message.bot.commands.filter((filters) => filters.help.category === "General").size})`,
+						name: `${message.config.emotes.general} ${message.language.get("HELPGLOBAL_FIELDS")[2]} (${message.bot.commands.filter((filters) => filters.help.category === "General").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "General").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
-						name: `${message.config.emotes.moderation} ${message.language.get("HELPGLOBAL_FIELDS")[4]} (${message.bot.commands.filter((filters) => filters.help.category === "Moderation").size})`,
+						name: `${message.config.emotes.moderation} ${message.language.get("HELPGLOBAL_FIELDS")[3]} (${message.bot.commands.filter((filters) => filters.help.category === "Moderation").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "Moderation").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
-					{
-						name: `${message.config.emotes.music} ${message.language.get("HELPGLOBAL_FIELDS")[5]} (${message.bot.commands.filter((filters) => filters.help.category === "Music").size})`,
+					/*{
+						name: `${message.config.emotes.music} ${message.language.get("HELPGLOBAL_FIELDS")[4]} (${message.bot.commands.filter((filters) => filters.help.category === "Music").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "Music").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
-					},
+					},*/
 				);
 
 				if (message.settings.modules.nsfw) {
