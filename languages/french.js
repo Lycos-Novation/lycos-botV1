@@ -418,7 +418,9 @@ module.exports = class {
 				"Émojis",
 				"Émojis animés"
 			],
-			EMOTES_DESC: (message) => `Le serveur possède actuellement **${message.guild.emojis.size}** émojis :`,
+			EMOTES_DESC: (message) => `Le serveur possède actuellement **${message.guild.emojis.cache.size}** émojis :`,
+			EMOTES_NO_EMOTES: "Il n'y a pas d'émojis sur ce serveur",
+			EMOTES_NO_ANIMATED: "Il n'y a pas d'émoji animé sur ce serveur",
             MEMBERCOUNT_DESCRIPTION: "Créé un un compteur de membres",
             MEMBERCOUNT_USAGE: (prefix) => `${prefix}membercount [channel/category]`,
             MEMBERCOUNT_EXAMPLES: (prefix) => `${prefix}membercount channel\n ${prefix}membercount category`,

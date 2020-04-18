@@ -21,28 +21,41 @@ class emotes extends Command {
 
     async run(message, args) {
         try {
+            
+            if(message.guild.emojis.cache.filter(e => !e.animated).size === 0){
+                var value1 = message.language.get("EMOTES_NO_EMOTES");
+            } else {
+                value1 = message.guild.emojis.cache.filter(e => !e.animated).map(e => `${e}`).join(' ');
+            }
+
+            if(message.guild.emojis.cache.filter(e => e.animated).size === 0){
+                var value2 = message.language.get("EMOTES_NO_ANIMATED");
+            } else {
+                value2 = message.guild.emojis.cache.filter(e => e.animated).map(e => `${e}`).join(' ');
+            }
+
             await message.channel.send({
                 embed: {
-                    "color": message.config.embed.color,
-                    "author": {
-                        "name": message.language.get("EMOTES_TITLE"),
-                        "icon_url": message.guild.iconURL,
+                    color: message.config.embed.color,
+                    author: {
+                        name: message.language.get("EMOTES_TITLE"),
+                        icon_url: message.guild.iconURL,
                     },
-                    "description": message.language.get("EMOTES_DESC", message),
-                    "fields": [{
-                        "name": message.language.get("EMOTES_TITLES")[0] + ` (${message.guild.emojis.filter(e => !e.animated).size})`,
-                        "value": message.guild.emojis.filter(e => !e.animated).map(e => `${e}`).join(' '),
-                        "inline": true,
+                    description: message.language.get("EMOTES_DESC", message),
+                    fields: [{
+                        name: message.language.get("EMOTES_TITLES")[0] + ` (${message.guild.emojis.cache.filter(e => !e.animated).size})`,
+                        value: value1,
+                        inline: true,
                     },
                         {
-                            "name": message.language.get("EMOTES_TITLES")[1]+ ` (${message.guild.emojis.filter(e => e.animated).size})`,
-                            "value": message.guild.emojis.filter(e => e.animated).map(e => `${e}`).join(' '),
-                            "inline": false,
+                            name: message.language.get("EMOTES_TITLES")[1]+ ` (${message.guild.emojis.cache.filter(e => e.animated).size})`,
+                            value: value2,
+                            inline: false,
                         },
                     ],
-                    "timestamp": new Date(),
-                    "footer" : {
-                        "text" : message.config.embed.footer,
+                    timestamp: new Date(),
+                    footer: {
+                        text: message.config.embed.footer,
                     },
                 },
             })
