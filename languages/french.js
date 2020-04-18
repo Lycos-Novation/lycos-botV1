@@ -97,7 +97,7 @@ module.exports = class {
 			ROLE_NOUSER_FOUND: "Aucun utilisateur n'a été trouvé.",
 			ROLE_GIVE: (member, role) => `${member.user.username} a maintenant le rôle <@&${role}>.`,
 			ROLE_REMOVE: (member, role) => `${member.user.username} n'a plus le rôle <@&${role}>.`,
-			BOT_DESCRIPTION: "Afficher des informations sur Lycos.",
+			BOT_DESCRNIPTION: "Afficher des informations sur Lycos.",
 			BOT_USAGE: ".bot",
 			BOT_EXAMPLES: ".bot",
 			BOT_FIELDS: [
@@ -135,7 +135,7 @@ module.exports = class {
 			INVITE_USAGE: (prefix) => `${prefix}invite`,
 			INVITE_EXAMPLES: (prefix) => `${prefix}invite`,
 			INVITE_TITLE: "Invitation",
-			INVITE_FIELD: "[Clique ici](https://discordapp.com/oauth2/authorize?client_id=390231727554953216&scope=bot&permissions=66321471) pour inviter le bot sur ton serveur.",
+			INVITE_FIELD: "[Clique ici](https://discordapp.com/oauth2/authorize?client_id=628186022991233025&scope=bot&permissions=8) pour inviter le bot sur ton serveur.",
 			PING_DESCRIPTION: "Donne la latence de l'API Discord",
 			PING_USAGE: (prefix) => `${prefix}ping`,
 			PING_EXAMPLES: (prefix) => `${prefix}ping`,
