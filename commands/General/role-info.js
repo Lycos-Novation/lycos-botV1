@@ -14,6 +14,7 @@ class RoleInformation extends Command {
 			guildOnly: true,
 			permLevel: "User",
 			botPermissions: ["EMBED_LINKS"],
+			aliases: ["rinfo", "r-info", "roleinfo"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 1000,
@@ -26,43 +27,43 @@ class RoleInformation extends Command {
 				return message.channel.send(message.language.get("ROLE_INFO_SPECIFY"))
 			}
 			else {
-				const role = message.guild.roles.get(args[0]) || message.guild.roles.find((r) => r.name.toLowerCase() === args[0].toLowerCase()) || message.mentions.roles.first();
+				const role = message.guild.roles.cache.get(args[0]) || message.guild.roles.cache.find((r) => r.name.toLowerCase() === args[0].toLowerCase()) || message.mentions.roles.first();
 				if (!role) {
 					return message.channel.send(message.language.get("ROLE_INFO_NOT_FOUND"))
 				}
 
 				return message.channel.send({
 					embed: {
-						"author": {
-							"name": message.language.get("ROLE_INFO_EMBED_NAME", role),
-							"icon_url": message.guild.iconURL,
+						author: {
+							name: message.language.get("ROLE_INFO_EMBED_NAME", role),
+							icon_url: message.guild.iconURL,
 						},
-						"color": role.color,
-						"fields" : [
+						color: role.color,
+						fields: [
 							{
-								"name" : message.language.get("ROLE_INFO_FIELDS")[0],
-								"value" : role.hexColor,
-								"inline" : true,
+								name: message.language.get("ROLE_INFO_FIELDS")[0],
+								value: role.hexColor,
+								inline: true,
 							},
 							{
-								"name" : message.language.get("ROLE_INFO_FIELDS")[1],
-								"value" : role.position,
-								"inline" : true,
+								name: message.language.get("ROLE_INFO_FIELDS")[1],
+								value: role.position,
+								inline: true,
 							},
 							{
-								"name" : message.language.get("ROLE_INFO_FIELDS")[2],
-								"value" : role.mentionable ? "<:valid:536968393367224320>" : "<:nop:536968387956310046>",
-								"inline" : true,
+								name: message.language.get("ROLE_INFO_FIELDS")[2],
+								value: role.mentionable ? "<:valid:536968393367224320>" : "<:nop:536968387956310046>",
+								inline: true,
 							},
 							{
-								"name" : message.language.get("ROLE_INFO_FIELDS")[3],
-								"value" : moment(role.createdTimestamp).format("LLLL"),
-								"inline" : true,
+								name: message.language.get("ROLE_INFO_FIELDS")[3],
+								value: moment(role.createdTimestamp).format("LLLL"),
+								inline: true,
 							},
 						],
-						"timestamp": new Date(),
-						"footer" : {
-							"text" : message.language.get("ROLE_INFO_ID", role),
+						timestamp: new Date(),
+						footer: {
+							text: message.language.get("ROLE_INFO_ID", role),
 						},
 					},
 				});
