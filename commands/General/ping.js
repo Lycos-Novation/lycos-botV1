@@ -21,16 +21,16 @@ class Ping extends Command {
 		try {
 			return message.channel.send({
 				embed: {
-					"color": message.config.embed.color,
-					"fields" : [
+					color: message.config.embed.color,
+					fields: [
 						{
-							"name" : message.language.get("PING_APILATENCY"),
-							"value" :  `${Math.round(message.bot.ping)} ms`,
-							"inline" : true,
+							name: message.language.get("PING_APILATENCY"),
+							value:  `${Math.round(this.client.ws.ping)} ms`,
+							inline: true,
 						},
 					],
-					"footer" : {
-						"text" : message.config.embed.footer,
+					footer: {
+						text: message.config.embed.footer,
 					},
 				},
 			});
