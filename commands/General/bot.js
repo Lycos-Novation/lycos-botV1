@@ -13,7 +13,7 @@ class Bot extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: ["denver", "botinfo"],
+			aliases: ["lycos", "botinfo", "bi"],
 			permLevel: "User",
 			botPermissions: ["EMBED_LINKS"],
 			cooldown: 1000,
