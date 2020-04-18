@@ -20,23 +20,32 @@ class Avatar extends Command {
 
 	run(message, args) {
 		try {
-			let looked = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[1]));
-			if (!looked) {
-				looked = message.member
+			let toLook = args.join(" ");
+			if (!toLook) {
+				var looked = message.member
 			}
+			if (message.mentions.members.size > 0) {
+				looked = message.mentions.members.first();
+			} else if (toLook) {
+				looked = message.bot.functions.fetchMembers(message.guild, toLook);
+				if (looked.size === 0) return message.channel.send(message.language.get("ERROR_NOUSER_FOUND"));
+				else if (looked.size === 1) looked = looked.first();
+				else return message.channel.send(message.language.get("ERROR_MUCH_USER_FOUND"));
+			}
+			
 			return message.channel.send({
 				embed: {
-					"color": message.config.embed.color,
-					"author": {
-						"name": message.language.get("AVATAR_TITLE", looked),
-						"icon_url": looked.user.displayAvatarURL,
+					color: message.config.embed.color,
+					author: {
+						name: message.language.get("AVATAR_TITLE", looked),
+						icon_url: looked.user.displayAvatarURL({dynamic: true}),
 					},
-					"image" : {
-						"url": looked.user.displayAvatarURL,
+					image: {
+						url: looked.user.displayAvatarURL({format: "png",dynamic: true, size: 2048}),
 					},
-					"timestamp": new Date(),
-					"footer" : {
-						"text" : message.config.embed.footer,
+					timestamp: new Date(),
+					footer: {
+						text: message.config.embed.footer,
 					},
 				},
 			});
