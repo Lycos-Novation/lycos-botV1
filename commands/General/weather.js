@@ -11,7 +11,7 @@ class weatherInfo extends Command {
             enabled: true,
             guildOnly: true,
             permLevel: "User",
-            aliases: ["weather"],
+            aliases: ["weather", "weatherinfo", "meteo", "météo"],
             botPermissions: ["EMBED_LINKS"],
             nsfw: false,
             adminOnly: false,
