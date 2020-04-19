@@ -38,7 +38,7 @@ class Avatar extends Command {
 					color: message.config.embed.color,
 					author: {
 						name: message.language.get("AVATAR_TITLE", looked),
-						icon_url: looked.user.displayAvatarURL({dynamic: true}),
+						icon_url: looked.user.displayAvatarURL({format: "png",dynamic: true,}),
 					},
 					image: {
 						url: looked.user.displayAvatarURL({format: "png",dynamic: true, size: 2048}),

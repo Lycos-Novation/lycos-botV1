@@ -200,7 +200,7 @@ module.exports = class {
 				"Ne pas déranger",
 			],
 			USERINFO_NOPLAY: "Aucun jeu",
-			USERINFO_PROFIL: "Profil",
+			USERINFO_PROFIL: "Profil de ",
 			/* LOGS_DESCRIPTION: "Ecrit...",
 			LOGS_USAGE: "Ecrit...",
 			LOGS_EXAMPLES: "Ecrit...",

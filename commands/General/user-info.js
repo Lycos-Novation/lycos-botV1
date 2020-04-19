@@ -11,7 +11,7 @@ class UserInformation extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "User",
-			aliases: ["userinfo"],
+			aliases: ["userinfo", "ui"],
 			botPermissions: ["EMBED_LINKS"],
 			nsfw: false,
 			adminOnly: false,
@@ -52,43 +52,45 @@ class UserInformation extends Command {
 			else if(member.user.presence.clientStatus.desktop) {
 				clientStatus = member.user.tag;
 			}
-			else if(member.user.presence.clientStatus.mobile) { clientStatus = `${member.user.tag} <:phone:587242842510983188>`;}
-			const activity = !!member.user.presence && member.user.presence.activity !== null ? member.user.presence.activity : message.language.get("USERINFO_NOPLAY");
+			else if(member.user.presence.clientStatus.mobile) { 
+				clientStatus = `${member.user.tag} <:phone:587242842510983188>`;
+			}
+			const activity = !member.user.presence && member.user.presence.activity !== null ? member.user.presence.activity.details : message.language.get("USERINFO_NOPLAY");
 			return message.channel.send({
 				embed: {
-					"color": message.config.embed.color,
-					"author": {
-						"name": message.language.get("USERINFO_PROFIL"),
-						"icon_url": message.bot.user.displayAvatarURL,
+					color: message.config.embed.color,
+					author: {
+						name: message.language.get("USERINFO_PROFIL") + member.user.username,
+						icon_url: member.user.displayAvatarURL({format: "png",dynamic: true,}),
 					},
-					"thumbnail": {
-						"url" : member.user.displayAvatarURL,
+					thumbnail: {
+						url: member.user.displayAvatarURL({format: "png",dynamic: true,}),
 					},
-					"fields" : [
+					fields: [
 						{
-							"name" : message.language.get("USERINFO_TITLES")[0],
-							"value" : clientStatus,
-							"inline" : true,
+							name: message.language.get("USERINFO_TITLES")[0],
+							value: clientStatus,
+							inline: true,
 						},
 						{
-							"name" : message.language.get("USERINFO_TITLES")[1],
-							"value" : `${activity}`,
-							"inline" : true,
+							name: message.language.get("USERINFO_TITLES")[1],
+							value: `${activity}`,
+							inline: true,
 						},
 						{
-							"name" : message.language.get("USERINFO_TITLES")[2],
-							"value" : member.user.id,
-							"inline" : true,
+							name: message.language.get("USERINFO_TITLES")[2],
+							value: member.user.id,
+							inline: true,
 						},
 						{
-							"name" : message.language.get("USERINFO_TITLES")[3],
-							"value" : status,
-							"inline" : true,
+							name: message.language.get("USERINFO_TITLES")[3],
+							value: status,
+							inline: true,
 						},
 					],
-					"timestamp": new Date(),
-					"footer" : {
-						"text" : message.config.embed.footer,
+					timestamp: new Date(),
+					footer: {
+						text: message.config.embed.footer,
 					},
 				},
 			});

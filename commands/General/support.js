@@ -42,7 +42,7 @@ class Support extends Command {
 							.setColor("#36393F")
 							.setAuthor(\`${message.author.username} | ${message.author.id}\`, \`${message.author.avatarURL()}\`)
 							.setDescription(\`${question.replace(/`/g, "\\`")}\nID: ${ID}\nGuild: [${message.guild.name}](https://discord.gg/${newInvite.code})\`)
-							.setFooter("Denver")
+							.setFooter("Lycos")
 							.setTimestamp();
 
 						if (channel) {
