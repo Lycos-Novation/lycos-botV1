@@ -292,7 +292,7 @@ module.exports = class {
 			FLIP_DESCRIPTION: "Amusez-vous à jouer avec le flip.",
 			FLIP_USAGE: ".flip",
 			FLIP_EXAMPLES: ".flip",
-			FLIP_HEADS: ":game_die: | C'est **face**!",
+			FLIP_HEADS: ":game_die: | C'est **face** !",
 			FLIP_TAILS: ":game_die: | C'est **pile** !",
 			PERMISSIONS_DESCRIPTION: "Displays the member's permissions in the channel",
 			PERMISSIONS_USAGE: (prefix) => `${prefix}permissions (@member)`,

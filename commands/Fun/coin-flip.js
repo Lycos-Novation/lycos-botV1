@@ -10,7 +10,7 @@ class CoinFlip extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: ["flip"],
+			aliases: ["flip", "coin", "coinflip", "flipcoin"],
 			permLevel: "User",
 			cooldown: 1000,
 		});
