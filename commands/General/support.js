@@ -12,7 +12,7 @@ class Support extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "User",
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["EMBED_LINKS", "CREATE_INSTANT_INVITE"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 30000,
@@ -35,12 +35,12 @@ class Support extends Command {
 				message.channel.createInvite().then(function(newInvite) {
 					message.bot.shard.broadcastEval(`
 						const Discord = require('discord.js');
-						const channel = this.channels.get("608335252368130048");
+						const channel = this.channels.cache.get("701360670532304927");
 
 						const embed = new Discord.MessageEmbed()
 							.setTitle("Support")
 							.setColor("#36393F")
-							.setAuthor(\`${message.author.username} | ${message.author.id}\`, \`${message.author.avatarURL()}\`)
+							.setAuthor(\`${message.author.username} | ${message.author.id}\`, \`${message.author.avatarURL({animated: true})}\`)
 							.setDescription(\`${question.replace(/`/g, "\\`")}\nID: ${ID}\nGuild: [${message.guild.name}](https://discord.gg/${newInvite.code})\`)
 							.setFooter("Lycos")
 							.setTimestamp();
@@ -56,11 +56,13 @@ class Support extends Command {
 				});
 
 				try {
-					message.bot.supportsData.set(ID, {
+					const newSupport = {
+						id: ID,
 						username: message.author.username,
 						question: question,
-						channelID: message.channel.id,
-					});
+						channelID: message.channel.id
+					}
+					await message.bot.functions.createSupport(newSupport);
 					return message.channel.send(message.language.get("SUPPORT_QUESTION_SEND"));
 				}
 				catch (e) {

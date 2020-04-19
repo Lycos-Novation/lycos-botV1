@@ -1,4 +1,4 @@
-const {Project, Guild} = require('../models');
+const {Project, Guild, Support} = require('../models');
 const mongoose = require('mongoose');
 const config = require('../config');
 module.exports = {
@@ -27,6 +27,25 @@ module.exports = {
 			var data = await Guild.findOne({ guildId: gd.id});
 			return data
 		}
+	},
+
+	async createSupport(settings) {
+		let merged = Object.assign(settings);
+
+		const newSupport = await new Support(merged);
+		return newSupport.save()
+	},
+
+	async getSupport(support) {
+		var data = await Support.findOne({id: support});
+		if(!data){
+			data = false;
+		}
+		return data;
+	},
+
+	async deleteSupport(support) {
+		return Support.deleteOne({id: support})
 	},
 
 	getPrefix(message) {
@@ -102,7 +121,7 @@ module.exports = {
 	},
 
 	async delProject(project){
-		console.log(`Projet ${project} supprimé.`)
+		console.log(`Projet ${project} supprimé.`);
 		return Project.deleteOne({name : project})
 	},
 

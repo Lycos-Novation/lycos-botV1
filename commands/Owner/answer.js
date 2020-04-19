@@ -17,16 +17,16 @@ class Answer extends Command {
 		});
 	}
 
-	run(message, args) {
+	async run(message, args) {
 		try {
-			const support = message.bot.functions.getSupport(message, args[0]);
+			const support = await message.bot.functions.getSupport(args[0]);
 			if (support === false) {
 				return message.channel.send(message.language("ANSWER_UNKNOWN_ID"))
 			}
 			else {
 				message.bot.shard.broadcastEval(`
 						const Discord = require('discord.js');
-						const channel = this.channels.get("${support.channelID}");
+						const channel = this.channels.cache.get("${support.channelID}");
 	
 						const embed = new Discord.MessageEmbed()
 							.setTitle("Support Answer")
@@ -46,7 +46,7 @@ class Answer extends Command {
 					`);
 				return message.channel.send(message.language.get("ANSWER_SENT", support)).then(() =>{
 					message.delete();
-					message.bot.supportsData.delete(args[0])
+					message.bot.functions.deleteSupport(args[0])
 				})
 			}
 		}

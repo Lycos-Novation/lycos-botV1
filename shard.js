@@ -7,6 +7,5 @@ const sharder = new ShardingManager("./lycos.js", {
 	autoSpawn: true,
 });
 
-sharder.on("shardCreate", (shard) => console.log(`[ShardingManager] - Launching shard ${shard.id + 1}/${shard.manager.totalShards}`));
-
+sharder.on("shardCreate", shard => console.log(`[ShardingManager] - Launching shard ${shard.id + 1}/${shard.manager.totalShards}`));
 sharder.spawn();

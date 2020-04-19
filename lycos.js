@@ -4,7 +4,6 @@ const { promisify } = require("util"),
 	fs = require("fs"),
 	path = require("path"),
 	readdir = promisify(fs.readdir);
-const Enmap = require("enmap");
 const { Provider, Client: PictURLClient } = require("pict-url");
 const { GiveawaysManager } = require("discord-giveaways");
 const logs = require('discord-logs');
