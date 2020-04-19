@@ -12,6 +12,7 @@ class Cat extends Command {
 			guildOnly: false,
 			permLevel: "User",
 			botPermissions: ["EMBED_LINKS"],
+			aliases: ["cats", "chat", "chats"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 2000,
