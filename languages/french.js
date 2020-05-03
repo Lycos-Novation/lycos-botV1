@@ -497,6 +497,54 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 			LOGS_CHANNEL_PINS_UPDATE_TITLE: "Modification des messages épinglés dans un salon !",
 			LOGS_CHANNEL_PINS_UPDATE_DESC: (channel, time) => `**Salon :** ${channel.name} - ${channel} - ${channel.id}
 **Modification à** ${moment(time).format("LLLL")}`,
+			LOGS_CHANNEL_UPDATE_TITLE: "Modification d'un salon !",
+			LOGS_CHANNEL_UPDATE_DESC: (oldChannel, newChannel) => `**__Ancien salon :__**
+
+**Nom :** ${oldChannel.name}
+**ID : ** ${oldChannel.id}
+**Type de salon :** ${oldChannel.type}
+**Sujet du salon :** ${oldChannel.topic ? `${oldChannel.topic}` : `Aucun sujet n'a été défini`}
+
+**__Nouveau salon :__**
+
+**Nom :** ${newChannel.name}
+**ID : ** ${newChannel.id}
+**Type de salon :** ${newChannel.type}
+**Sujet du salon :** ${newChannel.topic ? `${newChannel.topic}` : `Aucun sujet n'a été défini`}`,
+			LOGS_EMOJI_CREATE_TITLE: "Un nouvel émoji a été ajouté !",
+			LOGS_EMOJI_CREATE_DESC: (emoji) => `**Nom de l'émoji :** ${emoji.name}
+**ID :** ${emoji.id}
+**Type :** ${emoji.animated === true ? `Animé` : `Non animé`}
+**Aperçu :** ${emoji}
+**Date d'ajout :** ${moment(emoji.createdAt.toUTCString()).format("LLLL")}
+**Identifier :** ${emoji.identifier}
+**URL :** ${emoji.url}`,
+			LOGS_EMOJI_DELETE_TITLE: "Un émoji a été supprimé !",
+			LOGS_EMOJI_DELETE_DESC: (emoji) => `**Nom de l'émoji :** ${emoji.name}
+**ID :** ${emoji.id}
+**Type :** ${emoji.animated === true ? `Animé` : `Non animé`}
+**Date d'ajout :** ${moment(emoji.createdAt.toUTCString()).format("LLLL")}
+**Date de suppression :** ${moment(new Date()).format("LLLL")}
+**Identifier :** ${emoji.identifier}
+**URL :** ${emoji.url}`,
+			LOGS_EMOJI_UPDATE_TITLE: "Modification d'un émoji !",
+			LOGS_EMOJI_UPDATE_DESC: (oldEmoji, newEmoji) => `**__Ancien émoji :__**
+
+**Nom :** ${oldEmoji.name}
+**ID : ** ${oldEmoji.id}
+**Date d'ajout :** ${moment(oldEmoji.createdAt.toUTCString()).format("LLLL")}
+**Identifier :** ${oldEmoji.identifier}
+**URL :** ${oldEmoji.url}
+
+**__Nouvel émoji :__**
+
+**Nom :** ${newEmoji.name}
+**ID : ** ${newEmoji.id}
+**Aperçu :** ${newEmoji}
+**Date d'ajout :** ${moment(newEmoji.createdAt.toUTCString()).format("LLLL")}
+**Date de modification :** ${moment(new Date()).format("LLLL")}
+**Identifier :** ${newEmoji.identifier}
+**URL :** ${newEmoji.url}`,
         };
 		function date(date1){
 			let d = date1.split("-");
