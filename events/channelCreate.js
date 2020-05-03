@@ -21,7 +21,7 @@ module.exports = class {
 				footer: {
 					text: config.embed.footer,
 				},
-				color: 0xDB0808,
+				color: 0x21E61B,
 			}
 		});
 	});
