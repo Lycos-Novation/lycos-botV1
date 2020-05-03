@@ -6,22 +6,34 @@ module.exports = class {
 	}
 
 	async run(member) {
-		const g = await functions.getDataGuild(member.guild);
-		if(g.autorole.length > 0) {
-			member.roles.add(g.autorole, "Autorole")
+		try {
+			const sql = `SELECT autorole, welcome_channel, language
+		FROM Guilds
+		WHERE guild_id="${member.guild.id}"`;
+			var g;
+			mysqlcon.query(sql, async function (err, result, fields) {
+				if (err) throw err;
+				g = result[0];
+				if (g.autorole !== "") {
+					member.roles.add(g.autorole.split("/"), "Autorole")
+				}
+				const lang = new (require(`../languages/${g.language}.js`));
+				if (g.welcome_channel === null) return;
+				return member.guild.channels.cache.find(c => c.id === g.welcome_channel).send({
+					embed: {
+						title: lang.get(`LOGS_GUILD_MEMBER_ADD_TITLE`),
+						description: lang.get('LOGS_GUILD_MEMBER_ADD_DESC', member),
+						footer: {
+							text: config.embed.footer,
+						},
+						color: 0x21E61B,
+						thumbnail: member.user.displayAvatarURL,
+					}
+				});
+			});
+		} catch (error) {
+			console.error(error);
+			return member.guild.channels.cache.find(c => c.id === g.leave_channel).send(message.language.get("ERROR", error));
 		}
-		const lang = new (require(`../languages/${g.language}.js`));
-		if(g.channels.welcome === null) return;
-		return member.guild.channels.cache.find(c => c.id === g.channels.welcome).send({
-			embed: {
-				title: lang.get(`LOGS_GUILD_MEMBER_ADD_TITLE`),
-				description : lang.get('LOGS_GUILD_MEMBER_ADD_DESC', member),
-				footer: {
-					text: config.embed.footer,
-				},
-				color: 0x21E61B,
-				thumbnail: member.user.displayAvatarURL,
-			}
-		});
 	}
 };

@@ -36,7 +36,7 @@ module.exports = class {
 			if(games[parseInt(i + 1)]) {i++;}
 			else {i = 0;}
 		}, 35000);
-		client.mongoose = require('../utils/mongoose');
-		client.mongoose.init();
+		client.connection_mysql = require('../utils/connectmysql');
+		client.connection_mysql.init();
 	}
 };

@@ -1,5 +1,4 @@
 const Command = require("../../base/Command.js");
-const snowflakeID = require("flakeid");
 
 class Support extends Command {
 	constructor(client) {
@@ -26,12 +25,25 @@ class Support extends Command {
 			}
 			else {
 				const question = args.join(" ");
-				const questionID = new snowflakeID({
-					mid : 42,
-					timeOffset : (2019 - 1970) * 31536000 * 1000,
-				});
-				const ID = questionID.gen();
 
+				try {
+					var sql = `INSERT INTO Supports (user_name, question, channel_id, created_at)
+					VALUES ("${message.author.username}", "${question}", ${message.channel.id}, NOW());`;
+           			mysqlcon.query(sql, function (err, result) {
+						if (err) throw err;
+            		});
+				}
+				catch (e) {
+					return message.channel.send(message.language.get("ERROR", e));
+				}
+				sql = `SELECT id
+				FROM Supports 
+				WHERE user_name='${message.author.username}' && question="${question}" && channel_id='${message.channel.id}' && created_at=NOW();`;
+				var support_id;
+				mysqlcon.query(sql, function (err, result, fields) {
+					if (err) throw err;
+					support_id = result[0].id;
+					});
 				message.channel.createInvite().then(function(newInvite) {
 					message.bot.shard.broadcastEval(`
 						const Discord = require('discord.js');
@@ -41,7 +53,7 @@ class Support extends Command {
 							.setTitle("Support")
 							.setColor("#36393F")
 							.setAuthor(\`${message.author.username} | ${message.author.id}\`, \`${message.author.avatarURL({animated: true})}\`)
-							.setDescription(\`${question.replace(/`/g, "\\`")}\nID: ${ID}\nGuild: [${message.guild.name}](https://discord.gg/${newInvite.code})\`)
+							.setDescription(\`${question.replace(/`/g, "\\`")}\nID de la demande : ${support_id}\nGuild: [${message.guild.name}](https://discord.gg/${newInvite.code})\`)
 							.setFooter("Lycos")
 							.setTimestamp();
 
@@ -54,20 +66,9 @@ class Support extends Command {
 						}
         			`)
 				});
-
-				try {
-					const newSupport = {
-						id: ID,
-						username: message.author.username,
-						question: question,
-						channelID: message.channel.id
-					}
-					await message.bot.functions.createSupport(newSupport);
-					return message.channel.send(message.language.get("SUPPORT_QUESTION_SEND"));
-				}
-				catch (e) {
-					return message.channel.send(message.language.get("ERROR", e));
-				}
+				return message.channel.send(message.language.get("SUPPORT_QUESTION_SEND")).then(() => {
+					message.delete();
+				});
 			}
 		}
 		catch (error) {

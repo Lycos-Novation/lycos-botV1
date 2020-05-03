@@ -20,7 +20,12 @@ class Prefix extends Command {
 
 	async run(message, args) {
 		try {
-			const g = await message.bot.functions.getDataGuild(message.guild);
+			var sql = `SELECT *
+					   FROM Guilds
+					   WHERE guild_id="${message.guild.id}"`;
+			var g;
+			mysqlcon.query(sql, async function (err, result, fields) {
+				g = result[0];
 			if (!args[0]) {
 				return message.channel.send(message.language.get("PREFIX_INFO", message.settings.prefix));
 			}
@@ -29,14 +34,15 @@ class Prefix extends Command {
 					return message.channel.send(message.language.get("PREFIX_NULL"));
 				}
 				else {
-					await message.bot.functions.updateGuild(g, {prefix: args[1]});
+					mysqlcon.query("UPDATE Guilds SET prefix = ? WHERE guild_id = ?", [args[1], message.guild.id]);
 					return message.channel.send(message.language.get("PREFIX_CHANGE", args));
 				}
 			}
 			if (args[0] === "reset") {
-				await message.bot.functions.updateGuild(g, {prefix: "."});
+				mysqlcon.query("UPDATE Guilds SET prefix = . WHERE guild_id = ?", [message.guild.id]);
 				return message.channel.send(message.language.get("PREFIX_RESET"));
 			}
+		});
 		}
 		catch (error) {
 			console.error(error);

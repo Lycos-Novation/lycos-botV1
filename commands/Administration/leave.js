@@ -21,17 +21,27 @@ class Leave extends Command {
 
 	async run(message, args) {
 		try {
-			const g = await message.bot.functions.getDataGuild(message.guild);
+			var sql = `SELECT *
+					   FROM Guilds
+					   WHERE guild_id="${message.guild.id}"`;
+			var g;
+			mysqlcon.query(sql, async function (err, result, fields) {
+				g = result[0];
 			if (!args[0]) {
 				return message.channel.send(message.language.get("SETLEAVE_NO_ARGS", g));
 			}
 			let c = message.guild.channels.resolve(args[0]) || message.guild.channels.resolveID(args[0]);
 			let cid = c.toString().slice(2, c.toString().length -1) || c.id;
-            if (cid === g.channels.leave) {
+            if (cid === g.leave_channel) {
                 return message.channel.send(message.language.get("SETLEAVE_SAME", cid))
             }
-            await message.bot.functions.updateGuild(g, {"channels.leave": cid});
-            return message.channel.send(message.language.get("SETLEAVE_SUCCESS", cid));
+            sql = `UPDATE Guilds 
+				SET leave_channel=${cid}
+				WHERE guild_id="${message.guild.id}";`;
+			mysqlcon.query(sql, async function (err, result, fields) {
+			});
+			return message.channel.send(message.language.get("SETLEAVE_SUCCESS", cid));
+		});
 		}
 		catch (error) {
 			console.error(error);
