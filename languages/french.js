@@ -545,6 +545,18 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Date de modification :** ${moment(new Date()).format("LLLL")}
 **Identifier :** ${newEmoji.identifier}
 **URL :** ${newEmoji.url}`,
+			LOGS_GUILD_BAN_ADD_TITLE: "Quelqu'un a été banni du serveur !",
+			LOGS_GUILD_BAN_ADD_DESC: (user) => `**Pseudo :** ${user.username}
+**ID :** ${user.id}
+**Bot :** ${user.bot ? "Affirmatif" : "Négatif, c'est un humain (Ou un selfbot)"}
+**Création du compte :** ${moment(user.createdAt.toUTCString()).format("LLLL")}
+**Date du banissement :** ${moment(new Date()).format("LLLL")}`,
+			LOGS_GUILD_BAN_REMOVE_TITLE: "Quelqu'un a été débanni du serveur !",
+			LOGS_GUILD_BAN_REMOVE_DESC: (user) => `**Pseudo :** ${user.username}
+**ID :** ${user.id}
+**Bot :** ${user.bot ? "Affirmatif" : "Négatif, c'est un humain (Ou un selfbot)"}
+**Création du compte :** ${moment(user.createdAt.toUTCString()).format("LLLL")}
+**Date du débanissement :** ${moment(new Date()).format("LLLL")}`,
         };
 		function date(date1){
 			let d = date1.split("-");
