@@ -1,4 +1,3 @@
-const functions = require('../utils/functions');
 const config = require('../config');
 module.exports = class {
 	constructor(client) {
@@ -7,10 +6,15 @@ module.exports = class {
 
 	async run(channel) {
 		if (channel.type === 'dm') return;
-		const g = await functions.getDataGuild(channel.guild);
+		var sql = `SELECT *
+		FROM Guilds
+		WHERE guild_id="${message.guild.id}"`;
+		var g;
+		mysqlcon.query(sql, async function (err, result, fields) {
+			g = result[0];
+		if(g.logs_channel === null) return;
 		const lang = new (require(`../languages/${g.language}.js`));
-		if(g.channels.logs === null) return;
-		return channel.guild.channels.cache.find(c => c.id === g.channels.logs).send({
+		return channel.guild.channels.cache.find(c => c.id === g.logs_channel).send({
 			embed: {
 				title: lang.get(`LOGS_CHANNEL_DELETE_TITLE`),
 				description : lang.get('LOGS_CHANNEL_DELETE_DESC', channel),
@@ -20,5 +24,6 @@ module.exports = class {
 				color: 0xDB0808,
 			}
 		});
+	});
 	}
 };
