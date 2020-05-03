@@ -30,16 +30,12 @@ class Number extends Command {
 			let time = args[2];
 			if (!time) return message.channel.send(message.language.get("NUMBER_TIME"));
 			let toFind = parseInt((Math.random() * (max - min) + min), 10);
-			console.log(toFind);
+			message.author.send(toFind);
 			message.channel.send(message.language.get("NUMBER_START", min, max, time))
 			.then(msg => {
-				/*const filter = m => { 
-					parseInt(m.content) === number
-				};*/
 				let collector = new Discord.MessageCollector(message.channel, (m) => !m.author.bot, {
 					time: ms(time)
 				});
-				//const collector = msg.channel.createMessageCollector(filter, { time: ms(time) });
 				collector.on('collect', async (m) => {
 					if(isNaN(m.content)) return;
 					if (parseInt(m.content) < min || parseInt(m.content) > max) return message.reply(message.language.get("NUMBER_INTERVAL", min, max));

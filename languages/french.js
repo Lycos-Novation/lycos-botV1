@@ -494,6 +494,9 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 			LOGS_GUILD_MEMBER_REMOVE_TITLE: "Départ d'un membre !",
 			LOGS_GUILD_MEMBER_REMOVE_DESC: (m) => `${m} - **${m.user.tag}** est parti de **__${m.guild.name}__** !
 Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
+			LOGS_CHANNEL_PINS_UPDATE_TITLE: "Modification des messages épinglés dans un salon !",
+			LOGS_CHANNEL_PINS_UPDATE_DESC: (channel, time) => `**Salon :** ${channel.name} - ${channel} - ${channel.id}
+**Modification à** ${moment(time).format("LLLL")}`,
         };
 		function date(date1){
 			let d = date1.split("-");

@@ -8,7 +8,7 @@ module.exports = class {
 		if (channel.type === 'dm') return;
 		var sql = `SELECT *
 		FROM Guilds
-		WHERE guild_id="${message.guild.id}"`;
+		WHERE guild_id="${channel.guild.id}"`;
 		var g;
 		mysqlcon.query(sql, async function (err, result, fields) {
 			g = result[0];
