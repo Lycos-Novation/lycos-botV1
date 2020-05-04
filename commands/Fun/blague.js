@@ -24,7 +24,7 @@ class Number extends Command {
             if (message.settings.language !== "french") return message.channel.send(message.language.get("BLAGUE_NOT_AVALIABLE"));
             fetch('https://www.blagues-api.fr/api/random', {
                 headers: {
-                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTUzMTYzMzA4ODAxNzIwMzIxIiwibGltaXQiOjEwMCwia2V5IjoiYUl3YXoxSk5BeWVramtCS0d5VE1XbkRiTFRGOXk0bDFVOHJlTFlka0xCcXdyVzZhbVAiLCJjcmVhdGVkX2F0IjoiMjAyMC0wNC0xOVQyMzozMTozMyswMjowMCIsImlhdCI6MTU4NzMzMTg5M30.VtRtZDm1MuU23OCeJog8rCz1npFSUKqQ3MpbyHLaPII`
+                    'Authorization': `Bearer [Token]`
                 }
             })
                 .then(response => response.json())
