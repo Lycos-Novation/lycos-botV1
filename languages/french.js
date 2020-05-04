@@ -296,7 +296,7 @@ module.exports = class {
 			BAN_DESCRIPTION: "Banni l'utilisateur mentionné",
 			BAN_USAGE: (prefix) => `${prefix}ban [@user] (reason)`,
 			BAN_EXAMPLES: (prefix) => `${prefix}ban @Lycos Spam`,
-			BAN_ERRORARGS : "Merci d'indiquer un utilisateur!",
+			BAN_ERRORARGS: "Merci d'indiquer un utilisateur!",
 			BAN_NOT_BANNED: "Cet utilisateur n'est banni !",
 			BAN_ALREADY: "Cet utilisateur est déjà banni !",
 			BAN_BANNABLE: "Je ne peux pas bannir cet utilisateur, veuillez vérifier ses rôles et ses permissions",
@@ -408,7 +408,7 @@ module.exports = class {
 			MUTE_DESCRIPTION: "Mute le membre choisi",
 			MUTE_USAGE: (prefix) => `${prefix}mute [@User ou UserID] [Durée] [Raison]`,
 			MUTE_EXAMPLE: (prefix) => `${prefix}mute @Lycos 1d Spam emotes`,
-			MUTE_ERRORARGS : "Merci d'indiquer un utilisateur à mute !",
+			MUTE_ERRORARGS: "Merci d'indiquer un utilisateur à mute !",
 			MUTE_NO_MUTETIME: "Tu n'as pas spécifié de temps !",
 			MUTE_USER_ALREADY_MUTED: "Cet utilisateur est déjà mute !",
 			MUTE_UNMUTABLE: "Cet utilisateur ne peut pas être mute !",
@@ -426,11 +426,11 @@ module.exports = class {
 			CLEAR_DESCRIPTION: "Supprime tous les message visibles dans le salon",
 			CLEAR_USAGE: (prefix) => `${prefix}clear`,
 			CLEAR_EXAMPLE: (prefix) => `${prefix}clear`,
-            ROLEMENTION_DESCRIPTION: "Mentionne le rôle demandé",
-            ROLEMENTION_USAGE: (prefix) => `${prefix}rolemention [ID/Nom]`,
-            ROLEMENTION_EXAMPLES: (prefix) => `${prefix}rolemention 627956962008629279\n${prefix}rolemention Developers`,
-            ROLEMENTION_ROLE_NOT_FOUND: "Aucun rôle trouvé",
-            ROLEMENTION_ROLE_HIGHEST: "Ce rôle est supérieur au mien, je ne peux donc pas le mentionner.",
+			ROLEMENTION_DESCRIPTION: "Mentionne le rôle demandé",
+			ROLEMENTION_USAGE: (prefix) => `${prefix}rolemention [ID/Nom]`,
+			ROLEMENTION_EXAMPLES: (prefix) => `${prefix}rolemention 627956962008629279\n${prefix}rolemention Developers`,
+			ROLEMENTION_ROLE_NOT_FOUND: "Aucun rôle trouvé",
+			ROLEMENTION_ROLE_HIGHEST: "Ce rôle est supérieur au mien, je ne peux donc pas le mentionner.",
 			EMOTES_DESCRIPTION: "Donne la liste des emojis du serveur",
 			EMOTES_USAGE: (prefix) => `${prefix}emotes`,
 			EMOTES_EXAMPLES: (prefix) => `${prefix}emotes`,
@@ -442,13 +442,13 @@ module.exports = class {
 			EMOTES_DESC: (message) => `Le serveur possède actuellement **${message.guild.emojis.cache.size}** émojis :`,
 			EMOTES_NO_EMOTES: "Il n'y a pas d'émojis sur ce serveur",
 			EMOTES_NO_ANIMATED: "Il n'y a pas d'émoji animé sur ce serveur",
-            MEMBERCOUNT_DESCRIPTION: "Créé un un compteur de membres",
-            MEMBERCOUNT_USAGE: (prefix) => `${prefix}membercount [channel/category]`,
-            MEMBERCOUNT_EXAMPLES: (prefix) => `${prefix}membercount channel\n ${prefix}membercount category`,
-            MEMBERCOUNT_NO_METHOD: "Veuillez indiquer dans quoi voulez-vous faire apparaître votre compteur : channel/category",
-            MEMBERCOUNT_MEMBERS: "membres",
-            MEMBERCOUNT_UNVALID_METHOD: "Je n'ai pas compris dans quoi vous souhaitez faire apparaître votre compteur : channel/category",
-			MEMBERCOUNT_CHANNEL_EXISTS: (salon) => `Le compteur de membres est déjà présent sur le serveur : ${salon.type === "category" ? `catégorie ${salon.name}`: `<#${salon.id}>`}`,
+			MEMBERCOUNT_DESCRIPTION: "Créé un un compteur de membres",
+			MEMBERCOUNT_USAGE: (prefix) => `${prefix}membercount [channel/category]`,
+			MEMBERCOUNT_EXAMPLES: (prefix) => `${prefix}membercount channel\n ${prefix}membercount category`,
+			MEMBERCOUNT_NO_METHOD: "Veuillez indiquer dans quoi voulez-vous faire apparaître votre compteur : channel/category",
+			MEMBERCOUNT_MEMBERS: "membres",
+			MEMBERCOUNT_UNVALID_METHOD: "Je n'ai pas compris dans quoi vous souhaitez faire apparaître votre compteur : channel/category",
+			MEMBERCOUNT_CHANNEL_EXISTS: (salon) => `Le compteur de membres est déjà présent sur le serveur : ${salon.type === "category" ? `catégorie ${salon.name}` : `<#${salon.id}>`}`,
 			AUTOROLE_NO_ARGS: (g, text) => `${JSON.parse(g.autorole).length === 0 ? `Il n'y a actuellement aucun rôle d'attirbué aux membres lors de leur arrivée sur le serveur.` : `Il y a actuellement ${JSON.parse(g.autorole).length} ${JSON.parse(g.autorole).length === 1 ? `rôle attribué` : `rôles attribués`} aux membres lors de leur arrivée :\n${text}`}\nFaites \`\`${g.prefix}autorole add @Role/ID\`\` pour ajouter un rôle de l'autorole.\nFaites \`\`${g.prefix}autorole remove @Role/ID\`\` pour retirer un rôle de l'autorole`,
 			AUTOROLE_BAD_REASON: (g) => `Je n'ai pas compris ce que vous vouliez faire.\nFaites \`\`${g.prefix}autorole add @Role/ID\`\` pour ajouter un rôle de l'autorole.\nFaites \`\`${g.prefix}autorole remove @Role/ID\`\` pour retirer un rôle de l'autorole`,
 			AUTOROLE_NO_ROLE: "Veuillez préciser un rôle à ajouter ou retirer !",
@@ -457,22 +457,22 @@ module.exports = class {
 			AUTOROLE_ROLE_ADDED: (r) => `Le rôle <@&${r}> a été ajouté à l'autorole !`,
 			AUTOROLE_ROLE_REMOVED: (r) => `Le rôle <@&${r}> a été retiré de l'autorole !`,
 			AUTOROLE_LIMIT: "Vous avez atteint la limite de rôles attribuables dans l'autorôle. Veuillez en retirer si vous voulez en mettre de nouveaux.",//Ajouter "Vous pouvez augmentez cette limite en passant sur la version premium du bot"
-			SETLOGS_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les logs. ${g.logs_channel === null || g.logs_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des logs`: `Le salon d'affichage des logs est actuellement <#${g.logs_channel}>`}`,
+			SETLOGS_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les logs. ${g.logs_channel === null || g.logs_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des logs` : `Le salon d'affichage des logs est actuellement <#${g.logs_channel}>`}`,
 			SETLOGS_SAME: (c) => `<#${c}> est déjà le salon d'affichage des logs.`,
 			SETLOGS_SUCCESS: (c) => `Les logs seront désormais affichées dans le salon <#${c}>`,
-			SETJOIN_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les arrivées. ${g.welcome_channel === null || g.welcome_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des arrivées.`: `Le salon d'affichage des arrivées est actuellement <#${g.welcome_channel}>`}`,
+			SETJOIN_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les arrivées. ${g.welcome_channel === null || g.welcome_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des arrivées.` : `Le salon d'affichage des arrivées est actuellement <#${g.welcome_channel}>`}`,
 			SETJOIN_SAME: (c) => `<#${c}> est déjà le salon d'affichage des arrivées.`,
 			SETJOIN_SUCCESS: (c) => `Les arrivées seront désormais affichées dans le salon <#${c}>`,
-			SETLEAVE_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les départs. ${g.leave_channel === null || g.leave_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des départs.`: `Le salon d'affichage des départs est actuellement <#${g.leave_channel}>`}`,
+			SETLEAVE_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les départs. ${g.leave_channel === null || g.leave_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des départs.` : `Le salon d'affichage des départs est actuellement <#${g.leave_channel}>`}`,
 			SETLEAVE_SAME: (c) => `<#${c}> est déjà le salon d'affichage des départs.`,
 			SETLEAVE_SUCCESS: (c) => `Les départs seront désormais affichées dans le salon <#${c}>`,
-			SETREPORTS_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les signalements. ${g.reports_channel === null || g.reports_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des signalements.`: `Le salon d'affichage des signalements est actuellement <#${g.reports_channel}>`}`,
+			SETREPORTS_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les signalements. ${g.reports_channel === null || g.reports_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des signalements.` : `Le salon d'affichage des signalements est actuellement <#${g.reports_channel}>`}`,
 			SETREPORTS_SAME: (c) => `<#${c}> est déjà le salon d'affichage des signalements.`,
 			SETREPORTS_SUCCESS: (c) => `Les signalements seront désormais affichées dans le salon <#${c}>`,
-			SETNOTIF_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel créer le RoleReaction. ${g.rolereaction_channel === null || g.rolereaction_channel === "" ? `Il n'y a actuellement aucun salon pour le RoleReaction.`: `Le salon du RoleReaction est actuellement <#${g.rolereaction_channel}>`}`,
+			SETNOTIF_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel créer le RoleReaction. ${g.rolereaction_channel === null || g.rolereaction_channel === "" ? `Il n'y a actuellement aucun salon pour le RoleReaction.` : `Le salon du RoleReaction est actuellement <#${g.rolereaction_channel}>`}`,
 			SETNOTIF_SAME: (c) => `<#${c}> est déjà le salon du RoleReaction.`,
 			SETNOTIF_SUCCESS: (c) => `Le RoleReaction sera dans le salon <#${c}>`,
-			SETMODLOGS_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les logs de modération. ${g.modlogs_channel === null || g.modlogs_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des logs de modération.`: `Le salon d'affichage des logs de modération est actuellement <#${g.modlogs_channel}>`}`,
+			SETMODLOGS_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les logs de modération. ${g.modlogs_channel === null || g.modlogs_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des logs de modération.` : `Le salon d'affichage des logs de modération est actuellement <#${g.modlogs_channel}>`}`,
 			SETMODLOGS_SAME: (c) => `<#${c}> est déjà le salon d'affichage des logs de modération.`,
 			SETMODLOGS_SUCCESS: (c) => `Les logs de modération seront désormais affichées dans le salon <#${c}>`,
 			LOGS_CHANNEL_CREATE_TITLE: `Un nouveau salon a été créé !`,
@@ -557,8 +557,22 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Bot :** ${user.bot ? "Affirmatif" : "Négatif, c'est un humain (Ou un selfbot)"}
 **Création du compte :** ${moment(user.createdAt.toUTCString()).format("LLLL")}
 **Date du débanissement :** ${moment(new Date()).format("LLLL")}`,
-        };
-		function date(date1){
+			LOGS_GUILD_CREATE_TITLE: (guild) => `Lycos a été ajouté sur ${guild.name} !`,
+			LOGS_GUILD_CREATE_DESC: (guild, vl, r) => `**ID :** ${guild.id}
+**Membres :** ${guild.members.cache.filter(m => !m.user.bot).size}
+**Propriétaire :** ${guild.owner.user.tag} - ${guild.ownerID}
+**Créé le :** ${moment(guild.createdAt.toUTCString()).format("LLLL")}
+**Niveau de vérification :** : ${vl}
+**Localisation du serveur :** ${r}`,
+			LOGS_GUILD_DELETE_TITLE: (guild) => `Lycos a été enlevé de ${guild.name} !`,
+			LOGS_GUILD_DELETE_DESC: (guild, vl, r) => `**ID :** ${guild.id}
+**Membres :** ${guild.members.cache.filter(m => !m.user.bot).size}
+**Propriétaire :** ${guild.owner.user.tag} - ${guild.ownerID}
+**Créé le :** ${moment(guild.createdAt.toUTCString()).format("LLLL")}
+**Niveau de vérification :** : ${vl}
+**Localisation du serveur :** ${r}`,
+		};
+		function date(date1) {
 			let d = date1.split("-");
 			let an = d[0];
 			let mois = d[1];
