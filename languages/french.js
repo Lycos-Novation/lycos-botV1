@@ -571,6 +571,30 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Créé le :** ${moment(guild.createdAt.toUTCString()).format("LLLL")}
 **Niveau de vérification :** : ${vl}
 **Localisation du serveur :** ${r}`,
+			LOGS_GUILD_MEMBER_CHUNK_TITLE: "Tout un régiment de membres viennent d'arriver d'un même serveur !",
+			LOGS_GUILD_MEMBER_CHUNK_DESC: (members, guild) => ``,
+			LOGS_GUILD_MEMBER_UPDATE_TITLE: "Un membre du serveur a subi des modifications !",
+			LOGS_GUILD_MEMBER_UPDATE_DESC: (oldMember, newMember) => `**__Avant modifications du ${moment(new Date()).format("LLLL")} :__**
+			
+**Nom :** ${oldMember.user.tag}
+**ID :** ${oldMember.id}
+**Création du compte :** ${moment(oldMember.user.createdAt.toUTCString()).format("LLLL")}
+**A rejoint le serveur le :** ${moment(oldMember.joinedAt.toUTCString()).format("LLLL")}
+**Bannissable** : ${oldMember.bannable === true ? "Oui" : "Non"}
+**Expulsable :** ${oldMember.kickable === true ? "Oui" : "Non"}
+**Surnom :** ${oldMember.nickname ? `${oldMember.displayName}` : "Aucun surnom"}
+**Avatar :** ${oldMember.user.displayAvatarURL({format: "png",dynamic: true, size: 256})}
+
+**__Après modifications du ${moment(new Date()).format("LLLL")} :__**
+			
+**Nom :** ${newMember.user.tag}
+**ID :** ${newMember.id}
+**Création du compte :** ${moment(newMember.user.createdAt.toUTCString()).format("LLLL")}
+**A rejoint le serveur le :** ${moment(newMember.joinedAt.toUTCString()).format("LLLL")}
+**Bannissable** : ${newMember.bannable === true ? "Oui" : "Non"}
+**Expulsable :** ${newMember.kickable === true ? "Oui" : "Non"}
+**Surnom :** ${newMember.nickname ? `${newMember.displayName}` : "Aucun surnom"}
+**Avatar :** ${newMember.user.displayAvatarURL({format: "png",dynamic: true, size: 256})}`,
 		};
 		function date(date1) {
 			let d = date1.split("-");
