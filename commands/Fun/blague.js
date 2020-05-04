@@ -42,7 +42,7 @@ class Number extends Command {
                                 },
                                 {
                                     name: message.language.get("BLAGUE_ANSWER"),
-                                    value: data.answer,
+                                    value: `||${data.answer}||`,
                                 },
                             ],
                             color: message.config.embed.color,
