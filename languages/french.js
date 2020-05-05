@@ -584,6 +584,7 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Expulsable :** ${oldMember.kickable === true ? "Oui" : "Non"}
 **Surnom :** ${oldMember.nickname ? `${oldMember.displayName}` : "Aucun surnom"}
 **Avatar :** ${oldMember.user.displayAvatarURL({ format: "png", dynamic: true, size: 256 })}
+**Rôles :** ${oldMember.roles.cache.size > 10 ? `${oldMember.roles.cache.map((r) => r).slice(0, 9).join(", ")} et ${oldMember.roles.cache.size - 10} autres rôles.` : (oldMember.roles.cache.size < 1) ? `Aucun rôle` : `${oldMember.roles.cache.map((r) => r).join(", ")}`}
 
 **__Après modifications du ${moment(new Date()).format("LLLL")} :__**
 			
@@ -594,7 +595,8 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Bannissable** : ${newMember.bannable === true ? "Oui" : "Non"}
 **Expulsable :** ${newMember.kickable === true ? "Oui" : "Non"}
 **Surnom :** ${newMember.nickname ? `${newMember.displayName}` : "Aucun surnom"}
-**Avatar :** ${newMember.user.displayAvatarURL({ format: "png", dynamic: true, size: 256 })}`,
+**Avatar :** ${newMember.user.displayAvatarURL({ format: "png", dynamic: true, size: 256 })}
+**Rôles :** ${newMember.roles.cache.size > 10 ? `${newMember.roles.cache.map((r) => r).slice(0, 9).join(", ")} et ${newMember.roles.cache.size - 10} autres rôles.` : (newMember.roles.cache.size < 1) ? `Aucun rôle` : `${newMember.roles.cache.map((r) => r).join(", ")}`}`,
 			LOGS_MESSAGE_DELETE_TITLE: "Un message a été supprimé !",
 			LOGS_MESSAGE_DELETE_DESC: (message) => `**Auteur du message :** ${message.author.tag} - ${message.author} - ${message.author.id}
 **Message supprimé dans :** ${message.channel.name} - ${message.channel} - ${message.channel.id}
@@ -611,6 +613,11 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 			LOGS_ROLE_CREATE_DESC: (role) => `**Nom du rôle :** ${role.name} - ${role}
 **ID :** ${role.id}
 **Créé le :** ${moment(role.createdAt.toUTCString()).format("LLLL")}`,
+			LOGS_ROLE_DELETE_TITLE: "Un nouveau rôle a été créé !",
+			LOGS_ROLE_DELETE_DESC: (role) => `**Nom du rôle :** ${role.name}
+**ID :** ${role.id}
+**Créé le :** ${moment(role.createdAt.toUTCString()).format("LLLL")}
+**Supprimé le :** ${moment(new Date()).format("LLLL")}`,
 		};
 		function date(date1) {
 			let d = date1.split("-");
