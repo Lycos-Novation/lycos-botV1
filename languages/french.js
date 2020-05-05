@@ -607,6 +607,10 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Salon :** ${newMessage.channel.name} - ${newMessage.channel} - ${newMessage.channel.id}
 **Ancien message :** \`\`${oldMessage.content}\`\`
 **Nouveau message :** \`\`${newMessage.content}\`\``,
+			LOGS_ROLE_CREATE_TITLE: "Un nouveau rôle a été créé !",
+			LOGS_ROLE_CREATE_DESC: (role) => `**Nom du rôle :** ${role.name} - ${role}
+**ID :** ${role.id}
+**Créé le :** ${moment(role.createdAt.toUTCString()).format("LLLL")}`,
 		};
 		function date(date1) {
 			let d = date1.split("-");

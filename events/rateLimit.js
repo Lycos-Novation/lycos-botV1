@@ -3,6 +3,7 @@ module.exports = class {
 		this.client = client;
 	}
 
-	async run() {
+	async run(rateLimitInfo) {
+		return console.log(rateLimitInfo);
 	}
 };
