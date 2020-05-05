@@ -618,6 +618,28 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **ID :** ${role.id}
 **Créé le :** ${moment(role.createdAt.toUTCString()).format("LLLL")}
 **Supprimé le :** ${moment(new Date()).format("LLLL")}`,
+			LOGS_ROLE_UPDATE_TITLE: "Un rôle a été modifié !",
+			LOGS_ROLE_UPDATE_DESC: (oldRole, newRole) => `**__Avant modifications du ${moment(new Date()).format("LLLL")} :__**
+			
+**Nom du rôle :** ${oldRole.name}
+**ID :** ${oldRole.id}
+**Créé le :** ${moment(oldRole.createdAt.toUTCString()).format("LLLL")}
+**Position :** ${oldRole.position}
+**Couleur :** ${oldRole.hexColor}
+**Apparaît séparemment :** ${oldRole.hoist ? `Oui` : `Non`}
+**Mentionnable :** ${oldRole.mentionable ? `Oui` : `Non`}
+**Permissions :** ${oldRole.permissions.toArray().length > 10 ? `${oldRole.permissions.toArray().map((r) => r).slice(0, 9).join(", ")} et ${oldRole.permissions.toArray().length - 10} autres permissions.` : (oldRole.permissions.toArray().length < 1) ? `Aucune permission` : `${oldRole.permissions.toArray().map((r) => r).join(", ")}`}
+
+**__Après modifications du ${moment(new Date()).format("LLLL")} :__**
+			
+**Nom du rôle :** ${newRole.name} - ${newRole}
+**ID :** ${newRole.id}
+**Créé le :** ${moment(newRole.createdAt.toUTCString()).format("LLLL")}
+**Position :** ${newRole.position}
+**Couleur :** ${newRole.hexColor}
+**Apparaît séparemment :** ${newRole.hoist ? `Oui` : `Non`}
+**Mentionnable :** ${newRole.mentionable ? `Oui` : `Non`}
+**Permissions :** ${newRole.permissions.toArray().length > 10 ? `${newRole.permissions.toArray().map((r) => r).slice(0, 9).join(", ")} et ${newRole.permissions.toArray().length - 10} autres permissions.` : (newRole.permissions.toArray().length < 1) ? `Aucune permission` : `${newRole.permissions.toArray().map((r) => r).join(", ")}`}`,
 		};
 		function date(date1) {
 			let d = date1.split("-");
