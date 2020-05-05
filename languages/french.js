@@ -640,6 +640,9 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Apparaît séparemment :** ${newRole.hoist ? `Oui` : `Non`}
 **Mentionnable :** ${newRole.mentionable ? `Oui` : `Non`}
 **Permissions :** ${newRole.permissions.toArray().length > 10 ? `${newRole.permissions.toArray().map((r) => r).slice(0, 9).join(", ")} et ${newRole.permissions.toArray().length - 10} autres permissions.` : (newRole.permissions.toArray().length < 1) ? `Aucune permission` : `${newRole.permissions.toArray().map((r) => r).join(", ")}`}`,
+			LOGS_WEBHOOK_UPDATE_TITLE: `Un webhook a été modifié !`,
+			LOGS_WEBHOOK_UPDATE_DESC: (channel) => `**Nom du salon :** ${channel.name} - ${channel}
+**ID :** ${channel.id}`,
 		};
 		function date(date1) {
 			let d = date1.split("-");
