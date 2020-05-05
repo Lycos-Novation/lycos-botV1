@@ -583,7 +583,7 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Bannissable** : ${oldMember.bannable === true ? "Oui" : "Non"}
 **Expulsable :** ${oldMember.kickable === true ? "Oui" : "Non"}
 **Surnom :** ${oldMember.nickname ? `${oldMember.displayName}` : "Aucun surnom"}
-**Avatar :** ${oldMember.user.displayAvatarURL({format: "png",dynamic: true, size: 256})}
+**Avatar :** ${oldMember.user.displayAvatarURL({ format: "png", dynamic: true, size: 256 })}
 
 **__Après modifications du ${moment(new Date()).format("LLLL")} :__**
 			
@@ -594,7 +594,14 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Bannissable** : ${newMember.bannable === true ? "Oui" : "Non"}
 **Expulsable :** ${newMember.kickable === true ? "Oui" : "Non"}
 **Surnom :** ${newMember.nickname ? `${newMember.displayName}` : "Aucun surnom"}
-**Avatar :** ${newMember.user.displayAvatarURL({format: "png",dynamic: true, size: 256})}`,
+**Avatar :** ${newMember.user.displayAvatarURL({ format: "png", dynamic: true, size: 256 })}`,
+			LOGS_MESSAGE_DELETE_TITLE: "Un message a été supprimé !",
+			LOGS_MESSAGE_DELETE_DESC: (message) => `**Auteur du message :** ${message.author.tag} - ${message.author} - ${message.author.id}
+**Message supprimé dans :** ${message.channel.name} - ${message.channel} - ${message.channel.id}
+**Message supprimé le :** ${moment(new Date()).format("LLLL")}
+**Contenu du message :** \`\`${message.content}\`\``,
+			LOGS_MESSAGE_DELETE_BULK_TITLE: "Plusieurs messages ont été supprimés !",
+			LOGS_MESSAGE_DELETE_BULK_DESC: () => ``,
 		};
 		function date(date1) {
 			let d = date1.split("-");
