@@ -602,6 +602,11 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Contenu du message :** \`\`${message.content}\`\``,
 			LOGS_MESSAGE_DELETE_BULK_TITLE: "Plusieurs messages ont été supprimés !",
 			LOGS_MESSAGE_DELETE_BULK_DESC: () => ``,
+			LOGS_MESSAGE_UPDATE_TITLE: "Un message a été modifié !",
+			LOGS_MESSAGE_UPDATE_DESC: (oldMessage, newMessage) => `**Auteur du message :** ${newMessage.author.tag} - ${newMessage.author} - ${newMessage.author.id}
+**Salon :** ${newMessage.channel.name} - ${newMessage.channel} - ${newMessage.channel.id}
+**Ancien message :** \`\`${oldMessage.content}\`\`
+**Nouveau message :** \`\`${newMessage.content}\`\``,
 		};
 		function date(date1) {
 			let d = date1.split("-");
