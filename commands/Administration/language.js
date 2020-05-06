@@ -22,32 +22,45 @@ class Language extends Command {
 
 	async run(message, args) {
 		try {
-			if (!args[0]) {
-				return message.channel.send(message.language.get("LANGUAGE_INFO", message.settings.language, message.settings.prefix));
+			var method = args[0];
+			if (!method) {
+				message.channel.send(message.language.get("LANGUAGE_INFO", message.settings.language, message.settings.prefix));
+				method = await message.bot.functions.awaitResponse(message);
 			}
-			if (args[0].toLowerCase() === "list") {
+			if (method.toLowerCase() === "list") {
 				return message.channel.send(message.language.get("LANGUAGE_LIST", languages));
 			}
-			if (args[0].toLowerCase() === "set") {
-				if (!args[1] || !/\S+/g.test(args[1])) {
-					return message.channel.send(message.language.get("LANGUAGE_NULL"))
+			if (method.toLowerCase() === "set") {
+				var lang = args[1];
+				if (!lang) {
+					message.channel.send(message.language.get("LANGUAGE_SUPPLY"));
+					lang = await message.bot.functions.awaitResponse(message);
 				}
-				else if (languages.includes(args[1].toLowerCase())) {
+				if (languages.includes(lang.toLowerCase())) {
 					var sql = `SELECT *
 							   FROM Guilds
-							   WHERE guild_id="${message.guild.id}"`;
+							   WHERE guild_id="${message.guild.id}";`;
 					var g;
 					mysqlcon.query(sql, async function (err, result, fields) {
 						g = result[0];
-						if (g.language === args[1].toLowerCase()) {
-							return message.channel.send(message.language.get("LANGUAGE_ALREADY_SET", args))
+						if (g.language === lang.toLowerCase()) {
+							return message.channel.send(message.language.get("LANGUAGE_ALREADY_SET", lang));
 						} else {
 							sql = `UPDATE Guilds 
-								   SET language=${args[1].toLowerCase()}
+								   SET language="${lang.toLowerCase()}"
 								   WHERE guild_id="${message.guild.id}";`;
 							mysqlcon.query(sql, async function (err, result, fields) {
 							});
-							return message.channel.send(message.language.get("LANGUAGE_GUILD_INFO", args));
+							var sql = `SELECT language
+							   FROM Guilds
+							   WHERE guild_id="${message.guild.id}";`;
+					var g;
+					mysqlcon.query(sql, async function (err, result, fields) {
+						g = result[0];
+						const msgLang = new (require(`../../languages/${g.language}.js`));
+						return message.channel.send(msgLang.get("LANGUAGE_GUILD_INFO", lang));
+					});
+							
 						}
 					});
 				} else {
