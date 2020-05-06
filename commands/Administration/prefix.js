@@ -26,19 +26,21 @@ class Prefix extends Command {
 			var g;
 			mysqlcon.query(sql, async function (err, result, fields) {
 				g = result[0];
-			if (!args[0]) {
-				return message.channel.send(message.language.get("PREFIX_INFO", message.settings.prefix));
+				var method = args[0];
+			if (!method) {
+				message.channel.send(message.language.get("PREFIX_INFO", message.settings.prefix));
+				method = await message.bot.functions.awaitResponse(message);
 			}
-			if (args[0] === "set") {
-				if(!args[1] || !/\S+/g.test(args[1])) {
-					return message.channel.send(message.language.get("PREFIX_NULL"));
+			if (method === "set") {
+				var pref = args[1];
+				if(!pref) {
+					message.channel.send(message.language.get("PREFIX_NULL"));
+					pref = await message.bot.functions.awaitResponse(message);
 				}
-				else {
-					mysqlcon.query("UPDATE Guilds SET prefix = ? WHERE guild_id = ?", [args[1], message.guild.id]);
-					return message.channel.send(message.language.get("PREFIX_CHANGE", args));
-				}
+				mysqlcon.query("UPDATE Guilds SET prefix = ? WHERE guild_id = ?", [pref, message.guild.id]);
+				return message.channel.send(message.language.get("PREFIX_CHANGE", pref));
 			}
-			if (args[0] === "reset") {
+			if (method === "reset") {
 				mysqlcon.query("UPDATE Guilds SET prefix = . WHERE guild_id = ?", [message.guild.id]);
 				return message.channel.send(message.language.get("PREFIX_RESET"));
 			}
