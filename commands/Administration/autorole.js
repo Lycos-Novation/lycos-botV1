@@ -32,13 +32,13 @@ class Autorole extends Command {
                 var ar = result[0].autorole, ids = [];
                 if (!method) {
                     await message.channel.send(message.language.get("AUTOROLE_SUPPLY_METHOD"));
-                    method = await awaitResponse(message);
+                    method = await message.bot.functions.awaitResponse(message);
                 }
                 if (method !== "add" && method !== "remove") return message.channel.send(message.language.get("AUTOROLE_BAD_METHOD", g));
                 var role_supplied = args[1];
                 if (!role_supplied) {
                     await message.channel.send(message.language.get("AUTOROLE_SUPPLY_ROLE"));
-                    role_supplied = await awaitResponse(message);
+                    role_supplied = await message.bot.functions.awaitResponse(message);
                 }
                 let r = message.guild.roles.resolve(role_supplied) || message.guild.roles.resolveID(role_supplied);
                 let rid = r.id || r.toString().slice(3, r.toString().length - 1);
@@ -73,12 +73,6 @@ class Autorole extends Command {
         } catch (error) {
             console.error(error);
             return message.channel.send(message.language.get("ERROR", error));
-        }
-        async function awaitResponse(message){
-            const responseFilter = m => m.author.id === message.author.id;
-            const response = await message.channel.awaitMessages(responseFilter, {max: 1});
-            const rescontent = response.first().content;
-            return rescontent;
         }
     }
 }

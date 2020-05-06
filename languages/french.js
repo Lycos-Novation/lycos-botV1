@@ -462,7 +462,7 @@ module.exports = class {
 			SETLOGS_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les logs. ${g.logs_channel === null || g.logs_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des logs` : `Le salon d'affichage des logs est actuellement <#${g.logs_channel}>`}`,
 			SETLOGS_SAME: (c) => `<#${c}> est déjà le salon d'affichage des logs.`,
 			SETLOGS_SUCCESS: (c) => `Les logs seront désormais affichées dans le salon <#${c}>`,
-			SETJOIN_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les arrivées. ${g.welcome_channel === null || g.welcome_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des arrivées.` : `Le salon d'affichage des arrivées est actuellement <#${g.welcome_channel}>`}`,
+			SETJOIN_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les arrivées. ${g.welcome_channel === null || g.welcome_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des arrivées.` : `Le salon d'affichage des arrivées est actuellement <#${g.welcome_channel}>`}\nRépondez en mentionnant le salon ou en indiquant son ID afin d'en faire le salon d'affichge des arrivées.`,
 			SETJOIN_SAME: (c) => `<#${c}> est déjà le salon d'affichage des arrivées.`,
 			SETJOIN_SUCCESS: (c) => `Les arrivées seront désormais affichées dans le salon <#${c}>`,
 			SETLEAVE_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les départs. ${g.leave_channel === null || g.leave_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des départs.` : `Le salon d'affichage des départs est actuellement <#${g.leave_channel}>`}`,

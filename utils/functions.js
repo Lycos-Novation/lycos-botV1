@@ -31,6 +31,13 @@ module.exports = {
 		return guild.members.cache.filter((member) => member.id === search || member.displayName.toLowerCase().includes(search));
 	},
 
+	async awaitResponse(message){
+		const responseFilter = m => m.author.id === message.author.id;
+		const response = await message.channel.awaitMessages(responseFilter, {max: 1});
+		const rescontent = response.first().content;
+		return rescontent;
+	},
+
 	checkDays(date) {
 		const now = new Date();
 		const diff = now.getTime() - date.getTime();
