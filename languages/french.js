@@ -459,7 +459,7 @@ module.exports = class {
 			AUTOROLE_ROLE_ADDED: (r) => `Le rôle <@&${r}> a été ajouté à l'autorole !`,
 			AUTOROLE_ROLE_REMOVED: (r) => `Le rôle <@&${r}> a été retiré de l'autorole !`,
 			AUTOROLE_LIMIT: "Vous avez atteint la limite de rôles attribuables dans l'autorôle. Veuillez en retirer si vous voulez en mettre de nouveaux.",//Ajouter "Vous pouvez augmentez cette limite en passant sur la version premium du bot"
-			SETLOGS_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les logs. ${g.logs_channel === null || g.logs_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des logs` : `Le salon d'affichage des logs est actuellement <#${g.logs_channel}>`}`,
+			SETLOGS_NO_ARGS: (g) => `${g.logs_channel === null || g.logs_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des logs` : `Le salon d'affichage des logs est actuellement <#${g.logs_channel}>`}\nRépondez en mentionnant le salon ou en indiquant son ID afin d'en faire le salon d'affichge des logs.`,
 			SETLOGS_SAME: (c) => `<#${c}> est déjà le salon d'affichage des logs.`,
 			SETLOGS_SUCCESS: (c) => `Les logs seront désormais affichées dans le salon <#${c}>`,
 			SETJOIN_NO_ARGS: (g) => `${g.welcome_channel === null || g.welcome_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des arrivées.` : `Le salon d'affichage des arrivées est actuellement <#${g.welcome_channel}>`}\nRépondez en mentionnant le salon ou en indiquant son ID afin d'en faire le salon d'affichge des arrivées.`,
