@@ -474,7 +474,7 @@ module.exports = class {
 			SETNOTIF_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel créer le RoleReaction. ${g.rolereaction_channel === null || g.rolereaction_channel === "" ? `Il n'y a actuellement aucun salon pour le RoleReaction.` : `Le salon du RoleReaction est actuellement <#${g.rolereaction_channel}>`}`,
 			SETNOTIF_SAME: (c) => `<#${c}> est déjà le salon du RoleReaction.`,
 			SETNOTIF_SUCCESS: (c) => `Le RoleReaction sera dans le salon <#${c}>`,
-			SETMODLOGS_NO_ARGS: (g) => `Merci de préciser un slaon dans lequel seront affichées les logs de modération. ${g.modlogs_channel === null || g.modlogs_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des logs de modération.` : `Le salon d'affichage des logs de modération est actuellement <#${g.modlogs_channel}>`}`,
+			SETMODLOGS_NO_ARGS: (g) => `${g.modlogs_channel === null || g.modlogs_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des logs de modération.` : `Le salon d'affichage des logs de modération est actuellement <#${g.modlogs_channel}>`}\nRépondez en mentionnant le salon ou en indiquant son ID afin d'en faire le salon d'affichge des logs de modération.`,
 			SETMODLOGS_SAME: (c) => `<#${c}> est déjà le salon d'affichage des logs de modération.`,
 			SETMODLOGS_SUCCESS: (c) => `Les logs de modération seront désormais affichées dans le salon <#${c}>`,
 			LOGS_CHANNEL_CREATE_TITLE: `Un nouveau salon a été créé !`,

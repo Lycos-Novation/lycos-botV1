@@ -12,7 +12,7 @@ class Modlogs extends Command {
 			guildOnly: true,
 			permLevel: "Server Admin",
             botPermissions: ["EMBED_LINKS"],
-            aliases: ["modlogs"],
+            aliases: ["modlogs", "setmlogs"],
 			nsfw: false,
 			adminOnly: true,
 			cooldown: 1000,
@@ -27,10 +27,12 @@ class Modlogs extends Command {
 			var g;
 			mysqlcon.query(sql, async function (err, result, fields) {
 				g = result[0];
-			if (!args[0]) {
-				return message.channel.send(message.language.get("SETMODLOGS_NO_ARGS", g));
+				var chan = args[0];
+			if (!chan) {
+				message.channel.send(message.language.get("SETMODLOGS_NO_ARGS", g));
+				chan = await message.bot.functions.awaitResponse(message);
 			}
-			let c = message.guild.channels.resolve(args[0]) || message.guild.channels.resolveID(args[0]);
+			let c = message.guild.channels.resolve(chan) || message.guild.channels.resolveID(chan);
 			let cid = c.toString().slice(2, c.toString().length -1) || c.id;
             if (cid === g.modlogs_channel) {
                 return message.channel.send(message.language.get("SETMODLOGS_SAME", cid))
