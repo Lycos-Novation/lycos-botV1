@@ -28,15 +28,20 @@ class Autorole extends Command {
             mysqlcon.query(sql, async function (err, result, fields) {
                 if (err) throw err;
                 g = result[0];
-                let method = args[0];
+                var method = args[0];
                 var ar = result[0].autorole, ids = [];
                 if (!method) {
-                    return message.channel.send(message.language.get("AUTOROLE_NO_ARGS", g, text));
+                    await message.channel.send(message.language.get("AUTOROLE_SUPPLY_METHOD"));
+                    method = await awaitResponse(message);
                 }
-                if (method !== "add" || method !== "remove") return message.channel.send(message.language.get("AUTOROLE_BAD_REASON", g))
-                if (!args[1]) return message.channel.send(message.language.get("AUTOROLE_NO_ROLE"));
-                let r = message.guild.roles.resolve(args[1]) || message.guild.roles.resolveID(args[1]);
-                let rid = r.toString().slice(3, r.toString().length - 1) || r.id;
+                if (method !== "add" && method !== "remove") return message.channel.send(message.language.get("AUTOROLE_BAD_METHOD", g));
+                var role_supplied = args[1];
+                if (!role_supplied) {
+                    await message.channel.send(message.language.get("AUTOROLE_SUPPLY_ROLE"));
+                    role_supplied = await awaitResponse(message);
+                }
+                let r = message.guild.roles.resolve(role_supplied) || message.guild.roles.resolveID(role_supplied);
+                let rid = r.id || r.toString().slice(3, r.toString().length - 1);
                 if (method === 'add') {
                     if (ar.includes(rid)) return message.channel.send(message.language.get("AUTOROLE_ALREADY_IN"));
                     if (ar.split("/").length === 5) return message.channel.send(message.language.get("AUTOROLE_LIMIT"));
@@ -68,6 +73,12 @@ class Autorole extends Command {
         } catch (error) {
             console.error(error);
             return message.channel.send(message.language.get("ERROR", error));
+        }
+        async function awaitResponse(message){
+            const responseFilter = m => m.author.id === message.author.id;
+            const response = await message.channel.awaitMessages(responseFilter, {max: 1});
+            const rescontent = response.first().content;
+            return rescontent;
         }
     }
 }

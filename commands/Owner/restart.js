@@ -45,7 +45,7 @@ class Restart extends Command {
 					}, 1000);
 				}
 				else {
-					message.channel.send(`Shard[#${message.guild.shardID + 1}] is restarting...`);
+					message.channel.send(`Shard[#${message.guild.shardID}] is restarting...`);
 					setTimeout(() => {
 						process.exit(0);
 					}, 1000);
