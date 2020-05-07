@@ -72,24 +72,29 @@ class Help extends Command {
 						value: message.bot.commands.filter((filters) => filters.help.category === "Administration").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
-						name: `${message.config.emotes.fun} ${message.language.get("HELPGLOBAL_FIELDS")[1]} (${message.bot.commands.filter((filters) => filters.help.category === "Fun").size})`,
-						value: message.bot.commands.filter((filters) => filters.help.category === "Fun").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
+						name: `${message.config.emotes.moderation} ${message.language.get("HELPGLOBAL_FIELDS")[1]} (${message.bot.commands.filter((filters) => filters.help.category === "Moderation").size})`,
+						value: message.bot.commands.filter((filters) => filters.help.category === "Moderation").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
 						name: `${message.config.emotes.general} ${message.language.get("HELPGLOBAL_FIELDS")[2]} (${message.bot.commands.filter((filters) => filters.help.category === "General").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "General").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
-						name: `${message.config.emotes.moderation} ${message.language.get("HELPGLOBAL_FIELDS")[3]} (${message.bot.commands.filter((filters) => filters.help.category === "Moderation").size})`,
-						value: message.bot.commands.filter((filters) => filters.help.category === "Moderation").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
+						name: `${message.config.emotes.fun} ${message.language.get("HELPGLOBAL_FIELDS")[3]} (${message.bot.commands.filter((filters) => filters.help.category === "Fun").size})`,
+						value: message.bot.commands.filter((filters) => filters.help.category === "Fun").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
+					{
+						name: `${message.config.emotes.general} ${message.language.get("HELPGLOBAL_FIELDS")[4]} (${message.bot.commands.filter((filters) => filters.help.category === "Games").size})`,
+						value: message.bot.commands.filter((filters) => filters.help.category === "Games").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
+					},
+					
 					/*{
 						name: `${message.config.emotes.music} ${message.language.get("HELPGLOBAL_FIELDS")[4]} (${message.bot.commands.filter((filters) => filters.help.category === "Music").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "Music").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},*/
 				);
 
-				if (message.settings.modules.nsfw) {
+				/*if (message.settings.modules.nsfw) {
 					embedFields.push(
 						{
 							name: `${message.config.emotes.nsfw} NSFW (${message.bot.commands.filter((filters) => filters.help.category === "NSFW").size})`,
@@ -104,16 +109,16 @@ class Help extends Command {
 							value: message.bot.commands.filter((filters) => filters.help.category === "Hentai").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 						}
 					);
-				}
+				}*/
 
-				if (message.config.administrators.includes(message.author.id)) {
+				/*if (message.config.administrators.includes(message.author.id)) {
 					embedFields.push(
 						{
 							name: `Owner's Commands (${message.bot.commands.filter((filters) => filters.help.category === "Owner").size})`,
 							value: message.bot.commands.filter((filters) => filters.help.category === "Owner").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 						}
 					);
-				}
+				}*/
 
 				return message.channel.send({
 					embed: {

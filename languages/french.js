@@ -125,9 +125,10 @@ module.exports = class {
 			],
 			HELPGLOBAL_FIELDS: [
 				"Administration",
-				"Divertissement",
-				"Général",
 				"Modération",
+				"Général",
+				"Divertissement",
+				"Statistiques de jeux",
 				"Musique",
 			],
 			HELPGLOBAL_TITLE: "Help Menu",
