@@ -26,11 +26,11 @@ class Partners extends Command {
 					url: "https://discord.gg/7UwmMA3",
 					author: {
 						name: "Lycos",
-						icon_url: this.client.user.displayAvatarURL(),
+						icon_url: this.client.user.displayAvatarURL({format: "png",dynamic: true})
 					},
 					color: message.config.embed.color,
 					thumbnail: {
-						url: this.client.user.displayAvatarURL(),
+						url: this.client.user.displayAvatarURL({format: "png",dynamic: true})
 					},
 					description: message.language.get("PARTNERS_EMBED_DESC"),
 					fields: [

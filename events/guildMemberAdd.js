@@ -27,7 +27,7 @@ module.exports = class {
 							text: config.embed.footer,
 						},
 						color: 0x21E61B,
-						thumbnail: member.user.displayAvatarURL,
+						thumbnail: member.user.displayAvatarURL({format: "png",dynamic: true})
 					}
 				});
 			});

@@ -23,7 +23,7 @@ module.exports = class {
 							text: config.embed.footer,
 						},
 						color: 0xDB0808,
-						thumbnail: member.user.displayAvatarURL,
+						thumbnail: member.user.displayAvatarURL({format: "png",dynamic: true})
 					}
 				});
 			});

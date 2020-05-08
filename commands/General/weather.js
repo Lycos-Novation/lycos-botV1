@@ -31,10 +31,10 @@ class weatherInfo extends Command {
                         color: message.config.embed.color,
                         author: {
                             name: message.language.get("WEATHERINFO_EMBED_TITLE", result),
-                            icon_url: message.bot.user.displayAvatarURL,
+                            icon_url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
                         },
                         thumbnail: {
-                            url: message.member.displayAvatarURL,
+                            url: message.member.displayAvatarURL({format: "png",dynamic: true})
                         },
                         description: message.language.get("WEATHERINFO_EMBED_DESCRIPTION", result),
                         timestamp: new Date(),

@@ -51,7 +51,7 @@ class Report extends Command {
                         icon_url: message.author.displayAvatarURL({format: "png", dynamic: true}),
                     },
                     thumbnail: {
-                        url: member.user.displayAvatarURL(),
+                        url: member.user.displayAvatarURL({format: "png",dynamic: true}),
                     },
                     fields: [
                         {

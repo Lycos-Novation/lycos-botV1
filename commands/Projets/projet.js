@@ -38,7 +38,7 @@ class Projet extends Command {
                         color: message.config.embed.color,
                         author: {
                             name: `Liste des projets`,
-                            icon_url: message.bot.user.displayAvatarURL
+                            icon_url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
                         },
                         footer: {
                             text: message.config.embed.footer
@@ -96,7 +96,7 @@ class Projet extends Command {
                        color: message.config.embed.color,
                        author: {
                            name: "Gestionnaire de projet",
-                           icon_url: message.bot.user.displayAvatarURL
+                           icon_url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
                        },
                        footer: {
                            text: message.config.embed.footer

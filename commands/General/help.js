@@ -28,7 +28,7 @@ class Help extends Command {
 						embed: {
 							author: {
 								name: message.language.get("HELP_TITLE", command.help.name),
-								icon_url: message.bot.user.displayAvatarURL
+								icon_url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
 							},
 							color: message.config.embed.color,
 							footer: {
@@ -128,15 +128,16 @@ class Help extends Command {
 					embed: {
 						author : {
 							name :  message.language.get("HELPGLOBAL_TITLE"),
-							icon_url: message.bot.user.displayAvatarURL
+							icon_url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
 						},
 						color: message.config.embed.color,
 						thumbnail: {
-							url: message.bot.user.displayAvatarURL
+							url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
 						},
 						description: message.language.get("HELP_EMBED_DESCRIPTION", message),
 						footer: {
-							text: message.config.embed.footer, icon_url: message.bot.user.displayAvatarURL
+							text: message.config.embed.footer,
+							icon_url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
 						},
 						fields: embedFields,
 					},
