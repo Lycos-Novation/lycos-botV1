@@ -39,7 +39,7 @@ class emotes extends Command {
                     color: message.config.embed.color,
                     author: {
                         name: message.language.get("EMOTES_TITLE"),
-                        icon_url: message.guild.iconURL,
+                        icon_url: message.guild.iconURL({ format: "png", dynamic: true })
                     },
                     description: message.language.get("EMOTES_DESC", message),
                     fields: [{

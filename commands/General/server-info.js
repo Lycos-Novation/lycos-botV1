@@ -49,10 +49,10 @@ class ServerInformation extends Command {
 					color: message.config.embed.color,
 					author: {
 						name: message.language.get("SERVERINFO_PROFIL", message.guild.name),
-						icon_url: message.guild.iconURL,
+						icon_url: message.guild.iconURL({ format: "png", dynamic: true })
 					},
 					thumbnail: {
-						url: message.guild.iconURL,
+						url: message.guild.iconURL({ format: "png", dynamic: true })
 					},
 					fields: [{
 						name: message.language.get("SERVERINFO_TITLES")[0],

@@ -36,7 +36,7 @@ class RoleInformation extends Command {
 					embed: {
 						author: {
 							name: message.language.get("ROLE_INFO_EMBED_NAME", role),
-							icon_url: message.guild.iconURL,
+							icon_url: message.guild.iconURL({ format: "png", dynamic: true })
 						},
 						color: role.color,
 						fields: [

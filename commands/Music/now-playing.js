@@ -34,11 +34,11 @@ class NowPlaying extends Command {
 			const currentDuration = moment.duration({ ms: message.bot.player.get(message.guild.id).state.position * 1000 });
 			return message.channel.send({
 				embed: {
-					"author": {
-						"name": "Now playing",
-						"icon_url" : message.guild.iconURL(),
+					author: {
+						name: "Now playing",
+						icon_url: message.guild.iconURL({ format: "png", dynamic: true })
 					},
-					"description": `[${queue[0].info.title}](${queue[0].info.url}) by${queue[0].info.author}\nDuration: [${moment(currentDuration / 1000).minutes()}:${moment(currentDuration / 1000).seconds()}] ----- [${duration.minutes()}:${duration.seconds()}]`,
+					description: `[${queue[0].info.title}](${queue[0].info.url}) by${queue[0].info.author}\nDuration: [${moment(currentDuration / 1000).minutes()}:${moment(currentDuration / 1000).seconds()}] ----- [${duration.minutes()}:${duration.seconds()}]`,
 				},
 			});
 		}
