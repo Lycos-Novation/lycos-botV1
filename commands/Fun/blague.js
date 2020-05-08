@@ -33,7 +33,7 @@ class Number extends Command {
                         embed: {
                             author: {
                                 name: message.bot.user.username,
-						        icon_url: message.bot.user.displayAvatarURL
+						        icon_url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
                             },
                             fields: [
                                 {
