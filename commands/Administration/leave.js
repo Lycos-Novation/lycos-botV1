@@ -4,9 +4,9 @@ class Leave extends Command {
 	constructor(client) {
 		super(client, {
 			name: "setleave",
-			description: (language) => language.get("PREFIX_DESCRIPTION"),
-			usage: (language, prefix) => language.get("PREFIX_USAGE", prefix),
-			examples: (language, prefix) => language.get("PREFIX_EXAMPLES", prefix),
+			description: (language) => language.get("SETLEAVE_DESCRIPTION"),
+			usage: (language, prefix) => language.get("SETLEAVE_USAGE", prefix),
+			examples: (language, prefix) => language.get("SETLEAVE_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,

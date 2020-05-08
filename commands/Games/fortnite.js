@@ -36,27 +36,27 @@ class FortniteStats extends Command {
 				if (data.error !== message.language.get("FORTNITE_PLAYER_NOT_FOUND")) {
 					return message.channel.send({
 						embed: {
-							"author": {
-								"name": message.language.get("FORTNITE_PLAYER_STATS", data),
-								"icon_url": "https://images-ext-1.discordapp.net/external/qC98Cvto_CEupgrUP_0QJiLugVVtQjv8okcI2oifBf4/https/i.ebayimg.com/images/g/6ekAAOSw3WxaO8mr/s-l300.jpg",
+							author: {
+								name: message.language.get("FORTNITE_PLAYER_STATS", data),
+								icon_url: "https://images-ext-1.discordapp.net/external/qC98Cvto_CEupgrUP_0QJiLugVVtQjv8okcI2oifBf4/https/i.ebayimg.com/images/g/6ekAAOSw3WxaO8mr/s-l300.jpg",
 							},
-							"color": message.config.embed.color,
-							"fields": [
+							color: message.config.embed.color,
+							fields: [
 								{
-									"name" : message.language.get("FORTNITE_FIELDS")[0],
-									"value" : message.language.get("FORTNITE_FIELDS_CONTENT_KILL", data),
+									name: message.language.get("FORTNITE_FIELDS")[0],
+									value: message.language.get("FORTNITE_FIELDS_CONTENT_KILL", data),
 								},
 								{
-									"name" : message.language.get("FORTNITE_FIELDS")[1],
-									"value" : message.language.get("FORTNITE_FIELDS_CONTENT_MATCHSPLAYED", data),
+									name: message.language.get("FORTNITE_FIELDS")[1],
+									value: message.language.get("FORTNITE_FIELDS_CONTENT_MATCHSPLAYED", data),
 								},
 								{
-									"name" : message.language.get("FORTNITE_FIELDS")[2],
-									"value" : message.language.get("FORTNITE_FIELDS_CONTENT_VICTORIES", data),
+									name: message.language.get("FORTNITE_FIELDS")[2],
+									value: message.language.get("FORTNITE_FIELDS_CONTENT_VICTORIES", data),
 								},
 								{
-									"name": message.language.get("FORTNITE_FIELDS")[3],
-									"value": `${data.stats.lifetime.kd}`,
+									name: message.language.get("FORTNITE_FIELDS")[3],
+									value: `${data.stats.lifetime.kd}`,
 								},
 							],
 						},

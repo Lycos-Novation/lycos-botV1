@@ -4,9 +4,9 @@ class Setnotif extends Command {
 	constructor(client) {
 		super(client, {
 			name: "setnotif",
-			description: (language) => language.get("PREFIX_DESCRIPTION"),
-			usage: (language, prefix) => language.get("PREFIX_USAGE", prefix),
-			examples: (language, prefix) => language.get("PREFIX_EXAMPLES", prefix),
+			description: (language) => language.get("SETNOTIF_DESCRIPTION"),
+			usage: (language, prefix) => language.get("SETNOTIF_USAGE", prefix),
+			examples: (language, prefix) => language.get("SETNOTIF _EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,

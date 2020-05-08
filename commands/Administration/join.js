@@ -4,9 +4,9 @@ class Join extends Command {
 	constructor(client) {
 		super(client, {
 			name: "join",
-			description: (language) => language.get("PREFIX_DESCRIPTION"),
-			usage: (language, prefix) => language.get("PREFIX_USAGE", prefix),
-			examples: (language, prefix) => language.get("PREFIX_EXAMPLES", prefix),
+			description: (language) => language.get("SETJOIN_DESCRIPTION"),
+			usage: (language, prefix) => language.get("SETJOIN_USAGE", prefix),
+			examples: (language, prefix) => language.get("SETJOIN_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,

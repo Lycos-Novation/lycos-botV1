@@ -6,9 +6,9 @@ class RoleInformation extends Command {
 	constructor(client) {
 		super(client, {
 			name: "role-info",
-			description: (language) => language.get("ROLE_INFORMATION_DESCRIPTION"),
-			usage: (language, prefix) => language.get("ROLE_INFORMATION_USAGE", prefix),
-			examples: (language, prefix) => language.get("ROLE_INFORMATION_EXAMPLES", prefix),
+			description: (language) => language.get("ROLE_INFO_DESCRIPTION"),
+			usage: (language, prefix) => language.get("ROLE_INFO_USAGE", prefix),
+			examples: (language, prefix) => language.get("ROLE_INFO_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,

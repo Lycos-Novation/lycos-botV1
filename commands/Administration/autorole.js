@@ -4,14 +4,14 @@ class Autorole extends Command {
     constructor(client) {
         super(client, {
             name: 'autorole',
-            description: (language) => language.get("PREFIX_DESCRIPTION"),
-            usage: (language, prefix) => language.get("PREFIX_USAGE", prefix),
-            examples: (language, prefix) => language.get("PREFIX_EXAMPLES", prefix),
+            description: (language) => language.get("AUTOROLE_DESCRIPTION"),
+            usage: (language, prefix) => language.get("AUTOROLE_USAGE", prefix),
+            examples: (language, prefix) => language.get("AUTOROLE_EXAMPLES", prefix),
             dirname: __dirname,
             enabled: true,
             guildOnly: true,
             permLevel: "Server Admin",
-            botPermissions: ["SEND_MESSAGE"],
+            botPermissions: ["SEND_MESSAGE", "MANAGE_ROLES"],
             aliases: [],
             nsfw: false,
             adminOnly: true,

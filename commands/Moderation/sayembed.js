@@ -4,9 +4,9 @@ class Sayembed extends Command {
 	constructor(client) {
 		super(client, {
 			name: "sayembed",
-			description: (language) => language.get("BAN_DESCRIPTION"),
-			usage: (language, prefix) => language.get("BAN_USAGE", prefix),
-			examples: (language, prefix) => language.get("BAN_EXAMPLES", prefix),
+			description: (language) => language.get("SAY_EMBED_DESCRIPTION"),
+			usage: (language, prefix) => language.get("SAY_EMBED_USAGE", prefix),
+			examples: (language, prefix) => language.get("SAY_EMBED_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,

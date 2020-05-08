@@ -1,5 +1,5 @@
 const Command = require("../../base/Command.js");
-const {Project} = require('../../models');
+//const {Project} = require('../../models');
 const moment = require("moment-timezone");
 moment.locale('fr');
 class Projet extends Command {
@@ -18,7 +18,7 @@ class Projet extends Command {
         });
     }
 
-    async run(message, args) {
+    async run(message, args) {/*
         try {
             if(message.guild.id !== "627946609896062986") return;
             if (args[0] === 'list'){
@@ -574,7 +574,7 @@ Pour annuler la commande cliquez sur ❌.`)
             let response = await message.channel.awaitMessages(responseFilter, {max: 1});
             let rescontent = response.first().content;
             return rescontent;
-        }
+        }*/
     }
 }
 module.exports = Projet;

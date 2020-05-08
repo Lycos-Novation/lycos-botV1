@@ -4,9 +4,9 @@ class Modlogs extends Command {
 	constructor(client) {
 		super(client, {
 			name: "setmodlogs",
-			description: (language) => language.get("PREFIX_DESCRIPTION"),
-			usage: (language, prefix) => language.get("PREFIX_USAGE", prefix),
-			examples: (language, prefix) => language.get("PREFIX_EXAMPLES", prefix),
+			description: (language) => language.get("SETMODLOGS_DESCRIPTION"),
+			usage: (language, prefix) => language.get("SETMODLOGS_USAGE", prefix),
+			examples: (language, prefix) => language.get("SETMODLOGS_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,

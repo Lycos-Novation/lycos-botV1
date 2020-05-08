@@ -5,9 +5,9 @@ class Number extends Command {
 	constructor(client) {
 		super(client, {
 			name: "number",
-			description: (language) => language.get("CAT_DESCRIPTION"),
-			usage: (language, prefix) => language.get("CAT_USAGE", prefix),
-			examples: (language, prefix) => language.get("CAT_EXAMPLES", prefix),
+			description: (language) => language.get("NUMBER_DESCRIPTION"),
+			usage: (language, prefix) => language.get("NUMBER_USAGE", prefix),
+			examples: (language, prefix) => language.get("NUMBER_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,

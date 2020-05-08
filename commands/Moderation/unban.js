@@ -4,9 +4,9 @@ class Unban extends Command {
     constructor(client) {
 		super(client, {
 			name: "unban",
-			description: (language) => language.get("BAN_DESCRIPTION"),
-			usage: (language, prefix) => language.get("BAN_USAGE", prefix),
-			examples: (language, prefix) => language.get("BAN_EXAMPLES", prefix),
+			description: (language) => language.get("UNBAN_DESCRIPTION"),
+			usage: (language, prefix) => language.get("UNBAN_USAGE", prefix),
+			examples: (language, prefix) => language.get("UNBAN_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
@@ -22,15 +22,15 @@ class Unban extends Command {
         try {
             const searchArgs = args.slice(1).join(" ");
 				if (!searchArgs) {
-					return message.reply(`<:false:470303149077299231> ${message.language.get("BAN_ERRORARGS")}`)
+					return message.reply(`<:false:470303149077299231> ${message.language.get("UNBAN_ERRORARGS")}`)
 				}
 				const guildBans = await message.guild.fetchBans();
 				if (!guildBans.some((u) => u.user.id === searchArgs)) {
-					return message.channel.send(message.language.get("BAN_NOT_BANNED"));
+					return message.channel.send(message.language.get("UNBAN_NOT_BANNED"));
 				}
 				await message.guild.members.unban(searchArgs)
 					.then(u => {message.channel.send(message.language.get("UNBAN_INFO", u.username, message))})
-					.catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("BAN_ERROR")} ${error}`));
+					.catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("UNBAN_ERROR")} ${error}`));
 				return;
         } catch (error) {
             console.error(error);

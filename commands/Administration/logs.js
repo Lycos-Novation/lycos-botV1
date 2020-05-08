@@ -4,9 +4,9 @@ class Logs extends Command {
 	constructor(client) {
 		super(client, {
 			name: "logs",
-			description: (language) => language.get("PREFIX_DESCRIPTION"),
-			usage: (language, prefix) => language.get("PREFIX_USAGE", prefix),
-			examples: (language, prefix) => language.get("PREFIX_EXAMPLES", prefix),
+			description: (language) => language.get("SETLOGS_DESCRIPTION"),
+			usage: (language, prefix) => language.get("SETLOGS_USAGE", prefix),
+			examples: (language, prefix) => language.get("SETLOGS_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,

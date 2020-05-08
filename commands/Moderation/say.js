@@ -4,9 +4,9 @@ class Say extends Command {
 	constructor(client) {
 		super(client, {
 			name: "say",
-			description: (language) => language.get("BAN_DESCRIPTION"),
-			usage: (language, prefix) => language.get("BAN_USAGE", prefix),
-			examples: (language, prefix) => language.get("BAN_EXAMPLES", prefix),
+			description: (language) => language.get("SAY_DESCRIPTION"),
+			usage: (language, prefix) => language.get("SAY_USAGE", prefix),
+			examples: (language, prefix) => language.get("SAY_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,

@@ -4,9 +4,9 @@ class Setreports extends Command {
 	constructor(client) {
 		super(client, {
 			name: "setreports",
-			description: (language) => language.get("PREFIX_DESCRIPTION"),
-			usage: (language, prefix) => language.get("PREFIX_USAGE", prefix),
-			examples: (language, prefix) => language.get("PREFIX_EXAMPLES", prefix),
+			description: (language) => language.get("SETREPORTS_DESCRIPTION"),
+			usage: (language, prefix) => language.get("SETREPORTS_USAGE", prefix),
+			examples: (language, prefix) => language.get("SETREPORTS_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,

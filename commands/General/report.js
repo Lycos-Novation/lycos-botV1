@@ -4,9 +4,9 @@ class Report extends Command {
 	constructor(client) {
 		super(client, {
 			name: "report",
-			description: (language) => language.get("AVATAR_DESCRIPTION"),
-			usage: (language, prefix) => language.get("AVATAR_USAGE", prefix),
-			examples: (language, prefix) => language.get("AVATAR_EXAMPLES", prefix),
+			description: (language) => language.get("REPORT_DESCRIPTION"),
+			usage: (language, prefix) => language.get("REPORT_USAGE", prefix),
+			examples: (language, prefix) => language.get("REPORT_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,

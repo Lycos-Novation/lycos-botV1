@@ -1,18 +1,17 @@
 const Command = require("../../base/Command.js");
 const osu = require('node-osu');
 const osuApi = new osu.Api('dbb951f8d02090ebacc0fcfde7152ad677d79be1', {
-    // baseUrl: sets the base api url (default: https://osu.ppy.sh/api)
-    notFoundAsError: false, // Throw an error on not found instead of returning nothing. (default: true)
-    completeScores: true, // When fetching scores also fetch the beatmap they are for (Allows getting accuracy) (default: false)
-    parseNumeric: true // Parse numeric values into numbers/floats, excluding ids
+    notFoundAsError: false,
+    completeScores: true,
+    parseNumeric: true
 });
 class Osu extends Command {
     constructor(client) {
         super(client, {
             name: "osu",
-            description: (language) => language.get("FORTNITE_DESCRIPTION"),
-            usage: (language, prefix) => language.get("FORTNITE_USAGE", prefix),
-            examples: (language, prefix) => language.get("FORTNITE_EXAMPLES", prefix),
+            description: (language) => language.get("OSU_DESCRIPTION"),
+            usage: (language, prefix) => language.get("OSU_USAGE", prefix),
+            examples: (language, prefix) => language.get("OSU_EXAMPLES", prefix),
             dirname: __dirname,
             enabled: true,
             guildOnly: false,
