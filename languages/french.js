@@ -266,6 +266,23 @@ module.exports = class {
 			APEX_PLATFORM: "S'il vous plaît entrer le nom de votre plate-forme (pc, xbox, ps4).",
 			APEX_ERROR_PLATFORM: "S'il vous plaît entrer une plate-forme valide (pc, xbox, ps4).",
 			APEX_USERNAME_NULL: "Merci d'entrer un nom d'utilisateur.",
+			OSU_SUPPLY_PLAYER: "Répondez avec un nom d'utilisateur.",
+			OSU_USER_NOT_FOUND: "Je n'ai pas pu trouver ce joueur.",
+			OSU_EMBED_AUTHOR: (user) => `Profil Osu! de ${user.name} (ID: ${user.id}) | ${user.country}`,
+			OSU_FIELDS: [
+				"A commencé à jouer le",
+				"Niveau",
+				"Précision",
+				"Points de performance",
+				"Score",
+				"Notes",
+				"Nombre de parties jouées"
+			],
+			OSU_JOINED_DATE: (user) => `${moment(user.raw_joinedDate).format("LLLL")} et à joué pendant`,
+			OSU_PP: (user) => `Points total en classé : ${user.pp.raw} - Rang mondial : ${user.pp.rank} - Rang national : ${user.pp.countryRank}`,
+			OSU_SCORES: (user) => `Classé : ${user.scores.ranked} points - Total : ${user.scores.total} points`,
+			OSU_COUNTS: (user) => `50 : ${user.counts['50']} - 100 : ${user.counts['100']} - 300 : ${user.counts['300']}
+A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${user.counts.SS} - SSH :${user.counts.SSH}`,
 			QRCODE_DESCRIPTION: "Faire des sondages sur n'importe quoi.",
 			QRCODE_USAGE: ".qrcode <text>",
 			QRCODE_EXAMPLES: ".qrcode Code secret",

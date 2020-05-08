@@ -28,18 +28,18 @@ class weatherInfo extends Command {
                 if(!result[0]) return message.channel.send(message.language.get("WEATHERINFO_NOT_FOUND"));
                 return message.channel.send({
                     embed: {
-                        "color": message.config.embed.color,
-                        "author": {
-                            "name": message.language.get("WEATHERINFO_EMBED_TITLE", result),
-                            "icon_url": message.bot.user.displayAvatarURL,
+                        color: message.config.embed.color,
+                        author: {
+                            name: message.language.get("WEATHERINFO_EMBED_TITLE", result),
+                            icon_url: message.bot.user.displayAvatarURL,
                         },
-                        "thumbnail": {
-                            "url" : message.member.displayAvatarURL,
+                        thumbnail: {
+                            url: message.member.displayAvatarURL,
                         },
-                        "description": message.language.get("WEATHERINFO_EMBED_DESCRIPTION", result),
-                        "timestamp": new Date(),
-                        "footer" : {
-                            "text" : message.config.embed.footer,
+                        description: message.language.get("WEATHERINFO_EMBED_DESCRIPTION", result),
+                        timestamp: new Date(),
+                        footer: {
+                            text: message.config.embed.footer,
                         },
                     }
                 });
