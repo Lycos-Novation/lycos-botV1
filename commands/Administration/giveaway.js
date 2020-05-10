@@ -1,6 +1,6 @@
 const Command = require("../../base/Command.js");
 const ms = require("ms");
-class giveaway extends Command {
+class Giveaway extends Command {
     constructor(client) {
         super(client, {
             name: "giveaway",
@@ -9,9 +9,10 @@ class giveaway extends Command {
             examples: (language, prefix) => language.get("GIVEAWAY_EXAMPLES", prefix),
             dirname: __dirname,
             enabled: true,
-            guildOnly: false,
+            guildOnly: true,
             permLevel: "Server Admin",
             botPermissions: ["EMBED_LINKS"],
+            aliases: ["giveaways"],
             nsfw: false,
             adminOnly: true,
             cooldown: 1000,
@@ -20,8 +21,9 @@ class giveaway extends Command {
 
     async run(message, args) {
         try {
-            let method = args[0].toLowerCase();
+            let method = args[0];
             if (!method) return message.channel.send(message.language.get("GIVEAWAY_NO_METHOD", message.settings.prefix));
+            method = method.toLowerCase();
             if (method === "start"){
                 let time = args[1];
                 if (!time) return message.channel.send(message.language.get("GIVEAWAY_NO_TIME"));
@@ -34,8 +36,6 @@ class giveaway extends Command {
                     prize: prize,
                     winnerCount: winnersCount,
                     messages: message.language.get("GIVEAWAY_CREATE_MESSAGES")
-                }).then((gData) => {
-                    console.log(gData);
                 });
             } else if (method === "edit"){
                 let messageID = args[1];
@@ -87,4 +87,4 @@ class giveaway extends Command {
     }
 }
 
-module.exports = giveaway;
+module.exports = Giveaway;

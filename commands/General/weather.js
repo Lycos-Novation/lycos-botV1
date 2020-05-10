@@ -3,7 +3,7 @@ const weather = require('weather-js');
 class weatherInfo extends Command {
     constructor(client) {
         super(client, {
-            name: "weather-info",
+            name: "weather",
             description: (language) => language.get("WEATHERINFO_DESCRIPTION"),
             usage: (language, prefix) => language.get("WEATHERINFO_USAGE", prefix),
             examples: (language, prefix) => language.get("WEATHERINFO_EXAMPLES", prefix),
@@ -11,7 +11,7 @@ class weatherInfo extends Command {
             enabled: true,
             guildOnly: true,
             permLevel: "User",
-            aliases: ["weather", "weatherinfo", "meteo", "météo"],
+            aliases: ["weather-info", "weatherinfo", "meteo", "météo"],
             botPermissions: ["EMBED_LINKS"],
             nsfw: false,
             adminOnly: false,
@@ -32,9 +32,6 @@ class weatherInfo extends Command {
                         author: {
                             name: message.language.get("WEATHERINFO_EMBED_TITLE", result),
                             icon_url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
-                        },
-                        thumbnail: {
-                            url: message.member.displayAvatarURL({format: "png",dynamic: true})
                         },
                         description: message.language.get("WEATHERINFO_EMBED_DESCRIPTION", result),
                         timestamp: new Date(),

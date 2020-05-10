@@ -22,15 +22,15 @@ class Bot extends Command {
 
 	async run(message) {
 		try {
-			let users = message.bot.shard ? await message.bot.shard.broadcastEval("this.guilds.reduce((prev, guild) => prev + guild.memberCount, 0)") : message.bot.users.cache.size;
+			let users = message.bot.shard ? await message.bot.shard.broadcastEval("this.guilds.cache.reduce((prev, guild) => prev + guild.memberCount, 0)") : message.bot.users.cache.size;
 			if (users instanceof Array) {
 				users = users.reduce((sum, val) => sum + val, 0);
 			}
-			let guilds = message.bot.shard ? await message.bot.shard.broadcastEval("this.guilds.size") : message.bot.guilds.cache.size;
+			let guilds = message.bot.shard ? await message.bot.shard.broadcastEval("this.guilds.cache.size") : message.bot.guilds.cache.size;
 			if (guilds instanceof Array) {
 				guilds = guilds.reduce((sum, val) => sum + val, 0);
 			}
-			let channels = message.bot.shard ? await message.bot.shard.broadcastEval("this.channels.size") : message.bot.channels.cache.size;
+			let channels = message.bot.shard ? await message.bot.shard.broadcastEval("this.channels.cache.size") : message.bot.channels.cache.size;
 			if (channels instanceof Array) {
 				channels = channels.reduce((sum, val) => sum + val, 0);
 			}

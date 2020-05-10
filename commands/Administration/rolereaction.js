@@ -59,8 +59,6 @@ class RoleReaction extends Command {
                         if (!message.guild.roles.cache.find((r) => r.id === role)) return message.channel.send(`The role \`${role}\` doesn't exist.`);
 
                         const guildEmoji = message.bot.emojis.cache.find((emote) => emote.id === emoji.slice(emoji.length - 19, emoji.length-1));
-                        console.log(`Desc GE : ${guildEmoji}`);
-                        console.log(`Desc E : ${emoji}`);
                         descr = descr + `${guildEmoji !== undefined ? guildEmoji : emoji} **• ${message.guild.roles.cache.get(role).name}** - ${desc}\n`;
                     }
                     const embed = {
@@ -83,8 +81,6 @@ class RoleReaction extends Command {
                     return message.guild.channels.cache.get(g.rolereaction_channel).send(embed).then(async (msg) => {
                         for (const emoji of set.emotes) {
                             const guildEmoji = message.bot.emojis.cache.find((emote) => emote.id === emoji.slice(emoji.length - 19, emoji.length-1));
-                            console.log(`React GE : ${guildEmoji}`);
-                            console.log(`React E : ${emoji}`);
                             if (guildEmoji === undefined) await msg.react(emoji);
                             else await msg.react(guildEmoji.id);
                         }

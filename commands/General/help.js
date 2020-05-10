@@ -85,7 +85,7 @@ class Help extends Command {
 					},
 					{
 						name: `${message.config.emotes.general} ${message.language.get("HELPGLOBAL_FIELDS")[4]} (${message.bot.commands.filter((filters) => filters.help.category === "Stream").size})`,
-						value: message.bot.commands.filter((filters) => filters.help.category === "Stream").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
+						value: message.language.get("HELP_COMING_SOON"),//message.bot.commands.filter((filters) => filters.help.category === "Stream").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
 						name: `${message.config.emotes.general} ${message.language.get("HELPGLOBAL_FIELDS")[5]} (${message.bot.commands.filter((filters) => filters.help.category === "Games").size})`,
