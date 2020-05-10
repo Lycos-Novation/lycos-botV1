@@ -24,8 +24,8 @@ module.exports = class {
 		var settings;
 		mysqlcon.query(sql, async function (err, result, fields) {
 			if (result.length === 0) {
-				sql = `INSERT INTO Guilds (guild_id, guild_name, guild_owner, autorole)
-					VALUES ("${message.guild.id}", "${message.guild.name}", "${message.guild.owner.user.tag}", "");`;
+				sql = `INSERT INTO Guilds (guild_id, guild_name, guild_owner, autorole, rolereaction_emotes, rolereaction_roles, rolereaction_descs)
+					VALUES ("${message.guild.id}", "${message.guild.name}", "${message.guild.owner.user.tag}", "", "", "", "");`;
 				mysqlcon.query(sql, function (err, result) {
 					if (err) throw err;
 				});
