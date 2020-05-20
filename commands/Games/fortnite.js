@@ -33,12 +33,12 @@ class FortniteStats extends Command {
 			if (!user[0]) {return message.channel.send((message.language.get("FORTNITE_USERNAME_NULL")));}
 
 			fortnite.user(user, platform).then((data) => {
-				if (data.error !== message.language.get("FORTNITE_PLAYER_NOT_FOUND")) {
+				if (data.error !== 'Player Not Found') {
 					return message.channel.send({
 						embed: {
 							author: {
 								name: message.language.get("FORTNITE_PLAYER_STATS", data),
-								icon_url: "https://images-ext-1.discordapp.net/external/qC98Cvto_CEupgrUP_0QJiLugVVtQjv8okcI2oifBf4/https/i.ebayimg.com/images/g/6ekAAOSw3WxaO8mr/s-l300.jpg",
+								icon_url: message.bot.emojis.cache.get("709390445007863881").url
 							},
 							color: message.config.embed.color,
 							fields: [

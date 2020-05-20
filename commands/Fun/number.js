@@ -30,7 +30,7 @@ class Number extends Command {
 			let time = args[2];
 			if (!time) return message.channel.send(message.language.get("NUMBER_TIME"));
 			let toFind = parseInt((Math.random() * (max - min) + min), 10);
-			message.author.send(toFind);
+			message.author.send(message.language.get("NUMBER_ANSWER", toFind));
 			message.channel.send(message.language.get("NUMBER_START", min, max, time))
 			.then(msg => {
 				let collector = new Discord.MessageCollector(message.channel, (m) => !m.author.bot, {

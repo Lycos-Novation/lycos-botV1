@@ -23,7 +23,7 @@ class Say extends Command {
 			let say = args.join(" ");
             if (!say) return message.reply(message.language.get("SAY_NO_ARGS"));
             if (say.length > 1995) return message.reply(message.language.get("SAY_TOO_LONG"));
-            if (say.indexOf("@everyone") && !message.guild.member(message.author).hasPermission('ADMINISTRATOR')) return message.channel.send(message.language.get("SAY_EVERYONE"));
+            if (say.indexOf("@everyone") !== -1 && !message.guild.member(message.author).hasPermission('ADMINISTRATOR')) return message.channel.send(message.language.get("SAY_EVERYONE"));
             message.delete();
             if (message.attachments.size <= 0) {
                 return message.channel.send(say);

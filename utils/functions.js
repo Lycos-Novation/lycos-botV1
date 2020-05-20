@@ -31,18 +31,22 @@ module.exports = {
 		return guild.members.cache.filter((member) => member.id === search || member.displayName.toLowerCase().includes(search));
 	},
 
-	async awaitResponse(message){
+	async awaitResponse(message) {
 		const responseFilter = m => m.author.id === message.author.id;
-		const response = await message.channel.awaitMessages(responseFilter, {max: 1});
+		const response = await message.channel.awaitMessages(responseFilter, { max: 1 });
 		const rescontent = response.first().content;
 		return rescontent;
 	},
 
-	checkDays(date) {
+	checkDays(date, message) {
 		const now = new Date();
 		const diff = now.getTime() - date.getTime();
 		const days = Math.floor(diff / 86400000);
-		return days + (days === 1 ? " day" : " days") + " ago)";
+		if (message.language === "english") {
+			return days + (days === 1 ? ` ${message.language.get("DATE_DAY")}` : ` ${message.language.get("DATE_DAYS")}`) + ` ${message.language.get("DATE_AGO")}`;
+		} else {
+			return message.language.get("DATE_AGO") + days + (days === 1 ? ` ${message.language.get("DATE_DAY")}` : ` ${message.language.get("DATE_DAYS")}`);
+		}
 	},
 
 	makeid(length) {

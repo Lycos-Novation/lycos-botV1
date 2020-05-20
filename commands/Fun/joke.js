@@ -3,16 +3,16 @@ const fetch = require("node-fetch");
 class Number extends Command {
     constructor(client) {
         super(client, {
-            name: "blague",
+            name: "joke",
             description: (language) => language.get("BLAGUE_DESCRIPTION"),
             usage: (language, prefix) => language.get("BLAGUE_USAGE", prefix),
             examples: (language, prefix) => language.get("BLAGUE_EXAMPLES", prefix),
             dirname: __dirname,
             enabled: true,
             guildOnly: false,
-            permLevel: "Server Moderator",
+            permLevel: "User",
             botPermissions: ["EMBED_LINKS"],
-            aliases: ["joke", "blagues", "jokes"],
+            aliases: ["blague", "blagues", "jokes"],
             nsfw: false,
             adminOnly: false,
             cooldown: 2000,
@@ -24,7 +24,7 @@ class Number extends Command {
             if (message.settings.language !== "french") return message.channel.send(message.language.get("BLAGUE_NOT_AVALIABLE"));
             fetch('https://www.blagues-api.fr/api/random', {
                 headers: {
-                    'Authorization': `Bearer [Token]`
+                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTUzMTYzMzA4ODAxNzIwMzIxIiwibGltaXQiOjEwMCwia2V5IjoiYUl3YXoxSk5BeWVramtCS0d5VE1XbkRiTFRGOXk0bDFVOHJlTFlka0xCcXdyVzZhbVAiLCJjcmVhdGVkX2F0IjoiMjAyMC0wNC0xOVQyMzozMTozMyswMjowMCIsImlhdCI6MTU4NzMzMTg5M30.VtRtZDm1MuU23OCeJog8rCz1npFSUKqQ3MpbyHLaPII`
                 }
             })
                 .then(response => response.json())

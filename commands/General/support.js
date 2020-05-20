@@ -25,17 +25,11 @@ class Support extends Command {
 			}
 			else {
 				const question = args.join(" ");
-
-				try {
-					var sql = `INSERT INTO Supports (user_name, question, channel_id, created_at)
+				var sql = `INSERT INTO Supports (user_name, question, channel_id, created_at)
 					VALUES ("${message.author.username}", "${question}", ${message.channel.id}, NOW());`;
            			mysqlcon.query(sql, function (err, result) {
 						if (err) throw err;
             		});
-				}
-				catch (e) {
-					return message.channel.send(message.language.get("ERROR", e));
-				}
 				sql = `SELECT id
 				FROM Supports 
 				WHERE user_name='${message.author.username}' && question="${question}" && channel_id='${message.channel.id}' && created_at=NOW();`;
@@ -47,7 +41,7 @@ class Support extends Command {
 				message.channel.createInvite().then(function(newInvite) {
 					message.bot.shard.broadcastEval(`
 						const Discord = require('discord.js');
-						const channel = this.channels.cache.get("701360670532304927");
+						const channel = this.channels.cache.get("709137860002840616");
 
 						const embed = new Discord.MessageEmbed()
 							.setTitle("Support")

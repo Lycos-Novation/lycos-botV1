@@ -21,8 +21,14 @@ class Report extends Command {
 
 	async run(message, args) {
 		try {
-            const g = await message.bot.functions.getDataGuild(message.guild);
-            if (g.channels.reports === null){
+            var sql = `SELECT prefix, reports_channel
+		FROM Guilds
+		WHERE guild_id="${message.guild.id}"`;
+            var g;
+            mysqlcon.query(sql, async function (err, result, fields) {
+                if (err) throw err;
+                g = result[0];
+            if (!g.reports_channel){
                 return message.channel.send(message.language.get("REPORT_NOT_SET"))
             }
             const searchArgs = args[0];
@@ -43,7 +49,7 @@ class Report extends Command {
                 return message.channel.send(message.language.get("REPORT_NOREASON"))
             }
             message.delete();
-            return message.guild.channels.cache.find(c => c.id === g.channels.reports).send({
+            return message.guild.channels.cache.find(c => c.id === g.reports_channel).send({
                 embed: {
                     color: message.config.embed.color,
                     author: {
@@ -60,7 +66,8 @@ class Report extends Command {
                         },
                     ],
                 }
-            })
+            }).then(message.channel.send("REPORT_SEND"));
+        });
 		}
 		catch (error) {
 			console.error(error);

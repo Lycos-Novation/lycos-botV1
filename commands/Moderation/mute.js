@@ -21,8 +21,8 @@ class mute extends Command {
 
     async run(message, args) {
         try {
-            let muteRole = message.guild.roles.cache.find(m => m.name === 'muted');
-            if(!muteRole){
+            var muteRole = message.guild.roles.cache.find(m => m.name === 'muted');
+            if (!muteRole) {
                 await message.guild.roles.create({
                     data: {
                         name: 'muted',
@@ -31,43 +31,68 @@ class mute extends Command {
                     },
                     reason: "Mute - Auto create role"
                 }).catch(message.language.get("ERROR_CREATING_ROLE"));
-                muteRole = message.guild.roles.cache.find(m => m.name === 'muted')
+                muteRole = await message.guild.roles.cache.find(m => m.name === 'muted');
 
                 message.guild.channels.cache.forEach(async (channel, id) => {
                     await channel.overwritePermissions([
                         {
                             id: muteRole.id,
-                            deny: ["SEND_MESSAGES","ADD_REACTIONS", "SEND_TTS_MESSAGES", "ATTACH_FILES", "SPEAK"]
+                            deny: ["SEND_MESSAGES", "ADD_REACTIONS", "SEND_TTS_MESSAGES", "ATTACH_FILES", "SPEAK"]
                         }
                     ], "Mute - Auto setting up mute role")
                 });
             }
             const searchArgs = args[0];
             if (!searchArgs) {
-                return message.channel.send(`<:false:470303149077299231> ${message.language.get("MUTE_ERRORARGS")}`)    
-            } else if (searchArgs === "remove"){
+                return message.channel.send(`<:false:470303149077299231> ${message.language.get("MUTE_ERRORARGS")}`)
+            } else if (searchArgs === "remove") {
                 let sa = args[1];
                 if (!sa) {
-                return message.channel.send(`<:false:470303149077299231> ${message.language.get("MUTE_ERRORARGS")}`)
+                    return message.channel.send(`<:false:470303149077299231> ${message.language.get("MUTE_ERRORARGS")}`)
                 }
-                    let member;
+                let member;
                 if (message.mentions.members.size > 0) {
                     member = message.mentions.members.first();
                 } else if (sa) {
                     member = message.bot.functions.fetchMembers(message.guild, sa);
                     if (member.size === 0) return message.channel.send(message.language.get("ERROR_NOUSER_FOUND"));
                     else if (member.size === 1) member = member.first();
-                    else return message.channel.send(message.language.get("ERROR_MUCH_USER_FOUND"));
+                    else return message.channel.send(message.language.get("ERROR_MUCH_USERS_FOUND"));
                 }
                 if (!member.roles.cache.some(r => r.name === 'muted')) return message.channel.send(message.language.get("UNMUTE_USER_NOT_MUTED"));
                 await member.roles.remove(muteRole.id)
                     .then(r => {
                         message.channel.send(message.language.get("UNMUTE_SUCCESS", member));
-                        member.send(message.language.get("UNMUTE_USER_SUCCESS", message))
+                        member.send(message.language.get("UNMUTE_USER_SUCCESS", message));
+                        var sql = `SELECT prefix, autorole
+		FROM Guilds
+		WHERE guild_id="${message.guild.id}"`;
+                        var g;
+                        mysqlcon.query(sql, async function (err, result, fields) {
+                            if (err) throw err;
+                            g = result[0];
+                            if (g.modlogs_channel) {
+                                return message.guild.channels.chache.get(g.modlogs_channel).send({
+                                    embed: {
+                                        title: lang.get(`UNMUTE_EMBED_TITLE`),
+                                        description: lang.get('MUTE_REMOVE_EMBED_DESC', member, message),
+                                        footer: {
+                                            text: config.embed.footer,
+                                        },
+                                        thumbnail: {
+                                            url: member.user.displayAvatarURL({ format: "png", dynamic: true }),
+                                        },
+                                        color: 0xDB0808,
+                                    }
+                                })
+                            } else {
+                                return;
+                            }
+                        })
                     })
                     .catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("UNMUTE_ERROR")} ${error}`));
-                    return;
-                }
+                return;
+            }
             else {
                 let member;
                 if (message.mentions.members.size > 0) {
@@ -76,7 +101,7 @@ class mute extends Command {
                     member = message.bot.functions.fetchMembers(message.guild, searchArgs);
                     if (member.size === 0) return message.channel.send(message.language.get("ERROR_NOUSER_FOUND"));
                     else if (member.size === 1) member = member.first();
-                    else return message.channel.send(message.language.get("ERROR_MUCH_USER_FOUND"));
+                    else return message.channel.send(message.language.get("ERROR_MUCH_USERS_FOUND"));
                 }
 
                 let muteTime = args[1];
@@ -88,13 +113,40 @@ class mute extends Command {
                 if (member.roles.cache.find(r => r.name === 'muted')) return await message.channel.send(message.language.get("MUTE_USER_ALREADY_MUTES"));
 
                 if (!member.bannable) return message.channel.send(message.language.get("MUTE_UNMUTABLE"));
-                
+
                 await member.roles.add(muteRole.id)
-                        .then(member.send(message.language.get("MUTE_USER_MESSAGE", message, muteTime, reason)))
-                        .catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("MUTE_ERROR")} ${error}`));
-                    setTimeout(function () {
-                        member.roles.remove(muteRole.id)
-                    }, ms(muteTime));
+                    .then(m => {
+                        member.send(message.language.get("MUTE_USER_MESSAGE", message, muteTime, reason));
+                        var sql = `SELECT prefix, autorole
+		FROM Guilds
+		WHERE guild_id="${message.guild.id}"`;
+                        var g;
+                        mysqlcon.query(sql, async function (err, result, fields) {
+                            if (err) throw err;
+                            g = result[0];
+                            if (g.modlogs_channel) {
+                                return message.guild.channels.chache.get(g.modlogs_channel).send({
+                                    embed: {
+                                        title: lang.get(`MUTE_EMBED_TITLE`),
+                                        description: lang.get('MUTE_EMBED_DESC', member, message, muteTime, reason),
+                                        footer: {
+                                            text: config.embed.footer,
+                                        },
+                                        thumbnail: {
+                                            url: member.user.displayAvatarURL({ format: "png", dynamic: true }),
+                                        },
+                                        color: 0x21E61B,
+                                    }
+                                })
+                            } else {
+                                return;
+                            }
+                        })
+                    })
+                    .catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("MUTE_ERROR")} ${error}`));
+                setTimeout(function () {
+                    member.roles.remove(muteRole.id)
+                }, ms(muteTime));
                 return message.channel.send(message.language.get("MUTE_INFO", member, message))
             }
         }

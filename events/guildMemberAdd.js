@@ -7,7 +7,7 @@ module.exports = class {
 
 	async run(member) {
 		try {
-			const sql = `SELECT autorole, welcome_channel, language
+			const sql = `SELECT autorole, welcome_channel, language, membercount_channel
 		FROM Guilds
 		WHERE guild_id="${member.guild.id}"`;
 			var g;
@@ -18,6 +18,11 @@ module.exports = class {
 					member.roles.add(g.autorole.split("/"), "Autorole")
 				}
 				const lang = new (require(`../languages/${g.language}.js`));
+				if (g.membercount_channel !== null) {
+					member.guild.channels.cache.get(`${g.membercount_channel}`).edit({
+						name: `${member.guild.memberCount} ${lang.get("MEMBERCOUNT_MEMBERS")}`
+					})
+				}
 				if (g.welcome_channel === null) return;
 				return member.guild.channels.cache.find(c => c.id === g.welcome_channel).send({
 					embed: {

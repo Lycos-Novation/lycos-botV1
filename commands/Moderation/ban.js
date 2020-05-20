@@ -45,7 +45,7 @@ class Ban extends Command {
 					member = message.bot.functions.fetchMembers(message.guild, searchArgs);
 					if (member.size === 0) return message.channel.send(message.language.get("ERROR_NOUSER_FOUND"));
 					else if (member.size === 1) member = member.first();
-					else return message.channel.send(message.language.get("ERROR_MUCH_USER_FOUND"));
+					else return message.channel.send(message.language.get("ERROR_MUCH_USERS_FOUND"));
 				}
 
 				const guildBans = await message.guild.fetchBans();

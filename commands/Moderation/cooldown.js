@@ -1,9 +1,9 @@
 const Command = require("../../base/Command.js");
 const ms = require("ms");
-class cooldown extends Command {
+class Cooldown extends Command {
     constructor(client) {
         super(client, {
-            name: "giveaway",
+            name: "cooldown",
             description: (language) => language.get("GIVEAWAY_DESCRIPTION"),
             usage: (language, prefix) => language.get("GIVEAWAY_USAGE", prefix),
             examples: (language, prefix) => language.get("GIVEAWAY_EXAMPLES", prefix),
@@ -33,4 +33,4 @@ class cooldown extends Command {
     }
 }
 
-module.exports = cooldown;
+module.exports = Cooldown;

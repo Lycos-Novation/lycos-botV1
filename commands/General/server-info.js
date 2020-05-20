@@ -1,13 +1,11 @@
 const Command = require("../../base/Command.js");
-const moment = require("moment-timezone");
-moment.locale('fr');
 class ServerInformation extends Command {
 	constructor(client) {
 		super(client, {
 			name: "server-info",
 			description: (language) => language.get("SERVERINFO_DESCRIPTION"),
-			usage: (language) => language.get("SERVERINFO_USAGE"),
-			examples: (language) => language.get("SERVERINFO_EXAMPLES"),
+			usage: (language, prefix) => language.get("SERVERINFO_USAGE", prefix),
+			examples: (language, prefix) => language.get("SERVERINFO_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
@@ -52,7 +50,7 @@ class ServerInformation extends Command {
 						icon_url: message.guild.iconURL({ format: "png", dynamic: true })
 					},
 					thumbnail: {
-						url: message.guild.iconURL({ format: "png", dynamic: true })
+						url: message.guild.iconURL({ format: "png", dynamic: true})
 					},
 					fields: [{
 						name: message.language.get("SERVERINFO_TITLES")[0],
@@ -61,7 +59,7 @@ class ServerInformation extends Command {
 					},
 					{
 						name: message.language.get("SERVERINFO_TITLES")[1],
-						value: `${moment(message.channel.guild.createdAt.toUTCString()).format("LLLL")} (${message.bot.functions.checkDays(message.channel.guild.createdAt)}`,
+						value: message.language.get("SERVERINFO_CDATE", message),
 						inline: true,
 					},
 					{
@@ -93,6 +91,14 @@ class ServerInformation extends Command {
 						name: message.language.get("SERVERINFO_TITLES")[7],
 						value: verificationLevels[message.guild.verificationLevel],
 						inline: true,
+					},
+					{
+						name : message.language.get("SERVERINFO_TITLES")[8],
+						value : message.guild.roles.cache.size > 10 ? `${message.guild.roles.cache.sort(function compareNombres(a, b) {
+							return b.position - a.position;
+						  }).map((r) => r).slice(0, 9).join(", ")} ${message.language.get("SERVERINFO_ROLELIST", message.guild)}` : (message.guild.roles.cache.size < 1) ? `${message.language.get("SERVERINFO_NOROLES")}` : `${message.guild.roles.cache.sort(function compareNombres(a, b) {
+							return b.position - a.position;
+						  }).map((r) => r).join(", ")}`
 					},
 					],
 					timestamp: new Date(),

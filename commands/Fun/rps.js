@@ -8,7 +8,7 @@ class RPS extends Command {
 			usage: (language, prefix) => language.get("RPS_USAGE", prefix),
 			examples: (language, prefix) => language.get("RPS_EXAMPLES", prefix),
 			dirname: __dirname,
-			enabled: false,
+			enabled: true,
 			guildOnly: false,
 			aliases: ["rps", "pierre-feuille-ciseaux", "pfc"],
 			permLevel: "User",

@@ -31,6 +31,7 @@ class Prefix extends Command {
 				message.channel.send(message.language.get("PREFIX_INFO", message.settings.prefix));
 				method = await message.bot.functions.awaitResponse(message);
 			}
+			if (method.startsWith(".")) return;
 			if (method === "set") {
 				var pref = args[1];
 				if(!pref) {
@@ -41,7 +42,7 @@ class Prefix extends Command {
 				return message.channel.send(message.language.get("PREFIX_CHANGE", pref));
 			}
 			if (method === "reset") {
-				mysqlcon.query("UPDATE Guilds SET prefix = . WHERE guild_id = ?", [message.guild.id]);
+				mysqlcon.query("UPDATE Guilds SET prefix = '.' WHERE guild_id = ?", [message.guild.id]);
 				return message.channel.send(message.language.get("PREFIX_RESET"));
 			}
 		});

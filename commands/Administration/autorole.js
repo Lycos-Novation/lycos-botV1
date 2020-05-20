@@ -11,7 +11,7 @@ class Autorole extends Command {
             enabled: true,
             guildOnly: true,
             permLevel: "Server Admin",
-            botPermissions: ["SEND_MESSAGE", "MANAGE_ROLES"],
+            botPermissions: ["SEND_MESSAGES", "MANAGE_ROLES"],
             aliases: [],
             nsfw: false,
             adminOnly: true,
@@ -34,14 +34,17 @@ class Autorole extends Command {
                     await message.channel.send(message.language.get("AUTOROLE_SUPPLY_METHOD"));
                     method = await message.bot.functions.awaitResponse(message);
                 }
+                if (method.startsWith(".")) return;
                 if (method !== "add" && method !== "remove") return message.channel.send(message.language.get("AUTOROLE_BAD_METHOD", g));
-                var role_supplied = args[1];
+                var role_supplied = args.slice(1).join(" ");
                 if (!role_supplied) {
                     await message.channel.send(message.language.get("AUTOROLE_SUPPLY_ROLE"));
                     role_supplied = await message.bot.functions.awaitResponse(message);
                 }
+                if (role_supplied.startsWith(".")) return;
                 let r = message.guild.roles.resolve(role_supplied) || message.guild.roles.resolveID(role_supplied);
                 let rid = r.id || r.toString().slice(3, r.toString().length - 1);
+                if (!rid || isNaN(parseInt(rid))) return message.channel.send(message.language.get("AUTOROLE_ROLE_NOT_FOUND"));
                 if (method === 'add') {
                     if (ar.includes(rid)) return message.channel.send(message.language.get("AUTOROLE_ALREADY_IN"));
                     if (ar.split("/").length === 5) return message.channel.send(message.language.get("AUTOROLE_LIMIT"));
@@ -62,8 +65,8 @@ class Autorole extends Command {
                                 ids.push(ar.split("/")[i])
                             }
                         }
-                        ids.join("/");
-                        mysqlcon.query("UPDATE Guilds SET autorole = ? WHERE guild_id = ?", [ids, message.guild.id]);
+                        let envoi = ids.join("/");
+                        mysqlcon.query(`UPDATE Guilds SET autorole = ? WHERE guild_id = ?`, [envoi, message.guild.id]);
                         return message.channel.send(message.language.get("AUTOROLE_ROLE_REMOVED", rid));
                     }
                 } else {

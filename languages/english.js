@@ -1,210 +1,266 @@
 const e = require("../config.js").emotes;
+const moment = require("moment-timezone");
 
 module.exports = class {
 	constructor(...args) {
 		this.language = {
-			NO_DESCRIPTION_PROVIDED: "No description defined",
-			NO_USAGE_PROVIDED: "No defined use",
-			NO_EXAMPLES_PROVIDED: "No example defined",
-			ERROR: (error) => `Something went wrong. Please try again.\n\`\`\`\n${error}\`\`\``,
+			/* General error */
+			NO_DESCRIPTION_PROVIDED: "No description defined.",
+			NO_USAGE_PROVIDED: "No use defined.",
+			NO_EXAMPLES_PROVIDED: "No example defined.",
+			ERROR: (error) => `Something went wrong. Try Again.\n\`\`\`\n${error}\`\`\``,
 			ERROR_PERMISSIONS_TITLE: `${e.error} Insufficient permissions`,
-			ERROR_PERMISSIONS_CONTENT: (lvl, rlvl) => `This command requires the permission level \`${rlvl}\` and you only have the level \`${lvl}\` !`,
-			ERROR_COMMAND_GUILDONLY: `${e.error} | This command is unavailable in private messages!`,
+			ERROR_PERMISSIONS_CONTENT: (lvl, rlvl) => `This command requires the authorization level \`${rlvl}\` and you only have the level \`${lvl}\` !`,
+			ERROR_COMMAND_GUILDONLY: `${e.error} | This command is not available in private messages !`,
 			ERROR_NSFW_TITLE: `${e.nsfw} NSFW command`,
-			ERROR_NSFW_CONTENT: "This command must be launched in a NSFW channel (+18)",
+			ERROR_NSFW_CONTENT: "This command must be launched in an NSFW channel (+18).",
 			ERROR_DISABLED_TITLE: `${e.error} Command disabled`,
 			ERROR_DISABLED_CONTENT: "This command is temporarily disabled, only administrators currently have access to it.",
 			ERROR_EVERYONE_TITLE: `${e.error} Security`,
-			ERROR_EVERYONE_CONTENT: "We have detected an @everyone mention in your message, but you do not have permission to mention @everyone in the commands.",
+			ERROR_EVERYONE_CONTENT: "We detected an @everyone in your message, but you don't have permission to mention @everyone in orders.",
 			ERROR_BOTPERMISSIONS_TITLE: `${e.error} Missing permissions`,
-			ERROR_BOTPERMISSIONS_CONTENT: (perm) => `The following permissions are required for this command to work properly: ${perm}`,
-			ERROR_SPECIFY_USER: "Please specify an user.",
+			ERROR_BOTPERMISSIONS_CONTENT: (perm) => `The following permissions are required for this command to work properly: ${perm}.`,
+			ERROR_SPECIFY_USER: "Please specify a user.",
 			ERROR_ROLE_INVALID: "Invalid role.",
-			ERROR_NOUSER_FOUND: "No users were found.",
-			ERROR_MUCH_USERS_FOUND:"There are so much users found, be more precise.",
-			ERROR_NSFW_DEACTIVATED: "This command is unavailable because the ``NSFW`` module isn't enabled on this guild.\nAsk to a server administrator to enable this module.",
+			ERROR_NOUSER_FOUND: "No user was found.",
+			ERROR_MUCH_USERS_FOUND: "There are so many users found, be more specific.",
+			ERROR_NSFW_DEACTIVATED: "This command is not available because the module ``NSFW`` is not available on this server.\nAsk a server administrator to activate it.",
 			ERROR_FORTNITE_PLATFORM: "Please enter a valid platform (pc, xbox, psn).",
 			ERROR_FORTNITE_PLATFORM_USER_NOT_FOUND: "This user was not found on the specified platform.",
-			GIVEAWAY_DESCRIPTION: "Manage your giveaways simply!",
-			GIVEAWAY_USAGE: (prefix) => `${prefix}giveaway [create/reroll/delete/end] (time) (winners count) (prize)`,
-			GIVEAWAY_EXAMPLES: (prefix) => `${prefix}giveaway create 10m 2 5$ PayPal !\n giveaway reroll 597812898022031374`,
-			GIVEAWAY_ERR_STATUS: "You must specify `create`, `reroll` ou `delete`!",
-			GIVEAWAY_ERR_CREATE: (prefix) => `You must enter the information in this format: \n\n\`${prefix}giveaway create [time] [winners count] [prize]\``,
-			GIVEAWAY_ERR_REROLL: "You must enter the ID of the giveaway message a re-rolled!",
-			GIVEAWAY_ERR_DELETE: "You must enter the ID of the giveaway message to be deleted!",
-			GIVEAWAY_ERR_END: "You must enter the ID of the giveaway message to be ended!",
-			GIVEAWAY_ERR_REROLL_MSG_ENDED: (messageID) => `No giveaway **ended** found with message ID \`${messageID}\``,
-			GIVEAWAY_ERR_MESSAGE_NOT_FOUND: (messageID) => `No giveaway found with message ID \`${messageID}\``,
-			GIVEAWAY_ERR_15_DAYS: "The maximum length of a giveaway is 15 days.",
-			GIVEAWAY_ERR_MAX: "A maximum of 4 Giveaways can be launched on the same server.",
-			GIVEAWAY_CREATED: "Giveaway launched!",
-			GIVEAWAY_REROLLED: "New draw done!",
-			GIVEAWAY_DELETED: "Giveaway deleted!",
-			GIVEAWAY_ENDED: "Giveaway in stop mode (-15 seconds)!",
+			/* Giveaway */
+			GIVEAWAY_DESCRIPTION: "Allows you to manage giveaways easily !",
+			GIVEAWAY_USAGE: (prefix) => `${prefix}giveaway [start/edit/reroll/end/delete]`,
+			GIVEAWAY_EXAMPLES: (prefix) => `${prefix}giveaway start 2h 5 Discord Nitro\n${prefix}giveaway edit 665556886732668949 1 -1h Discord Nitro\n${prefix}giveaway reroll 665556886732668949 2\n${prefix}giveaway end 665556886732668949\n${prefix}giveaway delete 665556886732668949`,
+			GIVEAWAY_NO_METHOD: (prefix) => `Please indicate what you want to do :\n${prefix}giveaway start [Duration] [Number of winners] [Prizes to be won]\n${prefix}giveaway edit [messageID] [Number of winners] [Duration] [Prizes to be won]\n${prefix}giveaway end [messageID] [Number of winners to be raised]\n${prefix}giveaway delete [messageID]`,
+			GIVEAWAY_NO_TIME: "Please indicate a duration !",
+			GIVEAWAY_NO_WINNERCOUNT: "Please indicate the number of winners !",
+			GIVEAWAY_NO_PRIZE: "Please indicate something to win !",
+			GIVEAWAY_ERR_NO_ID: "You must enter the giveaway message ID !",
+			GIVEAWAY_ERR_REROLL_MSG_ENDED: (messageID) => `No giveaway **ended** found with message ID \`${messageID}\`.`,
+			GIVEAWAY_ERR_MESSAGE_NOT_FOUND: (messageID) => `No giveaway found with message ID \`${messageID}\`.`,
+			GIVEAWAY_REROLL_NO_WINNERSCOUNT: "Please indicate the number of winners to be drawn !",
+			GIVEAWAY_NO_NEWTIME: "Please indicate time modification.",
 			GIVEAWAY_CREATE_MESSAGES: {
-				giveaway: "ðŸŽ‰ðŸŽ‰ **GIVEAWAY** ðŸŽ‰ðŸŽ‰",
-				giveawayEnded: "ðŸŽ‰ðŸŽ‰ **GIVEAWAY ENDED** ðŸŽ‰ðŸŽ‰",
-				timeRemaining: "Time remaining: **{duration}** !",
-				inviteToParticipate: "React with ðŸŽ‰ to participate!",
-				winMessage: "Congratulations, {winners} ! You won **{prize}** !",
+				timeRemaining: "Remaining time : **{duration}** !",
+				inviteToParticipate: "React with 🎉 to participate !",
+				winMessage: "Well done {winners} ! You have won **{prize}** !",
 				embedFooter: "Giveaways",
-				noWinner: "Giveaway cancelled, no valid participation.",
-				winners: "winner(s)",
-				endedAt: "End at",
+				noWinner: "Giveaway canceled, no valid participation.",
+				winners: "Winner(s)",
+				endedAt: "Finishes at",
 				units: {
 					seconds: "seconds",
 					minutes: "minutes",
 					hours: "hours",
-					days: "days",
+					days: "days"
 				},
 			},
 			GIVEAWAY_REROLL_MESSAGES: {
-				congrat: "ðŸŽ‰ New winner(s) : {winners}! Congratulations!",
-				error: "No valid entries, no winners can be chosen!",
+				congrat: "New winner(s) : {winners}! Congratulations !",
+				error: "No valid registration, no winner can be chosen !",
 			},
-			LANGUAGE_DESCRIPTION: "Translate Lycos into another language.",
+			/* Language */
+			LANGUAGE_DESCRIPTION: "Translate Lycos into other languages.",
 			LANGUAGE_USAGE: ".language <language>",
-			LANGUAGE_EXAMPLES: ".language french",
-			LANGUAGE_INFO: (language, prefix) => `My language on this guild is \`${language}\` !\n> To change the language do \`${prefix}language set <value>\`\n> To see how many languages I can speak do \`${prefix}language list\``,
-			LANGUAGE_LIST: (languages) => `I'm available in \`${languages.join("\`, \`")}\`.`,
-			LANGUAGE_NULL: "The new language can't be empty.",
+			LANGUAGE_EXAMPLES: ".language english",
+			LANGUAGE_INFO: (language, prefix) => `My language on this server is \`${language}\` !\n> To change the language, answer with \`\`set\`\`\n> To see the different languages, answer with \`\`list\`\``,
+			LANGUAGE_LIST: (languages) => `I am available in \`${languages.join("\`, \`")}\`.`,
+			LANGUAGE_SUPPLY: "Respond with the language you want to put the bot in.",
 			LANGUAGE_ALREADY_SET: (lang) => `I'm already in \`${lang.toLowerCase()}\`.`,
-			LANGUAGE_GUILD_INFO: (lang) => `The language on this guild is now \`${lang.toLowerCase()}\`.`,
-			ERROR_LANGUAGE_INCORRECT: "I don't think that I know this language. Can you help me to learn it ?",
-			MODULES_DESCRIPTION: "Translate Lycos into another language.",
+			LANGUAGE_GUILD_INFO: (lang) => `The language on this server is now \`${lang.toLowerCase()}\`.`,
+			ERROR_LANGUAGE_INCORRECT: "I don't think I know this language. Can you help me learn it ?",
+			/* Modules */
+			MODULES_DESCRIPTION: "Not available.",
 			MODULES_USAGE: (prefix) => `${prefix}modules set <module> <on/off>`,
 			MODULES_EXAMPLES: (prefix) => `${prefix}modules set games on`,
-			MODULES_INFO: (prefix) => `Some modules are unavailable by default on Lycos.\n> To activate then do \`${prefix}modules set <module> <on/off>\`\n> To see how many modules I have do \`${prefix}modules list\``,
-			MODULES_LIST: (modules) => `Here is the list of available modules:\n> \`${modules.join("\`, \`")}\``,
-			MODULES_NULL: "You should indicate the module you want to modify.",
-			MODULES_ALREADY_ACTIVATED: "This module is already activated.",
-			MODULES_ALREADY_DEACTIVATED: "This module is already deactivated.",
-			MODULES_ACTIVATED: (args) => `The module ${args[1]} is now activated on this guild.`,
-			MODULES_DEACTIVATED: (args) => `The module ${args[1]} is now deactivated on this guild.`,
-			ERROR_MODULES_INCORRECT: (prefix) => `I don't think that I know this module. do \`${prefix}modules list\``,
-			POLL_DESCRIPTION: "Make poll for your server members.",
-			POLL_USAGE: ".poll <text>",
-			POLL_EXAMPLES: ".poll Is Lycos good?",
-			POLL_TEXT_NULL: "You must insert a text to do a poll.",
-			POLL_REACT: "React with the reactions down below to enter the poll.",
+			MODULES_INFO: (prefix) => `Certains modules ne sont pas disponibles par défaut sur Lycos.\n> Pour activer faites \`${prefix}modules set <module> <on/off>\`\n> Pour voir combien de modules j'ai, faire \`${prefix}modules list\``,
+			MODULES_LIST: (modules) => `Voici la liste des modules disponibles :\n> \`${modules.join("\`, \`")}\``,
+			MODULES_NULL: "Vous devez indiquer le module que vous souhaitez modifier.",
+			MODULES_ALREADY_ACTIVATED: "Ce module est déjà activé.",
+			MODULES_ALREADY_DEACTIVATED: "Ce module est déjà désactivé.",
+			MODULES_ACTIVATED: (args) => `Le module ${args[1]} est maintenant activé sur ce serveur.`,
+			MODULES_DEACTIVATED: (args) => `Le module ${args[1]} est maintenant désactivé sur ce serveur.`,
+			ERROR_MODULES_INCORRECT: (prefix) => `Je ne pense pas que je connaisse ce module. Faites \`${prefix}modules list\``,
+			/* Poll */
+			POLL_DESCRIPTION: "Make a poll for the members of your server.",
+			POLL_USAGE: (prefix) => `${prefix}poll [Question]`,
+			POLL_EXAMPLES: (prefix) => `${prefix}poll Is Lycos a good bot ? (Answer no and you will be banned c:)`,
+			POLL_TEXT_NULL: "You must insert a text to make a poll.",
+			POLL_REACT: "React with the reactions below to enter the poll.",
+			/* Prefix */
 			PREFIX_DESCRIPTION: "Manage the bot prefix on the server.",
 			PREFIX_USAGE: ".prefix set <prefix>\n.prefix reset",
 			PREFIX_EXAMPLES: ".prefix set d.\n.prefix reset",
-			PREFIX_INFO: (prefix) => `My prefix on this guild is \`${prefix}\` ! \n> To change this prefix do \`${prefix}prefix set <value>\`\n> To reset this prefix do \`${prefix}prefix reset\``,
-			PREFIX_NULL: "The prefix can't be empty.",
-			PREFIX_CHANGE: (args) => `The prefix is now \`${args[1]}\`.`,
-			PREFIX_RESET:"The prefix has been reset. It's now `.`",
+			PREFIX_INFO: (prefix) => `My prefix on this server is \`${prefix}\` ! \n> To change this prefix respond with \`set\`\n> To reset this prefix, answer with \`reset\`.`,
+			PREFIX_NULL: "Respond with the prefix you want to assign to the bot.",
+			PREFIX_CHANGE: (pref) => `The prefix is ​​now \`${pref}\`.`,
+			PREFIX_RESET: "The prefix has been reset. It is now `.`",
+			/* Role */
 			ROLE_DESCRIPTION: "Manage roles easily.",
 			ROLE_USAGE: ".role <add/remove> <user> <role>",
-			ROLE_EXAMPLES: ".role add Lycos Bot",
-			ROLE_INFO: (prefix) => `> To add a role to an user do \`${prefix}role add <user> <role>\` \n> To remove a role to an user do \`${prefix}role remove <user> <role>\``,
-			ROLE_NOUSER_FOUND: "No users were found.",
-			ROLE_GIVE: (member, role) => `${member.user.username} has now the role ${role.name}.`,
-			ROLE_REMOVE: (member, role) => `${member.user.username} no longer has the role ${role.name}.`,
+			ROLE_EXAMPLES: ".role add Lycos @Role/ID",
+			ROLE_INFO: (prefix) => `> To add a role to a user, do \`${prefix}role add <user> <role>\` \n> To delete a role from a user, do \`${prefix}role remove <user> <role>\`.`,
+			ROLE_NOUSER_FOUND: "No user was found.",
+			ROLE_GIVE: (member, role) => `${member.user.username} now has the role <@&${role}>.`,
+			ROLE_REMOVE: (member, role) => `${member.user.username} no longer has the role <@&${role}>.`,
+			/* Bot */
 			BOT_DESCRIPTION: "View information about Lycos.",
-			BOT_USAGE: ".bot",
-			BOT_EXAMPLES: ".bot",
+			BOT_USAGE: (prefix) => `${prefix}bot`,
+			BOT_EXAMPLES: (prefix) => `${prefix}bot`,
 			BOT_FIELDS: [
-				"General Information",
-				"General Statistics",
-				"Other Informations",
+				"General informations",
+				"General statistics",
+				"Other informations",
 				"\u200B",
 			],
-			BOT_FIELDS_CONTENT_GENERALINFO: (message, version) => `**Creator:** \`${message.bot.users.get("169146903462805504").tag}\`\n**Developers:** \`${message.bot.users.get("296693247856607263").tag}\` - \`${message.bot.users.get("291860794163855360").tag}\` - \`${message.bot.users.get("169146903462805504").tag}\`\n**Contributors:** \`${message.bot.users.get("422820341791064085") ? message.bot.users.get("422820341791064085").tag : "Androz"}\`\nCreated on the \`12/12/2017\`, the bot is currently running on version \`${version}\`.`,
-			BOT_FIELDS_CONTENT_GENERALSTATS: (guilds, users, channels) => `**Guilds:** serving \`${guilds}\` guilds.\n**Users:** \`${users}\` cached users.\n**Channels:** managing \`${channels}\` channels.`,
-			BOT_FIELDS_CONTENT_OTHERINFO: (process, moment, message) => `**Server:** \`${process.platform}\` - \`(${process.arch})\` [[Skoali]](https://skoali.fr/)\n**Heap:** \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}\`\n**Bot's uptime:** \`${moment.duration(message.bot.uptime).format("M[m] W[w] D[d] H[h] m[m] s[s]")}\``,
-			BOT_FIELDS_CONTENT_LINKS: "[Invite](https://discordapp.com/oauth2/authorize?client_id=390231727554953216&scope=bot&permissions=0) - [Server](https://discord.gg/ZvJpUpt) - [Donate](https://paypal.me/denverbot) - [Site](https://denverbot.fr/) - [Vote](https://discordbots.org/bot/390231727554953216) - [Twitter](https://twitter.com/BOT_Denver)",
-			HELP_DESCRIPTION: "Displays the list of commands",
-			HELP_USAGE: (prefix) => `${prefix}help (command)`,
+			BOT_FIELDS_CONTENT_GENERALINFO: (message, version) => `**Creator :** \`${message.bot.users.cache.get("169146903462805504").tag}\`\n**Developers :** \`${message.bot.users.cache.get("153163308801720321").tag}\` and \`${message.bot.users.cache.get("169146903462805504").tag}\`\nCreated the \`22/05/2020\`, the bot is currently running on the version \`${version}\`.`,
+			BOT_FIELDS_CONTENT_GENERALSTATS: (guilds, users, channels) => `**Number of servers :** \`${guilds}\`.\n**Users :** \`${users}\` in memory.\n**Number of channels :** \`${channels}\`.`,
+			BOT_FIELDS_CONTENT_OTHERINFO: (process, moment, message) => `**Machine :** \`${process.platform}\` - \`(${process.arch})\` \n**TAS :** \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}\`\n**Bot connection time :** \`${moment.duration(message.bot.uptime).format("M[m] W[w] D[d] H[h] m[m] s[s]")}\``,
+			BOT_FIELDS_CONTENT_LINKS: "[Invitation](https://discordapp.com/oauth2/authorize?client_id=628186022991233025&scope=bot&permissions=0) - [Server](https://discord.gg/64zRC73) - [Donations](https://utip.io/lycosnovation) - [Utip](https://utip.io/lycosnovation) - [Website](https://lycos-novation.fr/) - [Twitch](https://www.twitch.tv/lycostv) - [Instagram](https://www.instagram.com/lycosnovation/) - [Twitter](https://twitter.com/LycosNovation)",//[Vote](https://discordbots.org/bot/390231727554953216)
+			/* Help */
+			HELP_DESCRIPTION: "Displays the list of commands.",
+			HELP_USAGE: (prefix) => `${prefix}help (commande)`,
 			HELP_EXAMPLES: (prefix) => `${prefix}help\n${prefix}help ping`,
-			HELP_NOT_FOUND: (args) => `${e.error} | The command \`${args}\` doesn't exist!`,
+			HELP_NOT_FOUND: (args) => `${e.error} | The command \`${args}\` does not exist !`,
+			HELP_COMING_SOON: "Be available soon.",
 			HELP_TITLE: (command) => `Help : ${command}`,
 			HELP_TITLE1: (category) => `Category : ${category}`,
-			HELP_EMBED_DESCRIPTION: (message) => `Hey, here is Lycos's documentation. Some commands are unavailable on the documentation because they need to be enable.\nTo see what you can enable do \`${message.settings.prefix}modules\`.`,
+			HELP_EMBED_DESCRIPTION: (message) => `Hello, here is the Lycos documentation.`,//Certaines commandes ne sont pas disponible sur la documentation parce qu'elles doivent être activer.\nPour voir ce que vous pouvez activer faites \`${message.settings.prefix}modules\`.
 			HELP_FIELDS: [
 				"Description",
-				"Usage",
+				"Use",
 				"Examples",
 				"Required level",
 			],
 			HELPGLOBAL_FIELDS: [
 				"Administration",
-				"Lycos",
-				"Fun",
-				"General",
 				"Moderation",
+				"General",
+				"Entertainment",
+				"Stream",
+				"Game statistics",
 				"Music",
 			],
-			HELPGLOBAL_TITLE: "Help Menu",
-			INVITE_DESCRIPTION: "Gives the invitation to add the bot on a server",
+			HELPGLOBAL_TITLE: "Help menu",
+			/* Invitation */
+			INVITE_DESCRIPTION: "Give the invitation to add the bot on a server.",
 			INVITE_USAGE: (prefix) => `${prefix}invite`,
 			INVITE_EXAMPLES: (prefix) => `${prefix}invite`,
 			INVITE_TITLE: "Invitation",
-			INVITE_FIELD: "[Click here](https://discordapp.com/oauth2/authorize?client_id=390231727554953216&scope=bot&permissions=66321471) to invite the bot to your discord server.",
-			PING_DESCRIPTION: "Gives the Discord API latency",
+			INVITE_FIELD: "[Click here](https://discordapp.com/oauth2/authorize?client_id=628186022991233025&scope=bot&permissions=8) to invite the bot to your server.",
+			/* Ping */
+			PING_DESCRIPTION: "Gives latency of the Discord API.",
 			PING_USAGE: (prefix) => `${prefix}ping`,
 			PING_EXAMPLES: (prefix) => `${prefix}ping`,
 			PING_PONG: "Pong !",
 			PING_APILATENCY: "API latency",
+			/* Cat */
 			CAT_DESCRIPTION: "Have fun watching cat pictures.",
 			CAT_USAGE: (prefix) => `${prefix}cat`,
 			CAT_EXAMPLES: (prefix) => `${prefix}cat`,
+			/* Dog */
 			DOG_DESCRIPTION: "Have fun watching dog pictures.",
 			DOG_USAGE: (prefix) => `${prefix}dog`,
 			DOG_EXAMPLES: (prefix) => `${prefix}dog`,
-			AVATAR_DESCRIPTION: "Gives the avatar of the requested user",
-			AVATAR_USAGE: (prefix) => `${prefix}avatar (@user)`,
-			AVATAR_EXAMPLES: (prefix) => `${prefix}avatar @Lycos`,
-			AVATAR_TITLE: (member) => `${member.user.username}'s avatar`,
-			SERVERINFO_DESCRIPTION: "Displays server information",
+			/* Avatar */
+			AVATAR_DESCRIPTION: "Gives the avatar of the requested user.",
+			AVATAR_USAGE: (prefix) => `${prefix}avatar (@user/ID)`,
+			AVATAR_EXAMPLES: (prefix) => `${prefix}avatar @Lycos\n ${prefix}avatar 628186022991233025`,
+			AVATAR_TITLE: (looked) => `Avatar of ${looked.user.username}`,
+			/* Serverinfos */
+			SERVERINFO_PROFIL: (guild) => `Server information | ${guild}`,
+			SERVERINFO_DESCRIPTION: "Displays server information.",
 			SERVERINFO_USAGE: (prefix) => `${prefix}serverinfo`,
 			SERVERINFO_EXAMPLES: (prefix) => `${prefix}serverinfo`,
 			SERVERINFO_REGIONS: [
 				":flag_br: Brazil",
 				":flag_eu: Central Europe",
 				":flag_sg: Singapore",
-				":flag_us: U.S. Centre",
+				":flag_us: USA - Center",
 				":flag_au: Sydney",
-				":flag_us: U.S. East",
-				":flag_us: U.S. South",
-				":flag_us: U.S. West",
+				":flag_us: USA - East",
+				":flag_us: USA - Sud",
+				":flag_us: USA - West",
 				":flag_eu: Western Europe",
-				":flag_us: V.I.P. U.S. East",
+				":flag_us: USA - East VIP",
 				":flag_gb: London",
 				":flag_nl: Amsterdam",
 				":flag_hk: Hong Kong",
 				":flag_ru: Russia",
 				":flag_za: South Africa",
+				":flag_eu: Europe"
 			],
 			SERVERINFO_TITLES: [
-				"Name",
+				"Last name",
 				"Creation",
 				"Total | Humans | Bots",
-				"Channels",
+				"Channel",
 				"ID",
 				"Owner",
 				"Region",
-				"Verification Level",
+				"Verification level",
+				"Roles",
 			],
+			SERVERINFO_CDATE: (message) => `${moment(message.channel.guild.createdAt.toUTCString()).format("LLLL").charAt(0).toUpperCase() + moment(message.channel.guild.createdAt.toUTCString()).format("LLLL").slice(1)} (${message.bot.functions.checkDays(message.channel.guild.createdAt, message)}`,
+			SERVERINFO_NOROLES: "No role is present on this server.",
+			SERVERINFO_ROLELIST: (guild) => `and ${guild.roles.cache.size - 10} other roles.`,
+			/* Date */
+			DATE_AGO: "There is ",
+			DATE_DAY: " day",
+			DATE_DAYS: " days",
+			/* Userinfos */
 			USERINFO_DESCRIPTION: "Displays user information.",
 			USERINFO_USAGE: (prefix) => `${prefix}userinfo (@user)`,
 			USERINFO_EXAMPLES: (prefix) => `${prefix}userinfo @Lycos`,
 			USERINFO_TITLES: [
-				"Name",
-				"Currently playing",
+				"Last name",
 				"ID",
 				"Status",
+				"Account created at",
+				"Joined the guild at",
 				"Roles",
 			],
+			USERINFO_TITLES_ACTIVITY: (activity) => `${activity.length > 1 ? "Activities" : "Activity"}`,
+			USERINFO_CREATEACCOUNT: (createAccount) => `${moment(createAccount).format('LLLL')}`,
+			USERINFO_JOINGUILD : (joinGuild) => `${moment(joinGuild).format('LLLL')}`,
 			USERINFO_STATUS: [
 				"Online",
 				"Offline",
 				"Idle",
-				"Do Not Disturb",
+				"Do not disturb",
 			],
-			USERINFO_NOPLAY: "No playing",
-			USERINFO_PROFIL: "Profil",
-			MESSADEDELETE_DESC: "Message delete",
+			USERINFO_NO_ACTIVITY: "This member has no ongoing activity",
+			USERINFO_ACTIVITY_NUMBER: (activity) => `This member has ${activity.length === 1 ? "1 ongoing activity" : `${activity.length} ongoing activities`}:\n`,
+			USERINFO_ACTIVITY_NUM: (index) => `**__Activity ${index+1}:__**\n`,
+			USERINFO_ACTIVITY_NAME: (activity) => `**Name:** ${activity.name}`,
+			USERINFO_ACTIVITY_TYPE: (activity) => `**Type:** ${activity.type}`,
+			USERINFO_ACTIVITY_URL: (activity) => `**URL:** ${activity.url}`,
+			USERINFO_ACTIVITY_DETAILS: (activity) => `**Details:** ${activity.details}`,
+			USERINFO_ACTIVITY_STATE: (activity) => `**State:** ${activity.state}`,
+			USERINFO_ACTIVITY_TIMESTAMPS: (activity) => `${activity.start ? `**Activity started at** ${moment(activity.start).format("LLLL")}` : `**No detected start.**`} - ${activity.end ? `**Activity will ends at** ${moment(activity.end).format("LLLL")}` : `**No planned end.**`}`,
+			USERINFO_ACTIVITY_PARTY: (activity) => `**Party:** ${activity.id}`,
+			USERINFO_ACTIVITY_ASSETS: (activity) => `**Assets:** ${activity.largeText ? activity.largeText : "No text."} - ${activity.smallText ? activity.smallText : "No text."}`,
+			USERINFO_SPOTIFY_LISTENING: "Listening music on Spotify",
+			USERINFO_SPOTIFY_TITLE: "Title:",
+			USERINFO_SPOTIFY_ARTIST: "Artist:",
+			USERINFO_SPOTIFY_ALBUM: "Album:",
+			USERINFO_SPOTIFY_DURATION: `Music duration:`,
+			USERINFO_SPOTIFY_TIMEREMAINING: "Time remaining:",
+			USERINFO_TWITCH_STREAMING: "Streaming on Twitch",
+			USERINFO_TWITCH_TITLE: "Title:",
+			USERINFO_TWITCH_CATEGORY: "Category:",
+			USERINFO_TWITCH_JOIN: "Join stream",
+			USERINFO_GAME_PLAYING: "Playing",
+			USERINFO_GAME_NAME: "Name:",
+			USERINFO_GAME_SINCE: "Playing since",
+			USERINFO_CS: "Custom Status:",
+			USERINFO_CS_NAME: (activity) => `${activity.emoji ? activity.emoji.id ? `<${activity.emoji.animated ? `a` : ``}:${activity.emoji.name}:${activity.emoji.id}>` : `${activity.emoji.name}` : ``} ${activity.state}`,
+			USERINFO_PROFIL: "Profile of ",
+			USERINFO_UNKNOWN_STATUS: "I didin't find this member's status",
+			USERINFO_NOROLES: "This member has no role.",
+			USERINFO_ROLELIST: (member) => `and ${member.roles.cache.size - 10} other roles.`,
+			/* Massagedelete */
+			MESSADEDELETE_DESC: "Message deleted",
 			MESSADEDELETE_FIELD: [
 				"Channel",
 				"Content",
@@ -212,7 +268,7 @@ module.exports = class {
 				"User",
 				"Message",
 			],
-			MESSAGEUPDATE_DESC: "Message updated",
+			MESSAGEUPDATE_DESC: "Message updated.",
 			MESSAGEUPDATE_FIELD: [
 				"Channel",
 				"Go to message",
@@ -222,194 +278,639 @@ module.exports = class {
 				"User",
 				"Message",
 			],
-			PARTNERS_DESCRIPTION: "Look at our partners.",
-			PARTNERS_USAGE: ".partners",
-			PARTNERS_EXAMPLES: ".partners",
-			PARTNERS_TITLE: "Lycos's partner",
-			ANIME_DESCRIPTION: "Look for the best animes.",
-			ANIME_USAGE: ".anime <animeName>",
-			ANIME_EXAMPLES: ".anime Dragon Ball",
+			/* Partners */
+			PARTNERS_DESCRIPTION: "Displays Lycos partners.",
+			PARTNERS_USAGE: (prefix) => `${prefix}partners`,
+			PARTNERS_EXAMPLES: (prefix) => `${prefix}partners`,
+			PARTNERS_TITLE: "Lycos partners.",
+			PARTNERS_EMBED_DESC: "Here are listed Lycos partners with a brief description.",
+			PARTNERS_NAMES: ["Lycos currently has no partners."],
+			PARTNERS_VALUES: ["For any partnership request, please contact our team [Marketing](https://discord.gg/7UwmMA3)."],
+			/* Sponsors */
+			SPONSORS_DESCRIPTION: "Displays Lycos sponsors.",
+			SPONSORS_USAGE: (prefix) => `${prefix}sponsors`,
+			SPONSORS_EXAMPLES: (prefix) => `${prefix}sponsors`,
+			SPONSORS_TITLE: "Lycos sponsors.",
+			SPONSORS_EMBED_DESC: "Here are listed Lycos sponsors.",
+			SPONSORS_NAMES: ["Lycos currently has no sponsor."],
+			SPONSORS_VALUES: ["To become a sponsor, please contact <@!169146903462805504>."],
+			/* Anime */
+			ANIME_DESCRIPTION: "Find the best anime.",
+			ANIME_USAGE: (prefix) => `${prefix}anime [animeName]`,
+			ANIME_EXAMPLES: (prefix) => `${prefix}anime Dragon Ball`,
 			ANIME_NOTFOUND: "You must include an anime name.",
 			ANIME_TITLES: [
-				"English Name",
-				"Japanese Name",
+				"English name",
+				"Japanese name",
 				"Type",
 				"Episodes",
-				"Genre",
+				"Kind",
 				"Popularity",
 				"Score",
 			],
-			FORTNITE_DESCRIPTION: "Look at your Fortnite statistics to be competitive.",
-			FORTNITE_USAGE: ".fortnite <platform> <username>",
-			FORTNITE_EXAMPLES: ".fortnite pc Ninja",
+			/* Fortnite */
+			FORTNITE_DESCRIPTION: "Watch your Fortnite stats to be competitive.",
+			FORTNITE_USAGE: (prefix) => `${prefix}fortnite [platforme] [username]`,
+			FORTNITE_EXAMPLES: (prefix) => `${prefix}fortnite pc Ninja`,
 			FORTNITE_PLATFORM: "Please enter the name of your platform (pc, xbox, psn).",
 			FORTNITE_USERNAME_NULL: "Please enter a username.",
 			FORTNITE_PLAYER_NOT_FOUND: "Player not found.",
 			FORTNITE_PLAYER_STATS: (data) => `Statistics of ${data.username}`,
 			FORTNITE_FIELDS: [
 				"Kills",
-				"Matchs played",
+				"Games played",
 				"Victories",
-				"Kills ratio per game",
+				"Kill ratio per game",
 			],
-			FORTNITE_FIELDS_CONTENT_KILL: (data) => `${data.stats.lifetime.kills} (${data.stats.squad["kills"]} in section, ${data.stats.duo["kills"]} in duo, ${data.stats.solo["kills"]} in solo)`,
-			FORTNITE_FIELDS_CONTENT_MATCHSPLAYED: (data) => `${data.stats.lifetime.matches} (${data.stats.squad["matches"]} in section, ${data.stats.duo["matches"]} in duo, ${data.stats.solo["matches"]} in solo)`,
-			FORTNITE_FIELDS_CONTENT_VICTORIES: (data) => `${data.stats.lifetime.wins} (${data.stats.squad["wins"]} in section, ${data.stats.duo["wins"]} in duo, ${data.stats.solo["wins"]} in solo)`,
-			QRCODE_DESCRIPTION: "Make polls on anything.",
-			QRCODE_USAGE: ".qrcode <text>",
-			QRCODE_EXAMPLES: ".qrcode Secret code",
-			QRCODE_MESSAGE: "You must include something to be converted to a QR Code.",
-			ROLE_INFO_DESCRIPTION: "Displays role information.",
-			ROLE_INFO_USAGE: ".role-info <role>",
-			ROLE_INFO_EXAMPLES: ".role-info Members",
+			FORTNITE_FIELDS_CONTENT_KILL: (data) => `${data.stats.lifetime.kills} (${data.stats.squad["kills"]} in the section, ${data.stats.duo["kills"]} in duet, ${data.stats.solo["kills"]} alone)`,
+			FORTNITE_FIELDS_CONTENT_MATCHSPLAYED: (data) => `${data.stats.lifetime.matches} (${data.stats.squad["matches"]} in the section, ${data.stats.duo["matches"]} in duet, ${data.stats.solo["matches"]} alone)`,
+			FORTNITE_FIELDS_CONTENT_VICTORIES: (data) => `${data.stats.lifetime.wins} (${data.stats.squad["wins"]} in the section, ${data.stats.duo["wins"]} in duet, ${data.stats.solo["wins"]} alone)`,
+			/* Apex */
+			APEX_PLATFORM: "Please enter the name of your platform (pc, xbox, ps4).",
+			APEX_ERROR_PLATFORM: "Please enter a valid platform (pc, xbox, ps4).",
+			APEX_USERNAME_NULL: "Please enter a username.",
+			/* OSU */
+			OSU_DESCRIPTION: "Look at your statistics Osu!.",
+			OSU_USAGE: (prefix) => `${prefix}osu [Username]`,
+			OSU_EXAMPLES: (prefix) => `${prefix}osu WhiteCat`,
+			OSU_SUPPLY_PLAYER: "Respond with a username.",
+			OSU_USER_NOT_FOUND: "I couldn't find this player.",
+			OSU_EMBED_AUTHOR: (user) => `Profile Osu! of ${user.name} (ID: ${user.id}) | ${user.country}`,
+			OSU_FIELDS: [
+				"Started playing on",
+				"Level",
+				"Precision",
+				"Performance points",
+				"Score",
+				"Notes",
+				"Number of games played"
+			],
+			OSU_JOINED_DATE: (user) => `${moment(user.raw_joinedDate).format("LLLL")} and played for `,
+			OSU_PP: (user) => `Total points classified : ${user.pp.raw} - World rank : ${user.pp.rank} - National rank : ${user.pp.countryRank}`,
+			OSU_SCORES: (user) => `Ranked : ${user.scores.ranked} points - Total : ${user.scores.total} points`,
+			OSU_COUNTS: (user) => `50 : ${user.counts['50']} - 100 : ${user.counts['100']} - 300 : ${user.counts['300']} A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${user.counts.SS} - SSH :${user.counts.SSH}`,
+			/* QRCODE */
+			QRCODE_DESCRIPTION: "Generates a QRCode containing the specified text",
+			QRCODE_USAGE: (prefix) => `${prefix}qrcode [text]`,
+			QRCODE_EXAMPLES: (prefix) => `${prefix}qrcode Secret code`,
+			QRCODE_MESSAGE: "You must include something to convert to a QR Code.",
+			/* Role */
+			ROLE_INFO_DESCRIPTION: "Displays information for the specified role.",
+			ROLE_INFO_USAGE: (prefix) => `${prefix}role-info [@Role/ID]`,
+			ROLE_INFO_EXAMPLES: (prefix) => `${prefix}role-info @Members\ ${prefix}role-info 699011821654507572`,
 			ROLE_INFO_SPECIFY: "Please specify a role.",
 			ROLE_INFO_NOT_FOUND: "I can't find this role.",
 			ROLE_INFO_FIELDS: [
 				"Color",
 				"Position",
-				"Mentionnable",
+				"Mentionable",
 				"Creation date",
 			],
-			ROLE_INFO_ID: (role) => `Role ID: ${role.id}`,
-			ROLE_INFO_EMBED_NAME: (role) => `Informations about ${role.name} role`,
-			FLIP_DESCRIPTION: "Have fun playing heads or tails.",
-			FLIP_USAGE: ".flip",
-			FLIP_EXAMPLES: ".flip",
-			FLIP_HEADS: ":game_die: | It's **tails**!",
-			FLIP_TAILS: ":game_die: | It's **heads**!",
-			PERMISSIONS_DESCRIPTION: "Displays the member's permissions in the channel",
+			ROLE_INFO_CDATE: (role) => `${moment(role.createdTimestamp.toUTCString()).format("LLLL").charAt(0).toUpperCase() + moment(role.createdTimestamp.toUTCString()).format("LLLL").slice(1)} (${message.bot.functions.checkDays(role.createdTimestamp, message)}`,
+			ROLE_INFO_ID: (role) => `ID of the role : ${role.id}`,
+			ROLE_INFO_EMBED_NAME: (role) => `Information about the role ${role.name}`,
+			/* Flip */
+			FLIP_DESCRIPTION: "Have fun playing with the flip.",
+			FLIP_USAGE: (prefix) => `${prefix}flip`,
+			FLIP_EXAMPLES: (prefix) => `${prefix}flip`,
+			FLIP_HEADS: ":game_die: | It's **heads** !",
+			FLIP_TAILS: ":game_die: | It's **tails** !",
+			/* Permissions */
+			PERMISSIONS_DESCRIPTION: "Displays the permissions of a member in the channel.",
 			PERMISSIONS_USAGE: (prefix) => `${prefix}permissions (@member)`,
 			PERMISSIONS_EXAMPLES: (prefix) => `${prefix}permissions\n${prefix}permissions @user#1234`,
 			PERMISSIONS_TITLE: (username, channel) => `Permissions of ${username} in #${channel}`,
-			PURGE_DESCRIPTION: "Allows you to delete several messages at once.",
-			PURGE_USAGE: (prefix) => `${prefix}purge [messagesNumber]`,
+			/* Purge */
+			PURGE_DESCRIPTION: "Delete multiple messages at once.",
+			PURGE_USAGE: (prefix) => `${prefix}purge [NamebreDeMessage]`,
 			PURGE_EXAMPLES: (prefix) => `${prefix}purge 28`,
-			PURGE_SPECIFY_AMOUNT: "Must specify an amount to delete!",
-			PURGE_TOO_MUCH_AMOUNT: "I can't delete more than 100 messages.",
-			BAN_DESCRIPTION: "Banishes the mentioned user",
-			BAN_USAGE: (prefix) => `${prefix}ban [@user] (reason)`,
-			BAN_EXAMPLES: (prefix) => `${prefix}ban @Lycos#8124 Spam`,
-			BAN_ERRORARGS : "Please insert an user!",
-			BAN_ALREADY: "This user is already banned!",
-			BAN_BANNABLE: "I cannot ban this user! Do they have a higher role? Do I have ban permissions?",
-			BAN_NOREASON: "No reason provided",
-			BAN_ERROR: "I couldn't ban this user because: ",
-			BAN_INFO: (member, message) => `${member} has been banned by ${message.author}`,
-			KICK_DESCRIPTION: "Kicked the mentioned user",
+			PURGE_SPECIFY_AMOUNT: "You must specify an amount to delete !",
+			PURGE_TOO_MUCH_AMOUNT: "I cannot delete more than 100 messages at once.",
+			/* Ban */
+			BAN_DESCRIPTION: "Ban the mentioned user.",
+			BAN_USAGE: (prefix) => `${prefix}ban (remove) [@user] (reason)`,
+			BAN_EXAMPLES: (prefix) => `${prefix}ban @Lycos Spam\n ${prefix}ban remove `,
+			BAN_ERRORARGS: "Please indicate a user to ban !",
+			BAN_ALREADY: "This user is already banned !",
+			BAN_BANNABLE: "I cannot ban this user, please check their roles and permissions.",
+			BAN_NOREASON: "Please indicate a reason.",
+			BAN_ERROR: "I can't ban because : ",
+			BAN_INFO: (member, message) => `${member} was banned by ${message.author}`,
+			/* Unban */
+			UNBAN_INFO: (member, message) => `${member} was unbanned by ${message.author}`,
+			UNBAN_ERROR: "I can't ban because : ",
+			UNBAN_NOT_BANNED: "This user is not banned !",
+			UNBAN_DESCRIPTION: "Unban the specified user.",
+			UNBAN_USAGE: (prefix) => `${prefix}unban [UserID]`,
+			UNBAN_EXAMPLES: (prefix) => `${prefix}unban 628186022991233025`,
+			UNBAN_ERRORARGS: "Please indicate a user to unban !",
+			/* Kick */
+			KICK_DESCRIPTION: "Kick the mentioned user.",
 			KICK_USAGE: (prefix) => `${prefix}kick [@user] (reason)`,
-			KICK_EXAMPLES: (prefix) => `${prefix}kick @Lycos#8124 Spam`,
-			KICK_ERRORARGS: "Please insert an user!",
-			KICK_BANNABLE: "I cannot kick this user! Do they have a higher role? Do I have kick permissions?",
-			KICK_NOREASON: "No reason provided",
-			KICK_ERROR: "I couldn't kick this user because: ",
-			KICK_INFO: (member, message) => `${member} has been kicked by ${message.author}`,
+			KICK_EXAMPLES: (prefix) => `${prefix}kick @Lycos Spam`,
+			KICK_ERRORARGS: "Please indicate a user !",
+			KICK_KICKABLE: "I can't kick this user out, please check their roles and permissions.",
+			KICK_NOREASON: "Please indicate a reason",
+			KICK_ERROR: "I could not kick the user because : ",
+			KICK_INFO: (member, message) => `${member} was kicked out by ${message.author}`,
+			KICK_EMBED_TITLE: "A member has been kicked from the server!",
+			KIKC_EMBED_DESC: (member, reason, message) => `**Kicked member:** ${member.displayName} - ${member.user.id}
+**Kicked by:** ${message.member.displayName} - ${message.author} - ${message.author.id}
+**Reason:** ${reason}
+**Date:** ${moment(new Date()).format("LLLL")}`,
+			/* FML */
 			FUCKMYLIFE_DESCRIPTION: "Funny stories about everyday life.",
 			FUCKMYLIFE_USAGE: (prefix) => `${prefix}fuck-my-life | ${prefix}fml`,
 			FUCKMYLIFE_EXAMPLES: (prefix) => `${prefix}fuck-my-life | ${prefix}fml`,
-			NSFW_URL: "If the image doesn't display click here.",
-			WEATHERINFO_DESCRIPTION: "Affiche la météo de la ville demandée",
-			WEATHERINFO_USAGE: (prefix) => `${prefix}weather-info [Name/ZipCode]`,
+			/* NSFW */
+			NSFW_URL: "If the image does not appear click here.",
+			/* Weather */
+			WEATHERINFO_DESCRIPTION: "Displays the requested city weather.",
+			WEATHERINFO_USAGE: (prefix) => `${prefix}weather-info [Name/Postal Code]`,
 			WEATHERINFO_EXAMPLES: (prefix) => `${prefix}weather-info Paris`,
-			WEATHERINFO_NO_CITY: "Please give a name or Zip Code.",
-			WEATHERINFO_NOT_FOUND: "Can't find weather data about this city.",
-			WEATHER_LANGUAGE: "en-EN",
-			WEATHERINFO_EMBED_TITLE: (result) => `Weather of ${result[0].location.name} on ${result[0].current.day} ${result[0].current.date} at ${result[0].current.observationtime}`,
-			WEATHERINFO_EMBED_DESCRIPTION: (result) => `**Coordinates** - __Longitude :__ ${result[0].location.long} - __Latitude :__ ${result[0].location.lat}
-**Weather :** ${result[0].current.skytext}
-**Temperature :** ${result[0].current.temperature}°C
-**Feels like :** ${result[0].current.feelslike}°C
-**Humidity :** ${result[0].current.humidity}%
-**Wind display :** ${result[0].current.winddisplay}
-**Time Zone :** UTC${result[0].location.timezone >= 0 ? `+${result[0].location.timezone}` : `${result[0].location.timezone}`}
+			WEATHERINFO_NO_CITY: "Please enter a city name or postal code.",
+			WEATHERINFO_NOT_FOUND: "Unable to find weather data for this city.",
+			WEATHER_LANGUAGE: "fr-FR",
+			WEATHERINFO_EMBED_TITLE: (result) => `Weather in ${result[0].location.name} the ${result[0].current.day} ${date(result[0].current.date)} at ${result[0].current.observationtime}`,
+			WEATHERINFO_EMBED_DESCRIPTION: (result) => `**Coordinates** - __Longitude:__ ${result[0].location.long} - __Latitude:__ ${result[0].location.lat}
+**Weather:** ${result[0].current.skytext}
+**Temperature:** ${result[0].current.temperature}°C
+**Feeling:** ${result[0].current.feelslike}°C
+**Humidity:** ${result[0].current.humidity}%
+**Wind:** ${result[0].current.winddisplay}
+**Timezone:** UTC${result[0].location.timezone >= 0 ? `+${result[0].location.timezone}` : `${result[0].location.timezone}`}
 
-**__Forecast for ${result[0].forecast[0].day} ${result[0].forecast[0].date}__**
+**__Forecast for ${result[0].forecast[0].day} ${date(result[0].forecast[0].date)}__**
 
-**Temperature Max/Min** : ${result[0].forecast[0].high}°C/${result[0].forecast[0].low}°C
-**Weather :** ${result[0].forecast[0].skytextday}
-**Rainfall :** ${result[0].forecast[0].precip !== "" ? `${result[0].forecast[0].precip}` : `0`}%
+**Temperature Max/Min**: ${result[0].forecast[0].high}°C/${result[0].forecast[0].low}°C
+**Weather:** ${result[0].forecast[0].skytextday}
+**Precipitation:** ${result[0].forecast[0].precip !== "" ? `${result[0].forecast[0].precip}` : `0`}%
 
-**__Forecast for ${result[0].forecast[1].day} ${result[0].forecast[1].date}__**
+**__Forecast for ${result[0].forecast[1].day} ${date(result[0].forecast[1].date)}__**
 
-**Temperature Max/Min** : ${result[0].forecast[1].high}°C/${result[0].forecast[1].low}°C
-**Weather :** ${result[0].forecast[1].skytextday}
-**Rainfall :** ${result[0].forecast[1].precip}%
+**Temperature Max/Min**: ${result[0].forecast[1].high}°C/${result[0].forecast[1].low}°C
+**Weather:** ${result[0].forecast[1].skytextday}
+**Precipitation:** ${result[0].forecast[1].precip}%
 
-**__Forecast for ${result[0].forecast[2].day} ${result[0].forecast[2].date}__**
+**__Forecast for ${result[0].forecast[2].day} ${date(result[0].forecast[2].date)}__**
 
-**Temperature Max/Min** : ${result[0].forecast[2].high}°C/${result[0].forecast[2].low}°C
-**Weather :** ${result[0].forecast[2].skytextday}
-**Rainfall :** ${result[0].forecast[2].precip}%
+**Temperature Max/Min**: ${result[0].forecast[2].high}°C/${result[0].forecast[2].low}°C
+**Weather:** ${result[0].forecast[2].skytextday}
+**Precipitation:** ${result[0].forecast[2].precip}%
 
-**__Forecast for ${result[0].forecast[3].day} ${result[0].forecast[3].date}__**
+**__Forecast for ${result[0].forecast[3].day} ${date(result[0].forecast[3].date)}__**
 
-**Temperature Max/Min** : ${result[0].forecast[3].high}°C/${result[0].forecast[3].low}°C
-**Weather :** ${result[0].forecast[3].skytextday}
-**Rainfall :** ${result[0].forecast[3].precip}%
+**Temperature Max/Min**: ${result[0].forecast[3].high}°C/${result[0].forecast[3].low}°C
+**Weather:** ${result[0].forecast[3].skytextday}
+**Precipitation:** ${result[0].forecast[3].precip}%
 
-**__Forecast for ${result[0].forecast[4].day} ${result[0].forecast[0].date}__**
+**__Forecast for ${result[0].forecast[4].day} ${date(result[0].forecast[0].date)}__**
 
-**Temperature Max/Min** : ${result[0].forecast[4].high}°C/${result[0].forecast[4].low}°C
-**Weather :** ${result[0].forecast[4].skytextday}
-**Rainfall :** ${result[0].forecast[4].precip}%`,
-			RPS_LYCOS_CHOICE: (choixO) => `Lycos's choice : ${choixO}`,
-			RPS_MATCH_EQUAL: `:flag_white: | Draw !`,
-			RPS_PLAYER_WIN: (message) => `:dagger: | Win of ${message.author.username} !`,
-			RPS_LYCOS_WIN: `:skull_crossbones: | Win of Lycos !`,
-			RPS_CHOICES: "Choose beetween `rock`, `paper` and `scissors`",
-			SUPPORT_NO_ARGS: "Please describe your problem with at least 10 caracters to 1900",
-			SUPPORT_QUESTION_SEND: "Your question was sent to support. Please wait an answer.",
-			PLAY_DESCRIPTION: "Plays music",
+**Temperature Max/Min**: ${result[0].forecast[4].high}°C/${result[0].forecast[4].low}°C
+**Weather:** ${result[0].forecast[4].skytextday}
+**Precipitation:** ${result[0].forecast[4].precip}%`,
+			/* RPS */
+			RPS_DESCRIPTION: "Game of rock, paper, scissors",
+			RPS_USAGE: (prefix) => `${prefix}rps [rock/paper/scissors]`,
+			RPS_EXAMPLES: (prefix) => `${prefix}rps stone`,
+			RPS_LYCOS_CHOICE: (choixO) => `Lycos's choice: ${choixO}`,
+			RPS_MATCH_EQUAL: `:flag_white: | Draw!`,
+			RPS_PLAYER_WIN: (message) => `:dagger: | Victory of ${message.author.username} !`,
+			RPS_LYCOS_WIN: `:skull_crossbones: | Victory of Lycos !`,
+			RPS_CHOICES: "Choose between `rock`, `paper` and `scissors`",
+			/* Support */
+			SUPPORT_DESCRIPTION: "Allows you to contact bot support in case of a problem.",
+			SUPPORT_USAGE: (prefix) => `${prefix}support [Problem]`,
+			SUPPORT_EXAMPLES: (prefix) => `${prefix}support Hello, I thought I found a bug in your bot.`,
+			SUPPORT_NO_ARGS: "Please describe your problem with at least 10 characters and a maximum of 1900.",
+			SUPPORT_QUESTION_SEND: "Your question has been sent to support. Please wait for a response.",
+			/* Suggestion */
+			SUGGESTION_DESCRIPTION: "Allows you to send a suggestion about the bot",
+			SUGGESTION_USAGE: (prefix) => `${prefix}suggestion [Suggestion]`,
+			SUGGESTION_EXAMPLES: (prefix) => `${prefix}suggestion hi, you could make a suggestion commande witch sends the suggestion in a channel in the server Lycos novation - Support.`,
+			SUGGESTION_NO_ARGS: "Please describe your suggestion with at least 10 characters and a maximum of 1900.",
+			SUGGESTION_QUESTION_SEND: "Your suggestion has been sent! The for your advice!",
+			/* Number */
+			NUMBER_DESCRIPTION: "Draw a random number in a given interval (Min and max included: [min;max])",
+			NUMBER_USAGE: (prefix) => `${prefix}number [min] [max] [time]`,
+			NUMBER_EXAMPLES: (prefix) => `${prefix}number 1 50 1[d/h/m/s]`,
+			NUMBER_MIN: "You must indicate the minimum number of the search interval. This cannot be 0.",
+			NUMBER_MAX: "You must specify the maximum number of the search interval. This cannot be 0.",
+			NUMBER_MIN_LOWER: "The minimum number of the search interval cannot be less than the maximum number !",
+			NUMBER_TIME: "You must indicate the duration of the research.",
+			NUMBER_START: (min, max, time) => `Let's go ! You have ${time} to find an (integer) number between ${min} and ${max} ([${min};${max}]).`,
+			NUMBER_INTERVAL: (min, max) => `This number is not in the search range, the number to find is between ${min} and ${max} ([${min};${max}]).`,
+			NUMBET_HIGHER: "It is more !",
+			NUMBER_LOWER: "It is less !",
+			NUMBER_WINNER: (author) => `Congratulations to ${author} who found the right number !`,
+			NUMBER_END: (collected) => `It's over ! There have been ${collected.size} attempts during this game.`,
+			NUMBER_ANSWER: (toFind) => `The number to find is **${toFind}**.`,
+			/* Blague */
+			BLAGUE_DESCRIPTION: "Tell a joke",
+			BLAGUE_USAGE: (prefix) => `${prefix}blague`,
+			BLAGUE_EXAMPLES: (prefix) => `${prefix}blague`,
+			BLAGUE_NOT_AVALIABLE: "This command is not yet available in your language.",
+			BLAGUE_QUESTION: "Question",
+			BLAGUE_ANSWER: "Answer",
+			BLAGUE_FOOTER: (type, id) => `Type : ${type}, ID : ${id}`,
+			/* Morse */
+			MORSE_DESCRIPTION: "Translate a message in morse code",
+			MORSE_USAGE: (prefix) => `${prefix}morse [Message]`,
+			MORSE_EXAMPLES: (prefix) => `${prefix}morse [Message]`,
+			MORSE_NO_TEXT: "You must specify a message to translate ! You can reply with it or reply with the commande ans your message.",
+			MORSE_CANT_TRANSLATE: "Sorry, I can't translate your message. Make sure your message don't have special characters.",
+			/* Même */
+			MEME_DESCRIPTION: "Sends a meme",
+			MEME_USAGE: (prefix) => `${prefix}meme`,
+			MEME_EXAMPLES: (prefix) => `${prefix}meme`,
+			/* Say */
+			SAY_DESCRIPTION: "Make the bot speak.",
+			SAY_USAGE: (prefix) => `${prefix}say [text]`,
+			SAY_EXAMPLES: (prefix) => `${prefix}say Hello my name is Lycos!`,
+			SAY_NO_ARGS: "You must write a message to send!",
+			SAY_TOO_LONG: "Your message is too long !",
+			SAY_EVERYONE: "You cannot mention ``everyone``!",
+			SAY_EMBED_DESCRIPTION: "Make the bot speak in an embed",
+			SAY_EMBED_USAGE: (prefix) => `${prefix}say [text]`,
+			SAY_EMBED_EXAMPLES: (prefix) => `${prefix}say Hello my name is Lycos!`,
+			/* Report */
+			REPORT_DESCRIPTION: "Allows you to report a member.",
+			REPORT_USAGE: (prefix) => `${prefix}report [@User/ID] [Raison]`,
+			REPORT_EXAMPLES: (prefix) => `${prefix}report @Lycos This member has fun spamming in salons.`,
+			REPORT_NOT_SET: "The reception channel for reports has not been defined, the command is therefore deactivated.",
+			REPORT_NOREASON: "You must indicate a reason for your report.",
+			REPORT_SAMEUSER: "You cannot report yourself.",
+			REPORT_TITLE: "Reporting of ",
+			REPORT_NAME: (member) => `${member.user.tag} has been reported for:`,
+			REPORT_ERRORARGS: "You must indicate a person to report!",
+			REPORT_SEND: "Your report has been sent!",
+			/* Play */
+			PLAY_DESCRIPTION: "Play the requested music.",
 			PLAY_USAGE: ".play [Music/Link]",
-			PLAY_EXAMPLES: ".play Younger Dreams",
-			PLAY_NO_VOICECHANNEL: "You must be in a voice channel to play music",
-			PLAY_BOT_CANT_CONNECT: "I can't connect to the channel, please check my permissions !",
-			PLAY_BOT_CANT_SPEAK: "I can't speak in the channel, please check my permissions !",
-			PLAY_NO_ARGS: "Please give a music to play",
-			ANSWER_UNKNOWN_ID: "This support ID isn't known",
-			ANSWER_SENT: (support) => `Your answer have been successfully sent.(${support.id} ended)`,
-			RELOAD_NO_COMMAND: "You must give a command to reload",
-			RELOAD_ERROR_UNLOADING: (response) => `Error unloading : ${response}`,
-			RELOAD_ERROR_LOADING: (response) => `Error loading : ${response}`,
-			RELOAD_COMMAND_RELOADED: (commandName) => `The command \`${commandName}\` has been reloaded`,
+			PLAY_EXAMPLES: ".play Our Last Night - Younger Dreams",
+			PLAY_NO_VOICECHANNEL: "You must be in a voice channel to play music.",
+			PLAY_BOT_CANT_CONNECT: "I cannot connect to the channel, check that I have the required permission!",
+			PLAY_BOT_CANT_SPEAK: "I can not speak in this channel, check that I have the required permission!",
+			PLAY_NO_ARGS: "Please indicate a music to play.",
+			/* Answer */
+			ANSWER_UNKNOWN_ID: (args) => `Support request with ID \`${args}\` is not found.`,
+			ANSWER_SENT: `Your response has been sent successfully.`,
+			/* Reload */
+			RELOAD_NO_COMMAND: "You must indicate a command to reload.",
+			RELOAD_ERROR_UNLOADING: (response) => `Unloading error: ${response}`,
+			RELOAD_ERROR_LOADING: (response) => `Loading error: ${response}`,
+			RELOAD_COMMAND_RELOADED: (commandName) => `The command \`${commandName}\` has been reloaded.`,
 			RELOAD_COMMAND_DOESNT_EXIST: (args) => `The command \`${args[0]}\` doesn't seem to exist. Try again!`,
-			ERROR_CREATING_ROLE: "I couldn't create ``muted`` role. Please check my permissions!",
-			MUTE_DESCRIPTION: "Mute choosen member",
+			/* Mute */
+			ERROR_CREATING_ROLE: "I couldn't create the role ``muted``. Check that I have the required permission!",
+			MUTE_DESCRIPTION: "Mute the selected member.",
 			MUTE_USAGE: (prefix) => `${prefix}mute [@User or UserID] [Duration] [Reason]`,
-			MUTE_EXAMPLE: (prefix) => `${prefix}mute @Lycos 1d Spam emotes`,
-			MUTE_ERRORARGS : "Please give a member to mute!",
-			MUTE_NO_MUTETIME: "You havn't gave mute duration!",
-			MUTE_USER_ALREADY_MUTED: "This user is already muted!",
-			MUTE_UNMUTABLE: "This user can't be mute!",
-			MUTE_NOREASON: "you don't gave reason for the mute!",
-			MUTE_ERROR: "I can't mute because:",
-			MUTE_INFO: (member, message) => `${member} has been muted by ${message.author}`,
-			MUTE_USER_MESSAGE: (message, muteTime, reason) => `Hey! You are now muted on **${message.guild.name}** for **${reason}** during **${muteTime}**.`,
-			UNMUTE_USER_NOT_MUTED: "This member isn't muted",
-			UNMUTE_SUCCESS: (member) => `${member} has been successfully unmuted!`,
-			UNMUTE_USER_SUCCESS: (message) => `You have been unmuted from **${message.guild.name}**!`,
-			UNMUTE_ERROR: "I can't unmute because:",
-			UNMUTE_DESCRIPTION: "Unmute choosen member",
+			MUTE_EXAMPLE: (prefix) => `${prefix}mute @Lycos 1[d/h/m/s] Spam emotes`,
+			MUTE_ERRORARGS: "Please indicate a user to mute!",
+			MUTE_NO_MUTETIME: "You did not specify a time!",
+			MUTE_USER_ALREADY_MUTED: "This user is already mute!",
+			MUTE_UNMUTABLE: "This user cannot be mute!",
+			MUTE_NOREASON: "You did not indicate a reason for the mute!",
+			MUTE_ERROR: "I couldn't mute because:",
+			MUTE_INFO: (member, message) => `${member} was muted by ${message.author}`,
+			MUTE_USER_MESSAGE: (message, muteTime, reason) => `You are now muted on **${message.guild.name}** for **${reason}** while **${muteTime}**.`,
+			MUTE_EMBED_TITLE: "A member has been muted!",
+			MUTE_EMBED_DESC: (member, message, muteTime, reason) => `**Muted member:** ${member.displayName} - ${member} - ${member.user.id}
+**Muted by:** ${message.member.displayName} - ${message.author} - ${message.author.id}
+**Reason:** ${reason}
+**Mute duration:** ${muteTime}
+**Date:** ${moment(new Date()).format("LLLL")}`,
+			MUTE_REMOVE_EMBED_DESC: (member, message) => `**Unmuted member:** ${member.displayName} - ${member} - ${member.user.id}
+**Unmuted by:** ${message.member.displayName} - ${message.author} - ${message.author.id}
+**Date:** ${moment(new Date()).format("LLLL")}`,
+			/* Unmute */
+			UNMUTE_DESCRIPTION: "Unmute the selected member.",
 			UNMUTE_USAGE: (prefix) => `${prefix}unmute [@User or UserID]`,
 			UNMUTE_EXAMPLE: (prefix) => `${prefix}unmute @Lycos`,
-			CLEAR_DESCRIPTION: "Deletes all visible messages in the channel",
+			UNMUTE_USER_NOT_MUTED: "This member is not mute !",
+			UNMUTE_SUCCESS: (member) => `${member} was successfully unmute !`,
+			UNMUTE_USER_SUCCESS: (message) => `You were unmute of **${message.guild.name}**, sorry for inconvenience!`,
+			UNMUTE_ERROR: "I couldn't unmute because :",
+			UNMUTE_EMBED_TITLE: "A member has been unmuted!",
+			UNMUTE_REMOVE_EMBED_DESC: (member) => `**Unmuted member:** ${member.displayName} - ${member} - ${member.user.id}
+**Unmuted automatically**`,
+			/* Clear */
+			CLEAR_DESCRIPTION: "Delete all visible messages in the channel.",
 			CLEAR_USAGE: (prefix) => `${prefix}clear`,
 			CLEAR_EXAMPLE: (prefix) => `${prefix}clear`,
-			ROLEMENTION_DESCRIPTION: "Mention choosen role",
+			/* Rolemention */
+			ROLEMENTION_DESCRIPTION: "Mention the requested role.",
 			ROLEMENTION_USAGE: (prefix) => `${prefix}rolemention [ID/Name]`,
 			ROLEMENTION_EXAMPLES: (prefix) => `${prefix}rolemention 627956962008629279\n${prefix}rolemention Developers`,
-            ROLEMENTION_ROLE_NOT_FOUND: "Role not found",
-            ROLEMENTION_ROLE_HIGHEST: "This role is highest than mine, so I can't mention it.",
-			EMOTES_DESCRIPTION: "Gives the server emotes's list",
+			ROLEMENTION_ROLE_NOT_FOUND: "No role found.",
+			ROLEMENTION_ROLE_HIGHEST: "This role is superior to mine, so I can't mention it.",
+			ROLEMENTION_NOARGS: "Respond with the id of the role to be mentioned (If everyone or here, just respond with everyone or here).",
+			/* Emotes */
+			EMOTES_DESCRIPTION: "List server emojis.",
 			EMOTES_USAGE: (prefix) => `${prefix}emotes`,
 			EMOTES_EXAMPLES: (prefix) => `${prefix}emotes`,
-			EMOTES_TITLE: "emotes list",
+			EMOTES_TITLE: "List of server emojis.",
 			EMOTES_TITLES: [
-				"Emotes",
-				"Animated emotes"
+				"Emojis",
+				"Animated emojis"
 			],
-			EMOTES_DESC: (message) => `The server have **${message.guild.emojis.size}** emotes :`,
+			EMOTES_DESC: (message) => `The server currently has **${message.guild.emojis.cache.size}** emojis:`,
+			EMOTES_NO_EMOTES: "There are no emojis on this server.",
+			EMOTES_NO_ANIMATED: "There is no animated emoji on this server.",
+			/* Membercount */
+			MEMBERCOUNT_DESCRIPTION: "Create a membercount channel or category.",
+			MEMBERCOUNT_USAGE: (prefix) => `${prefix}membercount [channel/category/delete]`,
+			MEMBERCOUNT_EXAMPLES: (prefix) => `${prefix}membercount channel\n ${prefix}membercount category`,
+			MEMBERCOUNT_NO_METHOD: "Please indicate the type of the membercount you want: channel/category",
+			MEMBERCOUNT_MEMBERS: "members",
+			MEMBERCOUNT_UNVALID_METHOD: "I did not understand the type you asked: channel/category",
+			MEMBERCOUNT_CREATED: "The membercount has been created!",
+			MEMBERCOUNT_DELETED: "The mmebercount has been deleted!",
+			MEMBERCOUNT_NOT_EXISTS: "There is no membercount created on the server!",
+			/* Config */
+			CONFIG_DESCRIPTION: "Displays the bot configuration on the server.",
+			CONFIG_USAGE: (prefix) => `${prefix}config`,
+			CONFIG_EXAMPLES: (prefix) => `${prefix}config`,
+			CONFIG_TITLE: (g) => `Lycos configuration on ${g.guild_name}`,
+			CONFIG_FIELDS: [
+				"Bot language",
+				"Bot prefix",
+				"Autorole",
+				"Arrivals channel",
+				"Departures channel",
+				"Log display channel",
+				"Moderation logs display channel",
+				"Signal display channel"
+			],
+			CONFIG_VALUES: (g) => [
+				`${g.welcome_channel === null ? "No channel has been defined" : `<#${g.welcome_channel}>`}`,
+				`${g.leave_channel === null ? "No channel has been defined" : `<#${g.leave_channel}>`}`,
+				`${g.logs_channel === null ? "No channel has been defined" : `<#${g.logs_channel}>`}`,
+				`${g.modlogs_channel === null ? "No channel has been defined" : `<#${g.modlogs_channel}>`}`,
+				`${g.reports_channel === null ? "No channel has been defined" : `<#${g.reports_channel}>`}`,
+			],
+			/* Autorole */
+			AUTOROLE_DESCRIPTION: "Allows management of roles added when a new member arrives.",
+			AUTOROLE_USAGE: (prefix) => `${prefix}autorole [add/remove] [@Role/ID]`,
+			AUTOROLE_EXAMPLES: (prefix) => `${prefix}autorole add @Role\n${prefix}autorole remove 699011821654507572`,
+			AUTOROLE_NO_ARGS: (g, text) => `${JSON.parse(g.autorole).length === 0 ? `There is currently no role assigned to members when they arrive on the server.` : `There are currently ${JSON.parse(g.autorole).length} ${JSON.parse(g.autorole).length === 1 ? `assigned role` : `assigned roles`} to members upon their arrival :\n${text}`}\nAnswer with \`\`add\`\` to add an autorole role.\nAnswer with \`\`remove\`\` to remove a role from the autorole.`,
+			AUTOROLE_SUPPLY_METHOD: "Answer with \`\`add\`\` to add an autorole role.\nAnswer with \`\`remove\`\` to remove a role from the autorole.",
+			AUTOROLE_SUPPLY_ROLE: "Answer with ID of the role, or by mentioning it.",
+			AUTOROLE_BAD_METHOD: (g) => `I did not understand what you wanted to do.\nPlease try again.`,
+			AUTOROLE_NO_ROLE: "Please specify a role to add or remove !",
+			AUTOROLE_ALREADY_IN: "This role is already part of the autorole !",
+			AUTOROLE_NOT_IN: "This role is not part of the autorole !",
+			AUTOROLE_ROLE_NOT_FOUND: "I did not find the role you asked for.",
+			AUTOROLE_ROLE_ADDED: (r) => `The role <@&${r}> has been added to the autorole !`,
+			AUTOROLE_ROLE_REMOVED: (r) => `The role <@&${r}> has been removed from the autorole !`,
+			AUTOROLE_LIMIT: "You have reached the limit of assignable roles in self-employment. Please remove it if you want to add new ones.",//Ajouter "Vous pouvez augmentez cette limite en passant sur la version premium du bot"
+			/* RR */
+			RR_DESCRIPTION: "Configure the rolereaction.",
+			RR_USAGE: (prefix) => `${prefix}rolereaction [launch/add/remove] [emote] [Role]`,
+			RR_EXAMPLES: (prefix) => `${prefix}rolereaction add :lycos: @LycosRole\n ${prefix}rolereaction remove :lycos: @LycosRole\n ${prefix}rolereaction launch`,
+			RR_SUPPLY_METHOD: "Please specify what you want to do. Answer with launch, add ou remove.",
+			RR_EMPTY: "The role reaction is empty, please add roles to be able to initialize it.",
+			RR_SUPPLY_EMOTE: "Please indicate the emote to add.",
+			RR_SUPPLY_NAME: "Please indicate the role to associate with the emote.",
+			RR_EMOTE_ALREADY_IN: "This emote is already in the role reaction.",
+			RR_ROLE_ALREADY_IN: "This role is already in the role reaction.",
+			RR_LIMIT: "You have reached the limit of 30 roles in the role reaction.",
+			RR_NOT_IN: "This role is not in the role reaction.",
+			RR_BAD_METHOD: "I did not understand what you wanted to do. Please try again.",
+			RR_ROLE_ADDED: "Role added in the role reaction.",
+			RR_NO_CHANNEL: "Please set up a channel for the rolereaction beforehand. (See setnotif)",
+			RR_SUPPLY_DESCRIPTION: "Please provide a short description of the role. You cannot use the `/` character in your description.",
+			RR_ERROR_DESC: "The use of the character `/` is reserved for system use. Please try again.",
+			RR_EMBED_FOOTER: "Click on the reactions below.",
+			RR_EMBED_TITLE: "Role Reaction",
+			RR_EMBED_DESC: "Click on the reaction corresponding to the role you wish to have.",
+			RR_EMBED_FIELD: "List of roles :",
+			/* Setlogs */
+			SETLOGS_DESCRIPTION: "Allows the selection of the log display channel.",
+			SETLOGS_USAGE: (prefix) => `${prefix}setlogs [#channel/ID]`,
+			SETLOGS_EXAMPLES: (prefix) => `${prefix}setlogs #logs`,
+			SETLOGS_NO_ARGS: (g) => `${g.logs_channel === null || g.logs_channel === "" ? `There is currently no log channel.` : `The log channel is currently <#${g.logs_channel}>.`}\nAnswer by mentioning the channel or by indicating its ID in order to make it the log channel.`,
+			SETLOGS_SAME: (c) => `<#${c}> is already the log display channel.`,
+			SETLOGS_SUCCESS: (c) => `The logs will now be displayed in the channel <#${c}>.`,
+			SETLOGS_ERROR_CHANNEL: "I could not find the requested channel, please try again.",
+			/* Setjoin */
+			SETJOIN_DESCRIPTION: "Allows the selection of the channel for announcing the arrival of a new member.",
+			SETJOIN_USAGE: (prefix) => `${prefix}setjoin [#channel/ID]`,
+			SETJOIN_EXAMPLES: (prefix) => `${prefix}setjoin #arrivées`,
+			SETJOIN_NO_ARGS: (g) => `${g.welcome_channel === null || g.welcome_channel === "" ? `There is currently no arrivals channel.` : `The arrivals channel is currently <#${g.welcome_channel}>.`}\nAnswer by mentioning the channel or by indicating its ID in order to make it the channel for arrivals.`,
+			SETJOIN_SAME: (c) => `<#${c}> is already the arrivals channel.`,
+			SETJOIN_SUCCESS: (c) => `Arrivals will now be displayed in the channel <#${c}>.`,
+			/* Setleave */
+			SETLEAVE_DESCRIPTION: "Allows the selection of the channel for announcing the departure of a member.",
+			SETLEAVE_USAGE: (prefix) => `${prefix}setleave [#channel/ID]`,
+			SETLEAVE_EXAMPLES: (prefix) => `${prefix}setleave #join`,
+			SETLEAVE_SUPPLY: (g) => `${g.leave_channel === null || g.leave_channel === "" ? `There is currently no departure channel.` : `The departure channel is currently <#${g.leave_channel}>.`}\Answer by mentioning the channel or by indicating its ID in order to make it the departure channel.`,
+			SETLEAVE_SAME: (c) => `<#${c}> is already the departure display channel.`,
+			SETLEAVE_SUCCESS: (c) => `Departures will now be displayed in the channel <#${c}>.`,
+			/*Setreports */
+			SETREPORTS_DESCRIPTION: "Allows the selection of the channel for alerts.",
+			SETREPORTS_USAGE: (prefix) => `${prefix}setreports [#channel/ID]`,
+			SETREPORTS_EXAMPLES: (prefix) => `${prefix}setreports #reports`,
+			SETREPORTS_NO_ARGS: (g) => `${g.reports_channel === null || g.reports_channel === "" ? `There is currently no reporting channel.` : `The report channel is currently <#${g.reports_channel}>.`}\nAnswer by mentioning the channel or by indicating its ID in order to make it the channel for posting reports.`,
+			SETREPORTS_SAME: (c) => `<#${c}> is already the channel for posting reports.`,
+			SETREPORTS_SUCCESS: (c) => `Reports will now be displayed in the channel <#${c}>.`,
+			/* Setnotif */
+			SETNOTIF_DESCRIPTION: "Allows the selection of the reaction role channel.",
+			SETNOTIF_USAGE: (prefix) => `${prefix}setnotif [#channel/ID]`,
+			SETNOTIF_EXAMPLES: (prefix) => `${prefix}setnotif #rolereaction`,
+			SETNOTIF_NO_ARGS: (g) => `${g.rolereaction_channel === null || g.rolereaction_channel === "" ? `There is currently no channel for the RoleReaction.` : `The RoleReaction channel is currently <#${g.rolereaction_channel}>.`}\nAnswer by mentioning the channel or by indicating its ID to make it the role reaction channel.`,
+			SETNOTIF_SAME: (c) => `<#${c}> is already the RoleReaction channel.`,
+			SETNOTIF_SUCCESS: (c) => `The RoleReaction will be in the channel <#${c}>.`,
+			/* Setmodlogs */
+			SETMODLOGS_DESCRIPTION: "Allows the selection of the moderation log channel",
+			SETMODLOGS_USAGE: (prefix) => `${prefix}setmodlogs [#channel/ID]`,
+			SETMODLOGS_EXAMPLES: (prefix) => `${prefix}setmodlogs #mod-logs`,
+			SETMODLOGS_NO_ARGS: (g) => `${g.modlogs_channel === null || g.modlogs_channel === "" ? `There is currently no moderation log channel.` : `The moderation log channel is currently <#${g.modlogs_channel}>.`}\nAnswer by mentioning the channel or by indicating its ID to make it the channel for moderation logs.`,
+			SETMODLOGS_SAME: (c) => `<#${c}> is already the moderation log channel.`,
+			SETMODLOGS_SUCCESS: (c) => `Moderation logs will now be displayed in the channel <#${c}>.`,
+			/* Settwitch */
+			SETTWITCH_NO_ARGS: (g) => `${g.twitch_channel === null || g.twitch_channel === "" ? `There is currently no Twitch live channel.` : `The Twitch live Announcement channel is currently <#${g.twitch_channel}>.`}\nAnswer by mentioning the channel or specifying its ID to make it the Twitch live channel.`,
+			SETTWITCH_SAME: (c) => `<#${c}> is already the channel for announcing twitch lives.`,
+			SETTWITCH_SUCCESS: (c) => `Twitch lives will now be announced in the channel <#${c}>.`,
+			/* Logs */
+			LOGS_CHANNEL_CREATE_TITLE: `A new channel has been created !`,
+			LOGS_CHANNEL_CREATE_DESC: (c) => `**${c.name}** - ${c} (${c.id})
+**Created the :** ${moment(c.createdAt.toUTCString()).format("LLLL")}${c.parent ? `\n**In the category :** ${c.parent} (${c.parent.id})` : ``}
+**Type of channel :** ${c.type}
+**Position in the category :** ${c.position}
+**Position in the server :** ${c.rawPosition}`,
+			LOGS_CHANNEL_DELETE_TITLE: "A Channel has been deleted !",
+			LOGS_CHANNEL_DELETE_DESC: (c) => `**${c.name}** - (${c.id})
+**Created the :** ${moment(c.createdAt.toUTCString()).format("LLLL")}
+**Deleted the :** ${moment(new Date()).format("LLLL")}${c.parent ? `\n**In the category :** ${c.parent} (${c.parent.id})` : ``}
+**Type of channel :** ${c.type}
+**Position in the category :** ${c.position}
+**Position in the server :** ${c.rawPosition}`,
+			LOGS_GUILD_MEMBER_ADD_TITLE: "Arrival of a new member!",
+			LOGS_GUILD_MEMBER_ADD_DESC: (m) => `${m} - **${m.user.tag}** arrived on **__${m.guild.name}__**!
+There are now **${m.guild.memberCount}** people on the server!`,
+			LOGS_GUILD_MEMBER_REMOVE_TITLE: "Departure of member!",
+			LOGS_GUILD_MEMBER_REMOVE_DESC: (m) => `${m} - **${m.user.tag}** left from **__${m.guild.name}__**!
+There are now **${m.guild.memberCount}** people on the server!`,
+			LOGS_CHANNEL_PINS_UPDATE_TITLE: "Modification of messages pinned in a channel!",
+			LOGS_CHANNEL_PINS_UPDATE_DESC: (channel, time) => `**Salon :** ${channel.name} - ${channel} - ${channel.id}
+**Modification to** ${moment(time).format("LLLL")}`,
+			LOGS_CHANNEL_UPDATE_TITLE: "Modification of a channel!",
+			LOGS_CHANNEL_UPDATE_DESC: (oldChannel, newChannel) => `**__Old channel :__**
+
+**Name:** ${oldChannel.name}
+**ID: ** ${oldChannel.id}
+**Type of channel:** ${oldChannel.type}
+**Subject of the channel ** ${oldChannel.topic ? `${oldChannel.topic}` : `No subject has been defined.`}
+
+**__New channel:__**
+
+**Name:** ${newChannel.name}
+**ID: ** ${newChannel.id}
+**Type of channel:** ${newChannel.type}
+**Subject of the channel:** ${newChannel.topic ? `${newChannel.topic}` : `No subject has been defined.`}`,
+			LOGS_EMOJI_CREATE_TITLE: "A new emoji has been added!",
+			LOGS_EMOJI_CREATE_DESC: (emoji) => `**Name of emoji :** ${emoji.name}
+**ID:** ${emoji.id}
+**Type:** ${emoji.animated === true ? `Animated` : `Not animated`}
+**Overview:** ${emoji}
+**Date Added:** ${moment(emoji.createdAt.toUTCString()).format("LLLL")}
+**Identify:** ${emoji.identifier}
+**URL:** ${emoji.url}`,
+			LOGS_EMOJI_DELETE_TITLE: "An emoji has been deleted!",
+			LOGS_EMOJI_DELETE_DESC: (emoji) => `**Name of emoji :** ${emoji.name}
+**ID:** ${emoji.id}
+**Type:** ${emoji.animated === true ? `Animated` : `Not animated`}
+**Date Added:** ${moment(emoji.createdAt.toUTCString()).format("LLLL")}
+**Date of deletion:** ${moment(new Date()).format("LLLL")}
+**Identify:** ${emoji.identifier}
+**URL:** ${emoji.url}`,
+			LOGS_EMOJI_UPDATE_TITLE: "Editing an emoji!",
+			LOGS_EMOJI_UPDATE_DESC: (oldEmoji, newEmoji) => `**__Old emoji:__**
+
+**Name:** ${oldEmoji.name}
+**ID: ** ${oldEmoji.id}
+**Date Added:** ${moment(oldEmoji.createdAt.toUTCString()).format("LLLL")}
+**Identify:** ${oldEmoji.identifier}
+**URL:** ${oldEmoji.url}
+
+**__New emoji:__**
+
+**Name:** ${newEmoji.name}
+**ID: ** ${newEmoji.id}
+**Overview:** ${newEmoji}
+**Date Added:** ${moment(newEmoji.createdAt.toUTCString()).format("LLLL")}
+**Date of modification:** ${moment(new Date()).format("LLLL")}
+**Identify:** ${newEmoji.identifier}
+**URL:** ${newEmoji.url}`,
+			LOGS_GUILD_BAN_ADD_TITLE: "Someone has been banned from the server!",
+			LOGS_GUILD_BAN_ADD_DESC: (user) => `**Username:** ${user.username}
+**ID:** ${user.id}
+**Bot:** ${user.bot ? "Affirmative" : "Negative, it's a human (Or a selfbot)"}
+**Account creation:** ${moment(user.createdAt.toUTCString()).format("LLLL")}
+**Banishment date:** ${moment(new Date()).format("LLLL")}`,
+			LOGS_GUILD_BAN_REMOVE_TITLE: "Someone was unbanned from the server!",
+			LOGS_GUILD_BAN_REMOVE_DESC: (user) => `**Username:** ${user.username}
+**ID:** ${user.id}
+**Bot:** ${user.bot ? "Affirmative" : "Negative, it's a human (Or a selfbot)"}
+**Account creation:** ${moment(user.createdAt.toUTCString()).format("LLLL")}
+**Unbanishment date:** ${moment(new Date()).format("LLLL")}`,
+			LOGS_GUILD_CREATE_TITLE: (guild) => `Lycos has been added to ${guild.name}!`,
+			LOGS_GUILD_CREATE_DESC: (guild, vl, r) => `**ID:** ${guild.id}
+**Members:** ${guild.members.cache.filter(m => !m.user.bot).size}
+**Owner:** ${guild.owner.user.tag} - ${guild.ownerID}
+**Created the:** ${moment(guild.createdAt.toUTCString()).format("LLLL")}
+**Verification level:** ${vl}
+**Server location:** ${r}`,
+			LOGS_GUILD_DELETE_TITLE: (guild) => `Lycos has been removed from ${guild.name}!`,
+			LOGS_GUILD_DELETE_DESC: (guild, vl, r) => `**ID:** ${guild.id}
+**Members:** ${guild.members.cache.filter(m => !m.user.bot).size}
+**Owner:** ${guild.owner.user.tag} - ${guild.ownerID}
+**Created the:** ${moment(guild.createdAt.toUTCString()).format("LLLL")}
+**Verification level:** ${vl}
+**Server location:** ${r}`,
+			LOGS_GUILD_MEMBER_CHUNK_TITLE: "A whole regiment of members has just arrived from the same server!",
+			LOGS_GUILD_MEMBER_CHUNK_DESC: (members, guild) => ``,
+			LOGS_GUILD_MEMBER_UPDATE_TITLE: "A server member has undergone changes!",
+			LOGS_GUILD_MEMBER_UPDATE_DESC: (oldMember, newMember) => `**__Before modifications of ${moment(new Date()).format("LLLL")}:__**
+			
+**Name:** ${oldMember.user.tag}
+**ID:** ${oldMember.id}
+**Account creation:** ${moment(oldMember.user.createdAt.toUTCString()).format("LLLL")}
+**Joined the server the:** ${moment(oldMember.joinedAt.toUTCString()).format("LLLL")}
+**Bannisable**: ${oldMember.bannable === true ? "Yes" : "No"}
+**Expulsable:** ${oldMember.kickable === true ? "Yes" : "No"}
+**SurName:** ${oldMember.nickname ? `${oldMember.displayName}` : "No surName"}
+**Avatar:** ${oldMember.user.displayAvatarURL({ format: "png", dynamic: true})}
+**Roles:** ${oldMember.roles.cache.size > 10 ? `${oldMember.roles.cache.map((r) => r).slice(0, 9).join(", ")} and ${oldMember.roles.cache.size - 10} other roles.` : (oldMember.roles.cache.size < 1) ? `No role` : `${oldMember.roles.cache.map((r) => r).join(", ")}`}
+
+**__After modifications of the ${moment(new Date()).format("LLLL")}:__**
+			
+**Name:** ${newMember.user.tag}
+**ID:** ${newMember.id}
+**Account creation:** ${moment(newMember.user.createdAt.toUTCString()).format("LLLL")}
+**Joined the server the:** ${moment(newMember.joinedAt.toUTCString()).format("LLLL")}
+**Bannisable:** ${newMember.bannable === true ? "Oui" : "Non"}
+**Expulsable:** ${newMember.kickable === true ? "Oui" : "Non"}
+**SurName:** ${newMember.nickname ? `${newMember.displayName}` : "No surName"}
+**Avatar:** ${newMember.user.displayAvatarURL({ format: "png", dynamic: true})}
+**Roles:** ${newMember.roles.cache.size > 10 ? `${newMember.roles.cache.map((r) => r).slice(0, 9).join(", ")} and ${newMember.roles.cache.size - 10} other Roles.` : (newMember.roles.cache.size < 1) ? `No role` : `${newMember.roles.cache.map((r) => r).join(", ")}`}`,
+			LOGS_MESSAGE_DELETE_TITLE: "A message has been deleted!",
+			LOGS_MESSAGE_DELETE_DESC: (message) => `**Post author :** ${message.author.tag} - ${message.author} - ${message.author.id}
+**Message deleted in:** ${message.channel.name} - ${message.channel} - ${message.channel.id}
+**Message deleted the:** ${moment(new Date()).format("LLLL")}
+**Content of the message:** \`\`${message.content}\`\``,
+			LOGS_MESSAGE_DELETE_BULK_TITLE: "Several messages have been deleted !",
+			LOGS_MESSAGE_DELETE_BULK_DESC: () => ``,
+			LOGS_MESSAGE_UPDATE_TITLE: "A message has been changed!",
+			LOGS_MESSAGE_UPDATE_DESC: (oldMessage, newMessage) => `**Post author :** ${newMessage.author.tag} - ${newMessage.author} - ${newMessage.author.id}
+**Channel:** ${newMessage.channel.name} - ${newMessage.channel} - ${newMessage.channel.id}
+**Old message:** \`\`${oldMessage.content}\`\`
+**New message:** \`\`${newMessage.content}\`\``,
+			LOGS_ROLE_CREATE_TITLE: "A new role has been created!",
+			LOGS_ROLE_CREATE_DESC: (role) => `**Name of the role:** ${role.name} - ${role}
+**ID :** ${role.id}
+**Created the:** ${moment(role.createdAt.toUTCString()).format("LLLL")}`,
+			LOGS_ROLE_DELETE_TITLE: "A new role has been created!",
+			LOGS_ROLE_DELETE_DESC: (role) => `**Name of the role:** ${role.name}
+**ID:** ${role.id}
+**Created the:** ${moment(role.createdAt.toUTCString()).format("LLLL")}
+**Deleted the:** ${moment(new Date()).format("LLLL")}`,
+			LOGS_ROLE_UPDATE_TITLE: "A role has been changed!",
+			LOGS_ROLE_UPDATE_DESC: (oldRole, newRole) => `**__Before modifications of ${moment(new Date()).format("LLLL")}:__**
+			
+**Name of the role:** ${oldRole.name}
+**ID:** ${oldRole.id}
+**Created the:** ${moment(oldRole.createdAt.toUTCString()).format("LLLL")}
+**Position:** ${oldRole.position}
+**Color:** ${oldRole.hexColor}
+**Appears separately:** ${oldRole.hoist ? `Yes` : `No`}
+**Mentionable:** ${oldRole.mentionable ? `Yes` : `No`}
+**Permissions:** ${oldRole.permissions.toArray().length > 10 ? `${oldRole.permissions.toArray().map((r) => r).slice(0, 9).join(", ")} and ${oldRole.permissions.toArray().length - 10} other permissions.` : (oldRole.permissions.toArray().length < 1) ? `No permission` : `${oldRole.permissions.toArray().map((r) => r).join(", ")}`}
+
+**__Après modifications du ${moment(new Date()).format("LLLL")}:__**
+			
+**Name of the role:** ${newRole.name} - ${newRole}
+**ID:** ${newRole.id}
+**Created the:** ${moment(newRole.createdAt.toUTCString()).format("LLLL")}
+**Position:** ${newRole.position}
+**Color:** ${newRole.hexColor}
+**Appears separately:** ${newRole.hoist ? `Yes` : `No`}
+**Mentionable:** ${newRole.mentionable ? `Yes` : `No`}
+**Permissions:** ${newRole.permissions.toArray().length > 10 ? `${newRole.permissions.toArray().map((r) => r).slice(0, 9).join(", ")} and ${newRole.permissions.toArray().length - 10} other permissions.` : (newRole.permissions.toArray().length < 1) ? `No permission` : `${newRole.permissions.toArray().map((r) => r).join(", ")}`}`,
+			LOGS_WEBHOOK_UPDATE_TITLE: `A webhook has been modified!`,
+			LOGS_WEBHOOK_UPDATE_DESC: (channel) => `**Name of the channel:** ${channel.name} - ${channel}
+**ID:** ${channel.id}`,
 		};
+		function date(date1) {
+			let d = date1.split("-");
+			let an = d[0];
+			let mois = d[1];
+			let jour = d[2];
+			return `${jour}/${mois}/${an}`;
+		}
 	}
+
 	/**
 	 * The method to get language strings
 	 * @param {string} term The string or function to look up

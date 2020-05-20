@@ -12,7 +12,7 @@ class Giveaway extends Command {
             guildOnly: true,
             permLevel: "Server Admin",
             botPermissions: ["EMBED_LINKS"],
-            aliases: ["giveaways"],
+            aliases: ["giveaways", "gift", "gifts"],
             nsfw: false,
             adminOnly: true,
             cooldown: 1000,

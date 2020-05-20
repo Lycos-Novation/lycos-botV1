@@ -20,10 +20,22 @@ class roleMention extends Command {
 
     async run(message, args) {
         try {
-            let r = message.guild.roles.resolve(args[0]) || message.guild.roles.resolveID(args[0]);
-            if (!r) return message.channel.send(message.language.get("ROLEMENTION_ROLE_NOT_FOUND"));
-            let rid = r.toString().slice(3, r.toString().length -1) || r.id;
-            return message.channel.send(`<@&${rid}>`);
+            var toMention = args.slice(0).join(" ");
+            if (!toMention) {
+                message.channel.send(message.language.get("ROLEMENTION_NOARGS"));
+                toMention = await message.bot.functions.awaitResponse(message);
+            }
+            if (toMention.startsWith(".")) return;
+            if (toMention === "everyone" || toMention === "@everyone") {
+                return message.channel.send(`@everyone`);
+            } else if (toMention === "here" || toMention === "@here") {
+                return message.channel.send("@here");
+            } else {
+                let r = message.guild.roles.resolve(toMention) || message.guild.roles.resolveID(toMention);
+                let rid = r.toString().slice(3, r.toString().length - 1) || r.id;
+                if (!rid) return message.channel.send(message.language.get("ROLEMENTION_ROLE_NOT_FOUND"));
+                return message.channel.send(`<@&${rid}>`);
+            }
         }
         catch (error) {
             console.error(error);

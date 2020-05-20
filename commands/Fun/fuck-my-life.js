@@ -14,7 +14,7 @@ class FuckMyLife extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: ["fml", "vide-de-merde", "vdm"],
+			aliases: ["fml", "vie-de-merde", "vdm"],
 			permLevel: "User",
 			nsfw: false,
 			adminOnly: false,

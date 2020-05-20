@@ -6,7 +6,7 @@ module.exports = class {
 
 	async run(member) {
 		try {
-			const sql = `SELECT language, leave_channel
+			const sql = `SELECT language, leave_channel, membercount_channel
 		FROM Guilds
 		WHERE guild_id="${member.guild.id}"`;
 			var g;
@@ -14,6 +14,11 @@ module.exports = class {
 				if (err) throw err;
 				g = result[0];
 				const lang = new (require(`../languages/${g.language}.js`));
+				if (g.membercount_channel !== null) {
+					member.guild.channels.cache.get(`${g.membercount_channel}`).edit({
+						name: `${member.guild.memberCount} ${lang.get("MEMBERCOUNT_MEMBERS")}`
+					})
+				}
 				if (g.leave_channel === null) return;
 				return member.guild.channels.cache.find(c => c.id === g.leave_channel).send({
 					embed: {

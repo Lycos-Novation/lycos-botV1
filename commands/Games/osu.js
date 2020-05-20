@@ -39,6 +39,9 @@ class Osu extends Command {
                             name: message.language.get("OSU_EMBED_AUTHOR", user)//id, name, country
                         },
                         color: message.config.embed.color,
+                        thumbnail: {
+                            url: message.bot.emojis.cache.get("709769875035258951").url
+                        },
                         fields: [
                             {
                                 name: message.language.get("OSU_FIELDS")[0],//secondsPlayed + raw_joinDate

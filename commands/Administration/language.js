@@ -27,6 +27,7 @@ class Language extends Command {
 				message.channel.send(message.language.get("LANGUAGE_INFO", message.settings.language, message.settings.prefix));
 				method = await message.bot.functions.awaitResponse(message);
 			}
+			if (method.startsWith(".")) return;
 			if (method.toLowerCase() === "list") {
 				return message.channel.send(message.language.get("LANGUAGE_LIST", languages));
 			}
@@ -36,6 +37,7 @@ class Language extends Command {
 					message.channel.send(message.language.get("LANGUAGE_SUPPLY"));
 					lang = await message.bot.functions.awaitResponse(message);
 				}
+				if (lang.startsWith(".")) return;
 				if (languages.includes(lang.toLowerCase())) {
 					var sql = `SELECT *
 							   FROM Guilds

@@ -10,7 +10,7 @@ class Help extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: ["aide"],
+			aliases: ["aide", "h"],
 			permLevel: "User",
 			botPermissions: ["EMBED_LINKS"],
 			nsfw: false,

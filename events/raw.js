@@ -29,11 +29,15 @@ module.exports = class {
             mysqlcon.query(sql, async function (err, result, fields) {
                 g = result[0];
                 if (member.id !== lycos_id) {
+                    var rre = `${g.rolereaction_emotes}`;
                     if (event.t === 'MESSAGE_REACTION_ADD') {
                         if (channel.id !== g.rolereaction_channel) return;
-                        if (g.rolereaction_emotes.indexOf(data.emoji.id)) {
-                            const emotes_split = g.rolereaction_emotes.split("/");
-                            const number = emotes_split.indexOf(`<:${data.emoji.name}:${data.emoji.id}>`) !== -1 ? emotes_split.indexOf(`<:${data.emoji.name}:${data.emoji.id}>`) : emotes_split.indexOf(`<a:${data.emoji.name}:${data.emoji.id}>`);
+                        if (rre.indexOf(data.emoji.id) !== -1 || rre.indexOf(data.emoji.name) !== -1 ) {
+                            const emotes_split = rre.split("/");
+                            var number = emotes_split.indexOf(`${data.emoji.name}`);
+                            if (number === -1) {
+                                number = emotes_split.indexOf(`<:${data.emoji.name}:${data.emoji.id}>`) !== -1 ? emotes_split.indexOf(`<:${data.emoji.name}:${data.emoji.id}>`) : emotes_split.indexOf(`<a:${data.emoji.name}:${data.emoji.id}>`);
+                            }
                             const role_id = g.rolereaction_roles.split("/")[number];
                             const role = message.guild.roles.cache.get(role_id);
                             member.roles.add(role, 'Reaction role').catch((error) => console.error(error));
@@ -41,9 +45,12 @@ module.exports = class {
                     }
                     if (event.t === 'MESSAGE_REACTION_REMOVE') {
                         if (channel.id !== g.rolereaction_channel) return;
-                        if (g.rolereaction_emotes.indexOf(data.emoji.id)) {
-                            const emotes_split = g.rolereaction_emotes.split("/");
-                            const number = emotes_split.indexOf(`<:${data.emoji.name}:${data.emoji.id}>`) !== -1 ? emotes_split.indexOf(`<:${data.emoji.name}:${data.emoji.id}>`) : emotes_split.indexOf(`<a:${data.emoji.name}:${data.emoji.id}>`);
+                        if (rre.indexOf(data.emoji.id) !== -1 || rre.indexOf(data.emoji.name) !== -1 ) {
+                            const emotes_split = rre.split("/");
+                            var number = emotes_split.indexOf(`${data.emoji.name}`);
+                            if (number === -1) {
+                                number = emotes_split.indexOf(`<:${data.emoji.name}:${data.emoji.id}>`) !== -1 ? emotes_split.indexOf(`<:${data.emoji.name}:${data.emoji.id}>`) : emotes_split.indexOf(`<a:${data.emoji.name}:${data.emoji.id}>`);
+                            }
                             const role_id = g.rolereaction_roles.split("/")[number];
                             const role = message.guild.roles.cache.get(role_id);
                             member.roles.remove(role, 'Reaction Role').catch((error) => console.error(error));

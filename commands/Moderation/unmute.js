@@ -58,7 +58,32 @@ class unmute extends Command {
                 await member.roles.remove(muteRole.id)
                     .then(r => {
                         message.channel.send(message.language.get("UNMUTE_SUCCESS", member));
-                        member.send(message.language.get("UNMUTE_USER_SUCCESS", message))
+                        member.send(message.language.get("UNMUTE_USER_SUCCESS", message));
+                        var sql = `SELECT prefix, autorole
+		FROM Guilds
+		WHERE guild_id="${message.guild.id}"`;
+                        var g;
+                        mysqlcon.query(sql, async function (err, result, fields) {
+                            if (err) throw err;
+                            g = result[0];
+                            if (g.modlogs_channel) {
+                                return message.guild.channels.chache.get(g.modlogs_channel).send({
+                                    embed: {
+                                        title: lang.get(`UNMUTE_EMBED_TITLE`),
+                                        description: lang.get('UNMUTE_EMBED_DESC', member),
+                                        footer: {
+                                            text: config.embed.footer,
+                                        },
+                                        thumbnail: {
+                                            url: member.user.displayAvatarURL({ format: "png", dynamic: true }),
+                                        },
+                                        color: 0xDB0808,
+                                    }
+                                })
+                            } else {
+                                return;
+                            }
+                        })
                     })
                     .catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("UNMUTE_ERROR")} ${error}`));
             }

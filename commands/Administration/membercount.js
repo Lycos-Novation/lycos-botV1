@@ -18,40 +18,70 @@ class memberCount extends Command {
         });
     }
 
-    run(message, args) {
+    async run(message, args) {
         try {
-            let method = args[0];
-            let salon = message.guild.channels.cache.find(c => c.name === `${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`);
-            if (!method) {
-                if (salon) {
-                    salon.delete("Membercount")
-                        .then()
-                        .catch(console.error);
-                } else {
-                    return message.channel.send(message.language.get("MEMBERCOUNT_NO_METHOD"))
+            var sql = `SELECT *
+        FROM Guilds
+        WHERE guild_id="${message.guild.id}"`;
+            var g;
+            mysqlcon.query(sql, async function (err, result, fields) {
+                g = result[0];
+                var method = args[0];
+
+                if (!method) {
+                    message.channel.send(message.language.get("MEMBERCOUNT_NO_METHOD"));
+                    method = await message.bot.functions.awaitResponse(message)
                 }
-            } else {
-                if (salon) return message.channel.send(message.language.get("MEMBERCOUNT_CHANNEL_EXISTS", salon));
+                let salon = g.membercount_channel === null ? null : message.guild.channels.cache.get(g.membercount_channel);
+                var mc;
                 if (method === "category") {
-                    message.guild.channels.create(`${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`, {
+                    if (salon) {
+                        salon.delete("Membercount")
+                            .then()
+                            .catch(console.error);
+                    }
+                    await message.guild.channels.create(`${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`, {
                         type: 'category',
                         reason: "Membercount"
                     })
-                        .then(c => message.guild.channels.cache.get(c.id).setPosition(0))
+                        .then(c => {
+                            message.guild.channels.cache.get(c.id).setPosition(0);
+                            message.channel.send(message.language.get("MEMBERCOUNT_CREATED"));
+                            mc = c.id;
+                        })
                         .catch(console.error)
                 } else if (method === "channel") {
-                    message.guild.channels.create(`${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`, {
+                    if (salon) {
+                        salon.delete("Membercount")
+                            .then()
+                            .catch(console.error);
+                    }
+                    await message.guild.channels.create(`${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`, {
                         type: 'voice',
                         position: 0,
                         reason: "Membercount"
                     })
-                        .then()
+                        .then(c => {
+                            message.channel.send(message.language.get("MEMBERCOUNT_CREATED"));
+                            mc = c.id;
+                        })
                         .catch(console.error)
+                } else if (method === "delete") {
+                    if (salon) {
+                        salon.delete("Membercount")
+                            .then(mc = null)
+                            .catch(console.error);
+                            message.channel.send(message.language.get("MEMBERCOUNT_DELETED"))
+                    } else {
+                        return message.channel.send(message.channel.get("MEMBERCOUNT_NOT_EXISTS"))
+                    }
                 } else {
-                    message.channel.send(message.language.get("MEMBERCOUNT_UNVALID_METHOD"))
+                    return message.channel.send(message.language.get("MEMBERCOUNT_UNVALID_METHOD"))
                 }
-            }
-        } catch (error){
+                return mysqlcon.query("UPDATE Guilds SET membercount_channel = ? WHERE guild_id = ?", [mc, message.guild.id]);
+
+            });
+        } catch (error) {
             console.error(error);
             return message.channel.send(message.language.get("ERROR", error))
         }

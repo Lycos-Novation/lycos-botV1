@@ -32,6 +32,7 @@ class Ping extends Command {
 					footer: {
 						text: message.config.embed.footer,
 					},
+					timestamp: new Date(),
 				},
 			});
 		}
