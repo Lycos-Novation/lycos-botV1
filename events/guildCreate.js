@@ -12,7 +12,7 @@ module.exports = class {
 		mysqlcon.query(sql, async function (err, result, fields) {
 			if (result.length === 0) {
 				sql = `INSERT INTO Guilds (guild_id, guild_name, guild_owner, autorole, rolereaction_emotes, rolereaction_roles, rolereaction_descs)
-					VALUES ("${message.guild.id}", "${message.guild.name}", "${message.guild.owner.user.tag}", "", "", "", "");`;
+					VALUES ("${guild.id}", "${guild.name}", "${guild.owner.user.tag}", "", "", "", "");`;
 				mysqlcon.query(sql, function (err, result) {
 					if (err) throw err;
 				});
@@ -54,12 +54,16 @@ module.exports = class {
 				"europe": lang.get("SERVERINFO_REGIONS")[15],
 			};
 			const r = regions[guild.region];
-			return guild.client.guilds.cache.get("697368051405815860").channels.cache.get("697379467689066558").send({
+			var guilds = guild.client.shard ? await guild.client.shard.broadcastEval("this.guilds.cache.size") : guild.client.guilds.cache.size;
+			if (guilds instanceof Array) {
+				guilds = guilds.reduce((sum, val) => sum + val, 0);
+			}
+			return guild.client.guilds.cache.get("627946609896062986").channels.cache.get("713050560084836364").send({
 				embed: {
 					title: lang.get(`LOGS_GUILD_CREATE_TITLE`, guild),
 					description: lang.get('LOGS_GUILD_CREATE_DESC', guild, vl, r),
 					footer: {
-						text: config.embed.footer,
+						text: config.embed.footer + lang.get("LOGS_GUILD_CREATE_FOOTER", guilds),
 					},
 					thumbnail: {
 						url: guild.iconURL({ format: "png", dynamic: true }),

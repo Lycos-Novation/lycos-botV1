@@ -25,7 +25,7 @@ class Restart extends Command {
 			if (args[0] === "all") {
 				if (!message.client.shard) return message.channel.send("The bot isn't sharded.");
 				message.client.logger.log("All shards are restarting...", "log");
-				message.channel.send("All shards are restarting...");
+				message.bot.guilds.cache.get("627946609896062986").channels.cache.get("712635877729239081").send("All shards are restarting...");
 
 				try {
 					setTimeout(function() {
@@ -33,19 +33,19 @@ class Restart extends Command {
 					}, 1000);
 				}
 				catch (error) {
-					message.channel.send("Something went wrong while restarting all shards.")
+					message.bot.guilds.cache.get("627946609896062986").channels.cache.get("712635877729239081").send("Something went wrong while restarting all shards.")
 				}
 			}
 			else if (args[0] === "actual" || args[0] === "bot") {
 				if (!message.client.shard) {
 					message.client.logger.log(`${message.client.user.username} is restarting...`, "log");
-					message.channel.send(`${message.client.user.username} is restarting...`);
+					message.bot.guilds.cache.get("627946609896062986").channels.cache.get("712635877729239081").send(`${message.client.user.username} is restarting...`);
 					setTimeout(() => {
 						process.exit();
 					}, 1000);
 				}
 				else {
-					message.channel.send(`Shard[#${message.guild.shardID}] is restarting...`);
+					message.bot.guilds.cache.get("627946609896062986").channels.cache.get("712635877729239081").send(`Shard[#${message.guild.shardID}] is restarting...`);
 					setTimeout(() => {
 						process.exit(0);
 					}, 1000);

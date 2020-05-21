@@ -22,12 +22,8 @@ class Invite extends Command {
 			return message.channel.send({
 				embed: {
 					color: message.config.embed.color,
-					fields: [
-						{
-							name: message.language.get("INVITE_TITLE"),
-							value: message.language.get("INVITE_FIELD"),
-						},
-					],
+					title: message.language.get("INVITE_TITLE"),
+					description: message.language.get("INVITE_DESC"),
 				},
 			});
 		}

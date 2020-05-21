@@ -5,7 +5,7 @@ module.exports = class {
 	}
 
 	async run(message) {
-		if (message.channel.type === 'dm' || message.author.id === "663466858267148308" || message.content.indexOf('.') === 0) return;
+		if (message.channel.type === 'dm' || message.author.bot || message.content.indexOf('.') === 0) return;
 		var sql = `SELECT *
 		FROM Guilds
 		WHERE guild_id="${message.guild.id}"`;

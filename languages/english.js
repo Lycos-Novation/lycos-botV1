@@ -146,8 +146,17 @@ module.exports = class {
 			INVITE_DESCRIPTION: "Give the invitation to add the bot on a server.",
 			INVITE_USAGE: (prefix) => `${prefix}invite`,
 			INVITE_EXAMPLES: (prefix) => `${prefix}invite`,
-			INVITE_TITLE: "Invitation",
-			INVITE_FIELD: "[Click here](https://discordapp.com/oauth2/authorize?client_id=628186022991233025&scope=bot&permissions=8) to invite the bot to your server.",
+			INVITE_TITLE: "Lycos' invite links",
+			INVITE_DESC: `**⛓ How can I add Lycos on my server ?**
+
+			Here are various links to add Lycos according to the permissions
+			📌 To add Lycos with the **Admin permission**, you only need to [click here](https://discordapp.com/api/oauth2/authorize?client_id=628186022991233025&permissions=8&scope=bot).
+			⚙️ To add Lycos and **configure its permissions**, you only need to [click here](https://discordapp.com/api/oauth2/authorize?client_id=628186022991233025&permissions=2146958583&scope=bot).
+			▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+			⚠️ **__WARNING__**
+			Permissions required by Lycos may change at any time. 
+			To know about it, it's recommended to you to join the [official server of Lycos](https://discord.gg/fkmfKZp).`,
+			//⚖️ To add Spyer with **required permissions**, you only need to [click here](https://discordapp.com/api/oauth2/authorize?client_id=628186022991233025&permissions=41282630&scope=bot).
 			/* Ping */
 			PING_DESCRIPTION: "Gives latency of the Discord API.",
 			PING_USAGE: (prefix) => `${prefix}ping`,
@@ -822,6 +831,7 @@ There are now **${m.guild.memberCount}** people on the server!`,
 **Created the:** ${moment(guild.createdAt.toUTCString()).format("LLLL")}
 **Verification level:** ${vl}
 **Server location:** ${r}`,
+			LOGS_GUILD_CREATE_FOOTER: (guilds) => ` - Currently on ${guilds} servers`,
 			LOGS_GUILD_DELETE_TITLE: (guild) => `Lycos has been removed from ${guild.name}!`,
 			LOGS_GUILD_DELETE_DESC: (guild, vl, r) => `**ID:** ${guild.id}
 **Members:** ${guild.members.cache.filter(m => !m.user.bot).size}
@@ -829,6 +839,7 @@ There are now **${m.guild.memberCount}** people on the server!`,
 **Created the:** ${moment(guild.createdAt.toUTCString()).format("LLLL")}
 **Verification level:** ${vl}
 **Server location:** ${r}`,
+			LOGS_GUILD_DELETE_FOOTER: (guilds) => ` - Currently on ${guilds} servers`,
 			LOGS_GUILD_MEMBER_CHUNK_TITLE: "A whole regiment of members has just arrived from the same server!",
 			LOGS_GUILD_MEMBER_CHUNK_DESC: (members, guild) => ``,
 			LOGS_GUILD_MEMBER_UPDATE_TITLE: "A server member has undergone changes!",

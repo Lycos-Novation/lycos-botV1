@@ -41,12 +41,16 @@ module.exports = class {
 			"europe": lang.get("SERVERINFO_REGIONS")[15],
 		};
 		const r = regions[guild.region];
-		return guild.client.guilds.cache.get("697368051405815860").channels.cache.get("697379467689066558").send({
+		var guilds = guild.client.shard ? await guild.client.shard.broadcastEval("this.guilds.cache.size") : guild.client.guilds.cache.size;
+			if (guilds instanceof Array) {
+				guilds = guilds.reduce((sum, val) => sum + val, 0);
+			}
+		return guild.client.guilds.cache.get("627946609896062986").channels.cache.get("713050560084836364").send({
 			embed: {
 				title: lang.get(`LOGS_GUILD_DELETE_TITLE`, guild),
 				description: lang.get('LOGS_GUILD_DELETE_DESC', guild, vl, r),
 				footer: {
-					text: config.embed.footer,
+					text: config.embed.footer + lang.get("LOGS_GUILD_DELETE_FOOTER", guilds),
 				},
 				thumbnail: {
 					url: guild.iconURL({ format: "png", dynamic: true }),

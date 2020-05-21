@@ -138,8 +138,17 @@ module.exports = class {
 			INVITE_DESCRIPTION: "Donne l'invitation pour ajouter le bot sur un serveur",
 			INVITE_USAGE: (prefix) => `${prefix}invite`,
 			INVITE_EXAMPLES: (prefix) => `${prefix}invite`,
-			INVITE_TITLE: "Invitation",
-			INVITE_FIELD: "[Clique ici](https://discordapp.com/oauth2/authorize?client_id=628186022991233025&scope=bot&permissions=8) pour inviter le bot sur ton serveur.",
+			INVITE_TITLE: "Menu d'invitation de Lycos",
+			INVITE_DESC: `**⛓ Comment je fais pour inviter Lycos sur mon serveur ?**
+
+			Voici les différents liens d'invitation de Lycos en fonction des permissions :
+			📌 Pour inviter Lycos avec la **permission Administrateur**, il vous suffit de [cliquer ici](https://discordapp.com/api/oauth2/authorize?client_id=628186022991233025&permissions=8&scope=bot).
+			⚙️ Pour inviter Lycos et **configurer ses permissions**, il vous suffit de [cliquer ici](https://discordapp.com/api/oauth2/authorize?client_id=628186022991233025&permissions=2146958583&scope=bot).
+			▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+			⚠️ **__ATTENTION__**
+			Les permissions dont a besoin Lycos peuvent changer à tout moment.
+			Pour être au courant de cela, il vous est recommandé de rejoindre le [serveur officiel de Lycos](https://discord.gg/64zRC73).`,
+			//⚖️ Pour inviter Spyer avec **les permissions nécessaires**, il vous suffit de [cliquer ici](https://discordapp.com/api/oauth2/authorize?client_id=628186022991233025&permissions=41282630&scope=bot).
 			PING_DESCRIPTION: "Donne la latence de l'API Discord",
 			PING_USAGE: (prefix) => `${prefix}ping`,
 			PING_EXAMPLES: (prefix) => `${prefix}ping`,
@@ -764,6 +773,7 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Créé le :** ${moment(guild.createdAt.toUTCString()).format("LLLL")}
 **Niveau de vérification :** : ${vl}
 **Localisation du serveur :** ${r}`,
+			LOGS_GUILD_CREATE_FOOTER: (guilds) => ` - Actuellement sur ${guilds} serveurs`,
 			LOGS_GUILD_DELETE_TITLE: (guild) => `Lycos a été enlevé de ${guild.name} !`,
 			LOGS_GUILD_DELETE_DESC: (guild, vl, r) => `**ID :** ${guild.id}
 **Membres :** ${guild.members.cache.filter(m => !m.user.bot).size}
@@ -771,6 +781,7 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Créé le :** ${moment(guild.createdAt.toUTCString()).format("LLLL")}
 **Niveau de vérification :** : ${vl}
 **Localisation du serveur :** ${r}`,
+			LOGS_GUILD_DELETE_FOOTER: (guilds) => ` - Actuellement sur ${guilds} serveurs`,
 			LOGS_GUILD_MEMBER_CHUNK_TITLE: "Tout un régiment de membres viennent d'arriver d'un même serveur !",
 			LOGS_GUILD_MEMBER_CHUNK_DESC: (members, guild) => ``,
 			LOGS_GUILD_MEMBER_UPDATE_TITLE: "Un membre du serveur a subi des modifications !",

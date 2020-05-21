@@ -30,21 +30,28 @@ class testMySQL extends Command {
 				user_createdAt DATETIME
 			)
 			ENGINE=INNODB;`;*/
-			var sql = `SELECT *
-					   FROM Guilds
-					   WHERE guild_id="${message.guild.id}"`;
-			var g;
+			var sql = `CREATE TABLE Supports (
+				id SMALLINT(5,0) NOT NULL AUTO_INCREMENT,
+				user_name VARCHAR(32) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+				question TEXT(65535) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+				channel_id CHAR(18) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+				created_at DATETIME NOT NULL,
+				PRIMARY KEY (id) USING BTREE
+			)
+			COLLATE='utf8mb4_0900_ai_ci'
+			ENGINE=InnoDB;`;
+			/*var g;
 			mysqlcon.query(sql, async function (err, result, fields) {
 				g = result[0];
 				var emote = args[0];
 				message.channel.send(`${g.test} | ${emote}`);
 				if (emote === `${g.test}`) return message.channel.send("Oui");
 				else return message.channel.send("Non");
-			});
-            /*return mysqlcon.query(sql, function (err, result) {
+			});*/
+            return mysqlcon.query(sql, function (err, result) {
                 if (err) throw err;
                 console.log("Table created");
-			});*/
+			});
 		}
 		catch (error) {
 			console.error(error);

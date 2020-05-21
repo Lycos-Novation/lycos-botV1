@@ -11,10 +11,10 @@ module.exports = class {
 		}
 		// Logs some information using the logger file
 		console.log(`[Commands] - Loading a total of ${client.commands.size} command(s).`);
-		var guilds;
-		client.shard.fetchClientValues('guilds.cache.size')
-			.then(results => guilds = results.reduce((prev, val) => prev + val, 0) )
-			.catch(console.error);
+		var guilds = client.shard ? await client.shard.broadcastEval("this.guilds.cache.size") : client.guilds.cache.size;
+			if (guilds instanceof Array) {
+				guilds = guilds.reduce((sum, val) => sum + val, 0);
+			}
 		client.logger.log(`${client.user.tag}. On ${guilds} server(s) divided in ${client.shard.count} shards.`, "ready");
 
 		// Update the game every 20s

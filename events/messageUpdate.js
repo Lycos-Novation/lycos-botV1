@@ -5,13 +5,13 @@ module.exports = class {
 	}
 
 	async run(oldMessage, newMessage) {
-		if (oldMessage.channel.type === "dm" || newMessage.channel.type === 'dm' || newMessage.author.id === "663466858267148308" || newMessage.content.indexOf('.') === 0 || oldMessage.content.indexOf('.') === 0 ) return;
 		var sql = `SELECT *
 		FROM Guilds
 		WHERE guild_id="${newMessage.guild.id}"`;
 		var g;
 		mysqlcon.query(sql, async function (err, result, fields) {
 			g = result[0];
+			if (oldMessage.channel.type === "dm" || newMessage.channel.type === 'dm' || newMessage.author.bot || newMessage.content.indexOf(g.prefix) === 0 || oldMessage.content.indexOf(g.prefix) === 0 ) return;
 			if (g.logs_channel === null) return;
 			const lang = new (require(`../languages/${g.language}.js`));
 			return newMessage.guild.channels.cache.find(c => c.id === g.logs_channel).send({
