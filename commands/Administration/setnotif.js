@@ -12,7 +12,7 @@ class Setnotif extends Command {
 			guildOnly: true,
 			permLevel: "Server Admin",
             botPermissions: ["EMBED_LINKS"],
-            aliases: ["setreactionrole", "setrolereaction"],
+            aliases: ["setreactionrole", "setrolereaction", "setnotifs"],
 			nsfw: false,
 			adminOnly: true,
 			cooldown: 1000,

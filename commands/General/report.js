@@ -11,8 +11,8 @@ class Report extends Command {
 			enabled: true,
 			guildOnly: false,
 			permLevel: "User",
-            botPermissions: ["EMBED_LINKS"],
-            aliases: ["signal"],
+            botPermissions: ["EMBED_LINKS", "SEND_MESSAGES", "MANAGE_MESSAGES"],
+            aliases: ["signal", "reports"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 50000,
@@ -49,6 +49,7 @@ class Report extends Command {
                 return message.channel.send(message.language.get("REPORT_NOREASON"))
             }
             message.delete();
+            message.channel.send(message.language.get("REPORT_SEND"));
             return message.guild.channels.cache.find(c => c.id === g.reports_channel).send({
                 embed: {
                     color: message.config.embed.color,
@@ -66,7 +67,7 @@ class Report extends Command {
                         },
                     ],
                 }
-            }).then(message.channel.send("REPORT_SEND"));
+            });
         });
 		}
 		catch (error) {

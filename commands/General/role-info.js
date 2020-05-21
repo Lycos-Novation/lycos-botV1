@@ -1,6 +1,4 @@
 const Command = require("../../base/Command.js");
-const moment = require("moment-timezone");
-moment.locale('fr');
 
 class RoleInformation extends Command {
 	constructor(client) {
@@ -14,7 +12,7 @@ class RoleInformation extends Command {
 			guildOnly: true,
 			permLevel: "User",
 			botPermissions: ["EMBED_LINKS"],
-			aliases: ["rinfo", "r-info", "roleinfo"],
+			aliases: ["rinfo", "r-info", "roleinfo", "ri"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 1000,
@@ -52,12 +50,12 @@ class RoleInformation extends Command {
 							},
 							{
 								name: message.language.get("ROLE_INFO_FIELDS")[2],
-								value: role.mentionable ? "<:valid:536968393367224320>" : "<:nop:536968387956310046>",
+								value: role.mentionable ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>",
 								inline: true,
 							},
 							{
 								name: message.language.get("ROLE_INFO_FIELDS")[3],
-								value: moment(role.createdTimestamp).format("LLLL"),
+								value: message.language.get("ROLE_INFO_CDATE", role, message),
 								inline: true,
 							},
 						],

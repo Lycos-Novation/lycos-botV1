@@ -26,7 +26,10 @@ class Ping extends Command {
 						{
 							name: message.language.get("PING_APILATENCY"),
 							value:  `${Math.round(this.client.ws.ping)} ms`,
-							inline: true,
+						},
+						{
+							name: message.language.get("PING_CLIENTLATENCY"),
+							value:  `${Math.round(new Date().getTime() - message.createdTimestamp)} ms`,
 						},
 					],
 					footer: {

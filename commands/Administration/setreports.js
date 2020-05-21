@@ -12,7 +12,7 @@ class Setreports extends Command {
 			guildOnly: true,
 			permLevel: "Server Admin",
             botPermissions: ["EMBED_LINKS"],
-            aliases: [],
+            aliases: ["setreport"],
 			nsfw: false,
 			adminOnly: true,
 			cooldown: 1000,

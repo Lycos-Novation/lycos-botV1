@@ -8,14 +8,14 @@ module.exports = {
 	perm(level, requiredLevel, message) {
 		return message.channel.send({
 			embed: {
-				"color": 16711680,
-				"author": {
-					"text": message.language.get("ERROR_PERMISSIONS_TITLE"),
+				color: 16711680,
+				author: {
+					text: message.language.get("ERROR_PERMISSIONS_TITLE"),
 				},
-				"description": message.language.get("ERROR_PERMISSIONS_CONTENT", level, requiredLevel),
-				"timestamp": new Date(),
-				"footer" : {
-					"text" : message.config.embed.footer,
+				description: message.language.get("ERROR_PERMISSIONS_CONTENT", level, requiredLevel),
+				timestamp: new Date(),
+				footer: {
+					text: message.config.embed.footer,
 				},
 			},
 		});
@@ -28,14 +28,14 @@ module.exports = {
 	nsfw(message) {
 		return message.channel.send({
 			embed: {
-				"color": 16711680,
-				"author": {
-					"text": message.language.get("ERROR_NSFW_TITLE"),
+				color: 16711680,
+				author: {
+					text: message.language.get("ERROR_NSFW_TITLE"),
 				},
-				"description": message.language.get("ERROR_NSFW_CONTENT"),
-				"timestamp": new Date(),
-				"footer" : {
-					"text" : message.config.embed.footer,
+				description: message.language.get("ERROR_NSFW_CONTENT"),
+				timestamp: new Date(),
+				footer: {
+					text: message.config.embed.footer,
 				},
 			},
 		});
@@ -48,14 +48,14 @@ module.exports = {
 	disabled(message) {
 		return message.channel.send({
 			embed: {
-				"color": 16711680,
-				"author": {
-					"text": message.language.get("ERROR_DISABLED_TITLE"),
+				color: 16711680,
+				author: {
+					text: message.language.get("ERROR_DISABLED_TITLE"),
 				},
-				"description": message.language.get("ERROR_DISABLED_CONTENT"),
-				"timestamp": new Date(),
-				"footer" : {
-					"text" : message.config.embed.footer,
+				description: message.language.get("ERROR_DISABLED_CONTENT"),
+				timestamp: new Date(),
+				footer: {
+					text: message.config.embed.footer,
 				},
 			},
 		});
@@ -68,14 +68,14 @@ module.exports = {
 	everyone(message) {
 		return message.channel.send({
 			embed: {
-				"color": 16711680,
-				"author": {
-					"text": message.language.get("ERROR_EVERYONE_TITLE"),
+				color: 16711680,
+				author: {
+					text: message.language.get("ERROR_EVERYONE_TITLE"),
 				},
-				"description": message.language.get("ERROR_EVERYONE_CONTENT"),
-				"timestamp": new Date(),
-				"footer" : {
-					"text" : message.config.embed.footer,
+				description: message.language.get("ERROR_EVERYONE_CONTENT"),
+				timestamp: new Date(),
+				footer: {
+					text: message.config.embed.footer,
 				},
 			},
 		});
@@ -87,6 +87,6 @@ module.exports = {
      * @param {object} message The discord message
      */
 	botPermissions(permissions, message) {
-		return message.channel.send(`__**${message.language.get("ERROR_BOTPERMISSIONS_TITLE")}**__\n\n${message.language.get("ERROR_BOTPERMISSIONS_CONTENT", permissions)}`);
+		return message.channel.send(`**${message.language.get("ERROR_BOTPERMISSIONS_TITLE")}**\n\n${message.language.get("ERROR_BOTPERMISSIONS_CONTENT", permissions)}`);
 	},
 };
