@@ -52,7 +52,7 @@ class Number extends Command {
 					        },
                         },
                     });
-                })
+                });
         } catch (error) {
             console.error(error);
             return message.channel.send(message.language.get("ERROR", error));

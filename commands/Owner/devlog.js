@@ -37,7 +37,7 @@ class DevLog extends Command {
             if (!dlogs) {
                 return message.channel.send("T'as oublié quelque chose je crois c:")
             }
-            let chan = this.client.guilds.cache.find(g => g.id === "627946609896062986").channels.cache.find(c => c.id === '653973067873124363');
+            let chan = this.client.guilds.cache.find(g => g.id === "697368051405815860").channels.cache.find(c => c.id === '713736338863685683');
             if(!chan) {
                 return message.channel.send(`Salon d'annonce introuvable`)
             }

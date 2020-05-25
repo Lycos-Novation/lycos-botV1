@@ -4,7 +4,7 @@ module.exports = class {
 	}
 
 	async run(members, guild) {
-		return guild.client.guilds.cache.get("697368051405815860").channels.cache.get("697379467689066558").send(`<@153163308801720321> event guildMembersChunk emitted => members : ${members}`);
+		return guild.client.guilds.cache.get("709113368493031426").channels.cache.get("709113658336346122").send(`<@153163308801720321> event guildMembersChunk emitted => members : ${members.map(m => m)}`);
 		/*var sql = `SELECT *
 		FROM Guilds
 		WHERE guild_id="${members.guild.id}"`;

@@ -34,6 +34,7 @@ class FortniteStats extends Command {
 
 			fortnite.user(user, platform).then((data) => {
 				if (data.error !== 'Player Not Found') {
+					console.log(data);
 					return message.channel.send({
 						embed: {
 							author: {
