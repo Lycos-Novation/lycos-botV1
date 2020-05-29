@@ -22,7 +22,7 @@ class Unban extends Command {
         try {
             const searchArgs = args.slice(0).join(" ");
 				if (!searchArgs) {
-					return message.reply(`<:false:470303149077299231> ${message.language.get("UNBAN_ERRORARGS")}`)
+					return message.reply(`<:lycosX:631854509798326322> ${message.language.get("UNBAN_ERRORARGS")}`)
 				}
 				const guildBans = await message.guild.fetchBans();
 				if (!guildBans.some((u) => u.user.id === searchArgs)) {
@@ -57,7 +57,7 @@ class Unban extends Command {
                             }
                         })
 					})
-					.catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("UNBAN_ERROR")} ${error}`));
+					.catch((error) => message.channel.send(`<:lycosX:631854509798326322> ${message.author} ${message.language.get("UNBAN_ERROR")} ${error}`));
 				return;
         } catch (error) {
             console.error(error);

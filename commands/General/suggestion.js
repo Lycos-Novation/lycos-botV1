@@ -11,7 +11,7 @@ class Suggestion extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "User",
-            botPermissions: ["EMBED_LINKS",],
+            botPermissions: [],
             aliases: ["suggestions", "suggest", "suggests"],
 			nsfw: false,
 			adminOnly: false,
@@ -28,7 +28,7 @@ class Suggestion extends Command {
 				const suggestion = args.join(" ");
 				message.bot.shard.broadcastEval(`
 						const Discord = require('discord.js');
-						const channel = this.channels.cache.get("711686179640049674");
+						const channel = this.channels.cache.get("627955885582581790");
 
 						const embed = new Discord.MessageEmbed()
 							.setTitle("Suggestion")
@@ -39,8 +39,10 @@ class Suggestion extends Command {
 							.setTimestamp();
 
 						if (channel) {
-							channel.send(embed).then(await message.react(this.emojis.cache.get("631854492173991947"));
-                            await message.react(this.emojis.cache.get("631854509798326322"));
+							channel.send(embed).then(async(m) => {
+							await m.react(this.emojis.cache.get("631854492173991947"));
+							await m.react(this.emojis.cache.get("631854509798326322"));
+						});
 							true;
 						}
 						else {

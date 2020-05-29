@@ -11,7 +11,7 @@ class Config extends Command {
             enabled: true,
             guildOnly: true,
             permLevel: "Server Admin",
-            botPermissions: ["SEND_MESSAGE"],
+            botPermissions: ["SEND_MESSAGES"],
             aliases: ["server-config", "configuration"],
             nsfw: false,
             adminOnly: true,

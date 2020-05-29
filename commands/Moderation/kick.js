@@ -22,7 +22,7 @@ class Kick extends Command {
 		try {
 			const searchArgs = args.join(" ");
 			if (!searchArgs) {
-				return message.reply(`<:false:470303149077299231> ${message.language.get("KICK_ERRORARGS")}`)
+				return message.reply(`<:lycosX:631854509798326322> ${message.language.get("KICK_ERRORARGS")}`)
 			}
 			else {
 				let member;
@@ -40,7 +40,7 @@ class Kick extends Command {
 				if (!reason) { reason = message.language.get("KICK_NOREASON"); }
 
 				await member.kick(reason)
-					.catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("KICK_ERROR")} ${error}`));
+					.catch((error) => message.channel.send(`<:lycosX:631854509798326322> ${message.author} ${message.language.get("KICK_ERROR")} ${error}`));
 				message.channel.send(message.language.get("KICK_INFO", member, message));
 				var sql = `SELECT prefix, autorole
 		FROM Guilds

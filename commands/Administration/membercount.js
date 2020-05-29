@@ -34,13 +34,19 @@ class memberCount extends Command {
                 }
                 let salon = g.membercount_channel === null ? null : message.guild.channels.cache.get(g.membercount_channel);
                 var mc;
+                var name = args.slice(1).join(" ");
+                if (name.indexOf("{membercount}")){
+                    name = name.replace("{membercount}", message.guild.memberCount);
+                } else {
+                    name = `${name} | ${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`;
+                }
                 if (method === "category") {
                     if (salon) {
                         salon.delete("Membercount")
                             .then()
                             .catch(console.error);
                     }
-                    await message.guild.channels.create(`${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`, {
+                    await message.guild.channels.create(name, {
                         type: 'category',
                         reason: "Membercount"
                     })
@@ -56,7 +62,7 @@ class memberCount extends Command {
                             .then()
                             .catch(console.error);
                     }
-                    await message.guild.channels.create(`${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`, {
+                    await message.guild.channels.create(name, {
                         type: 'voice',
                         position: 0,
                         reason: "Membercount"

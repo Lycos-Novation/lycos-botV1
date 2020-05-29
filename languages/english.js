@@ -61,14 +61,17 @@ module.exports = class {
 			},
 			/* Language */
 			LANGUAGE_DESCRIPTION: "Translate Lycos into other languages.",
-			LANGUAGE_USAGE: ".language <language>",
-			LANGUAGE_EXAMPLES: ".language english",
-			LANGUAGE_INFO: (language, prefix) => `My language on this server is \`${language}\` !\n> To change the language, answer with \`\`set\`\`\n> To see the different languages, answer with \`\`list\`\``,
-			LANGUAGE_LIST: (languages) => `I am available in \`${languages.join("\`, \`")}\`.`,
-			LANGUAGE_SUPPLY: "Respond with the language you want to put the bot in.",
+			LANGUAGE_USAGE: (prefix) => `${prefix}language [set/list]`,
+			LANGUAGE_EXAMPLES: (prefix) => `${prefix}lang list\n${prefix}language set english\n${prefix}language set fr`,
+			LANGUAGE_INFO: (language) => `My language on this server is \`${language}\` !\n> To change the language, reply with \`\`set\`\`\n> To see the different languages, reply with \`\`list\`\``,
+			LANGUAGE_LIST: `Lycos' languages`,
+			LANGUAGE_NAMES: ["English", "French"],
+			LANGAUGE_LIST_DESC: (prefix) => `Here are Lycos' languages.\nType the command \`\`${prefix}lang set [language]\`\` by replacing \`\`[language]\`\` with one of the following options.`,
+			LANGUAGE_SUPPLY: "Reply with the language you want to put the bot in.",
 			LANGUAGE_ALREADY_SET: (lang) => `I'm already in \`${lang.toLowerCase()}\`.`,
 			LANGUAGE_GUILD_INFO: (lang) => `The language on this server is now \`${lang.toLowerCase()}\`.`,
 			ERROR_LANGUAGE_INCORRECT: "I don't think I know this language. Can you help me learn it ?",
+			LANGUAGE_METHOD_ERROR: "I didin't understand what you asked for. Please retry.",
 			/* Modules */
 			MODULES_DESCRIPTION: "Not available.",
 			MODULES_USAGE: (prefix) => `${prefix}modules set <module> <on/off>`,
@@ -125,7 +128,7 @@ module.exports = class {
 			HELP_COMING_SOON: "Be available soon.",
 			HELP_TITLE: (command) => `Help : ${command}`,
 			HELP_TITLE1: (category) => `Category : ${category}`,
-			HELP_EMBED_DESCRIPTION: (message) => `Hello, here is the Lycos documentation.`,//Certaines commandes ne sont pas disponible sur la documentation parce qu'elles doivent être activer.\nPour voir ce que vous pouvez activer faites \`${message.settings.prefix}modules\`.
+			HELP_EMBED_DESCRIPTION: (prefix) => `Hello, here is the Lycos documentation.\nTo get more informations about a command, do \`\`${prefix}help [Command]\`\``,//Certaines commandes ne sont pas disponible sur la documentation parce qu'elles doivent être activer.\nPour voir ce que vous pouvez activer faites \`${message.settings.prefix}modules\`.
 			HELP_FIELDS: [
 				"Description",
 				"Use",
@@ -213,7 +216,7 @@ module.exports = class {
 			],
 			SERVERINFO_CDATE: (message) => `${moment(message.channel.guild.createdAt.toUTCString()).format("LLLL").charAt(0).toUpperCase() + moment(message.channel.guild.createdAt.toUTCString()).format("LLLL").slice(1)} (${message.bot.functions.checkDays(message.channel.guild.createdAt, message)})`,
 			SERVERINFO_NOROLES: "No role is present on this server.",
-			SERVERINFO_ROLELIST: (guild) => `and ${guild.roles.cache.size - 10} other roles.`,
+			SERVERINFO_ROLELIST: (guild) => `and ${guild.roles.cache.size - 10} ${guild.roles.cache.size - 10 === 1 ? "other role" : "other roles"}.`,
 			/* Date */
 			DATE_AGO: "There is ",
 			DATE_DAY: " day",
@@ -268,7 +271,7 @@ module.exports = class {
 			USERINFO_PROFIL: "Profile of ",
 			USERINFO_UNKNOWN_STATUS: "I didin't find this member's status",
 			USERINFO_NOROLES: "This member has no role.",
-			USERINFO_ROLELIST: (member) => `and ${member.roles.cache.size - 10} other roles.`,
+			USERINFO_ROLELIST: (member) => `and ${member.roles.cache.size - 10} ${member.roles.cache.size - 10 === 1 ? "other role" : "other roles"}.`,
 			/* Massagedelete */
 			MESSADEDELETE_DESC: "Message deleted",
 			MESSADEDELETE_FIELD: [
@@ -332,9 +335,9 @@ module.exports = class {
 				"Victories",
 				"Kill ratio per game",
 			],
-			FORTNITE_FIELDS_CONTENT_KILL: (data) => `${data.stats.lifetime.kills} (${data.stats.squad["kills"]} in the section, ${data.stats.duo["kills"]} in duet, ${data.stats.solo["kills"]} alone)`,
-			FORTNITE_FIELDS_CONTENT_MATCHSPLAYED: (data) => `${data.stats.lifetime.matches} (${data.stats.squad["matches"]} in the section, ${data.stats.duo["matches"]} in duet, ${data.stats.solo["matches"]} alone)`,
-			FORTNITE_FIELDS_CONTENT_VICTORIES: (data) => `${data.stats.lifetime.wins} (${data.stats.squad["wins"]} in the section, ${data.stats.duo["wins"]} in duet, ${data.stats.solo["wins"]} alone)`,
+			FORTNITE_FIELDS_CONTENT_KILL: (data) => `${data.stats.lifetime.kills} (${data.stats.squad ? `${data.stats.squad.kills}` : "0"} in squad, ${data.stats.duo ? `${data.stats.duo.kills}` : "0"} in duo, ${data.stats.solo ? `${data.stats.solo.kills}` : "0"} alone)`,
+			FORTNITE_FIELDS_CONTENT_MATCHSPLAYED: (data) => `${data.stats.lifetime.matches} (${data.stats.squad ? `${data.stats.squad.matches}` : "0"} in squad, ${data.stats.duo ? `${data.stats.duo.matches}` : "0"} in duo, ${data.stats.solo ? `${data.stats.solo.matches}` : "0"} alone)`,
+			FORTNITE_FIELDS_CONTENT_VICTORIES: (data) => `${data.stats.lifetime.wins} (${data.stats.squad ? `${data.stats.squad.wins}` : "0"} in squad, ${data.stats.duo ? `${data.stats.duo.wins}` : "0"} in duo, ${data.stats.solo ? `${data.stats.solo.wins}` : "0"} alone)`,
 			/* Apex */
 			APEX_PLATFORM: "Please enter the name of your platform (pc, xbox, ps4).",
 			APEX_ERROR_PLATFORM: "Please enter a valid platform (pc, xbox, ps4).",
@@ -488,6 +491,10 @@ module.exports = class {
 			RPS_PLAYER_WIN: (message) => `:dagger: | Victory of ${message.author.username} !`,
 			RPS_LYCOS_WIN: `:skull_crossbones: | Victory of Lycos !`,
 			RPS_CHOICES: "Choose between `rock`, `paper` and `scissors`",
+			RPS_CHOICES_ARRAY: ["rock", "paper", "scissors"],
+			RPS_ROCK: "rock",
+			RPS_PAPER: "paper",
+			RPS_SCISSORS: "scissors",
 			/* Support */
 			SUPPORT_DESCRIPTION: "Allows you to contact bot support in case of a problem.",
 			SUPPORT_USAGE: (prefix) => `${prefix}support [Problem]`,
@@ -628,14 +635,14 @@ module.exports = class {
 			EMOTES_NO_EMOTES: "There are no emojis on this server.",
 			EMOTES_NO_ANIMATED: "There is no animated emoji on this server.",
 			/* Membercount */
-			MEMBERCOUNT_DESCRIPTION: "Create a membercount channel or category.",
-			MEMBERCOUNT_USAGE: (prefix) => `${prefix}membercount [channel/category/delete]`,
-			MEMBERCOUNT_EXAMPLES: (prefix) => `${prefix}membercount channel\n ${prefix}membercount category`,
-			MEMBERCOUNT_NO_METHOD: "Please indicate the type of the membercount you want: channel/category",
+			MEMBERCOUNT_DESCRIPTION: "Create a membercount channel or category",
+			MEMBERCOUNT_USAGE: (prefix) => `${prefix}membercount [channel/category/delete] (Name)`,
+			MEMBERCOUNT_EXAMPLES: (prefix) => `${prefix}membercount channel\n ${prefix}membercount category Lycos Novation : {membercount} members`,
+			MEMBERCOUNT_NO_METHOD: "Please indicate the type of the membercount you want: channel/category. You can add the name you want to give to the channel using ``{membercount}`` where you want the number of member to be in your channel's name.",
 			MEMBERCOUNT_MEMBERS: "members",
 			MEMBERCOUNT_UNVALID_METHOD: "I did not understand the type you asked: channel/category",
 			MEMBERCOUNT_CREATED: "The membercount has been created!",
-			MEMBERCOUNT_DELETED: "The mmebercount has been deleted!",
+			MEMBERCOUNT_DELETED: "The membercount has been deleted!",
 			MEMBERCOUNT_NOT_EXISTS: "There is no membercount created on the server!",
 			/* Config */
 			CONFIG_DESCRIPTION: "Displays the bot configuration on the server.",
@@ -695,6 +702,8 @@ module.exports = class {
 			RR_EMBED_TITLE: "Role Reaction",
 			RR_EMBED_DESC: "Click on the reaction corresponding to the role you wish to have.",
 			RR_EMBED_FIELD: "List of roles :",
+			RR_ADD_USER: (g, r) => `> <:lycosV:631854492173991947> ${g.name} | Given role: ${r.name}`,
+			RR_REMOVE_USER: (g, r) => `> <:lycosX:631854509798326322> ${g.name} | Role removed: ${r.name}`,
 			/* Setlogs */
 			SETLOGS_DESCRIPTION: "Allows the selection of the log display channel.",
 			SETLOGS_USAGE: (prefix) => `${prefix}setlogs [#channel/ID]`,
@@ -749,7 +758,7 @@ module.exports = class {
 **Type of channel :** ${c.type}
 **Position in the category :** ${c.position}
 **Position in the server :** ${c.rawPosition}`,
-			LOGS_CHANNEL_DELETE_TITLE: "A Channel has been deleted !",
+			LOGS_CHANNEL_DELETE_TITLE: "A channel has been deleted !",
 			LOGS_CHANNEL_DELETE_DESC: (c) => `**${c.name}** - (${c.id})
 **Created the :** ${moment(c.createdAt.toUTCString()).format("LLLL")}
 **Deleted the :** ${moment(new Date()).format("LLLL")}${c.parent ? `\n**In the category :** ${c.parent} (${c.parent.id})` : ``}

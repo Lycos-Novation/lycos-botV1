@@ -22,7 +22,7 @@ class unmute extends Command {
         try {
             const searchArgs = args.join(" ");
             if (!searchArgs) {
-                return message.channel.send(`<:false:470303149077299231> ${message.language.get("MUTE_ERRORARGS")}`)
+                return message.channel.send(`<:lycosX:631854509798326322> ${message.language.get("MUTE_ERRORARGS")}`)
             } else {
                 let member;
                 if (message.mentions.members.size > 0) {
@@ -46,12 +46,14 @@ class unmute extends Command {
                     muteRole = message.guild.roles.cache.find(m => m.name === 'muted')
 
                     message.guild.channels.cache.forEach(async (channel, id) => {
-                        await channel.overwritePermissions([
-                            {
-                                id: muteRole.id,
-                                deny: ["SEND_MESSAGES","ADD_REACTIONS", "SEND_TTS_MESSAGES", "ATTACH_FILES", "SPEAK"]
-                            }
-                        ], "Unmute - Auto setting up mute role")
+                        await channel.createOverwrite(muteRole.id,
+                                {
+                                    SEND_MESSAGES: false,
+                                    ADD_REACTIONS: false,
+                                    SEND_TTS_MESSAGES: false, 
+                                    ATTACH_FILES: false,
+                                    SPEAK: false
+                            }, "Unmute - Auto setting up mute role")
                     });
                 }
                 if (!member.roles.cache.some(r => r.name === 'muted')) return message.channel.send(message.language.get("UNMUTE_USER_NOT_MUTED"));
@@ -85,7 +87,7 @@ class unmute extends Command {
                             }
                         })
                     })
-                    .catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("UNMUTE_ERROR")} ${error}`));
+                    .catch((error) => message.channel.send(`<:lycosX:631854509798326322> ${message.author} ${message.language.get("UNMUTE_ERROR")} ${error}`));
             }
         }
         catch (error) {

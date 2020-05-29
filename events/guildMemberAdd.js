@@ -20,7 +20,7 @@ module.exports = class {
 				const lang = new (require(`../languages/${g.language}.js`));
 				if (g.membercount_channel !== null) {
 					member.guild.channels.cache.get(`${g.membercount_channel}`).edit({
-						name: `${member.guild.memberCount} ${lang.get("MEMBERCOUNT_MEMBERS")}`
+						name: `${member.guild.channels.cache.get(`${g.membercount_channel}`).name.replace(member.guild.memberCount - 1, member.guild.memberCount)}`
 					})
 				}
 				if (g.welcome_channel === null) return;

@@ -23,7 +23,7 @@ class Ban extends Command {
 			if(args[0] === 'remove'){
 				const searchArgs = args.slice(1).join(" ");
 				if (!searchArgs) {
-					return message.reply(`<:false:470303149077299231> ${message.language.get("BAN_ERRORARGS")}`)
+					return message.reply(`<:lycosX:631854509798326322> ${message.language.get("BAN_ERRORARGS")}`)
 				}
 				const guildBans = await message.guild.fetchBans();
 				if (!guildBans.some((u) => u.user.id === searchArgs)) {
@@ -31,12 +31,12 @@ class Ban extends Command {
 				}
 				await message.guild.members.unban(searchArgs)
 					.then(u => {message.channel.send(message.language.get("UNBAN_INFO", u.username, message))})
-					.catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("BAN_ERROR")} ${error}`));
+					.catch((error) => message.channel.send(`<:lycosX:631854509798326322> ${message.author} ${message.language.get("BAN_ERROR")} ${error}`));
 				return;
 				}
 			const searchArgs = args.join(" ");
 			if (!searchArgs) {
-				return message.reply(`<:false:470303149077299231> ${message.language.get("BAN_ERRORARGS")}`)
+				return message.reply(`<:lycosX:631854509798326322> ${message.language.get("BAN_ERRORARGS")}`)
 			}
 			else {
 				let member;
@@ -59,7 +59,7 @@ class Ban extends Command {
 				if (!reason) {reason = message.language.get("BAN_NOREASON");}
 
 				await member.ban(reason)
-					.catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("BAN_ERROR")} ${error}`));
+					.catch((error) => message.channel.send(`<:lycosX:631854509798326322> ${message.author} ${message.language.get("BAN_ERROR")} ${error}`));
 				return message.channel.send(message.language.get("BAN_INFO", member, message))
 			}
 		}

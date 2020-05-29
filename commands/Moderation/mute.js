@@ -34,21 +34,23 @@ class mute extends Command {
                 muteRole = await message.guild.roles.cache.find(m => m.name === 'muted');
 
                 message.guild.channels.cache.forEach(async (channel, id) => {
-                    await channel.overwritePermissions([
+                    await channel.createOverwrite(muteRole.id,
                         {
-                            id: muteRole.id,
-                            deny: ["SEND_MESSAGES", "ADD_REACTIONS", "SEND_TTS_MESSAGES", "ATTACH_FILES", "SPEAK"]
-                        }
-                    ], "Mute - Auto setting up mute role")
+                            SEND_MESSAGES: false,
+                            ADD_REACTIONS: false,
+                            SEND_TTS_MESSAGES: false, 
+                            ATTACH_FILES: false,
+                            SPEAK: false
+                    }, "Mute - Auto setting up mute role")
                 });
             }
             const searchArgs = args[0];
             if (!searchArgs) {
-                return message.channel.send(`<:false:470303149077299231> ${message.language.get("MUTE_ERRORARGS")}`)
+                return message.channel.send(`<:lycosX:631854509798326322> ${message.language.get("MUTE_ERRORARGS")}`)
             } else if (searchArgs === "remove") {
                 let sa = args[1];
                 if (!sa) {
-                    return message.channel.send(`<:false:470303149077299231> ${message.language.get("MUTE_ERRORARGS")}`)
+                    return message.channel.send(`<:lycosX:631854509798326322> ${message.language.get("MUTE_ERRORARGS")}`)
                 }
                 let member;
                 if (message.mentions.members.size > 0) {
@@ -90,7 +92,7 @@ class mute extends Command {
                             }
                         })
                     })
-                    .catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("UNMUTE_ERROR")} ${error}`));
+                    .catch((error) => message.channel.send(`<:lycosX:631854509798326322> ${message.author} ${message.language.get("UNMUTE_ERROR")} ${error}`));
                 return;
             }
             else {
@@ -143,7 +145,7 @@ class mute extends Command {
                             }
                         })
                     })
-                    .catch((error) => message.channel.send(`<:false:470303149077299231> ${message.author} ${message.language.get("MUTE_ERROR")} ${error}`));
+                    .catch((error) => message.channel.send(`<:lycosX:631854509798326322> ${message.author} ${message.language.get("MUTE_ERROR")} ${error}`));
                 setTimeout(function () {
                     member.roles.remove(muteRole.id)
                 }, ms(muteTime));
