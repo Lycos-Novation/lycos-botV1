@@ -3,6 +3,7 @@ module.exports = {
 	getPrefix(message) {
 		if (message.channel.type !== "dm") {
 			const prefixes = [
+				`<@!${message.client.user.id}>`,
 				`<@${message.client.user.id}>`,
 				"Lycos",
 				message.settings.prefix,

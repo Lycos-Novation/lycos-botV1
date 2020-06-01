@@ -92,7 +92,7 @@ class RoleReaction extends Command {
                             ]
                         }
                     };
-                    if (!g.rolereaction_channel) return message.channel.send("RR_NO_CHANNEL");
+                    if (!g.rolereaction_channel) return message.channel.send(message.language.get("RR_NO_CHANNEL"));
                     return message.guild.channels.cache.get(g.rolereaction_channel).send(embed).then(async (msg) => {
                         try {
                             for (const { emoji } of configuration) {
@@ -119,6 +119,8 @@ class RoleReaction extends Command {
                     name = await message.bot.functions.awaitResponse(message);
                 }
                 let r = message.guild.roles.resolve(name) || message.guild.roles.resolveID(name);
+                let test = message.guild.roles.cache.get(r);
+				if (test === undefined) return message.channel.send(message.language.get("AUTOROLE_ROLE_NOT_FOUND"));
                 let rid = r.id || r.toString().slice(3, r.toString().length - 1);
                 var rr = result[0].rolereaction_roles, ids = [];
                 var re = result[0].rolereaction_emotes;
@@ -137,9 +139,9 @@ class RoleReaction extends Command {
                     } else {
                         mysqlcon.query("UPDATE Guilds SET rolereaction_emotes = ?, rolereaction_roles = ?, rolereaction_descs = ? WHERE guild_id = ?", [e, rid, description, message.guild.id]);
                     }
-                    return message.channel.send(message.language.get("RR_ROLE_ADDED", e));
+                    return message.channel.send(message.language.get("RR_ROLE_ADDED"));
                 } else if (method === "remove") {
-                    if (!rr.includes(e)) {
+                    if (!re.includes(e) || !rr.includes(rid)) {
                         return message.channel.send(message.language.get("RR_NOT_IN"));
                     }
                     if (rr.split("/").length > 1) {
@@ -153,17 +155,20 @@ class RoleReaction extends Command {
 
                         ids = [];
                         var ids2 = [];
-                        for (var i = 0; i < re.split("/").length; i++) {
-                            if (re.split("/")[i] !== e) {
-                                ids.push(re.split("/")[i])
+
+                        for (var i = 0; i < re.toString('utf-8').split("/").length; i++) {
+                            if (re.toString('utf-8').split("/")[i] !== e) {
+                                ids.push(re.toString('utf-8').split("/")[i])
                                 ids2.push(result[0].rolereaction_descs.split("/")[i]);
                             }
                         }
                         ids.join("/");
                         ids2.join("/");
-                        mysqlcon.query("UPDATE Guilds SET rolereaction_emotes = ?, rolereaction_emotes = ? WHERE guild_id = ?", [ids, ids2, message.guild.id]);
-                        return message.channel.send(message.language.get("RR_ROLE_REMOVED", e));
+                        mysqlcon.query("UPDATE Guilds SET rolereaction_emotes = ?, rolereaction_descs = ? WHERE guild_id = ?", [ids, ids2, message.guild.id]);
+                    } else {
+                        mysqlcon.query("UPDATE Guilds SET rolereaction_roles = ?, rolereaction_emotes = ?, rolereaction_descs = ? WHERE guild_id = ?", ["", "", "", message.guild.id]);
                     }
+                    return message.channel.send(message.language.get("RR_ROLE_REMOVED"));
                 } else {
                     return message.channel.send(message.language.get("RR_BAD_METHOD", g));
                 }

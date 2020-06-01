@@ -27,6 +27,7 @@ module.exports = class {
 			ERROR_NSFW_DEACTIVATED: "This command is not available because the module ``NSFW`` is not available on this server.\nAsk a server administrator to activate it.",
 			ERROR_FORTNITE_PLATFORM: "Please enter a valid platform (pc, xbox, psn).",
 			ERROR_FORTNITE_PLATFORM_USER_NOT_FOUND: "This user was not found on the specified platform.",
+			BOT_MENTION: (prefix) => `>>> My prefix is \`\`${prefix}\`\` on this server.\nYou can see my commands with \`\`${prefix}help\`\`.\nIf you have any issue, please join the official Lycos' server (https://discord.gg/64zRC73) or contact LePtitMetalleux#1604 or BaptisteGT#0123 in direct messages.`,
 			/* Giveaway */
 			GIVEAWAY_DESCRIPTION: "Allows you to manage giveaways easily !",
 			GIVEAWAY_USAGE: (prefix) => `${prefix}giveaway [start/edit/reroll/end/delete]`,
@@ -68,10 +69,12 @@ module.exports = class {
 			LANGUAGE_NAMES: ["English", "French"],
 			LANGAUGE_LIST_DESC: (prefix) => `Here are Lycos' languages.\nType the command \`\`${prefix}lang set [language]\`\` by replacing \`\`[language]\`\` with one of the following options.`,
 			LANGUAGE_SUPPLY: "Reply with the language you want to put the bot in.",
-			LANGUAGE_ALREADY_SET: (lang) => `I'm already in \`${lang.toLowerCase()}\`.`,
-			LANGUAGE_GUILD_INFO: (lang) => `The language on this server is now \`${lang.toLowerCase()}\`.`,
+			LANGUAGE_ALREADY_SET: (lang) => `I'm already in \`${lang}\`.`,
+			LANGUAGE_GUILD_INFO: (lang) => `I'm now in \`${lang}\` on this server.`,
 			ERROR_LANGUAGE_INCORRECT: "I don't think I know this language. Can you help me learn it ?",
 			LANGUAGE_METHOD_ERROR: "I didin't understand what you asked for. Please retry.",
+			LANGUAGE_HELP_TRAD_TITLE: "Tranlsation help",
+			LANGUAGE_HELP_TRAD_MSG: "If you want to help us for the bot's translation, [click here](https://discord.gg/64zRC73).",
 			/* Modules */
 			MODULES_DESCRIPTION: "Not available.",
 			MODULES_USAGE: (prefix) => `${prefix}modules set <module> <on/off>`,
@@ -125,7 +128,7 @@ module.exports = class {
 			HELP_USAGE: (prefix) => `${prefix}help (commande)`,
 			HELP_EXAMPLES: (prefix) => `${prefix}help\n${prefix}help ping`,
 			HELP_NOT_FOUND: (args) => `${e.error} | The command \`${args}\` does not exist !`,
-			HELP_COMING_SOON: "Be available soon.",
+			HELP_COMING_SOON: "Coming soon...",
 			HELP_TITLE: (command) => `Help : ${command}`,
 			HELP_TITLE1: (category) => `Category : ${category}`,
 			HELP_EMBED_DESCRIPTION: (prefix) => `Hello, here is the Lycos documentation.\nTo get more informations about a command, do \`\`${prefix}help [Command]\`\``,//Certaines commandes ne sont pas disponible sur la documentation parce qu'elles doivent être activer.\nPour voir ce que vous pouvez activer faites \`${message.settings.prefix}modules\`.
@@ -145,6 +148,14 @@ module.exports = class {
 				"Music",
 			],
 			HELPGLOBAL_TITLE: "Help menu",
+			/*Bug report*/
+			BUGREPORT_DESCRIPTION: "Reports a bug with the bot.",
+			BUGREPORT_USAGE: (prefix) => `${prefix}bugreport [Message] (Follow the folowing exmaple)`,
+			BUGREPORT_EXAMPLES: (prefix) => `${prefix}bugreport Command: role-info
+			Erorr: TypeError: role.createdTimestamp.toUTCString is not a function
+			Context: I just typed the .role-info Blurple command and I got this error.`,
+			BUGREPORT_NO_ARGS: "Please describe the issue with at least 10 characters and a maximum of 1900.",
+			BUGREPORT_REPORT_SEND: "The bug has been reported successfully, it will be processed as fast as possible et will be fixed in a future update.\nTo be aware of next updates, join Lycos' Discord (https://discord.gg/64zRC73)",
 			/* Invitation */
 			INVITE_DESCRIPTION: "Give the invitation to add the bot on a server.",
 			INVITE_USAGE: (prefix) => `${prefix}invite`,
@@ -158,7 +169,7 @@ module.exports = class {
 			▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 			⚠️ **__WARNING__**
 			Permissions required by Lycos may change at any time. 
-			To know about it, it's recommended to you to join the [official server of Lycos](https://discord.gg/fkmfKZp).`,
+			To know about it, it's recommended to you to join the [official server of Lycos](https://discord.gg/64zRC73).`,
 			//⚖️ To add Spyer with **required permissions**, you only need to [click here](https://discordapp.com/api/oauth2/authorize?client_id=628186022991233025&permissions=41282630&scope=bot).
 			/* Ping */
 			PING_DESCRIPTION: "Gives latency of the Discord API.",
@@ -482,6 +493,11 @@ module.exports = class {
 **Temperature Max/Min**: ${result[0].forecast[4].high}°C/${result[0].forecast[4].low}°C
 **Weather:** ${result[0].forecast[4].skytextday}
 **Precipitation:** ${result[0].forecast[4].precip}%`,
+			/* WIKIPEDIA */
+			WIKIPEDIA_DESCRIPTION: "Seaches a wikipeda page",
+			WIKIPEDIA_USAGE: (prefix) => `${prefix}wikipedia [Name]`,
+			WIKIPEDIA_EXAMPLES: (prefix) => `${prefix}wikipedia Batman`,
+			WIKI_NO_SEARCH: "You must provide the name of the page to search!",
 			/* RPS */
 			RPS_DESCRIPTION: "Game of rock, paper, scissors",
 			RPS_USAGE: (prefix) => `${prefix}rps [rock/paper/scissors]`,
@@ -583,11 +599,11 @@ module.exports = class {
 			MUTE_DESCRIPTION: "Mute the selected member.",
 			MUTE_USAGE: (prefix) => `${prefix}mute [@User or UserID] [Duration] [Reason]`,
 			MUTE_EXAMPLE: (prefix) => `${prefix}mute @Lycos 1[d/h/m/s] Spam emotes`,
-			MUTE_ERRORARGS: "Please indicate a user to mute!",
+			MUTE_ERRORARGS: "Please indicate a user to muted!",
 			MUTE_NO_MUTETIME: "You did not specify a time!",
-			MUTE_USER_ALREADY_MUTED: "This user is already mute!",
+			MUTE_USER_ALREADY_MUTED: "This user is already muted!",
 			MUTE_UNMUTABLE: "This user cannot be mute!",
-			MUTE_NOREASON: "You did not indicate a reason for the mute!",
+			MUTE_NOREASON: "You did not indicate a reason for the muted!",
 			MUTE_ERROR: "I couldn't mute because:",
 			MUTE_INFO: (member, message) => `${member} was muted by ${message.author}`,
 			MUTE_USER_MESSAGE: (message, muteTime, reason) => `You are now muted on **${message.guild.name}** for **${reason}** while **${muteTime}**.`,
@@ -604,10 +620,10 @@ module.exports = class {
 			UNMUTE_DESCRIPTION: "Unmute the selected member.",
 			UNMUTE_USAGE: (prefix) => `${prefix}unmute [@User or UserID]`,
 			UNMUTE_EXAMPLE: (prefix) => `${prefix}unmute @Lycos`,
-			UNMUTE_USER_NOT_MUTED: "This member is not mute !",
-			UNMUTE_SUCCESS: (member) => `${member} was successfully unmute !`,
+			UNMUTE_USER_NOT_MUTED: "This member is not muted!",
+			UNMUTE_SUCCESS: (member) => `${member} was successfully unmuted!`,
 			UNMUTE_USER_SUCCESS: (message) => `You were unmute of **${message.guild.name}**, sorry for inconvenience!`,
-			UNMUTE_ERROR: "I couldn't unmute because :",
+			UNMUTE_ERROR: "I couldn't unmute because:",
 			UNMUTE_EMBED_TITLE: "A member has been unmuted!",
 			UNMUTE_REMOVE_EMBED_DESC: (member) => `**Unmuted member:** ${member.displayName} - ${member} - ${member.user.id}
 **Unmuted automatically**`,
@@ -692,9 +708,10 @@ module.exports = class {
 			RR_EMOTE_ALREADY_IN: "This emote is already in the role reaction.",
 			RR_ROLE_ALREADY_IN: "This role is already in the role reaction.",
 			RR_LIMIT: "You have reached the limit of 30 roles in the role reaction.",
-			RR_NOT_IN: "This role is not in the role reaction.",
+			RR_NOT_IN: "This role or emote is not in the role reaction.",
 			RR_BAD_METHOD: "I did not understand what you wanted to do. Please try again.",
 			RR_ROLE_ADDED: "Role added in the role reaction.",
+			RR_ROLE_REMOVED: "The role has been removed from the role reaction",
 			RR_NO_CHANNEL: "Please set up a channel for the rolereaction beforehand. (See setnotif)",
 			RR_SUPPLY_DESCRIPTION: "Please provide a short description of the role. You cannot use the `/` character in your description.",
 			RR_ERROR_DESC: "The use of the character `/` is reserved for system use. Please try again.",
@@ -733,6 +750,7 @@ module.exports = class {
 			SETREPORTS_NO_ARGS: (g) => `${g.reports_channel === null || g.reports_channel === "" ? `There is currently no reporting channel.` : `The report channel is currently <#${g.reports_channel}>.`}\nAnswer by mentioning the channel or by indicating its ID in order to make it the channel for posting reports.`,
 			SETREPORTS_SAME: (c) => `<#${c}> is already the channel for posting reports.`,
 			SETREPORTS_SUCCESS: (c) => `Reports will now be displayed in the channel <#${c}>.`,
+			SETREPORTS_NOT_TEXT: "Supplied channel isn't a text channel!",
 			/* Setnotif */
 			SETNOTIF_DESCRIPTION: "Allows the selection of the reaction role channel.",
 			SETNOTIF_USAGE: (prefix) => `${prefix}setnotif [#channel/ID]`,

@@ -36,7 +36,8 @@ class Setnotif extends Command {
 			let c = message.guild.channels.resolve(chan) || message.guild.channels.resolveID(chan);
 			let cid = c.toString().slice(2, c.toString().length -1) || c.id;
 			if (isNaN(parseInt(cid)) || !message.guild.channels.cache.find(c => c.id === cid)) return message.channel.send(message.language.get("SETLOGS_ERROR_CHANNEL"));
-            if (cid === g.rolereaction_channel) {
+			if (message.guild.channels.cache.get(`${cid}`).type !== "text") return message.channel.send(message.language.get("SETREPORTS_NOT_TEXT"));
+			if (cid === g.rolereaction_channel) {
                 return message.channel.send(message.language.get("SETNOTIF_SAME", cid))
             }
             mysqlcon.query("UPDATE Guilds SET rolereaction_channel = ? WHERE guild_id = ?", [cid, message.guild.id]);

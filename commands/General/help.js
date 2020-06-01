@@ -134,7 +134,7 @@ class Help extends Command {
 						thumbnail: {
 							url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
 						},
-						description: message.language.get("HELP_EMBED_DESCRIPTION", message),
+						description: message.language.get("HELP_EMBED_DESCRIPTION", message.settings.prefix),
 						footer: {
 							text: message.config.embed.footer,
 							icon_url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})

@@ -44,6 +44,8 @@ class Role extends Command {
 					}
 
 					let r = message.guild.roles.resolve(args[2]) || message.guild.roles.resolveID(args[2]);
+					let test = message.guild.roles.cache.get(r);
+					if (test === undefined) return message.channel.send(message.language.get("AUTOROLE_ROLE_NOT_FOUND"));
 					let rid = r.toString().slice(3, r.toString().length - 1) || r.id;
 					if (!r) {
 						return message.channel.send(message.language.get("ERROR_ROLE_INVALID"));
@@ -71,6 +73,8 @@ class Role extends Command {
 					}
 
 					let r = message.guild.roles.resolve(args[2]) || message.guild.roles.resolveID(args[2]);
+					let test = message.guild.roles.cache.get(r);
+					if (test === undefined) return message.channel.send(message.language.get("AUTOROLE_ROLE_NOT_FOUND"));
 					let rid = r.toString().slice(3, r.toString().length - 1) || r.id;
 					if (!r) {
 						return message.channel.send(message.language.get("ERROR_ROLE_INVALID"));

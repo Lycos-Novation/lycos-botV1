@@ -38,10 +38,10 @@ class mute extends Command {
                         {
                             SEND_MESSAGES: false,
                             ADD_REACTIONS: false,
-                            SEND_TTS_MESSAGES: false, 
+                            SEND_TTS_MESSAGES: false,
                             ATTACH_FILES: false,
                             SPEAK: false
-                    }, "Mute - Auto setting up mute role")
+                        }, "Mute - Auto setting up mute role")
                 });
             }
             const searchArgs = args[0];
@@ -94,8 +94,7 @@ class mute extends Command {
                     })
                     .catch((error) => message.channel.send(`<:lycosX:631854509798326322> ${message.author} ${message.language.get("UNMUTE_ERROR")} ${error}`));
                 return;
-            }
-            else {
+            } else {
                 let member;
                 if (message.mentions.members.size > 0) {
                     member = message.mentions.members.first();
@@ -117,39 +116,37 @@ class mute extends Command {
                 if (!member.bannable) return message.channel.send(message.language.get("MUTE_UNMUTABLE"));
 
                 await member.roles.add(muteRole.id)
-                    .then(m => {
-                        member.send(message.language.get("MUTE_USER_MESSAGE", message, muteTime, reason));
-                        var sql = `SELECT prefix, autorole
+                    .catch((error) => message.channel.send(`<:lycosX:631854509798326322> ${message.author} ${message.language.get("MUTE_ERROR")} ${error}`));
+                member.send(message.language.get("MUTE_USER_MESSAGE", message, muteTime, reason));
+                message.channel.send(message.language.get("MUTE_INFO", member, message));
+                var sql = `SELECT prefix, autorole
 		FROM Guilds
 		WHERE guild_id="${message.guild.id}"`;
-                        var g;
-                        mysqlcon.query(sql, async function (err, result, fields) {
-                            if (err) throw err;
-                            g = result[0];
-                            if (g.modlogs_channel) {
-                                return message.guild.channels.chache.get(g.modlogs_channel).send({
-                                    embed: {
-                                        title: lang.get(`MUTE_EMBED_TITLE`),
-                                        description: lang.get('MUTE_EMBED_DESC', member, message, muteTime, reason),
-                                        footer: {
-                                            text: config.embed.footer,
-                                        },
-                                        thumbnail: {
-                                            url: member.user.displayAvatarURL({ format: "png", dynamic: true }),
-                                        },
-                                        color: 0x21E61B,
-                                    }
-                                })
-                            } else {
-                                return;
+                var g;
+                mysqlcon.query(sql, async function (err, result, fields) {
+                    if (err) throw err;
+                    g = result[0];
+                    if (g.modlogs_channel) {
+                        return message.guild.channels.chache.get(g.modlogs_channel).send({
+                            embed: {
+                                title: lang.get(`MUTE_EMBED_TITLE`),
+                                description: lang.get('MUTE_EMBED_DESC', member, message, muteTime, reason),
+                                footer: {
+                                    text: config.embed.footer,
+                                },
+                                thumbnail: {
+                                    url: member.user.displayAvatarURL({ format: "png", dynamic: true }),
+                                },
+                                color: 0x21E61B,
                             }
                         })
-                    })
-                    .catch((error) => message.channel.send(`<:lycosX:631854509798326322> ${message.author} ${message.language.get("MUTE_ERROR")} ${error}`));
+                    } else {
+                        return;
+                    }
+                });
                 setTimeout(function () {
                     member.roles.remove(muteRole.id)
                 }, ms(muteTime));
-                return message.channel.send(message.language.get("MUTE_INFO", member, message))
             }
         }
         catch (error) {

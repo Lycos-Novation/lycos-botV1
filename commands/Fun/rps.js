@@ -22,15 +22,15 @@ class RPS extends Command {
 	run(message, args) {
 		try {
 			if (args.length >= 1) {
-				var choices = ["pierre", "feuille", "ciseaux"];
+				var choices = message.language.get("RPS_CHOICES_ARRAY");
 				var choixJ = args[0].toLowerCase();
 				if (choices.includes(choixJ)) {
 					var choixO = choices[Math.floor(Math.random() * choices.length)];
 					var result;
 					if (choixO === choixJ) {
 						result = 0;
-				  	} else if ((choixO === "pierre" && choixJ === "ciseaux") || (choixO === "feuille" && choixJ === "pierre") || (choixO === "ciseaux" && choixJ === "feuille")) {
-						result = -1;
+				  	} else if ((choixO === message.language.get("RPS_ROCK") && choixJ === message.language.get("RPS_SCISSORS")) || (choixO === message.language.get("RPS_PAPER") && choixJ === message.language.get("RPS_ROCK")) || (choixO === message.language.get("RPS_SCISSORS") && choixJ === message.language.get("RPS_PAPER"))) {
+						result = 2;
 				  	} else {
 						result = 1;
 				  	}

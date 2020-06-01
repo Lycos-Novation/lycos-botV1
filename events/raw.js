@@ -28,6 +28,7 @@ module.exports = class {
             var g;
             mysqlcon.query(sql, async function (err, result, fields) {
                 g = result[0];
+                const lang = new (require(`../languages/${g.language}.js`));
                 if (member.id !== lycos_id) {
                     var rre = `${g.rolereaction_emotes}`;
                     if (event.t === 'MESSAGE_REACTION_ADD') {
@@ -41,6 +42,7 @@ module.exports = class {
                             const role_id = g.rolereaction_roles.split("/")[number];
                             const role = message.guild.roles.cache.get(role_id);
                             member.roles.add(role, 'Reaction role').catch((error) => console.error(error));
+                            member.send(lang.get(`RR_ADD_USER`, message.guild, role)).catch((error) => console.error(error));
                         }
                     }
                     if (event.t === 'MESSAGE_REACTION_REMOVE') {
@@ -54,6 +56,7 @@ module.exports = class {
                             const role_id = g.rolereaction_roles.split("/")[number];
                             const role = message.guild.roles.cache.get(role_id);
                             member.roles.remove(role, 'Reaction Role').catch((error) => console.error(error));
+                            member.send(lang.get(`RR_REMOVE_USER`, message.guild, role)).catch((error) => console.error(error));
                         }
                     }
                 }

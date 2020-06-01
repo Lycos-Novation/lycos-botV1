@@ -45,19 +45,19 @@ module.exports = class {
 			const permLevel = await client.getLevel(message);
 			message.permLevel = permLevel;
 
+			// Gets language
+			const language = new (require(`../languages/${settings.language}.js`));
+			message.language = language;
+
 			// Check if the bot was mentioned
 			const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 			if (message.content.match(prefixMention)) {
-				return message.channel.send(language.get("PREFIX_INFO", settings.prefix));
+				return await message.channel.send(language.get("BOT_MENTION", settings.prefix));
 			}
 
 			// Gets prefix
 			const prefix = client.functions.getPrefix(message);
 			if (!prefix) return;
-
-			// Gets language
-			const language = new (require(`../languages/${settings.language}.js`));
-			message.language = language;
 
 			const args = message.content.slice((typeof prefix === "string" ? prefix.length : 0)).trim().split(/ +/g);
 			const command = args.shift().toLowerCase();
