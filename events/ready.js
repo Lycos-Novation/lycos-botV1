@@ -84,7 +84,7 @@ module.exports = class {
 												const element = result[index].twitch_channel;
 												const language = new (require(`../languages/${result[index].language}.js`));
 												if (element !== null) {
-													client.channels.cache.get(element).send(result[index].stream_annonce.replace("{streamer}", `${stream._data.user_name}`));
+													client.channels.cache.get(element).send(result[index].stream_annonce.toString('utf-8').replace("{streamer}", `${stream._data.user_name}`));
 													const gid = client.channels.cache.get(element).guild.id;
 													var g;
 													if (gid !== null) {

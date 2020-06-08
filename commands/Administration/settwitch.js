@@ -56,12 +56,13 @@ class SetTwitch extends Command {
 				} else if (toModify.toLowerCase() === "message"){
 					var annonce = args.slice(1).join(" ");
 					if (!annonce) {
-						message.channel.send(message.language.get("SETTWITCH_NO_MSG")+"\n"+message.language.get("COMMAND_CANCEL"));
-						chan = await message.bot.functions.awaitResponse(message);
+						message.channel.send(message.language.get("SETTWTICH_NO_MSG")+"\n"+message.language.get("COMMAND_CANCEL"));
+						annonce = await message.bot.functions.awaitResponse(message);
 					}
 					if (annonce.startsWith(g.prefix)) return;
 					if (annonce.toLowerCase() === "stop" || annonce.toLowerCase() === "cancel") return message.channel.send(message.language.get("COMMAND_CANCELLED"));
-					if (annonce.length > 1500 || annonce.length < 1) return message.channel.send(message.language.get("SETTWTICH_MSG_LENGTH"));
+					console.log(annonce.length);
+					if (annonce.length > 1500 || annonce.length < 1) return message.channel.send(message.language.get("SETTWITCH_MSG_LENGHT"));
 					if (annonce === g.stream_annonce) {
 						return message.channel.send(message.language.get("SETTWITCH_SAME_MSG"));
 					}

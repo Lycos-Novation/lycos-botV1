@@ -144,7 +144,7 @@ class clipGet extends Command {
                 var period = args[1];
                 if (!period) {
                     await message.channel.send(message.language.get("CLIPGET_TOP_NO_PERIOD")+"\n"+message.language.get("COMMAND_CANCEL"));
-                    period = await message.bot.functions.awaitresponse(message);
+                    period = await message.bot.functions.awaitResponse(message);
                 }
                 if (period.startsWith(message.prefix)) return;
                 if (period.toLowerCase() === "stop" || period.toLowerCase() === "cancel") return message.channel.send(message.language.get("COMMAND_CANCELLED"));
