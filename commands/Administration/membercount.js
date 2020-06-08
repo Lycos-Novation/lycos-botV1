@@ -29,9 +29,11 @@ class memberCount extends Command {
                 var method = args[0];
 
                 if (!method) {
-                    message.channel.send(message.language.get("MEMBERCOUNT_NO_METHOD"));
+                    message.channel.send(message.language.get("MEMBERCOUNT_NO_METHOD")+"\n"+message.language.get("COMMAND_CANCEL"));
                     method = await message.bot.functions.awaitResponse(message)
                 }
+                if (method.startsWith(message.prefix)) return;
+			    if (method.toLowerCase() === "stop" || method.toLowerCase() === "cancel") return message.channel.send(message.language.get("COMMAND_CANCELLED"));
                 let salon = g.membercount_channel === null ? null : message.guild.channels.cache.get(g.membercount_channel);
                 var mc;
                 var name = args.slice(1).join(" ");
@@ -40,7 +42,7 @@ class memberCount extends Command {
                 } else {
                     name = `${name} | ${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`;
                 }
-                if (method === "category") {
+                if (method.toLowerCase() === "category") {
                     if (salon) {
                         salon.delete("Membercount")
                             .then()
@@ -56,7 +58,7 @@ class memberCount extends Command {
                             mc = c.id;
                         })
                         .catch(console.error)
-                } else if (method === "channel") {
+                } else if (method.toLowerCase() === "channel") {
                     if (salon) {
                         salon.delete("Membercount")
                             .then()
@@ -72,7 +74,7 @@ class memberCount extends Command {
                             mc = c.id;
                         })
                         .catch(console.error)
-                } else if (method === "delete") {
+                } else if (method.toLowerCase() === "delete") {
                     if (salon) {
                         salon.delete("Membercount")
                             .then(mc = null)

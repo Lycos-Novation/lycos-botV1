@@ -39,7 +39,7 @@ class Wikipedia extends Command {
                             embed: {
                                 title: info.raw.title,
                                 url: info.raw.fullurl,
-                                description: (p.indexOf("=") || p.length) > 2047 ? p.substring(0, p.indexOf("=") > 2044 ? 2044 : p.indexOf("="))+"..." : p.substring(0, p.indexOf("=")),
+                                description: (p.indexOf("=") || p.length) > 2047 ? p.substring(0, p.indexOf("=") > 2044 ? 2044 : p.indexOf("=")) + "..." : p.substring(0, p.indexOf("=")),
                                 footer: {
                                     text: `ID : ${info.raw.pageid}`
                                 },
@@ -47,8 +47,8 @@ class Wikipedia extends Command {
                         })
                     })
                     .catch(e => {
-                        return message.channel.send(message.language.get("ERROR", e));
-                    })
+                        return message.channel.send(message.language.get("WIKI_ERROR", e));
+                    });
             });
         } catch (error) {
             console.error(error);

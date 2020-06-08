@@ -24,10 +24,11 @@ class Language extends Command {
 		try {
 			var method = args[0];
 			if (!method) {
-				message.channel.send(message.language.get("LANGUAGE_INFO", message.settings.language));
+				message.channel.send(message.language.get("LANGUAGE_INFO", message.settings.language)+"\n"+message.language.get("COMMAND_CANCEL"));
 				method = await message.bot.functions.awaitResponse(message);
 			}
-			if (method.startsWith(".")) return;
+			if (method.startsWith(message.prefix)) return;
+			if (method.toLowerCase() === "stop" || method.toLowerCase() === "cancel") return message.channel.send(message.language.get("COMMAND_CANCELLED"));
 			if (method.toLowerCase() === "list") {
 				return message.channel.send({
 					embed: {
@@ -60,10 +61,11 @@ class Language extends Command {
 			} else if (method.toLowerCase() === "set") {
 				var lang = args[1];
 				if (!lang) {
-					message.channel.send(message.language.get("LANGUAGE_SUPPLY"));
+					await message.channel.send(message.language.get("LANGUAGE_SUPPLY")+"\n"+message.language.get("COMMAND_CANCEL"));
 					lang = await message.bot.functions.awaitResponse(message);
 				}
-				if (lang.startsWith(".")) return;
+				if (lang.startsWith(message.prefix)) return;
+				if (lang.toLowerCase() === "stop" || lang.toLowerCase() === "cancel") return message.channel.send(message.language.get("COMMAND_CANCELLED"));
 				if (aliases_fr.includes(lang.toLowerCase()) || aliases_en.includes(lang.toLowerCase())) {
 					var sql = `SELECT *
 							   FROM Guilds

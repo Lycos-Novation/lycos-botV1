@@ -1,4 +1,8 @@
 const Command = require('../../base/Command');
+const TwitchClient = require('twitch').default;
+const clientId = '3ttfz7jff7fs719vmv9bs6k89cksq0';
+const clientSecret = '0awsjh64mmbp3oz9w7nwxxnhhjtjeh';
+const twitchClient = TwitchClient.withClientCredentials(clientId, clientSecret);
 
 class Config extends Command {
     constructor(client) {
@@ -29,6 +33,7 @@ class Config extends Command {
                 if (err) throw err;
                 g = result[0];
                 let ar = result[0].autorole;
+                var stream_ar = g.streamers_ids
                 var autorole = "";
                 if (ar.split("/").length > 1) {
                     autorole = "<@&" + ar.split("/")[0] + ">";
@@ -40,6 +45,23 @@ class Config extends Command {
                 } else {
                     autorole = "Aucun rôle"
                 }
+                var text = "";
+                        if (stream_ar === ""){
+                            text = message.language.get("STREAM_NO_STREAMER_IN");
+                        } else if (stream_ar.split("/").length < 1){
+                            var user = await twitchClient.helix.users.getUserById(stream_ar);
+                            text = `**•** ${user._data.display_name} (${user._data.login} - ${user._data.id})`;
+                        } else {
+                            const ar_ids = stream_ar.split("/");
+                            for (var i = 0; i < stream_ar.split("/").length; i++) {
+                                var user = await twitchClient.helix.users.getUserById(ar_ids[i]);
+                                if (text === ""){
+                                    text = `**•** ${user._data.display_name} (${user._data.login} - ${user._data.id})`;
+                                } else {
+                                    text = text + `\n**•** ${user._data.display_name} (${user._data.login} - ${user._data.id})`
+                                }
+                            }
+                        }
                 return message.channel.send({
                     embed: {
                         author: {
@@ -86,6 +108,15 @@ class Config extends Command {
                                 name: message.language.get("CONFIG_FIELDS")[7],
                                 value: message.language.get("CONFIG_VALUES", g)[4],
                                 inline: true
+                            },
+                            {
+                                name: message.language.get("CONFIG_FIELDS")[8],
+                                value: message.language.get("CONFIG_VALUES", g)[5],
+                                inline: true
+                            },
+                            {
+                                name: message.language.get("CONFIG_FIELDS")[9],
+                                value: text,
                             },
                         ],
                         color: message.config.embed.color,

@@ -58,6 +58,7 @@ module.exports = class {
 			// Gets prefix
 			const prefix = client.functions.getPrefix(message);
 			if (!prefix) return;
+			message.prefix = prefix;
 
 			const args = message.content.slice((typeof prefix === "string" ? prefix.length : 0)).trim().split(/ +/g);
 			const command = args.shift().toLowerCase();

@@ -28,20 +28,23 @@ class Prefix extends Command {
 				g = result[0];
 				var method = args[0];
 			if (!method) {
-				message.channel.send(message.language.get("PREFIX_INFO", message.settings.prefix));
+				message.channel.send(message.language.get("PREFIX_INFO", message.settings.prefix)+"\n"+message.language.get("COMMAND_CANCEL"));
 				method = await message.bot.functions.awaitResponse(message);
 			}
-			if (method.startsWith(".")) return;
-			if (method === "set") {
+			if (method.startsWith(message.prefix)) return;
+			if (method.toLowerCase() === "stop" || method.toLowerCase() === "cancel") return message.channel.send(message.language.get("COMMAND_CANCELLED"));
+			if (method.toLowerCase() === "set") {
 				var pref = args[1];
 				if(!pref) {
-					message.channel.send(message.language.get("PREFIX_NULL"));
+					message.channel.send(message.language.get("PREFIX_NULL")+"\n"+message.language.get("COMMAND_CANCEL"));
 					pref = await message.bot.functions.awaitResponse(message);
 				}
+				if (pref.startsWith(message.prefix)) return;
+				if (pref.toLowerCase() === "stop" || pref.toLowerCase() === "cancel") return message.channel.send(message.language.get("COMMAND_CANCELLED"));
 				mysqlcon.query("UPDATE Guilds SET prefix = ? WHERE guild_id = ?", [pref, message.guild.id]);
 				return message.channel.send(message.language.get("PREFIX_CHANGE", pref));
 			}
-			if (method === "reset") {
+			if (method.toLowerCase() === "reset") {
 				mysqlcon.query("UPDATE Guilds SET prefix = '.' WHERE guild_id = ?", [message.guild.id]);
 				return message.channel.send(message.language.get("PREFIX_RESET"));
 			}

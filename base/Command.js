@@ -14,7 +14,7 @@ module.exports = class Command {
 		botPermissions = [],
 		nsfw = false,
 		adminOnly = false,
-		cooldown = 3000,
+		cooldown = 1000,
 	}) {
 		const category = (dirname ? dirname.split("/")[parseInt(dirname.split("/").length - 1, 10)] : "Other");
 		this.client = client;

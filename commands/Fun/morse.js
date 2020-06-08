@@ -25,11 +25,12 @@ class Morse extends Command {
             morse = ".-,-...,-.-.,-..,.,..-.,--.,....,..,.---,-.-,.-..,--,-.,---,.--.,--.-,.-.,...,-,..-,...-,.--,-..-,-.--,--..,.----,..---,...--,....-,.....,-....,--...,---..,----.,-----".split(","),
             text = args.slice(0).join(" ").toUpperCase();
             if(!text){
-                message.channel.send(message.language.get("MORSE_NO_TEXT"));
+                message.channel.send(message.language.get("MORSE_NO_TEXT")+"\n"+message.language.get("COMMAND_CANCEL"));
                 text = await message.bot.functions.awaitResponse(message)
                 text = text.toUpperCase();
             }
-            if(text.startsWith(".")) return;
+            if (text.startsWith(message.prefix)) return;
+            if (text === "stop" || text === "cancel") return message.channel.send(message.language.get("COMMAND_CANCELLED"));
         while (text.includes("Ä") || text.includes("Ö") || text.includes("Ü")) {
             text = text.replace("Ä","AE").replace("Ö","OE").replace("Ü","UE");
         }

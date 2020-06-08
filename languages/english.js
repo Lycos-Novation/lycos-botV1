@@ -1,5 +1,5 @@
 const e = require("../config.js").emotes;
-const moment = require("moment-timezone");
+const moment = require("moment");
 
 module.exports = class {
 	constructor(...args) {
@@ -8,6 +8,8 @@ module.exports = class {
 			NO_DESCRIPTION_PROVIDED: "No description defined.",
 			NO_USAGE_PROVIDED: "No use defined.",
 			NO_EXAMPLES_PROVIDED: "No example defined.",
+			COMMAND_CANCEL: "Reply with `stop` or `cancel` to stop the command.",
+			COMMAND_CANCELLED: "Command stopped",
 			ERROR: (error) => `Something went wrong. Try Again.\n\`\`\`\n${error}\`\`\``,
 			ERROR_PERMISSIONS_TITLE: `<:lycosX:631854509798326322> Insufficient permissions`,
 			ERROR_PERMISSIONS_CONTENT: (lvl, rlvl) => `This command requires the authorization level \`${rlvl}\` and you only have the level \`${lvl}\` !`,
@@ -498,6 +500,7 @@ module.exports = class {
 			WIKIPEDIA_USAGE: (prefix) => `${prefix}wikipedia [Name]`,
 			WIKIPEDIA_EXAMPLES: (prefix) => `${prefix}wikipedia Batman`,
 			WIKI_NO_SEARCH: "You must provide the name of the page to search!",
+			WIKI_ERROR: (e) => `${e}`,
 			/* RPS */
 			RPS_DESCRIPTION: "Game of rock, paper, scissors",
 			RPS_USAGE: (prefix) => `${prefix}rps [rock/paper/scissors]`,
@@ -673,7 +676,9 @@ module.exports = class {
 				"Departures channel",
 				"Log display channel",
 				"Moderation logs display channel",
-				"Signal display channel"
+				"Reports display channel",
+				"Streams announcement channel",
+				"Server's followed streamers' list"
 			],
 			CONFIG_VALUES: (g) => [
 				`${g.welcome_channel === null ? "No channel has been defined" : `<#${g.welcome_channel}>`}`,
@@ -681,6 +686,7 @@ module.exports = class {
 				`${g.logs_channel === null ? "No channel has been defined" : `<#${g.logs_channel}>`}`,
 				`${g.modlogs_channel === null ? "No channel has been defined" : `<#${g.modlogs_channel}>`}`,
 				`${g.reports_channel === null ? "No channel has been defined" : `<#${g.reports_channel}>`}`,
+				`${g.twitch_channel === null ? "Aucun salon n'a été défini" : `<#${g.twitch_channel}>`}`,
 			],
 			/* Autorole */
 			AUTOROLE_DESCRIPTION: "Allows management of roles added when a new member arrives.",
@@ -766,9 +772,95 @@ module.exports = class {
 			SETMODLOGS_SAME: (c) => `<#${c}> is already the moderation log channel.`,
 			SETMODLOGS_SUCCESS: (c) => `Moderation logs will now be displayed in the channel <#${c}>.`,
 			/* Settwitch */
+			SETTWITCH_DESCRIPTION: "Allows you to manage stream announcements, `channel` for annoucements' channel and `message` for annoucements' message.",
+			SETTWITCH_USAGE: (prefix) => `${prefix}settwitch [channel/message]. Use \`{streamer}\` where you want the steamer name to be.`,
+			SETTWITCH_EXAMPLES: (prefix) => `${prefix}settwitch channel #streams\n${prefix}settwitch message Hey @everyone ! {streamer} just strted a new stream!`,
 			SETTWITCH_NO_ARGS: (g) => `${g.twitch_channel === null || g.twitch_channel === "" ? `There is currently no Twitch live channel.` : `The Twitch live Announcement channel is currently <#${g.twitch_channel}>.`}\nAnswer by mentioning the channel or specifying its ID to make it the Twitch live channel.`,
 			SETTWITCH_SAME: (c) => `<#${c}> is already the channel for announcing twitch lives.`,
 			SETTWITCH_SUCCESS: (c) => `Twitch lives will now be announced in the channel <#${c}>.`,
+			SETTWITCH_NO_MODIFY: "Please provide the element you want to modify: ``channel`` or ``message``.",
+			SETTWITCH_BAD_MODIFY: "I didn't understand what you want to modify. Please retry.",
+			SETTWTICH_NO_MSG: "Please provide the message you want to send for stream announcements. Use `{streamer}` where you want the steamer name to be.",
+			SETTWITCH_MSG_LENGHT: "The stream announcement must have at least 1 character and 1500 at maximum.",
+			SETTWITCH_SAME_MSG: "The current announcement message is the same.",
+			SETTWITCH_NEW_MSG: (annonce) => `The new stream announcement message is: \`${annonce}\`.`,
+			SETTWITCH_ERROR_MODIFY: "Error : No corrsponding modification found (Neither of ``channel`` and ``message``).",
+			/* Stream */
+			STREAM_DESCRIPTION: "Allows you to manage announced streams on the server.",
+			STREAM_USAGE: (prefix) => `${prefix}stream [add/remove/list]`,
+			STREAM_EXAMPLES: (prefix) => `${prefix}stream add lycostv\n${prefix}stream remove lycostv\n${prefix}stream list`,
+			STREAM_LIST_TITLE: "Server's followed streamers' list",
+			STREAM_NO_CHANNEL: "Stream announcements channel is not defined.",
+			STREAM_NO_METHOD: "Please provide what you want to do: `add`, `remove` or `list`.",
+			STREAM_NO_STREAMER_IN: "There isn't any followed streamer on the server.",
+			STREAM_NO_STREAMER_FOUND: "I cant found provided streamer.",
+			STREAM_BAD_METHOD: "I didn't understand what you want to do. Please retry.",
+			STREAM_NO_STREAMER: "Please provide the streamer's name you want the stream announcements.",
+			STREAM_LIMIT_REACHED: "You have reached the limit of 4 streamers.",
+			STREAM_STREAMER_ALREADY_IN: "This streamer is already in the annoucements list of the server!",
+			STREAM_STREAMER_NOT_IN: "This streamer isn't in the annoucements list of the server!",
+			STREAM_ADDED: (displayName, name, id) => `The nexts streams of ${displayName} (${name} - ${id}) will be announced on the server!`,
+			STREAM_REMOVED: (displayName, name, id) => `The streams of ${displayName} (${name} - ${id}) will not be announced anymore on the server.`,
+			STREAM_EMBED_TITLES: [
+				"Game",
+				"Viewers",
+				"Started At"
+			],
+			STREAM_STARTEDAT: (startedat) => moment(startedat).format("LLLL").charAt(0).toUpperCase() + moment(startedat).format("LLLL").slice(1),
+			STREAM_NO_GAME: "No game defined",
+			STREAM_ENDED: (streamer) => `**${streamer}**'s stream had ended.`,
+			/* Streamer-info */
+			STREAMERINFO_DESCRIPTION: "Gives informations about the provided Twitch streamer.",
+			STREAMERINFO_USAGE: (prefix) => `${prefix}streamer-info [Channel]`,
+			STREAMERINFO_EXAMPLES: (prefix) => `${prefix}streamer-info LycosTV`,
+			STREAMERINFO_NO_REQUEST: "Please provide a streamer's name!",
+			STREAMERINFO_EMBED_TITLE: (name, type) => `${name}'s profile${type !== "" ? type === "affiliate" ? " (Twitch Affiliate)": " (Twitch Partner)" : ""}`,
+			STREAMERINFO_EMBED_TITLES: [
+				"View count"
+			],
+			/* Clip-get */
+			CLIPGET_DESCRIPTION: "Finds a requested or random clip.",
+			CLIPGET_USAGE: (prefix) => `${prefix}clip-get [id/streamer/game/top] (Amount)`,
+			CLIPGET_EXAMPLES: (prefix) => `${prefix}clip-get id ImpartialGlutenFreePineappleWholeWheat\n${prefix}clip-get streamer LycosTV 5\n${prefix}clip-get game Minecraft Dungeons 5\n${prefix}clip-get top 10`,
+			CLIPGET_NO_METHOD: "Please provide the clip's origin: `id`, `streamer`, `game` `top`, or `trending`",
+			CLIPGET_BAD_METHOD: "I didn't understand the origin of the clip you asked for: `id`, `streamer`, `game`, `top` or `trending`",
+			CLIPGET_NO_CLIPID: "Please give the clip's ID to find.",
+			CLIPGET_ID_EMBED_TITLES: [
+				"Channel",
+				"Language",
+				"View count",
+				"Created at"
+			],
+			CLIPGET_ID_CREATION_DATE: (startedat) => moment(startedat).format("LLLL").charAt(0).toUpperCase() + moment(startedat).format("LLLL").slice(1),
+			CLIPGET_NO_STREAMER: "Please provide the streamer of your choice.",
+			CLIPGET_NO_GAME: "Please provide the game of your choice.",
+			CLIPGET_STREAMER_NOT_FOUND: "I didn't find the streamer you asked for.",
+			CLIPGET_GAME_NOT_FOUND: "I didn't find the game you asked for.",
+			CLIPGET_STREAMER_NUMBER: "The amount of clips to show must be between 1 and 10. (Included values).",
+			CLIPGET_STREAMER_EMBED_TITLE: (num, user) => `${num === 1 ? "Last clip of" : `List of the ${num} last clips`} of ${user}`,
+			CLIPGET_STREAMER_EMBED_CREATEDBY: "Created by",
+			CLIPGET_STREAMER_EMBED_CREATEDAT: (createdat) => `at ${moment(createdat).format("LLLL")}`,
+			CLIPGET_STREAMER_EMBED_CREATEDCHANNEL: (channel) => `on ${channel}'s channel`,
+			CLIPGET_TOP_NO_PERIOD: "You must provide the period wich you want clips to come from : `day`, `week`, `month` ou `all`",
+			CLIPGET_TOP_EMBED_VIEWS: "views",
+			CLIPGET_STREAMER_EMBED_CREATEDAT: (createdat) => `Created at ${moment(createdat).format("LLLL")}`,
+			CLIPGET_TOP_EMBED_TITLE: (period) => `Top 5 of clips the most viewed ${period === "day" ? "of the day" : period === "week" ? "of the week" : period === "month" ? "of the month" : "ever"}`,
+			CLIPGET_TRENDING_EMBED_TITLE: (period) => `Top 5 of clips the most popular ${period === "day" ? "of the day" : period === "week" ? "of the week" : period === "month" ? "of the month" : "ever"}`,
+			/* Gametop */
+			GAMETOP_DESCRIPTION: "Shows a list of the 10 most viewed games at the moment",
+			GAMETOP_USAGE: (prefix) => `${prefix}game-top`,
+			GAMETOP_EXAMPLES: (prefix) => `${prefix}game-top`,
+			GAMETOP_EMBED_TITLE: "Top 10 of most viewed games on Twitch",
+			GAMETOP_EMBED_ON: "on",
+			GAMETOP_EMBED_CHANNELS: "channels",
+			/* Clip-create */
+			CLIPCREATE_DESCRIPTION: "Creates a clip on resquested channel.",
+			CLIPCREATE_USAGE: (prefix) => `${prefix}clip-create [channel]`,
+			CLIPCREATE_EXAMPLES: (prefix) => `${prefix}clip-create LycosTV`,
+			CLIPCREATE_NO_CHANNEL: "Please provide the name of a streaming channel.",
+			CLIPCREATE_NO_LIVE: "This channel isn't streaming!",
+			CLIPCREATE_CREATED: (clip, name) => `A new clip has been created on \`${name}\`'s channel!
+You can find it here: https://clips.twitch.tv/${clip}`,
 			/* Logs */
 			LOGS_CHANNEL_CREATE_TITLE: `A new channel has been created !`,
 			LOGS_CHANNEL_CREATE_DESC: (c) => `**${c.name}** - ${c} (${c.id})

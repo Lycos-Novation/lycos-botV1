@@ -28,9 +28,11 @@ class Osu extends Command {
         try {
             var player = args.join(" ");
             if (!player) {
-                message.channel.send(message.language.get("OSU_SUPPLY_PLAYER"));
+                message.channel.send(message.language.get("OSU_SUPPLY_PLAYER")+"\n"+message.language.get("COMMAND_CANCEL"));
                 player = await message.bot.functions.awaitResponse(message);
             }
+            if (player.startsWith(message.prefix)) return;
+            if (player.toLowerCase() === "stop" || player.toLowerCase() === "cancel") return message.channel.send(message.language.get("COMMAND_CANCELLED"));
             osuApi.getUser({ u: player }).then((user) => {
                 if (user.length === 0) return message.channel.send(message.language.get("OSU_USER_NOT_FOUND"));
                 return message.channel.send({

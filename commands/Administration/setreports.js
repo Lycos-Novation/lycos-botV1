@@ -29,10 +29,11 @@ class Setreports extends Command {
 				g = result[0];
 				var chan = args[0];
 			if (!chan) {
-				message.channel.send(message.language.get("SETREPORTS_NO_ARGS", g));
+				message.channel.send(message.language.get("SETREPORTS_NO_ARGS", g)+"\n"+message.language.get("COMMAND_CANCEL"));
 				chan = await message.bot.functions.awaitResponse(message);
 			}
-			if (chan.startsWith(".")) return;
+			if (chan.startsWith(message.prefix)) return;
+			if (chan === "stop" || chan === "cancel") return message.channel.send(message.language.get("COMMAND_CANCELLED"));
 			let c = message.guild.channels.resolve(chan) || message.guild.channels.resolveID(chan);
 			let cid = c.toString().slice(2, c.toString().length -1) || c.id;
 			if (isNaN(parseInt(cid)) || !message.guild.channels.cache.find(c => c.id === cid)) return message.channel.send(message.language.get("SETLOGS_ERROR_CHANNEL"));

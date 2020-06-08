@@ -21,6 +21,13 @@ class Help extends Command {
 
 	run(message, args) {
 		try {
+			var sql = ` SELECT prefix
+					    FROM Guilds
+						WHERE guild_id="${message.guild.id}";`;
+            var g;
+            mysqlcon.query(sql, async function (err, result, fields) {
+				g = result[0];
+				const prefix = g.prefix;
 			if(args[0]) {
 				const command = message.bot.commands.get(args[0]) || message.bot.commands.get(message.bot.aliases.get(args[0]));
 				if(command) {
@@ -41,11 +48,11 @@ class Help extends Command {
 								},
 								{
 									name: message.language.get("HELP_FIELDS")[1],
-									value: command.help.usage(message.language, message.settings.prefix),
+									value: command.help.usage(message.language, prefix),
 								},
 								{
 									name: message.language.get("HELP_FIELDS")[2],
-									value: command.help.examples(message.language, message.settings.prefix),
+									value: command.help.examples(message.language, prefix),
 								},
 								{
 									name: "Aliases",
@@ -68,27 +75,27 @@ class Help extends Command {
 
 				embedFields.push(
 					{
-						name: `${message.config.emotes.administration} ${message.language.get("HELPGLOBAL_FIELDS")[0]} (${message.bot.commands.filter((filters) => filters.help.category === "Administration").size})`,
+						name: `⚙️ ${message.language.get("HELPGLOBAL_FIELDS")[0]} (${message.bot.commands.filter((filters) => filters.help.category === "Administration").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "Administration").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
-						name: `${message.config.emotes.moderation} ${message.language.get("HELPGLOBAL_FIELDS")[1]} (${message.bot.commands.filter((filters) => filters.help.category === "Moderation").size})`,
+						name: `🔰 ${message.language.get("HELPGLOBAL_FIELDS")[1]} (${message.bot.commands.filter((filters) => filters.help.category === "Moderation").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "Moderation").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
-						name: `${message.config.emotes.general} ${message.language.get("HELPGLOBAL_FIELDS")[2]} (${message.bot.commands.filter((filters) => filters.help.category === "General").size})`,
+						name: `<:lycosLogo:708601118673862666> ${message.language.get("HELPGLOBAL_FIELDS")[2]} (${message.bot.commands.filter((filters) => filters.help.category === "General").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "General").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
-						name: `${message.config.emotes.fun} ${message.language.get("HELPGLOBAL_FIELDS")[3]} (${message.bot.commands.filter((filters) => filters.help.category === "Fun").size})`,
+						name: `🎉 ${message.language.get("HELPGLOBAL_FIELDS")[3]} (${message.bot.commands.filter((filters) => filters.help.category === "Fun").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "Fun").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
-						name: `${message.config.emotes.general} ${message.language.get("HELPGLOBAL_FIELDS")[4]} (${message.bot.commands.filter((filters) => filters.help.category === "Stream").size})`,
-						value: message.language.get("HELP_COMING_SOON"),//message.bot.commands.filter((filters) => filters.help.category === "Stream").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
+						name: `<:Twitch:640189897566846976> ${message.language.get("HELPGLOBAL_FIELDS")[4]} (${message.bot.commands.filter((filters) => filters.help.category === "Stream").size})`,
+						value: message.bot.commands.filter((filters) => filters.help.category === "Stream").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
-						name: `${message.config.emotes.general} ${message.language.get("HELPGLOBAL_FIELDS")[5]} (${message.bot.commands.filter((filters) => filters.help.category === "Games").size})`,
+						name: `🎮 ${message.language.get("HELPGLOBAL_FIELDS")[5]} (${message.bot.commands.filter((filters) => filters.help.category === "Games").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "Games").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					
@@ -131,10 +138,7 @@ class Help extends Command {
 							icon_url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
 						},
 						color: message.config.embed.color,
-						thumbnail: {
-							url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
-						},
-						description: message.language.get("HELP_EMBED_DESCRIPTION", message.settings.prefix),
+						description: message.language.get("HELP_EMBED_DESCRIPTION", prefix),
 						footer: {
 							text: message.config.embed.footer,
 							icon_url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
@@ -143,8 +147,8 @@ class Help extends Command {
 					},
 				});
 			}
-		}
-		catch (error) {
+		})
+		} catch (error) {
 			console.error(error);
 			return message.channel.send(message.language.get("ERROR", error));
 		}

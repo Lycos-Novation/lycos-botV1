@@ -22,10 +22,11 @@ class roleMention extends Command {
         try {
             var toMention = args.slice(0).join(" ");
             if (!toMention) {
-                message.channel.send(message.language.get("ROLEMENTION_NOARGS"));
+                message.channel.send(message.language.get("ROLEMENTION_NOARGS")+"\n"+message.language.get("COMMAND_CANCEL"));
                 toMention = await message.bot.functions.awaitResponse(message);
             }
-            if (toMention.startsWith(".")) return;
+            if (toMention.startsWith(message.prefix)) return;
+            if (toMention === "stop" || toMention === "cancel") return message.channel.send(message.language.get("COMMAND_CANCELLED"));
             if (toMention === "everyone" || toMention === "@everyone") {
                 return message.channel.send(`@everyone`);
             } else if (toMention === "here" || toMention === "@here") {
