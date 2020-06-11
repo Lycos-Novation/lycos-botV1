@@ -121,7 +121,7 @@ module.exports = class {
 				"Other informations",
 				"\u200B",
 			],
-			BOT_FIELDS_CONTENT_GENERALINFO: (message, version) => `**Creator :** \`${message.bot.users.cache.get("169146903462805504").tag}\`\n**Developers :** \`${message.bot.users.cache.get("153163308801720321").tag}\` and \`${message.bot.users.cache.get("169146903462805504").tag}\`\nCreated the \`22/05/2020\`, the bot is currently running on the version \`${version}\`.`,
+			BOT_FIELDS_CONTENT_GENERALINFO: (message, version) => `**Creator :** [\`${message.bot.users.cache.get("169146903462805504").tag}\`](https://dsc.bio/baptistegt)\n**Developers :** [\`${message.bot.users.cache.get("153163308801720321").tag}\`](https://dsc.bio/LePtitMetalleux) and [\`${message.bot.users.cache.get("169146903462805504").tag}\`](https://dsc.bio/baptistegt)\nCreated on the \`22/05/2020\`, the bot is currently running on the version \`${version}\`.`,
 			BOT_FIELDS_CONTENT_GENERALSTATS: (guilds, users, channels) => `**Number of servers :** \`${guilds}\`.\n**Users :** \`${users}\` in memory.\n**Number of channels :** \`${channels}\`.`,
 			BOT_FIELDS_CONTENT_OTHERINFO: (process, moment, message) => `**Machine :** \`${process.platform}\` - \`(${process.arch})\` \n**TAS :** \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}\`\n**Bot connection time :** \`${moment.duration(message.bot.uptime).format("M[m] W[w] D[d] H[h] m[m] s[s]")}\``,
 			BOT_FIELDS_CONTENT_LINKS: "[Invitation](https://discordapp.com/oauth2/authorize?client_id=628186022991233025&scope=bot&permissions=0) - [Server](https://discord.gg/64zRC73) - [Donations](https://utip.io/lycosnovation) - [Utip](https://utip.io/lycosnovation) - [Website](https://lycos-novation.fr/) - [Twitch](https://www.twitch.tv/lycostv) - [Instagram](https://www.instagram.com/lycosnovation/) - [Twitter](https://twitter.com/LycosNovation)",//[Vote](https://discordbots.org/bot/390231727554953216)
@@ -969,9 +969,9 @@ There are now **${m.guild.memberCount}** people on the server!`,
 **ID:** ${oldMember.id}
 **Account creation:** ${moment(oldMember.user.createdAt.toUTCString()).format("LLLL")}
 **Joined the server the:** ${moment(oldMember.joinedAt.toUTCString()).format("LLLL")}
-**Bannisable**: ${oldMember.bannable === true ? "Yes" : "No"}
+**Bannable**: ${oldMember.bannable === true ? "Yes" : "No"}
 **Expulsable:** ${oldMember.kickable === true ? "Yes" : "No"}
-**SurName:** ${oldMember.nickname ? `${oldMember.displayName}` : "No surName"}
+**Nickname:** ${oldMember.nickname ? `${oldMember.displayName}` : "No surName"}
 **Avatar:** ${oldMember.user.displayAvatarURL({ format: "png", dynamic: true})}
 **Roles:** ${oldMember.roles.cache.size > 10 ? `${oldMember.roles.cache.map((r) => r).slice(0, 9).join(", ")} and ${oldMember.roles.cache.size - 10} other roles.` : (oldMember.roles.cache.size < 1) ? `No role` : `${oldMember.roles.cache.map((r) => r).join(", ")}`}
 
@@ -981,16 +981,16 @@ There are now **${m.guild.memberCount}** people on the server!`,
 **ID:** ${newMember.id}
 **Account creation:** ${moment(newMember.user.createdAt.toUTCString()).format("LLLL")}
 **Joined the server the:** ${moment(newMember.joinedAt.toUTCString()).format("LLLL")}
-**Bannisable:** ${newMember.bannable === true ? "Oui" : "Non"}
-**Expulsable:** ${newMember.kickable === true ? "Oui" : "Non"}
-**SurName:** ${newMember.nickname ? `${newMember.displayName}` : "No surName"}
+**Bannable:** ${newMember.bannable === true ? "Yes" : "No"}
+**Expulsable:** ${newMember.kickable === true ? "Yes" : "No"}
+**Nickname:** ${newMember.nickname ? `${newMember.displayName}` : "No surName"}
 **Avatar:** ${newMember.user.displayAvatarURL({ format: "png", dynamic: true})}
 **Roles:** ${newMember.roles.cache.size > 10 ? `${newMember.roles.cache.map((r) => r).slice(0, 9).join(", ")} and ${newMember.roles.cache.size - 10} other Roles.` : (newMember.roles.cache.size < 1) ? `No role` : `${newMember.roles.cache.map((r) => r).join(", ")}`}`,
 			LOGS_MESSAGE_DELETE_TITLE: "A message has been deleted!",
-			LOGS_MESSAGE_DELETE_DESC: (message) => `**Post author :** ${message.author.tag} - ${message.author} - ${message.author.id}
+			LOGS_MESSAGE_DELETE_DESC: (message) => `**Message author :** ${message.author.tag} - ${message.author} - ${message.author.id}
 **Message deleted in:** ${message.channel.name} - ${message.channel} - ${message.channel.id}
 **Message deleted the:** ${moment(new Date()).format("LLLL")}
-**Content of the message:** \`\`${message.content}\`\``,
+**Content of the message:** \`\`${message.content.length > 150 ? message.content.substring(0, 150)+"..." : message.content }\`\``,
 			LOGS_MESSAGE_DELETE_BULK_TITLE: "Several messages have been deleted !",
 			LOGS_MESSAGE_DELETE_BULK_DESC: () => ``,
 			LOGS_MESSAGE_UPDATE_TITLE: "A message has been changed!",

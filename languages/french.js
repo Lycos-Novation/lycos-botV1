@@ -114,7 +114,7 @@ module.exports = class {
 				"Autres renseignements",
 				"\u200B",
 			],
-			BOT_FIELDS_CONTENT_GENERALINFO: (message, version) => `**Créateur :** \`${message.bot.users.cache.get("169146903462805504").tag}\`\n**Développeurs :** \`${message.bot.users.cache.get("153163308801720321").tag}\` et \`${message.bot.users.cache.get("169146903462805504").tag}\`\nCréé le \`22/05/2020\`, le bot tourne actuellement sur la version \`${version}\`.`,
+			BOT_FIELDS_CONTENT_GENERALINFO: (message, version) => `**Créateur :** [\`${message.bot.users.cache.get("169146903462805504").tag}\`](https://dsc.bio/baptistegt)\n**Développeurs :** [\`${message.bot.users.cache.get("153163308801720321").tag}\`](https://dsc.bio/LePtitMetalleux) et [\`${message.bot.users.cache.get("169146903462805504").tag}\`](https://dsc.bio/baptistegt)\nCréé le \`22/05/2020\`, le bot tourne actuellement sur la version \`${version}\`.`,
 			BOT_FIELDS_CONTENT_GENERALSTATS: (guilds, users, channels) => `**Nombre de serveurs :** \`${guilds}\`.\n**Utilisateurs :** \`${users}\` en mémoire.\n**Nombre de salons :** \`${channels}\`.`,
 			BOT_FIELDS_CONTENT_OTHERINFO: (process, moment, message) => `**Machine :** \`${process.platform}\` - \`(${process.arch})\` \n**TAS :** \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}\`\n**Durée de connexion du bot :** \`${moment.duration(message.bot.uptime).format("M[m] W[w] D[d] H[h] m[m] s[s]")}\``,
 			BOT_FIELDS_CONTENT_LINKS: "[Invitation](https://discordapp.com/oauth2/authorize?client_id=628186022991233025&scope=bot&permissions=8) - [Serveur](https://discord.gg/64zRC73) - [Dons](https://utip.io/lycosnovation) - [Utip](https://utip.io/lycosnovation) - [Site](https://lycos-novation.fr/) - [Twitch](https://www.twitch.tv/lycostv) - [Instagram](https://www.instagram.com/lycosnovation/) - [Twitter](https://twitter.com/LycosNovation)",//[Vote](https://discordbots.org/bot/390231727554953216)
@@ -924,14 +924,14 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 			LOGS_MESSAGE_DELETE_DESC: (message) => `**Auteur du message :** ${message.author.tag} - ${message.author} - ${message.author.id}
 **Message supprimé dans :** ${message.channel.name} - ${message.channel} - ${message.channel.id}
 **Message supprimé le :** ${moment(new Date()).format("LLLL")}
-**Contenu du message :** \`\`${message.content}\`\``,
+**Contenu du message :** \`\`${message.content.length > 150 ? message.content.substring(0, 150)+"..." : message.content }\`\``,
 			LOGS_MESSAGE_DELETE_BULK_TITLE: "Plusieurs messages ont été supprimés !",
 			LOGS_MESSAGE_DELETE_BULK_DESC: () => ``,
 			LOGS_MESSAGE_UPDATE_TITLE: "Un message a été modifié !",
 			LOGS_MESSAGE_UPDATE_DESC: (oldMessage, newMessage) => `**Auteur du message :** ${newMessage.author.tag} - ${newMessage.author} - ${newMessage.author.id}
 **Salon :** ${newMessage.channel.name} - ${newMessage.channel} - ${newMessage.channel.id}
-**Ancien message :** \`\`${oldMessage.content}\`\`
-**Nouveau message :** \`\`${newMessage.content}\`\``,
+**Ancien message :** \`\`${oldMessage.content.length > 150 ? oldMessage.content.substring(0, 150) + "..." : oldMessage.content}\`\`
+**Nouveau message :** \`\`${newMessage.content.length > 150 ? newMessage.content.substring(0, 150) + "..." : newMessage.content}\`\``,
 			LOGS_ROLE_CREATE_TITLE: "Un nouveau rôle a été créé !",
 			LOGS_ROLE_CREATE_DESC: (role) => `**Nom du rôle :** ${role.name} - ${role}
 **ID :** ${role.id}

@@ -106,8 +106,10 @@ class stream extends Command {
                                     if (stock_array.split("/").indexOf(data.users[0]._id) === -1) {
                                         mysqlcon.query("UPDATE Guilds SET stream_check = ? WHERE guild_id = ?", [stock_array + "/" + data.users[0]._id, "697368051405815860"]);
                                     }
+                                    mysqlcon.query(`INSERT INTO Streams (streamer, title, game) VALUES (${data.users[0]._id}, null, null)`);
                                 } else {
                                     mysqlcon.query("UPDATE Guilds SET stream_check = ? WHERE guild_id = ?", [stock_array + data.users[0]._id, "697368051405815860"]);
+                                    mysqlcon.query(`INSERT INTO Streams (streamer, title, game) VALUES (${data.users[0]._id}, null, null)`);
                                 }
                                 return message.channel.send(message.language.get("STREAM_ADDED", data.users[0].display_name, data.users[0].name, data.users[0]._id));
                             } else if (method.toLowerCase() === 'remove') {

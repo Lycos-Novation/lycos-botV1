@@ -73,86 +73,134 @@ module.exports = class {
 						const subscriptions = await subscribeToMultipleUsersStreamChanges(ids, listener, async (stream, userId) => {
 							try {
 								if (stream) {
-									const game = await twitchClient.helix.games.getGameById(stream._data.game_id);
-									var sql = `SELECT *
+									sql = `SELECT *
+											FROM Streams
+											WHERE streamer='${userId}'`;
+									mysqlcon.query(sql, async function (err, r, fields) {
+										if (err) throw err;
+										if (r[0].state === 1) {
+											return;
+										} else {
+											mysqlcon.query("UPDATE Streams SET state = ? WHERE streamer = ?", [true, userId]);
+											const game = await twitchClient.helix.games.getGameById(stream._data.game_id);
+											var sql = `SELECT *
 											   FROM Guilds
 											   WHERE streamers_ids LIKE '%${userId}%'`;
-									mysqlcon.query(sql, async function (err, result, fields) {
-										if (err) throw err;
-										try {
-											for (let index = 0; index < result.length; index++) {
-												const element = result[index].twitch_channel;
-												const language = new (require(`../languages/${result[index].language}.js`));
-												if (element !== null) {
-													client.channels.cache.get(element).send(result[index].stream_annonce.toString('utf-8').replace("{streamer}", `${stream._data.user_name}`));
-													const gid = client.channels.cache.get(element).guild.id;
-													var g;
-													if (gid !== null) {
-														g = client.guilds.cache.get(gid);
+											mysqlcon.query(sql, async function (err, result, fields) {
+												if (err) throw err;
+												try {
+													for (let index = 0; index < result.length; index++) {
+														const element = result[index].twitch_channel;
+														const language = new (require(`../languages/${result[index].language}.js`));
+														if (element !== null) {
+															client.channels.cache.get(element).send(result[index].stream_annonce.toString('utf-8').replace("{streamer}", `${stream._data.user_name}`));
+															const gid = client.channels.cache.get(element).guild.id;
+															var g;
+															if (gid !== null) {
+																g = client.guilds.cache.get(gid);
+															}
+															if (g === undefined) return;
+															sql = `SELECT *
+											   				FROM Streams
+											   				WHERE streamer='${userId}'`;
+															mysqlcon.query(sql, async function (err, res, fields) {
+																if (err) throw err;
+																if ((res[0].title === null ? res[0].title : res[0].title.toString()) !== stream._data.title) {
+																	mysqlcon.query("UPDATE Streams SET title = ? WHERE streamer = ?", [stream._data.title, userId]);
+																	for (let index = 0; index < result.length; index++) {
+																		const element = result[index].twitch_channel;
+																		if (element !== null) {
+																			return client.channels.cache.get(element).send("Titre changé");
+																		}
+																	}
+																}
+																if (res[0].game !== game._data.id) {
+																	mysqlcon.query("UPDATE Streams SET game = ? WHERE streamer = ?", [game._data.id, userId]);
+																	for (let index = 0; index < result.length; index++) {
+																		const element = result[index].twitch_channel;
+																		if (element !== null) {
+																			return client.channels.cache.get(element).send("Jeu changé");
+																		}
+																	}
+																}
+																client.channels.cache.get(element).send({
+																	embed: {
+																		author: {
+																			name: g.name,
+																			icon_url: g.iconURL({ format: "png", dynamic: true })
+																		},
+																		title: stream._data.title,
+																		url: `https://twitch.tv/${stream._data.user_name.toLowerCase()}`,
+																		fields: [
+																			{
+																				name: language.get("STREAM_EMBED_TITLES")[0],
+																				value: game === null ? language.get("STREAM_NO_GAME") : game._data.name,
+																				inline: true
+																			},
+																			{
+																				name: language.get("STREAM_EMBED_TITLES")[1],
+																				value: stream._data.viewer_count,
+																				inline: true
+																			},
+																			{
+																				name: language.get("STREAM_EMBED_TITLES")[2],
+																				value: language.get("STREAM_STARTEDAT", stream._data.started_at),
+																			},
+																		],
+																		/*video: {
+																			height: 378,
+																			url: `https://player.twitch.tv/?channel=leptitmetalleux&player=facebook&autoplay=true&parent=meta.tag`,
+																			width: 620,
+																		},*/
+																		image: {
+																			url: stream._data.thumbnail_url.toString().replace("{width}", "1980").replace("{height}", "1080"),
+																			width: 1920,
+																			height: 1080,
+																		},
+																		color: 0x6441a5,
+																		thumbnail: {
+																			url: game === null ? null : game._data.box_art_url.toString().replace("{width}", "188").replace("{height}", "250"),
+																			width: 188,
+																			height: 250,
+																		},
+																	}
+																});
+															});
+														};
 													}
-													client.channels.cache.get(element).send({
-														embed: {
-															author: {
-																name: g.name,
-																icon_url: g.iconURL({ format: "png", dynamic: true })
-															},
-															title: stream._data.title,
-															url: `https://twitch.tv/${stream._data.user_name.toLowerCase()}`,
-															fields: [
-																{
-																	name: language.get("STREAM_EMBED_TITLES")[0],
-																	value: game === null ? language.get("STREAM_NO_GAME") : game._data.name,
-																	inline: true
-																},
-																{
-																	name: language.get("STREAM_EMBED_TITLES")[1],
-																	value: stream._data.viewer_count,
-																	inline: true
-																},
-																{
-																	name: language.get("STREAM_EMBED_TITLES")[2],
-																	value: language.get("STREAM_STARTEDAT", stream._data.started_at),
-																},
-															],
-															/*video: {
-																height: 378,
-																url: `https://player.twitch.tv/?channel=leptitmetalleux&player=facebook&autoplay=true&parent=meta.tag`,
-																width: 620,
-															},*/
-															image: {
-																url: stream._data.thumbnail_url.toString().replace("{width}", "1980").replace("{height}", "1080"),
-																width: 1920,
-																height: 1080,
-															},
-															color: 0x6441a5,
-															thumbnail: {
-																url: game === null ? null : game._data.box_art_url.toString().replace("{width}", "188").replace("{height}", "250"),
-																width: 188,
-																height: 250,
-															},
-														}
-													});
-												};
-											}
-										} catch (error) {
-											return console.log(error);
+												} catch (error) {
+													return console.log(error);
+												}
+											});
 										}
-
 									});
+
 								} else {
 									// no stream, no display name
-									const user = await twitchClient.helix.users.getUserById(userId);
 									sql = `SELECT *
-		FROM Guilds
-		WHERE streamers_ids LIKE '%${userId}%'`;
-									mysqlcon.query(sql, async function (err, result, fields) {
+											FROM Streams
+											WHERE streamer='${userId}'`;
+									mysqlcon.query(sql, async function (err, res, fields) {
 										if (err) throw err;
-										for (let index = 0; index < result.length; index++) {
-											const element = result[index].twitch_channel;
-											const language = new (require(`../languages/${result[index].language}.js`));
-											if (element !== null) client.channels.cache.get(element).send(language.get("STREAM_ENDED", user._data.display_name));
+										if (res[0].state === 0) {
+											return;
+										} else {
+											mysqlcon.query("UPDATE Streams SET state = ? WHERE streamer = ?", [false, userId]);
+											const user = await twitchClient.helix.users.getUserById(userId);
+											sql = `SELECT *
+													FROM Guilds
+													WHERE streamers_ids LIKE '%${userId}%'`;
+											mysqlcon.query(sql, async function (err, result, fields) {
+												if (err) throw err;
+												for (let index = 0; index < result.length; index++) {
+													const element = result[index].twitch_channel;
+													const language = new (require(`../languages/${result[index].language}.js`));
+													if (element !== null) client.channels.cache.get(element).send(language.get("STREAM_ENDED", user._data.display_name));
+												}
+											});
 										}
 									});
+
 								}
 							} catch (error) {
 								return console.log(error);
