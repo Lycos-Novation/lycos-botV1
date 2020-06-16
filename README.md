@@ -5,6 +5,7 @@
 <a href="https://nodejs.org/">
     <image src="https://img.shields.io/badge/node--js-v10.16.0-brightgreen.svg?logo=node.js&longCache=true&style=flat-square">
 </a>
+[![chat](https://img.shields.io/discord/627946609896062986?label=Discord)](https://discord.gg/KWjptxF)
 
 ## Contributing
 
