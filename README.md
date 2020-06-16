@@ -8,6 +8,7 @@
 <a href="https://discord.gg/KWjptxF">
     <image src="https://img.shields.io/discord/627946609896062986?label=Discord&style=flat-square">
 </a>
+
 ## Contributing
 
 > To get started...
