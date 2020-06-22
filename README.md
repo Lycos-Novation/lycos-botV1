@@ -1,5 +1,14 @@
 # Lycos Bot
 
+## Features
+
+<a href="https://nodejs.org/">
+    <image src="https://img.shields.io/badge/node--js-v10.16.0-brightgreen.svg?logo=node.js&longCache=true&style=flat-square">
+</a>
+<a href="https://discord.gg/KWjptxF">
+    <image src="https://img.shields.io/discord/627946609896062986?label=Discord&style=flat-square">
+</a>
+
 ## Contributing
 
 > To get started...
