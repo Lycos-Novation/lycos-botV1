@@ -9,7 +9,7 @@ class Sayembed extends Command {
 			examples: (language, prefix) => language.get("SAY_EMBED_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
-			guildOnly: false,
+			guildOnly: true,
 			permLevel: "Server Moderator",
             botPermissions: ["SEND_MESSAGES"],
             aliases: ["sembed", "saye"],

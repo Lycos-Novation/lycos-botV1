@@ -73,61 +73,57 @@ module.exports = class {
 						const subscriptions = await subscribeToMultipleUsersStreamChanges(ids, listener, async (stream, userId) => {
 							try {
 								if (stream) {
+									console.log(stream);
 									sql = `SELECT *
 											FROM Streams
 											WHERE streamer='${userId}'`;
 									mysqlcon.query(sql, async function (err, r, fields) {
 										if (err) throw err;
-										if (r[0].state === 1) {
-											return;
-										} else {
-											mysqlcon.query("UPDATE Streams SET state = ? WHERE streamer = ?", [true, userId]);
-											const game = await twitchClient.helix.games.getGameById(stream._data.game_id);
-											var sql = `SELECT *
+										//if (r[0].state === 0) {
+										const game = await twitchClient.helix.games.getGameById(stream._data.game_id);
+										var sql = `SELECT *
 											   FROM Guilds
 											   WHERE streamers_ids LIKE '%${userId}%'`;
-											mysqlcon.query(sql, async function (err, result, fields) {
-												if (err) throw err;
-												try {
-													for (let index = 0; index < result.length; index++) {
-														const element = result[index].twitch_channel;
-														const language = new (require(`../languages/${result[index].language}.js`));
-														if (element !== null) {
-															client.channels.cache.get(element).send(result[index].stream_annonce.toString('utf-8').replace("{streamer}", `${stream._data.user_name}`));
-															const gid = client.channels.cache.get(element).guild.id;
-															var g;
-															if (gid !== null) {
-																g = client.guilds.cache.get(gid);
-															}
-															if (g === undefined) return;
-															sql = `SELECT *
+										mysqlcon.query(sql, async function (err, result, fields) {
+											if (err) throw err;
+											try {
+												for (let index = 0; index < result.length; index++) {
+													var element = result[index].twitch_channel;
+													var language = new (require(`../languages/${result[index].language}.js`));
+													if (element !== null) {
+														var gid = client.channels.cache.get(element).guild.id;
+														var g;
+														if (gid !== null) {
+															g = client.guilds.cache.get(gid);
+														}
+														if (g === undefined) return console.log("Error ready.js | L.100 --> g === undefined");
+														sql = `SELECT *
 											   				FROM Streams
 											   				WHERE streamer='${userId}'`;
-															mysqlcon.query(sql, async function (err, res, fields) {
-																if (err) throw err;
-																if ((res[0].title === null ? res[0].title : res[0].title.toString()) !== stream._data.title) {
-																	mysqlcon.query("UPDATE Streams SET title = ? WHERE streamer = ?", [stream._data.title, userId]);
-																	for (let index = 0; index < result.length; index++) {
-																		const element = result[index].twitch_channel;
-																		if (element !== null) {
-																			return client.channels.cache.get(element).send("Titre changé");
-																		}
-																	}
+														mysqlcon.query(sql, async function (err, res, fields) {
+															if (err) throw err;
+															if ((res[0].title === null ? res[0].title : res[0].title.toString()) !== stream._data.title) {
+																await mysqlcon.query("UPDATE Streams SET title = ? WHERE streamer = ?", [stream._data.title, userId]);
+																if (res[0].state !== 0) {
+																	return client.channels.cache.get(element).send(language.get("STREAM_TILTE_CHANGED", stream._data.user_name, stream._data.title));
 																}
-																if (res[0].game !== game._data.id) {
-																	mysqlcon.query("UPDATE Streams SET game = ? WHERE streamer = ?", [game._data.id, userId]);
-																	for (let index = 0; index < result.length; index++) {
-																		const element = result[index].twitch_channel;
-																		if (element !== null) {
-																			return client.channels.cache.get(element).send("Jeu changé");
-																		}
-																	}
+															}
+															if (res[0].game !== game._data.id) {
+																await mysqlcon.query("UPDATE Streams SET game = ? WHERE streamer = ?", [game._data.id, userId]);
+																if (res[0].state !== 0) {
+																	var oldGame = await twitchClient.helix.games.getGameById(res[0].game);
+																	return client.channels.cache.get(element).send(language.get("STREAM_GAME_CHANGED", stream._data.user_name, oldGame._data.name, game._data.name));
 																}
-																client.channels.cache.get(element).send({
+															}
+															if (res[0].state === 0) {
+																mysqlcon.query("UPDATE Streams SET state = ? WHERE streamer = ?", [true, userId]);
+																var user = await twitchClient.helix.users.getUserById(userId);
+																client.channels.cache.get(element).send(result[index].stream_annonce.toString('utf-8').replace("{streamer}", `${stream._data.user_name}`));
+																return client.channels.cache.get(element).send({
 																	embed: {
 																		author: {
-																			name: g.name,
-																			icon_url: g.iconURL({ format: "png", dynamic: true })
+																			name: stream._data.user_name,
+																			icon_url: user._data.profile_image_url,
 																		},
 																		title: stream._data.title,
 																		url: `https://twitch.tv/${stream._data.user_name.toLowerCase()}`,
@@ -165,14 +161,15 @@ module.exports = class {
 																		},
 																	}
 																});
-															});
-														};
-													}
-												} catch (error) {
-													return console.log(error);
+															}
+														});
+													};
 												}
-											});
-										}
+											} catch (error) {
+												return console.log(error);
+											}
+										});
+										//}
 									});
 
 								} else {
@@ -182,9 +179,7 @@ module.exports = class {
 											WHERE streamer='${userId}'`;
 									mysqlcon.query(sql, async function (err, res, fields) {
 										if (err) throw err;
-										if (res[0].state === 0) {
-											return;
-										} else {
+										if (res[0].state === 1) {
 											mysqlcon.query("UPDATE Streams SET state = ? WHERE streamer = ?", [false, userId]);
 											const user = await twitchClient.helix.users.getUserById(userId);
 											sql = `SELECT *
@@ -193,8 +188,8 @@ module.exports = class {
 											mysqlcon.query(sql, async function (err, result, fields) {
 												if (err) throw err;
 												for (let index = 0; index < result.length; index++) {
-													const element = result[index].twitch_channel;
-													const language = new (require(`../languages/${result[index].language}.js`));
+													var element = result[index].twitch_channel;
+													var language = new (require(`../languages/${result[index].language}.js`));
 													if (element !== null) client.channels.cache.get(element).send(language.get("STREAM_ENDED", user._data.display_name));
 												}
 											});
@@ -208,9 +203,6 @@ module.exports = class {
 
 						});
 					});
-
-
-
 				} catch (error) {
 					return console.error(error);
 				}

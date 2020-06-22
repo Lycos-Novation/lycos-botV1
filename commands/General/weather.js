@@ -9,7 +9,7 @@ class weatherInfo extends Command {
             examples: (language, prefix) => language.get("WEATHERINFO_EXAMPLES", prefix),
             dirname: __dirname,
             enabled: true,
-            guildOnly: true,
+            guildOnly: false,
             permLevel: "User",
             aliases: ["weather-info", "weatherinfo", "meteo", "météo"],
             botPermissions: ["EMBED_LINKS"],
@@ -32,6 +32,9 @@ class weatherInfo extends Command {
                         author: {
                             name: message.language.get("WEATHERINFO_EMBED_TITLE", result),
                             icon_url: message.bot.user.displayAvatarURL({format: "png",dynamic: true})
+                        },
+                        thumbnail: {
+                            url: result[0].current.imageUrl
                         },
                         description: message.language.get("WEATHERINFO_EMBED_DESCRIPTION", result),
                         timestamp: new Date(),

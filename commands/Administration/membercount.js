@@ -27,7 +27,7 @@ class memberCount extends Command {
             mysqlcon.query(sql, async function (err, result, fields) {
                 g = result[0];
                 var method = args[0];
-
+                if (message.guild.channels.cache.size === 500) return message.channel.send(message.language.get("MEMBERCOUNT_TOO_MUCH_CHANNELS"));
                 if (!method) {
                     message.channel.send(message.language.get("MEMBERCOUNT_NO_METHOD")+"\n"+message.language.get("COMMAND_CANCEL"));
                     method = await message.bot.functions.awaitResponse(message)
@@ -37,10 +37,10 @@ class memberCount extends Command {
                 let salon = g.membercount_channel === null ? null : message.guild.channels.cache.get(g.membercount_channel);
                 var mc;
                 var name = args.slice(1).join(" ");
-                if (name.indexOf("{membercount}")){
+                if (name.indexOf("{membercount}") !== -1){
                     name = name.replace("{membercount}", message.guild.memberCount);
                 } else {
-                    name = `${name} | ${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`;
+                    name = `${message.guild.name} | ${message.guild.memberCount} ${message.language.get("MEMBERCOUNT_MEMBERS")}`;
                 }
                 if (method.toLowerCase() === "category") {
                     if (salon) {
@@ -81,7 +81,7 @@ class memberCount extends Command {
                             .catch(console.error);
                             message.channel.send(message.language.get("MEMBERCOUNT_DELETED"))
                     } else {
-                        return message.channel.send(message.channel.get("MEMBERCOUNT_NOT_EXISTS"))
+                        return message.channel.send(message.language.get("MEMBERCOUNT_NOT_EXISTS"))
                     }
                 } else {
                     return message.channel.send(message.language.get("MEMBERCOUNT_UNVALID_METHOD"))

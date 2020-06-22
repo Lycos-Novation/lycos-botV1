@@ -21,13 +21,7 @@ class Help extends Command {
 
 	run(message, args) {
 		try {
-			var sql = ` SELECT prefix
-					    FROM Guilds
-						WHERE guild_id="${message.guild.id}";`;
-            var g;
-            mysqlcon.query(sql, async function (err, result, fields) {
-				g = result[0];
-				const prefix = g.prefix;
+			const prefix = message.prefix;
 			if(args[0]) {
 				const command = message.bot.commands.get(args[0]) || message.bot.commands.get(message.bot.aliases.get(args[0]));
 				if(command) {
@@ -147,7 +141,6 @@ class Help extends Command {
 					},
 				});
 			}
-		})
 		} catch (error) {
 			console.error(error);
 			return message.channel.send(message.language.get("ERROR", error));

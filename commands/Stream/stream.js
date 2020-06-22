@@ -1,7 +1,7 @@
 const Command = require('../../base/Command');
 const fetch = require("node-fetch");
 const TwitchClient = require('twitch').default;
-const clientId = 'TwitchClientID';
+const clientId = 'TwitchClientId';
 const clientSecret = 'TwitchClientSecret';
 const twitchClient = TwitchClient.withClientCredentials(clientId, clientSecret);
 class stream extends Command {
@@ -93,40 +93,46 @@ class stream extends Command {
                     fetch(url, options)
                         .then(res => res.json())
                         .then(data => {
-                            if (data._total === 0) return message.channel.send(message.language.get("STREAM_NO_STREAMER_FOUND"));
-                            if (method.toLowerCase() === 'add') {
-                                if (ar.split("/").length === 4) return message.channel.send(message.language.get("STREAM_LIMIT_REACHED"));
-                                if (ar.split("/").indexOf(data.users[0]._id) !== -1) return message.channel.send(message.language.get("STREAM_STREAMER_ALREADY_IN"));
-                                if (ar.split("/").length > 1 || ar !== "") {
-                                    mysqlcon.query("UPDATE Guilds SET streamers_ids = ? WHERE guild_id = ?", [g.streamers_ids + "/" + data.users[0]._id, message.guild.id]);
-                                } else {
-                                    mysqlcon.query("UPDATE Guilds SET streamers_ids = ? WHERE guild_id = ?", [g.streamers_ids + data.users[0]._id, message.guild.id]);
-                                }
-                                if (stock_array.split("/").length > 1 || stock_array !== "") {
-                                    if (stock_array.split("/").indexOf(data.users[0]._id) === -1) {
-                                        mysqlcon.query("UPDATE Guilds SET stream_check = ? WHERE guild_id = ?", [stock_array + "/" + data.users[0]._id, "697368051405815860"]);
+                            try {
+                                if (data._total === 0) return message.channel.send(message.language.get("STREAM_NO_STREAMER_FOUND"));
+                                if (method.toLowerCase() === 'add') {
+                                    if (ar.split("/").length === 4) return message.channel.send(message.language.get("STREAM_LIMIT_REACHED"));
+                                    if (ar.split("/").indexOf(data.users[0]._id) !== -1) return message.channel.send(message.language.get("STREAM_STREAMER_ALREADY_IN"));
+                                    if (ar.split("/").length > 1 || ar !== "") {
+                                        mysqlcon.query("UPDATE Guilds SET streamers_ids = ? WHERE guild_id = ?", [g.streamers_ids + "/" + data.users[0]._id, message.guild.id]);
+                                    } else {
+                                        mysqlcon.query("UPDATE Guilds SET streamers_ids = ? WHERE guild_id = ?", [g.streamers_ids + data.users[0]._id, message.guild.id]);
                                     }
-                                    mysqlcon.query(`INSERT INTO Streams (streamer, title, game) VALUES (${data.users[0]._id}, null, null)`);
-                                } else {
-                                    mysqlcon.query("UPDATE Guilds SET stream_check = ? WHERE guild_id = ?", [stock_array + data.users[0]._id, "697368051405815860"]);
-                                    mysqlcon.query(`INSERT INTO Streams (streamer, title, game) VALUES (${data.users[0]._id}, null, null)`);
-                                }
-                                return message.channel.send(message.language.get("STREAM_ADDED", data.users[0].display_name, data.users[0].name, data.users[0]._id));
-                            } else if (method.toLowerCase() === 'remove') {
-                                if (ar.split("/").indexOf(data.users[0]._id) === -1) return message.channel.send(message.language.get("STREAM_STREAMER_NOT_IN"));
-                                if (ar.split("/").length > 1) {
-                                    for (var i = 0; i < ar.split("/").length; i++) {
-                                        if (ar.split("/")[i] !== data.users[0]._id) {
-                                            ids.push(ar.split("/")[i])
+                                    if (stock_array.split("/").length > 1 || stock_array !== "") {
+                                        if (stock_array.split("/").indexOf(data.users[0]._id) === -1) {
+                                            mysqlcon.query("UPDATE Guilds SET stream_check = ? WHERE guild_id = ?", [stock_array + "/" + data.users[0]._id, "697368051405815860"]);
                                         }
+                                        mysqlcon.query(`INSERT INTO Streams (streamer, title, game) VALUES (${data.users[0]._id}, null, null)`);
+                                    } else {
+                                        mysqlcon.query("UPDATE Guilds SET stream_check = ? WHERE guild_id = ?", [stock_array + data.users[0]._id, "697368051405815860"]);
+                                        mysqlcon.query(`INSERT INTO Streams (streamer, title, game) VALUES (${data.users[0]._id}, null, null)`);
                                     }
-                                    let envoi = ids.join("/");
-                                    mysqlcon.query(`UPDATE Guilds SET streamers_ids = ? WHERE guild_id = ?`, [envoi, message.guild.id]);
-                                } else {
-                                    mysqlcon.query("UPDATE Guilds SET streamers_ids = ? WHERE guild_id = ?", ["", message.guild.id]);
-                                }
-                                return message.channel.send(message.language.get("STREAM_REMOVED", data.users[0].display_name, data.users[0].name, data.users[0]._id));
+                                    return message.channel.send(message.language.get("STREAM_ADDED", data.users[0].display_name, data.users[0].name, data.users[0]._id));
+                                } else if (method.toLowerCase() === 'remove') {
+                                    if (ar.split("/").indexOf(data.users[0]._id) === -1) return message.channel.send(message.language.get("STREAM_STREAMER_NOT_IN"));
+                                    if (ar.split("/").length > 1) {
+                                        for (var i = 0; i < ar.split("/").length; i++) {
+                                            if (ar.split("/")[i] !== data.users[0]._id) {
+                                                ids.push(ar.split("/")[i])
+                                            }
+                                        }
+                                        let envoi = ids.join("/");
+                                        mysqlcon.query(`UPDATE Guilds SET streamers_ids = ? WHERE guild_id = ?`, [envoi, message.guild.id]);
+                                    } else {
+                                        mysqlcon.query("UPDATE Guilds SET streamers_ids = ? WHERE guild_id = ?", ["", message.guild.id]);
+                                    }
+                                    return message.channel.send(message.language.get("STREAM_REMOVED", data.users[0].display_name, data.users[0].name, data.users[0]._id));
+                                } 
+                            } catch (error) {
+                                console.error(error);
+                                return message.channel.send(message.language.get("ERROR", error));
                             }
+                            
                         });
                 });
             });

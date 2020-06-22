@@ -9,7 +9,7 @@ class Ban extends Command {
 			examples: (language, prefix) => language.get("BAN_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
-			guildOnly: false,
+			guildOnly: true,
 			permLevel: "Server Moderator",
 			botPermissions: ["EMBED_LINKS", "BAN_MEMBERS"],
 			nsfw: false,

@@ -9,7 +9,7 @@ class Kick extends Command {
 			examples: (language, prefix) => language.get("KICK_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
-			guildOnly: false,
+			guildOnly: true,
 			permLevel: "Server Moderator",
 			botPermissions: ["EMBED_LINKS", "KICK_MEMBERS"],
 			nsfw: false,

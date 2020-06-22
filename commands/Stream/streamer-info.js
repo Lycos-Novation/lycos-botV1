@@ -1,8 +1,8 @@
 const Command = require('../../base/Command');
 
 const TwitchClient = require('twitch').default;
-const clientId = 'TwitchClientID';
-const clientSecret = 'TwitchCLientSecret';
+const clientId = 'TwitchClientId';
+const clientSecret = 'TwitchClientSecret';
 const twitchClient = TwitchClient.withClientCredentials(clientId, clientSecret);
 class streamerInfo extends Command {
     constructor(client) {
@@ -13,7 +13,7 @@ class streamerInfo extends Command {
             examples: (language, prefix) => language.get("STREAMERINFO_EXAMPLES", prefix),
             dirname: __dirname,
             enabled: true,
-            guildOnly: true,
+            guildOnly: false,
             permLevel: "User",
             botPermissions: ["SEND_MESSAGES"],
             aliases: ["streamerinfo"],

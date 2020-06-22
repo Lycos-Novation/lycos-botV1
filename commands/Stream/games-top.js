@@ -10,7 +10,7 @@ class topGames extends Command {
             examples: (language, prefix) => language.get("GAMETOP_EXAMPLES", prefix),
             dirname: __dirname,
             enabled: true,
-            guildOnly: true,
+            guildOnly: false,
             permLevel: "User",
             botPermissions: ["SEND_MESSAGES"],
             aliases: ["gametop", "topgames", "gamestop", "top-game", "top-games", "game-top"],

@@ -5,6 +5,7 @@ module.exports = class {
 	}
 
 	async run(oldMessage, newMessage) {
+		if (oldMessage.channel.type === 'dm' || oldMessage.author.bot || oldMessage.content.indexOf('.') === 0) return;
 		var sql = `SELECT *
 		FROM Guilds
 		WHERE guild_id="${newMessage.guild.id}"`;

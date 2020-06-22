@@ -12,7 +12,7 @@ class clipCreate extends Command {
             examples: (language, prefix) => language.get("CLIPCREATE_EXAMPLES", prefix),
             dirname: __dirname,
             enabled: true,
-            guildOnly: true,
+            guildOnly: false,
             permLevel: "User",
             botPermissions: ["SEND_MESSAGES"],
             aliases: ["clipcreate", "createclip", "create-clip"],

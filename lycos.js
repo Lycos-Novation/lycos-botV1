@@ -21,6 +21,8 @@ class Lycos extends Client {
 		this.commands = new Collection();
 		// Aliases are loaded in collections where they can be read from.
 		this.aliases = new Collection();
+		// Cooldowns
+		this.cooldowns = new Collection();
 		// This is our image module.
 		this.pictURL = new PictURLClient(Provider.Imgur);
 		// Here we load all our functions stored in functions.js

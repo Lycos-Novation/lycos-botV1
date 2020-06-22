@@ -18,6 +18,8 @@ module.exports = class {
 			ERROR_NSFW_CONTENT: "This command must be launched in an NSFW channel (+18).",
 			ERROR_DISABLED_TITLE: `<:lycosX:631854509798326322> Command disabled`,
 			ERROR_DISABLED_CONTENT: "This command is temporarily disabled, only administrators currently have access to it.",
+			ERROR_COOLDOWN: "<:lycosX:631854509798326322> __Cooldown running__",
+			ERROR_COOLDOWN_CONTENT: (timeLeft, command) => `You must wait ${timeLeft} more second(s) before reusing the \`${command}\` command.`,
 			ERROR_EVERYONE_TITLE: `<:lycosX:631854509798326322> Security`,
 			ERROR_EVERYONE_CONTENT: "We detected an @everyone in your message, but you don't have permission to mention @everyone in orders.",
 			ERROR_BOTPERMISSIONS_TITLE: `<:lycosX:631854509798326322> __Missing permissions__`,
@@ -663,6 +665,7 @@ module.exports = class {
 			MEMBERCOUNT_CREATED: "The membercount has been created!",
 			MEMBERCOUNT_DELETED: "The membercount has been deleted!",
 			MEMBERCOUNT_NOT_EXISTS: "There is no membercount created on the server!",
+			MEMBERCOUNT_TOO_MUCH_CHANNELS: "The limit of channels in this server has been reached! Please delete a channel for the membercount's creation.",
 			/* Config */
 			CONFIG_DESCRIPTION: "Displays the bot configuration on the server.",
 			CONFIG_USAGE: (prefix) => `${prefix}config`,
@@ -809,6 +812,8 @@ module.exports = class {
 			STREAM_STARTEDAT: (startedat) => moment(startedat).format("LLLL").charAt(0).toUpperCase() + moment(startedat).format("LLLL").slice(1),
 			STREAM_NO_GAME: "No game defined",
 			STREAM_ENDED: (streamer) => `**${streamer}**'s stream had ended.`,
+			STREAM_TITLE_CHANGED: (streamer, newTitle) => `**${streamer}** has changed his stream name: **${newTitle}**`,
+			STREAM_GAME_CHANGED: (streamer, oldGame, newGame) => `**${streamer}** stopped playing to **${oldGame}** and started playing to **${newGame}** !`,
 			/* Streamer-info */
 			STREAMERINFO_DESCRIPTION: "Gives informations about the provided Twitch streamer.",
 			STREAMERINFO_USAGE: (prefix) => `${prefix}streamer-info [Channel]`,

@@ -9,7 +9,7 @@ class clear extends Command {
             examples: (language, prefix) => language.get("CLEAR_EXAMPLE", prefix),
             dirname: __dirname,
             enabled: true,
-            guildOnly: false,
+            guildOnly: true,
             permLevel: "Server Moderator",
             botPermissions: ["MANAGE_MESSAGES"],
             nsfw: false,

@@ -1,7 +1,7 @@
 const Command = require('../../base/Command');
 const fetch = require("node-fetch");
 const TwitchClient = require('twitch').default;
-const clientId = 'TwitchClientID';
+const clientId = 'TwitchClientId';
 const accessToken = 'TwitchAccessToken';
 const twitchClient = TwitchClient.withCredentials(clientId, accessToken);
 class clipGet extends Command {
@@ -13,7 +13,7 @@ class clipGet extends Command {
             examples: (language, prefix) => language.get("CLIPGET_EXAMPLES", prefix),
             dirname: __dirname,
             enabled: true,
-            guildOnly: true,
+            guildOnly: false,
             permLevel: "User",
             botPermissions: ["SEND_MESSAGES"],
             aliases: ["get-clip", "clips-get", "get-clips", "getclip", "getclips", "clipget", "clipsget"],

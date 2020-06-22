@@ -5,6 +5,7 @@ module.exports = {
      * @param {string} requiredLevel The permissions required
      * @param {object} message The discord message
      */
+
 	perm(level, requiredLevel, message) {
 		return message.channel.send({
 			embed: {
@@ -25,6 +26,7 @@ module.exports = {
      * Send an error if the channel is not NSFW
      * @param {object} message The discord message
      */
+
 	nsfw(message) {
 		return message.channel.send({
 			embed: {
@@ -45,6 +47,7 @@ module.exports = {
      * Send an error message if the command is disabled
      * @param {object} message The discord message
      */
+
 	disabled(message) {
 		return message.channel.send({
 			embed: {
@@ -65,6 +68,7 @@ module.exports = {
      * Send an error message if the member doesn't have the permission to mention everyone
      * @param {object} message The discord message
      */
+
 	everyone(message) {
 		return message.channel.send({
 			embed: {
@@ -86,7 +90,19 @@ module.exports = {
      * @param {string} permissions Needed permissions
      * @param {object} message The discord message
      */
+
 	botPermissions(permissions, message) {
 		return message.channel.send(`**${message.language.get("ERROR_BOTPERMISSIONS_TITLE")}**\n\n${message.language.get("ERROR_BOTPERMISSIONS_CONTENT", permissions)}`);
+	},
+
+	/**
+     * Send an error message if the member is in command cooldown
+     * @param {string} timeLeft Time left before the end of the cooldown
+     * @param {string} command The command's name
+	 * @param {object} message The discord message
+     */
+
+	inCooldown(timeLeft, command, message) {
+		return message.channel.send(`**${message.language.get("ERROR_COOLDOWN")}**\n\n${message.language.get("ERROR_COOLDOWN_CONTENT", timeLeft, command)}`);
 	},
 };

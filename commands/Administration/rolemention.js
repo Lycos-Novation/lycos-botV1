@@ -34,7 +34,7 @@ class roleMention extends Command {
             } else {
                 let r = message.guild.roles.resolve(toMention) || message.guild.roles.resolveID(toMention);
                 let rid = r.toString().slice(3, r.toString().length - 1) || r.id;
-                if (!rid) return message.channel.send(message.language.get("ROLEMENTION_ROLE_NOT_FOUND"));
+                if (!rid || isNaN(rid)) return message.channel.send(message.language.get("ROLEMENTION_ROLE_NOT_FOUND"));
                 return message.channel.send(`<@&${rid}>`);
             }
         }

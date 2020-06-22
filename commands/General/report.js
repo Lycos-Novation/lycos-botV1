@@ -9,7 +9,7 @@ class Report extends Command {
 			examples: (language, prefix) => language.get("REPORT_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
-			guildOnly: false,
+			guildOnly: true,
 			permLevel: "User",
             botPermissions: ["EMBED_LINKS", "SEND_MESSAGES", "MANAGE_MESSAGES"],
             aliases: ["signal", "reports"],
