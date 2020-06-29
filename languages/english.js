@@ -105,6 +105,7 @@ module.exports = class {
 			PREFIX_NULL: "Respond with the prefix you want to assign to the bot.",
 			PREFIX_CHANGE: (pref) => `The prefix is ​​now \`${pref}\`.`,
 			PREFIX_RESET: "The prefix has been reset. It is now `.`",
+			PREFIX_TOO_LONG: (prefix) => `The prefix \`${prefix}\` is too long! Bot's prefix can't be more than 15 characters in lenght.`,
 			/* Role */
 			ROLE_DESCRIPTION: "Manage roles easily.",
 			ROLE_USAGE: ".role <add/remove> <user> <role>",
@@ -557,6 +558,7 @@ module.exports = class {
 			MORSE_EXAMPLES: (prefix) => `${prefix}morse [Message]`,
 			MORSE_NO_TEXT: "You must specify a message to translate ! You can reply with it or reply with the commande ans your message.",
 			MORSE_CANT_TRANSLATE: "Sorry, I can't translate your message. Make sure your message don't have special characters.",
+			MORSE_TRANSLATE_ESPACE: "Sorry, there are more than 2000 characters that follow each other without space, so I can't send the translation without corrupt it...",
 			/* Même */
 			MEME_DESCRIPTION: "Sends a meme",
 			MEME_USAGE: (prefix) => `${prefix}meme`,
@@ -567,10 +569,10 @@ module.exports = class {
 			SAY_EXAMPLES: (prefix) => `${prefix}say Hello my name is Lycos!`,
 			SAY_NO_ARGS: "You must write a message to send!",
 			SAY_TOO_LONG: "Your message is too long !",
-			SAY_EVERYONE: "You cannot mention ``everyone``!",
+			SAY_EVERYONE: "You cannot mention `everyone`!",
 			SAY_EMBED_DESCRIPTION: "Make the bot speak in an embed",
-			SAY_EMBED_USAGE: (prefix) => `${prefix}say [text]`,
-			SAY_EMBED_EXAMPLES: (prefix) => `${prefix}say Hello my name is Lycos!`,
+			SAY_EMBED_USAGE: (prefix) => `${prefix}sayembed [text]`,
+			SAY_EMBED_EXAMPLES: (prefix) => `${prefix}sayembed Hello my name is Lycos!`,
 			/* Report */
 			REPORT_DESCRIPTION: "Allows you to report a member.",
 			REPORT_USAGE: (prefix) => `${prefix}report [@User/ID] [Raison]`,
@@ -644,10 +646,10 @@ module.exports = class {
 			ROLEMENTION_ROLE_HIGHEST: "This role is superior to mine, so I can't mention it.",
 			ROLEMENTION_NOARGS: "Respond with the id of the role to be mentioned (If everyone or here, just respond with everyone or here).",
 			/* Emotes */
-			EMOTES_DESCRIPTION: "List server emojis.",
+			EMOTES_DESCRIPTION: "Server's emojis list",
 			EMOTES_USAGE: (prefix) => `${prefix}emotes`,
 			EMOTES_EXAMPLES: (prefix) => `${prefix}emotes`,
-			EMOTES_TITLE: "List of server emojis.",
+			EMOTES_TITLE: "Server's emojis list",
 			EMOTES_TITLES: [
 				"Emojis",
 				"Animated emojis"
@@ -706,6 +708,7 @@ module.exports = class {
 			AUTOROLE_ROLE_ADDED: (r) => `The role <@&${r}> has been added to the autorole !`,
 			AUTOROLE_ROLE_REMOVED: (r) => `The role <@&${r}> has been removed from the autorole !`,
 			AUTOROLE_LIMIT: "You have reached the limit of assignable roles in self-employment. Please remove it if you want to add new ones.",//Ajouter "Vous pouvez augmentez cette limite en passant sur la version premium du bot"
+			AUTOROLE_ROLE_BOT: "You can't use a bot's role in the autorole!",
 			/* RR */
 			RR_DESCRIPTION: "Configure the rolereaction.",
 			RR_USAGE: (prefix) => `${prefix}rolereaction [launch/add/remove] [emote] [Role]`,
@@ -730,6 +733,7 @@ module.exports = class {
 			RR_EMBED_FIELD: "List of roles :",
 			RR_ADD_USER: (g, r) => `> <:lycosV:631854492173991947> ${g.name} | Given role: ${r.name}`,
 			RR_REMOVE_USER: (g, r) => `> <:lycosX:631854509798326322> ${g.name} | Role removed: ${r.name}`,
+			RR_ROLE_BOT: "You can't use a bot's role in the rolereaction!",
 			/* Setlogs */
 			SETLOGS_DESCRIPTION: "Allows the selection of the log display channel.",
 			SETLOGS_USAGE: (prefix) => `${prefix}setlogs [#channel/ID]`,
@@ -1007,7 +1011,7 @@ There are now **${m.guild.memberCount}** people on the server!`,
 			LOGS_ROLE_CREATE_DESC: (role) => `**Name of the role:** ${role.name} - ${role}
 **ID :** ${role.id}
 **Created the:** ${moment(role.createdAt.toUTCString()).format("LLLL")}`,
-			LOGS_ROLE_DELETE_TITLE: "A new role has been created!",
+			LOGS_ROLE_DELETE_TITLE: "A role has been deleted!",
 			LOGS_ROLE_DELETE_DESC: (role) => `**Name of the role:** ${role.name}
 **ID:** ${role.id}
 **Created the:** ${moment(role.createdAt.toUTCString()).format("LLLL")}

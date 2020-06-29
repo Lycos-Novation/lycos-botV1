@@ -30,7 +30,7 @@ class Avatar extends Command {
 				looked = message.bot.functions.fetchMembers(message.guild, toLook);
 				if (looked.size === 0) return message.channel.send(message.language.get("ERROR_NOUSER_FOUND"));
 				else if (looked.size === 1) looked = looked.first();
-				else return message.channel.send(message.language.get("ERROR_MUCH_USER_FOUND"));
+				else return message.channel.send(message.language.get("ERROR_MUCH_USERS_FOUND"));
 			}
 			
 			return message.channel.send({

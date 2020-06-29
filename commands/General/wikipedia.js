@@ -16,7 +16,7 @@ class Wikipedia extends Command {
             aliases: ["wiki", "wikipédia"],
             nsfw: false,
             adminOnly: false,
-            cooldown: 1000,
+            cooldown: 5000,
         });
     }
 

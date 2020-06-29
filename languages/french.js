@@ -100,6 +100,7 @@ module.exports = class {
 			PREFIX_NULL: "Répondez avec le préfixe que vous voulez attribuer au bot",
 			PREFIX_CHANGE: (pref) => `Le préfixe est maintenant \`${pref}\`.`,
 			PREFIX_RESET: "Le préfixe a été réinitialisé. Il est maintenant `.`",
+			PREFIX_TOO_LONG: (prefix) => `Le préfixe \`${prefix}\` est trop long ! Le préfixe du bot ne peux pas faire plus de 15 caractères.`,
 			ROLE_DESCRIPTION: "Gérer les rôles facilement.",
 			ROLE_USAGE: ".role <add/remove> <user> <role>",
 			ROLE_EXAMPLES: ".role add Lycos @Role/ID",
@@ -519,6 +520,7 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			MORSE_EXAMPLES: (prefix) => `${prefix}morse [Message]`,
 			MORSE_NO_TEXT: "Vous devez indiquer un message à traduire ! Répondez par ce message ou tapez à nouveau la commande avec votre message.",
 			MORSE_CANT_TRANSLATE: "Désolé, je n'ai pas pu traduire votre message. Assurez-vous qu'il ne comporte pas de caractères spéciaux.",
+			MORSE_TRANSLATE_ESPACE: "Désolé, il y a plus de 2000 caractères qui se suivent sans espace, je ne peut donc pas envoyer la traduction sans la fausser...",
 			MEME_DESCRIPTION: "Envoie un même",
 			MEME_USAGE: (prefix) => `${prefix}meme`,
 			MEME_EXAMPLES: (prefix) => `${prefix}meme`,
@@ -529,8 +531,8 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			SAY_TOO_LONG: "Votre message est trop long !",
 			SAY_EVERYONE: "Vous ne pouvez pas mentionner ``everyone`` !",
 			SAY_EMBED_DESCRIPTION: "Fait parler le bot dans un embed",
-			SAY_EMBED_USAGE: (prefix) => `${prefix}say [Texte]`,
-			SAY_EMBED_EXAMPLES: (prefix) => `${prefix}say Bonjour je m'appelle Lycos !`,
+			SAY_EMBED_USAGE: (prefix) => `${prefix}sayembed [Texte]`,
+			SAY_EMBED_EXAMPLES: (prefix) => `${prefix}sayembed Bonjour je m'appelle Lycos !`,
 			REPORT_DESCRIPTION: "Permet de signaler un membre",
 			REPORT_USAGE: (prefix) => `${prefix}report [@User/ID] [Raison]`,
 			REPORT_EXAMPLES: (prefix) => `${prefix}report @Lycos Ce membre s'amuse à spam dans les salons`,
@@ -654,6 +656,7 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			AUTOROLE_ROLE_ADDED: (r) => `Le rôle <@&${r}> a été ajouté à l'autorole !`,
 			AUTOROLE_ROLE_REMOVED: (r) => `Le rôle <@&${r}> a été retiré de l'autorole !`,
 			AUTOROLE_LIMIT: "Vous avez atteint la limite de rôles attribuables dans l'autorôle. Veuillez en retirer si vous voulez en mettre de nouveaux.",//Ajouter "Vous pouvez augmentez cette limite en passant sur la version premium du bot"
+			AUTOROLE_ROLE_BOT: "Vous ne pouvez pas utiliser le rôle d'un bot dans l'autorôle !",
 			RR_DESCRIPTION: "Permet de configurer le rolereaction",
 			RR_USAGE: (prefix) => `${prefix}rolereaction [launch/add/remove] [emote] [Role]`,
 			RR_EXAMPLES: (prefix) => `${prefix}rolereaction add :lycos: @LycosRole\n ${prefix}rolereaction remove :lycos: @LycosRole\n ${prefix}rolereaction launch`,
@@ -677,6 +680,7 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			RR_EMBED_FIELD: "Liste des rôles :",
 			RR_ADD_USER: (g, r) => `> <:lycosV:631854492173991947> **${g}** | Rôle donné : ${r.name}`,
 			RR_REMOVE_USER: (g, r) => `> <:lycosX:631854509798326322> **${g}** | Rôle enlevé : ${r.name}`,
+			RR_ROLE_BOT: "Vous ne pouvez pas utiliser le rôle d'un bot dans le rôle réaction !",
 			SETLOGS_DESCRIPTION: "Permet la sélection du salon d'affichage des logs.",
 			SETLOGS_USAGE: (prefix) => `${prefix}setlogs [#channel/ID]`,
 			SETLOGS_EXAMPLES: (prefix) => `${prefix}setlogs #logs`,
@@ -941,7 +945,7 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 			LOGS_ROLE_CREATE_DESC: (role) => `**Nom du rôle :** ${role.name} - ${role}
 **ID :** ${role.id}
 **Créé le :** ${moment(role.createdAt.toUTCString()).format("LLLL")}`,
-			LOGS_ROLE_DELETE_TITLE: "Un nouveau rôle a été créé !",
+			LOGS_ROLE_DELETE_TITLE: "Un rôle a été supprimé !",
 			LOGS_ROLE_DELETE_DESC: (role) => `**Nom du rôle :** ${role.name}
 **ID :** ${role.id}
 **Créé le :** ${moment(role.createdAt.toUTCString()).format("LLLL")}

@@ -1,4 +1,5 @@
 const config = require('../config');
+const { Collection } = require("discord.js");
 module.exports = {
 
 	async messageEvent(client, message, settings) {
@@ -30,6 +31,25 @@ module.exports = {
 			if (cmd && !message.guild && cmd.conf.guildOnly) {
 				return message.channel.send(language.get("ERROR_COMMAND_GUILDONLY"));
 			}
+
+			if (!client.cooldowns.has(cmd.help.name)){
+				client.cooldowns.set(cmd.help.name, new Collection());
+			}
+
+			const now = Date.now();
+			const timestamps = client.cooldowns.get(cmd.help.name);
+			const cooldownAmount = cmd.conf.cooldown;
+
+			if (timestamps.has(message.author.id)){
+				const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+				if (now < expirationTime){
+					const timeLeft = (expirationTime - now) * 1000;
+					return client.errors.inCooldown(timeLeft, cmd.help.name, message);
+				}
+			}
+
+			timestamps.set(message.author.id, now);
+			setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
 			if (message.guild) {
 				const neededPermission = [];

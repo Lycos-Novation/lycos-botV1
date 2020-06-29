@@ -49,8 +49,14 @@ class Morse extends Command {
             }
             text = text.join(" ");
         }
-        if(!text || text === " ") return message.channel.send(message.language.get("MORSE_CANT_TRANSLATE"));
-        return message.channel.send(`${text}`);
+        if (!text || text === " ") return message.channel.send(message.language.get("MORSE_CANT_TRANSLATE"));
+        if (!text.includes(" ") && text.length >= 2000) return message.channel.send(message.language.get("MORSE_TRANSLATE_ESPACE"));
+        return message.channel.send({
+            split: { 
+                char: " ",
+            },
+            content: text,
+        });
         } catch (error) {
 			console.error(error);
 			return message.channel.send(message.language.get("ERROR", error));

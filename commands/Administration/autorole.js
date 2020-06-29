@@ -47,6 +47,7 @@ class Autorole extends Command {
                 let r = message.guild.roles.resolve(role_supplied) || message.guild.roles.resolveID(role_supplied);
                 let test = message.guild.roles.cache.get(role_supplied);
                 if (test === undefined) return message.channel.send(message.language.get("AUTOROLE_ROLE_NOT_FOUND"));
+                if (test.managed) return message.channel.send(message.language.get("AUTOROLE_ROLE_BOT"));
                 let rid = r.id || r.toString().slice(3, r.toString().length - 1);
                 if (!rid || isNaN(parseInt(rid))) return message.channel.send(message.language.get("AUTOROLE_ROLE_NOT_FOUND"));
                 if (method.toLowerCase() === 'add') {

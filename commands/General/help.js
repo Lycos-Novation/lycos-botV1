@@ -1,5 +1,5 @@
 const Command = require("../../base/Command.js");
-
+const ms = require("ms");
 class Help extends Command {
 	constructor(client) {
 		super(client, {
@@ -22,7 +22,7 @@ class Help extends Command {
 	run(message, args) {
 		try {
 			const prefix = message.prefix;
-			if(args[0]) {
+			if (args[0]) {
 				const command = message.bot.commands.get(args[0]) || message.bot.commands.get(message.bot.aliases.get(args[0]));
 				if(command) {
 					return message.channel.send({
@@ -53,6 +53,10 @@ class Help extends Command {
 									value: command.conf.aliases.join(", ") ? command.conf.aliases.join(", ") : "none",
 								},
 								{
+									name: "Cooldown",
+									value: command.conf.cooldown ? ms(command.conf.cooldown, { long: true }) : "none",
+								},
+								{
 									name: message.language.get("HELP_FIELDS")[3],
 									value: `${message.config.permLevels.find((p) => p.name === command.conf.permLevel).level} (${command.conf.permLevel})`,
 								},
@@ -63,8 +67,7 @@ class Help extends Command {
 				else {
 					return message.channel.send(message.language.get("HELP_NOT_FOUND", args[0]));
 				}
-			}
-			else {
+			} else {
 				const embedFields = [];
 
 				embedFields.push(
