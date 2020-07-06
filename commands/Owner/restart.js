@@ -37,6 +37,7 @@ class Restart extends Command {
 				}
 			}
 			else if (args[0] === "actual" || args[0] === "bot") {
+				message.bot.guilds.cache.get("627946609896062986").channels.cache.get("712635877729239081").send(`Forced restart`);
 				if (!message.client.shard) {
 					message.client.logger.log(`${message.client.user.username} is restarting...`, "log");
 					message.bot.guilds.cache.get("627946609896062986").channels.cache.get("712635877729239081").send(`${message.client.user.username} is restarting...`);

@@ -1,5 +1,6 @@
 const e = require("../config.js").emotes;
-const moment = require("moment");
+const moment = require("moment-timezone");
+moment.locale("en");
 
 module.exports = class {
 	constructor(...args) {
@@ -41,6 +42,7 @@ module.exports = class {
 			GIVEAWAY_NO_WINNERCOUNT: "Please indicate the number of winners !",
 			GIVEAWAY_NO_PRIZE: "Please indicate something to win !",
 			GIVEAWAY_ERR_NO_ID: "You must enter the giveaway message ID !",
+			GIVEAWAY_TIME_NOT_POSITIVE: "The giveaway's duration can't be netgative or equal to 0!",
 			GIVEAWAY_ERR_REROLL_MSG_ENDED: (messageID) => `No giveaway **ended** found with message ID \`${messageID}\`.`,
 			GIVEAWAY_ERR_MESSAGE_NOT_FOUND: (messageID) => `No giveaway found with message ID \`${messageID}\`.`,
 			GIVEAWAY_REROLL_NO_WINNERSCOUNT: "Please indicate the number of winners to be drawn !",
@@ -176,6 +178,12 @@ module.exports = class {
 			Permissions required by Lycos may change at any time. 
 			To know about it, it's recommended to you to join the [official server of Lycos](https://discord.gg/64zRC73).`,
 			//⚖️ To add Spyer with **required permissions**, you only need to [click here](https://discordapp.com/api/oauth2/authorize?client_id=628186022991233025&permissions=41282630&scope=bot).
+			/* Vote */
+			VOTE_DESCRIPTION: "Lycos' vote links",
+			VOTE_USAGE: (prefix) => `${prefix}vote`,
+			VOTE_EXAMPLES: (prefix) => `${prefix}vote`,
+			VOTE_TITLE: "Lycos' vote links",
+			VOTE_DESC: `<:botdatabase:728338548138442903> [Vote on BotsDataBase](https://botsdatabase.com/bot/628186022991233025)`,
 			/* Ping */
 			PING_DESCRIPTION: "Gives latency of the Discord API.",
 			PING_USAGE: (prefix) => `${prefix}ping`,
@@ -459,7 +467,34 @@ module.exports = class {
 			WEATHERINFO_EXAMPLES: (prefix) => `${prefix}weather-info Paris`,
 			WEATHERINFO_NO_CITY: "Please enter a city name or postal code.",
 			WEATHERINFO_NOT_FOUND: "Unable to find weather data for this city.",
-			WEATHER_LANGUAGE: "fr-FR",
+			WEATHER_LANGUAGE: "en-UK",
+			WEATHERINFO_EMBED_TITLE_TODAY: (result) => `Weather in ${result[0].location.name} the ${result[0].current.day} ${date(result[0].current.date)} at ${result[0].current.observationtime}`,
+			WEATHERINFO_EMBED_DESCRIPTION_TODAY: (result) => `**Weather:** ${result[0].current.skytext}
+**Temperature:** ${result[0].current.temperature}°C
+**Feeling:** ${result[0].current.feelslike}°C
+**Humidity:** ${result[0].current.humidity}%
+**Wind:** ${result[0].current.winddisplay}`,
+			WEATHERINFO_EMBED_TITLE_YESTERDAY: (result) => `Weather in ${result[0].location.name} the ${result[0].forecast[0].day} ${date(result[0].forecast[0].date)}.`,
+			WEATHERINFO_EMBED_DESCRIPTION_YESTERDAY: (result) => `**Température Max/Min** : ${result[0].forecast[0].high}°C/${result[0].forecast[0].low}°C
+**Météo :** ${result[0].forecast[0].skytextday}
+**Précipitations :** ${result[0].forecast[0].precip !== "" ? `${result[0].forecast[0].precip}` : `0`}%`,
+			WEATHERINFO_EMBED_TITLE_TOMORROW: (result) => `Météo de ${result[0].location.name} le ${result[0].forecast[1].day} ${date(result[0].forecast[1].date)}.`,
+			WEATHERINFO_EMBED_DESCRIPTION_TOMORROW: (result) => `**Temperature Max/Min:** ${result[0].forecast[1].high}°C/${result[0].forecast[1].low}°C
+**Weather:** ${result[0].forecast[1].skytextday}
+**Précipitations :** ${result[0].forecast[1].precip}%`,
+			WEATHERINFO_EMBED_TITLE_J2: (result) => `Météo de ${result[0].location.name} le ${result[0].forecast[2].day} ${date(result[0].forecast[2].date)}.`,
+			WEATHERINFO_EMBED_DESCRIPTION_J2: (result) => `**Température Max/Min:** ${result[0].forecast[2].high}°C/${result[0].forecast[2].low}°C
+**Météo :** ${result[0].forecast[2].skytextday}
+**Précipitations :** ${result[0].forecast[2].precip}%`,
+			WEATHERINFO_EMBED_TITLE_J3: (result) => `Météo de ${result[0].location.name} le ${result[0].forecast[3].day} ${date(result[0].forecast[3].date)}.`,
+			WEATHERINFO_EMBED_DESCRIPTION_J3: (result) => `**Température Max/Min** : ${result[0].forecast[3].high}°C/${result[0].forecast[3].low}°C
+**Météo :** ${result[0].forecast[3].skytextday}
+**Précipitations :** ${result[0].forecast[3].precip}%`,
+			WEATHERINFO_EMBED_TITLE_J4: (result) => `Météo de ${result[0].location.name} le ${result[0].forecast[4].day} ${date(result[0].forecast[4].date)}.`,
+			WEATHERINFO_EMBED_DESCRIPTION_J4: (result) => `**Température Max/Min** : ${result[0].forecast[4].high}°C/${result[0].forecast[4].low}°C
+**Météo :** ${result[0].forecast[4].skytextday}
+**Précipitations :** ${result[0].forecast[4].precip}%`,
+			WEATHERINFO_EMBED_FOOTER: (result) => `Coordonnées - Longitude : ${result[0].location.long} - Latitude : ${result[0].location.lat} | Zone horaire : UTC${result[0].location.timezone >= 0 ? `+${result[0].location.timezone}` : `${result[0].location.timezone}`}`,
 			WEATHERINFO_EMBED_TITLE: (result) => `Weather in ${result[0].location.name} the ${result[0].current.day} ${date(result[0].current.date)} at ${result[0].current.observationtime}`,
 			WEATHERINFO_EMBED_DESCRIPTION: (result) => `**Coordinates** - __Longitude:__ ${result[0].location.long} - __Latitude:__ ${result[0].location.lat}
 **Weather:** ${result[0].current.skytext}
@@ -995,8 +1030,11 @@ There are now **${m.guild.memberCount}** people on the server!`,
 **Nickname:** ${newMember.nickname ? `${newMember.displayName}` : "No surName"}
 **Avatar:** ${newMember.user.displayAvatarURL({ format: "png", dynamic: true})}
 **Roles:** ${newMember.roles.cache.size > 10 ? `${newMember.roles.cache.map((r) => r).slice(0, 9).join(", ")} and ${newMember.roles.cache.size - 10} other Roles.` : (newMember.roles.cache.size < 1) ? `No role` : `${newMember.roles.cache.map((r) => r).join(", ")}`}`,
+			LOGS_MESSAGE_DELETE_DELETED_BY: "**Deleted by:**",
+			LOGS_MESSAGE_DELETE_DELETED_BY_UNKNOWN: "I'm sorry, I didn't found who deleted the message...",			
 			LOGS_MESSAGE_DELETE_TITLE: "A message has been deleted!",
-			LOGS_MESSAGE_DELETE_DESC: (message) => `**Message author :** ${message.author.tag} - ${message.author} - ${message.author.id}
+			LOGS_MESSAGE_DELETE_DESC: (message, deletedBy) => `**Message author :** ${message.author.tag} - ${message.author} - ${message.author.id}
+${deletedBy}
 **Message deleted in:** ${message.channel.name} - ${message.channel} - ${message.channel.id}
 **Message deleted the:** ${moment(new Date()).format("LLLL")}
 **Content of the message:** \`\`${message.content.length > 150 ? message.content.substring(0, 150)+"..." : message.content }\`\``,

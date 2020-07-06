@@ -5,10 +5,12 @@ module.exports = class {
 
     async run() {
         try {
+            const fetch = require("node-fetch");
             const TwitchClient = require('twitch').default;
             const clientId = 'TwitchClientID';
-            const clientSecret = 'TwitchClientSecret';
+            const clientSecret = 'TwitchClientID';
             const twitchClient = TwitchClient.withClientCredentials(clientId, clientSecret);
+            const BotsDataBaseToken = "BDBToken";
             const client = this.client;
             // If the token isn't a bot token the bot will logout.
             if (!client.user.bot) {
@@ -52,6 +54,30 @@ module.exports = class {
             }, 35000);
             client.connection_mysql = require('../utils/connectmysql');
             client.connection_mysql.init();
+
+            setInterval(async () => {
+                try {
+                    const url = `https://api.botsdatabase.com/v1/bots/628186022991233025`;
+                    const shards = await client.shard.fetchClientValues('guilds.cache.size');
+                    const body = {
+                        "servers": guilds,
+                        "shards": shards,
+                    }
+                    const options = {
+                        method: "post",
+                        headers: {
+                            "Authorization": BotsDataBaseToken,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(body),
+                    };
+                    const response = await fetch(url, options)
+	                const json = await response.json();
+                    console.log(json);
+                } catch (error) {
+                    return console.log(error);
+                }
+            }, 60000);
 
             async function isStreamLive(id) {
                 const user = await twitchClient.helix.users.getUserById(id);

@@ -12,7 +12,7 @@ class emotes extends Command {
             guildOnly: true,
             permLevel: "User",
             aliases: ["emojis", "emotes-list", "emojis-list"],
-            botPermissions: ["MANAGE_ROLES"],
+            botPermissions: [],
             nsfw: false,
             adminOnly: false,
             cooldown: 1000,
@@ -43,12 +43,12 @@ class emotes extends Command {
                 const emotesList = current.map(e => `${e}`).join(' ');
                 const animatedList = current2.map(e => `${e}`).join(' ');
                 embedFields.push({
-                    name: message.language.get("EMOTES_TITLES")[0] + ` (${startEmotes !== 0 ? startEmotes : 1} - ${emotes.length <= 10 ? emotes.length : startEmotes + 10})`,
-                    value: emotesList,
+                    name: message.language.get("EMOTES_TITLES")[0] + ` (${(!emotesList) ? 0 : startEmotes !== 0 ? startEmotes : 1} - ${emotes.length <= 10 ? emotes.length : startEmotes + 10})`,
+                    value: (!emotesList) ? message.language.get("EMOTES_NO_EMOTES") : emotesList,
                 },
                 {
-                    name: message.language.get("EMOTES_TITLES")[1] + ` (${startAnimated !== 0 ? startAnimated : 1} - ${anim.length <= 10 ? anim.length : startAnimated + 10})`,
-                    value: animatedList,
+                    name: message.language.get("EMOTES_TITLES")[1] + ` (${(!animatedList) ? 0 : startAnimated !== 0 ? startAnimated : 1} - ${anim.length <= 10 ? anim.length : startAnimated + 10})`,
+                    value: (!animatedList) ? message.language.get("EMOTES_NO_ANIMATED") : animatedList,
                 }
                 )
                 const embed = {

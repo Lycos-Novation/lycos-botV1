@@ -43,13 +43,15 @@ module.exports = {
 			if (timestamps.has(message.author.id)){
 				const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 				if (now < expirationTime){
-					const timeLeft = (expirationTime - now) * 1000;
+					const timeLeft = (expirationTime - now) / 1000;
 					return client.errors.inCooldown(timeLeft, cmd.help.name, message);
 				}
 			}
 
-			timestamps.set(message.author.id, now);
-			setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+			if (permLevel < 4) {
+				timestamps.set(message.author.id, now);
+				setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+			}
 
 			if (message.guild) {
 				const neededPermission = [];

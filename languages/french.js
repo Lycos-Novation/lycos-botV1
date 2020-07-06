@@ -39,11 +39,12 @@ module.exports = class {
 			GIVEAWAY_NO_TIME: "Merci d'indiquer une durée !",
 			GIVEAWAY_NO_WINNERCOUNT: "Merci d'indiquer le nombre de gagnants !",
 			GIVEAWAY_NO_PRIZE: "Merci d'indiquer quelque chose à gagner !",
-			GIVEAWAY_ERR_NO_ID: "Vous devez entrer l'ID du message du giveaway!",
-			GIVEAWAY_ERR_REROLL_MSG_ENDED: (messageID) => `Aucun giveaway **terminé** trouvé avec l'ID de message \`${messageID}\``,
-			GIVEAWAY_ERR_MESSAGE_NOT_FOUND: (messageID) => `Aucun giveaway trouvé avec l'ID de message \`${messageID}\``,
+			GIVEAWAY_TIME_NOT_POSITIVE: "La durée du giveaway ne peut être ni nulle ni négative !",
+			GIVEAWAY_ERR_NO_ID: "Vous devez entrer l'ID du message du giveaway !",
+			GIVEAWAY_ERR_REROLL_MSG_ENDED: (messageID) => `Aucun giveaway **terminé** trouvé avec l'ID de message \`${messageID}\`.`,
+			GIVEAWAY_ERR_MESSAGE_NOT_FOUND: (messageID) => `Aucun giveaway trouvé avec l'ID de message \`${messageID}\`.`,
 			GIVEAWAY_REROLL_NO_WINNERSCOUNT: "Veuillez indiquer le nombre de gagants à tirer !",
-			GIVEAWAY_NO_NEWTIME: "Veuillez indiquer la modification de temps",
+			GIVEAWAY_NO_NEWTIME: "Veuillez indiquer la modification de temps.",
 			GIVEAWAY_CREATE_MESSAGES: {
 				timeRemaining: "Temps restant : **{duration}** !",
 				inviteToParticipate: "Réagis avec 🎉 pour participer !",
@@ -60,8 +61,8 @@ module.exports = class {
 				},
 			},
 			GIVEAWAY_REROLL_MESSAGES: {
-				congrat: "Nouveau(x) gagnant(s) : {winners}! Félicitations!",
-				error: "Aucune inscription valide, aucun gagnant ne peut être choisi!",
+				congrat: "Nouveau(x) gagnant(s) : {winners} ! Félicitations !",
+				error: "Aucune inscription valide, aucun gagnant ne peut être choisi !",
 			},
 			LANGUAGE_DESCRIPTION: "Change la langue de Lycos.",
 			LANGUAGE_USAGE: (prefix) => `${prefix}language [set/list]`,
@@ -166,6 +167,23 @@ module.exports = class {
 			Les permissions dont a besoin Lycos peuvent changer à tout moment.
 			Pour être au courant de cela, il vous est recommandé de rejoindre le [serveur officiel de Lycos](https://discord.gg/64zRC73).`,
 			//⚖️ Pour inviter Spyer avec **les permissions nécessaires**, il vous suffit de [cliquer ici](https://discordapp.com/api/oauth2/authorize?client_id=628186022991233025&permissions=41282630&scope=bot).
+			VOTE_DESCRIPTION: "Donne les différents liens de vote du bot",
+			VOTE_USAGE: (prefix) => `${prefix}vote`,
+			VOTE_EXAMPLES: (prefix) => `${prefix}vote`,
+			VOTE_TITLE: "Menu de vote de Lycos",
+			VOTE_DESC: `<:botdatabase:728338548138442903> [Voter sur BotsDataBase](https://botsdatabase.com/bot/628186022991233025)`,
+			INVITE_USAGE: (prefix) => `${prefix}invite`,
+			INVITE_EXAMPLES: (prefix) => `${prefix}invite`,
+			INVITE_TITLE: "Menu d'invitation de Lycos",
+			INVITE_DESC: `**⛓ Comment je fais pour inviter Lycos sur mon serveur ?**
+
+			Voici les différents liens d'invitation de Lycos en fonction des permissions :
+			📌 Pour inviter Lycos avec la **permission Administrateur**, il vous suffit de [cliquer ici](https://discordapp.com/api/oauth2/authorize?client_id=628186022991233025&permissions=8&scope=bot).
+			⚙️ Pour inviter Lycos et **configurer ses permissions**, il vous suffit de [cliquer ici](https://discordapp.com/api/oauth2/authorize?client_id=628186022991233025&permissions=2146958583&scope=bot).
+			▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+			⚠️ **__ATTENTION__**
+			Les permissions dont a besoin Lycos peuvent changer à tout moment.
+			Pour être au courant de cela, il vous est recommandé de rejoindre le [serveur officiel de Lycos](https://discord.gg/64zRC73).`,
 			PING_DESCRIPTION: "Donne la latence de l'API Discord",
 			PING_USAGE: (prefix) => `${prefix}ping`,
 			PING_EXAMPLES: (prefix) => `${prefix}ping`,
@@ -429,44 +447,33 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			WEATHERINFO_NO_CITY: "merci d'indiquer un nom de ville ou un code postal.",
 			WEATHERINFO_NOT_FOUND: "Impossible de trouver les données météo pour cette ville.",
 			WEATHER_LANGUAGE: "fr-FR",
-			WEATHERINFO_EMBED_TITLE: (result) => `Météo de ${result[0].location.name} le ${result[0].current.day} ${date(result[0].current.date)} à ${result[0].current.observationtime}`,
-			WEATHERINFO_EMBED_DESCRIPTION: (result) => `**Coordonnées** - __Longitude :__ ${result[0].location.long} - __Latitude :__ ${result[0].location.lat}
-**Météo :** ${result[0].current.skytext}
+			WEATHERINFO_EMBED_TITLE_TODAY: (result) => `Météo de ${result[0].location.name} le ${result[0].current.day} ${date(result[0].current.date)} à ${result[0].current.observationtime}`,
+			WEATHERINFO_EMBED_DESCRIPTION_TODAY: (result) => `**Météo :** ${result[0].current.skytext}
 **Température :** ${result[0].current.temperature}°C
 **Ressenti :** ${result[0].current.feelslike}°C
 **Humidité :** ${result[0].current.humidity}%
-**Vent :** ${result[0].current.winddisplay}
-**Zone horaire :** UTC${result[0].location.timezone >= 0 ? `+${result[0].location.timezone}` : `${result[0].location.timezone}`}
-
-**__Prévisions du ${result[0].forecast[0].day} ${date(result[0].forecast[0].date)}__**
-
-**Température Max/Min** : ${result[0].forecast[0].high}°C/${result[0].forecast[0].low}°C
+**Vent :** ${result[0].current.winddisplay}`,
+			WEATHERINFO_EMBED_TITLE_YESTERDAY: (result) => `Météo de ${result[0].location.name} le ${result[0].forecast[0].day} ${date(result[0].forecast[0].date)}.`,
+			WEATHERINFO_EMBED_DESCRIPTION_YESTERDAY: (result) => `**Température Max/Min** : ${result[0].forecast[0].high}°C/${result[0].forecast[0].low}°C
 **Météo :** ${result[0].forecast[0].skytextday}
-**Précipitations :** ${result[0].forecast[0].precip !== "" ? `${result[0].forecast[0].precip}` : `0`}%
-
-**__Prévisions du ${result[0].forecast[1].day} ${date(result[0].forecast[1].date)}__**
-
-**Température Max/Min** : ${result[0].forecast[1].high}°C/${result[0].forecast[1].low}°C
+**Précipitations :** ${result[0].forecast[0].precip !== "" ? `${result[0].forecast[0].precip}` : `0`}%`,
+			WEATHERINFO_EMBED_TITLE_TOMORROW: (result) => `Météo de ${result[0].location.name} le ${result[0].forecast[1].day} ${date(result[0].forecast[1].date)}.`,
+			WEATHERINFO_EMBED_DESCRIPTION_TOMORROW: (result) => `**Température Max/Min** : ${result[0].forecast[1].high}°C/${result[0].forecast[1].low}°C
 **Météo :** ${result[0].forecast[1].skytextday}
-**Précipitations :** ${result[0].forecast[1].precip}%
-
-**__Prévisions du ${result[0].forecast[2].day} ${date(result[0].forecast[2].date)}__**
-
-**Température Max/Min** : ${result[0].forecast[2].high}°C/${result[0].forecast[2].low}°C
+**Précipitations :** ${result[0].forecast[1].precip}%`,
+			WEATHERINFO_EMBED_TITLE_J2: (result) => `Prévisions météo de ${result[0].location.name} le ${result[0].forecast[2].day} ${date(result[0].forecast[2].date)}.`,
+			WEATHERINFO_EMBED_DESCRIPTION_J2: (result) => `**Température Max/Min** : ${result[0].forecast[2].high}°C/${result[0].forecast[2].low}°C
 **Météo :** ${result[0].forecast[2].skytextday}
-**Précipitations :** ${result[0].forecast[2].precip}%
-
-**__Prévisions du ${result[0].forecast[3].day} ${date(result[0].forecast[3].date)}__**
-
-**Température Max/Min** : ${result[0].forecast[3].high}°C/${result[0].forecast[3].low}°C
+**Précipitations :** ${result[0].forecast[2].precip}%`,
+			WEATHERINFO_EMBED_TITLE_J3: (result) => `Prévisison météo de ${result[0].location.name} le ${result[0].forecast[3].day} ${date(result[0].forecast[3].date)}.`,
+			WEATHERINFO_EMBED_DESCRIPTION_J3: (result) => `**Température Max/Min** : ${result[0].forecast[3].high}°C/${result[0].forecast[3].low}°C
 **Météo :** ${result[0].forecast[3].skytextday}
-**Précipitations :** ${result[0].forecast[3].precip}%
-
-**__Prévisions du ${result[0].forecast[4].day} ${date(result[0].forecast[0].date)}__**
-
-**Température Max/Min** : ${result[0].forecast[4].high}°C/${result[0].forecast[4].low}°C
+**Précipitations :** ${result[0].forecast[3].precip}%`,
+			WEATHERINFO_EMBED_TITLE_J4: (result) => `Prévisions météo de ${result[0].location.name} le ${result[0].forecast[4].day} ${date(result[0].forecast[4].date)}.`,
+			WEATHERINFO_EMBED_DESCRIPTION_J4: (result) => `**Température Max/Min** : ${result[0].forecast[4].high}°C/${result[0].forecast[4].low}°C
 **Météo :** ${result[0].forecast[4].skytextday}
 **Précipitations :** ${result[0].forecast[4].precip}%`,
+			WEATHERINFO_EMBED_FOOTER: (result) => `Coordonnées - Longitude : ${result[0].location.long} - Latitude : ${result[0].location.lat} | Zone horaire : UTC${result[0].location.timezone >= 0 ? `+${result[0].location.timezone}` : `${result[0].location.timezone}`}`,
 			WIKIPEDIA_DESCRIPTION: "Cherche une page wikipédia",
 			WIKIPEDIA_USAGE: (prefix) => `${prefix}wikipedia [Nom]`,
 			WIKIPEDIA_EXAMPLES: (prefix) => `${prefix}wikipedia Batman`,
@@ -761,7 +768,7 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			STREAMERINFO_USAGE: (prefix) => `${prefix}streamer-info [Chaîne]`,
 			STREAMERINFO_EXAMPLES: (prefix) => `${prefix}streamer-info LycosTV`,
 			STREAMERINFO_NO_REQUEST: "Veuillez donner le nom d'une chaîne !",
-			STREAMERINFO_EMBED_TITLE: (name, type) => `Profil de ${name}${type !== "" ? type === "affiliate" ? " (Affilié Twitch)": " (Partenaire Twitch)" : ""}`,
+			STREAMERINFO_EMBED_TITLE: (name, type) => `Profil de ${name}${type !== "" ? type === "affiliate" ? " (Affilié Twitch)" : " (Partenaire Twitch)" : ""}`,
 			STREAMERINFO_EMBED_TITLES: [
 				"Vues"
 			],
@@ -929,11 +936,14 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Surnom :** ${newMember.nickname ? `${newMember.displayName}` : "Aucun surnom"}
 **Avatar :** ${newMember.user.displayAvatarURL({ format: "png", dynamic: true })}
 **Rôles :** ${newMember.roles.cache.size > 10 ? `${newMember.roles.cache.map((r) => r).slice(0, 9).join(", ")} et ${newMember.roles.cache.size - 10} autres rôles.` : (newMember.roles.cache.size < 1) ? `Aucun rôle` : `${newMember.roles.cache.map((r) => r).join(", ")}`}`,
+			LOGS_MESSAGE_DELETE_DELETED_BY: "**Supprimé par :**",
+			LOGS_MESSAGE_DELETE_DELETED_BY_UNKNOWN: "Je n'ai pas trouvé qui a supprimé le message, désolé...",
 			LOGS_MESSAGE_DELETE_TITLE: "Un message a été supprimé !",
-			LOGS_MESSAGE_DELETE_DESC: (message) => `**Auteur du message :** ${message.author.tag} - ${message.author} - ${message.author.id}
+			LOGS_MESSAGE_DELETE_DESC: (message, deletedBy) => `**Auteur du message :** ${message.author.tag} - ${message.author} - ${message.author.id}
+${deletedBy}
 **Message supprimé dans :** ${message.channel.name} - ${message.channel} - ${message.channel.id}
 **Message supprimé le :** ${moment(new Date()).format("LLLL")}
-**Contenu du message :** \`\`${message.content.length > 150 ? message.content.substring(0, 150)+"..." : message.content }\`\``,
+**Contenu du message :** \`\`${message.content.length > 150 ? message.content.substring(0, 150) + "..." : message.content}\`\``,
 			LOGS_MESSAGE_DELETE_BULK_TITLE: "Plusieurs messages ont été supprimés !",
 			LOGS_MESSAGE_DELETE_BULK_DESC: () => ``,
 			LOGS_MESSAGE_UPDATE_TITLE: "Un message a été modifié !",

@@ -32,6 +32,9 @@ class roleMention extends Command {
             } else if (toMention === "here" || toMention === "@here") {
                 return message.channel.send("@here");
             } else {
+                if (!toMention.startsWith("<") && isNaN(parseInt(toMention))) { 
+                    toMention = message.guild.roles.cache.find(r => r.name === toMention);
+                }
                 let r = message.guild.roles.resolve(toMention) || message.guild.roles.resolveID(toMention);
                 let rid = r.toString().slice(3, r.toString().length - 1) || r.id;
                 if (!rid || isNaN(rid)) return message.channel.send(message.language.get("ROLEMENTION_ROLE_NOT_FOUND"));

@@ -1,5 +1,5 @@
 const Command = require("../../base/Command.js");
-const moment = require("moment-timezone");
+const moment = require("moment");
 
 class UserInformation extends Command {
 	constructor(client) {
