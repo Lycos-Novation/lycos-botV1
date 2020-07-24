@@ -21,6 +21,9 @@ class Purge extends Command {
 	run(message, args) {
 		try {
 			message.delete().then(m => {
+				if (args[0].indexOf("-") !== -1 || args[0].indexOf("0") === 0) {
+					return message.channel.send(message.language.get("PURGE_NEGATIVE_OR_NULL"));
+				}
 				const amount = parseInt(args[0]) ? parseInt(args[0]) : parseInt(args[1]);
 				if (!amount) {
 					return message.channel.send(message.language.get("PURGE_SPECIFY_AMOUNT"))

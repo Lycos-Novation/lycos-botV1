@@ -95,6 +95,7 @@ class RoleReaction extends Command {
                         }
                     };
                     if (!g.rolereaction_channel) return message.channel.send(message.language.get("RR_NO_CHANNEL"));
+                    
                     return message.guild.channels.cache.get(g.rolereaction_channel).send(embed).then(async (msg) => {
                         try {
                             for (const { emoji } of configuration) {
