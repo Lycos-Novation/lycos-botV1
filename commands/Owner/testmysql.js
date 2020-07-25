@@ -20,40 +20,68 @@ class testMySQL extends Command {
 
 	async run(message, args) {
 		try {
-            /*var sql = `CREATE TABLE Users (
-    			user_name VARCHAR(32) NOT NULL,
-				user_id UNSIGNED BIGINT NOT NULL,
-				user_discriminator CHAR(4) NOT NULL,
-				user_verified BOOLEAN NOT NULL,
-				user_email TEXT,
-				user_locale VARCHAR(32),
-				user_createdAt DATETIME
-			)
-			ENGINE=INNODB;`;*/
-			var sql = `CREATE TABLE Supports (
-				id SMALLINT(5,0) NOT NULL AUTO_INCREMENT,
-				user_name VARCHAR(32) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
-				question TEXT(65535) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
-				channel_id CHAR(18) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
-				created_at DATETIME NOT NULL,
-				PRIMARY KEY (id) USING BTREE
-			)
-			COLLATE='utf8mb4_0900_ai_ci'
-			ENGINE=InnoDB;`;
-			/*var g;
-			mysqlcon.query(sql, async function (err, result, fields) {
-				g = result[0];
-				var emote = args[0];
-				message.channel.send(`${g.test} | ${emote}`);
-				if (emote === `${g.test}`) return message.channel.send("Oui");
-				else return message.channel.send("Non");
-			});*/
-            return mysqlcon.query(sql, function (err, result) {
-                if (err) throw err;
-                console.log("Table created");
+            if (!message.member.voice.channel) {
+				return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"))
+			}
+			const song = args.join(" ");
+			if (!song) {
+				return message.channel.send(message.language.get("PLAY_NO_ARGS"));
+			}
+			// Search for tracks
+			let tracks = await message.bot.player.searchTracks(song, true);
+			if (tracks.length === 0) return message.channel.send(message.language.get("PLAY_NO_TRACK_FOUND"));
+			// Sends an embed with the 10 first songs
+			if (tracks.length > 10) tracks = tracks.slice(0, 10);
+			const embed = new Discord.MessageEmbed()
+				.setDescription(tracks.map((t, i) => `**${i + 1} -** ${t.name} | ${t.author}`).join("\n"))
+				.setTitle(message.language.get("PLAY_CHOICE"))
+				.setFooter(message.language.get("PLAY_CHOICE"))
+				.setThumbnail(tracks[0].thumbnail);
+			message.channel.send(embed);
+			// Wait for user answer
+			await message.channel.awaitMessages((m) => m.content > 0 && m.content < 11, { max: 1, time: 20000, errors: ["time"] }).then(async (answers) => {
+				let index = parseInt(answers.first().content, 10);
+				let track = tracks[index - 1];
+
+				let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+				// If there's already a track being played
+				if (trackPlaying) {
+					const result = await message.bot.player.addToQueue(message.guild.id, track, message.author);
+					console.log(result);
+					if (result.type === 'playlist') {
+						message.channel.send(`${result.tracks.length} ${message.language.get("PLAY_SONGS_ADDED")}.`);
+					} else {
+						message.channel.send(`\`${result.name}\` ${message.language.get("PLAY_SONG_ADDED")}`);
+					}
+				} else {
+					// Else, play the track
+					const result = await message.bot.player.play(message.member.voice.channel, track, message.author);
+					console.log(result);
+					if (result.type === 'playlist') {
+						message.channel.send(`${result.tracks.length} ${message.language.get("PLAY_SONGS_ADDED")}.\n${message.language.get("NOWPLAYING")} **${result.tracks[0].name}**!`);
+					} else {
+						message.channel.send(`${message.language.get("NOWPLAYING")} \`${result.name}\``);
+					}
+					message.bot.player.getQueue(message.guild.id)
+
+						//Events
+						.on('end', () => {
+							message.channel.send(message.language.get("PLAY_END"));
+						})
+						.on('trackChanged', (oldTrack, newTrack, skipped, repeatMode) => {
+							if (skipped) message.channel.send(message.language.get("PLAY_SKIPPED", oldTrack.name));
+							if (repeatMode) {
+								message.channel.send(message.language.get(`PLAY_AGAIN`, newTrack.name));
+							} else {
+								message.channel.send(`${message.language.get("PLAY_NEWPLAY", newTrack.name)}`);
+							}
+						})
+						.on('channelEmpty', () => {
+							message.channel.send(message.language.get("PLAY_CHANNEL_EMPTY"));
+						});
+				}
 			});
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(error);
 			return message.channel.send(message.language.get("ERROR", error));
 		}

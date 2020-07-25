@@ -80,7 +80,7 @@ class Help extends Command {
 						value: message.bot.commands.filter((filters) => filters.help.category === "Moderation").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
-						name: `<:lycosLogo:708601118673862666> ${message.language.get("HELPGLOBAL_FIELDS")[2]} (${message.bot.commands.filter((filters) => filters.help.category === "General").size})`,
+						name: `<:lycosLogo:724005602514305134> ${message.language.get("HELPGLOBAL_FIELDS")[2]} (${message.bot.commands.filter((filters) => filters.help.category === "General").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "General").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					{
@@ -96,10 +96,10 @@ class Help extends Command {
 						value: message.bot.commands.filter((filters) => filters.help.category === "Games").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 					
-					/*{
-						name: `${message.config.emotes.music} ${message.language.get("HELPGLOBAL_FIELDS")[4]} (${message.bot.commands.filter((filters) => filters.help.category === "Music").size})`,
+					{
+						name: `🎧 ${message.config.emotes.music} ${message.language.get("HELPGLOBAL_FIELDS")[6]} (${message.bot.commands.filter((filters) => filters.help.category === "Music").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "Music").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
-					},*/
+					},
 				);
 
 				/*if (message.settings.modules.nsfw) {

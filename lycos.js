@@ -7,6 +7,7 @@ const { promisify } = require("util"),
 const { Provider, Client: PictURLClient } = require("pict-url");
 const { GiveawaysManager } = require("discord-giveaways");
 const logs = require('discord-logs');
+const { Player } = require("discord-player");
 
 /**
  * @class Lycos
@@ -27,6 +28,7 @@ class Lycos extends Client {
 		this.pictURL = new PictURLClient(Provider.Imgur);
 		// Here we load all our functions stored in functions.js
 		this.functions = require("./utils/functions");
+		this.player = new Player(this);
 		this.gManager = new GiveawaysManager(this, {
 			storage: "./giveaways.json",
 			updateCountdownEvery: 15000,
@@ -39,8 +41,7 @@ class Lycos extends Client {
 			}
 		});
 		logs(this);
-		// Here we load all our Lavalink functions stored in lavalinkFunctions.js
-		/*this.lavalink = require("./utils/lavalinkFunctions");*/
+
 		// This will load our custom Logger class.
 		this.logger = require("./utils/logger");
 		// This will load our errors file.

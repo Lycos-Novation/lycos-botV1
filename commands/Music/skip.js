@@ -5,26 +5,23 @@ class Skip extends Command {
 		super(client, {
 			name: "skip",
 			description: (language) => language.get("SKIP_DESCRIPTION"),
-			usage: (language, prefix) => language.get("PLAY_USAGE", prefix),
-			examples: (language, prefix) => language.get("PLAY_EXAMPLES", prefix),
+			usage: (language, prefix) => language.get("SKIP_USAGE", prefix),
+			examples: (language, prefix) => language.get("SKIP_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			permLevel: "User",
+			permLevel: "Server Moderator",
 			cooldown: 2000,
 		});
 	}
 
 	async run(message) {
 		try {
-			if(!message.member.voice.channel) {
-				return message.channel.send("You need to be in a voice channel to skip a music!");
+			let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+			if (!trackPlaying) {
+				return message.channel.send(message.language.get("NOT_PLAYING"));
 			}
-			if (!message.bot.player.get(message.guild.id)) {
-				return message.channel.send("I'm not playing a song.");
-			}
-
-			await message.bot.player.get(message.guild.id).stop();
+			return message.bot.player.skip(message.guild.id);
 		}
 		catch (error) {
 			console.error(error);

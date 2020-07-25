@@ -10,28 +10,24 @@ class Volume extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			permLevel: "User",
+			permLevel: "Server Moderator",
 			cooldown: 2000,
 		});
 	}
 
 	async run(message, args) {
 		try {
-			if (!message.bot.player.get(message.guild.id)) {
-				return message.channel.send("I'm not connected to any voice channel.");
-			}
-			if(!message.member.voice.channel) {
-				return message.channel.send("You need to be in a voice channel to play music! ");
+			let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+			if (!trackPlaying) {
+				return message.channel.send("No music playing.");
 			}
 
 			const volume = args.join(" ");
-			const player = message.bot.player.get(message.guild.id);
-			if (!player) { return message.channel.send("There is nothing playing now."); }
-			if (!volume || isNaN(volume)) { return message.channel.send("The volume must be between 1 and 100%."); }
-			else if (volume <= 0 || volume > 100) { return message.channel.send("The volume must be between 1 and 100%."); }
-
-			const playerVolume = await player.volume(volume);
-			return message.channel.send(`🔊 Volume has been set to \`${playerVolume.state.volume}%\`.`);
+			if (!volume || isNaN(volume) || volume <= 0 || volume > 100) {
+				return message.channel.send(message.language.get("VOLUME_BETWEEN"));
+			}
+			await message.bot.player.setVolume(message.guild.id, parseInt(volume));
+			return message.channel.send(`${message.language.get("VOLUME_SETTED")} \`${volume}%\`.`);
 		}
 		catch (error) {
 			console.error(error);

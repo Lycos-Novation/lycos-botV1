@@ -1,5 +1,6 @@
 const e = require("../config.js").emotes;
 const moment = require("moment-timezone");
+const { staff } = require("../config.js");
 moment.locale("en");
 
 module.exports = class {
@@ -183,7 +184,8 @@ module.exports = class {
 			VOTE_USAGE: (prefix) => `${prefix}vote`,
 			VOTE_EXAMPLES: (prefix) => `${prefix}vote`,
 			VOTE_TITLE: "Lycos' vote links",
-			VOTE_DESC: `<:botdatabase:728338548138442903> [Vote on BotsDataBase](https://botsdatabase.com/bot/628186022991233025)`,
+			VOTE_DESC: (dbd, dbl) => `<:botdatabase:728338548138442903> [Vote on BotsDataBase](https://botsdatabase.com/bot/628186022991233025) (**${dbd}** votes)
+<:DiscordBotList:735786997569814579> [Vote on Disord Bot List](https://top.gg/bot/628186022991233025) (**${dbl}** votes)`,
 			/* Ping */
 			PING_DESCRIPTION: "Gives latency of the Discord API.",
 			PING_USAGE: (prefix) => `${prefix}ping`,
@@ -250,25 +252,27 @@ module.exports = class {
 			USERINFO_USAGE: (prefix) => `${prefix}userinfo (@user)`,
 			USERINFO_EXAMPLES: (prefix) => `${prefix}userinfo @Lycos`,
 			USERINFO_TITLES: [
-				"Last name",
+				"Userame",
 				"ID",
 				"Status",
 				"Account created at",
 				"Joined the guild at",
 				"Roles",
 			],
+			USERINFO_TITLES_BADGE: (badge) => `${badge.length > 1 ? "Badges" : "Badge"}`,
 			USERINFO_TITLES_ACTIVITY: (activity) => `${activity.length > 1 ? "Activities" : "Activity"}`,
 			USERINFO_CREATEACCOUNT: (createAccount) => `${moment(createAccount).format('LLLL')}`,
-			USERINFO_JOINGUILD : (joinGuild) => `${moment(joinGuild).format('LLLL')}`,
+			USERINFO_JOINGUILD: (joinGuild) => `${moment(joinGuild).format('LLLL')}`,
 			USERINFO_STATUS: [
 				"Online",
 				"Offline",
 				"Idle",
 				"Do not disturb",
 			],
+			USERINFO_NO_BADGES: "This member has no badge",
 			USERINFO_NO_ACTIVITY: "This member has no ongoing activity",
 			USERINFO_ACTIVITY_NUMBER: (activity) => `This member has ${activity.length === 1 ? "1 ongoing activity" : `${activity.length} ongoing activities`}:\n`,
-			USERINFO_ACTIVITY_NUM: (index) => `**__Activity ${index+1}:__**\n`,
+			USERINFO_ACTIVITY_NUM: (index) => `**__Activity ${index + 1}:__**\n`,
 			USERINFO_ACTIVITY_NAME: (activity) => `**Name:** ${activity.name}`,
 			USERINFO_ACTIVITY_TYPE: (activity) => `**Type:** ${activity.type}`,
 			USERINFO_ACTIVITY_URL: (activity) => `**URL:** ${activity.url}`,
@@ -337,14 +341,32 @@ module.exports = class {
 			ANIME_EXAMPLES: (prefix) => `${prefix}anime Dragon Ball`,
 			ANIME_NOTFOUND: "You must include an anime name.",
 			ANIME_TITLES: [
-				"English name",
-				"Japanese name",
-				"Type",
-				"Episodes",
-				"Kind",
-				"Popularity",
-				"Score",
+				"Synopsis",
+				"Characters",
+				"Staff",
+				"General infomations",
 			],
+			ANIME_INFOS: [
+				"Synonyms",
+				"Episodes",
+				"Status",
+				"Aired",
+				"Premiered",
+				"Broadcast",
+				"Producers",
+				"Duration",
+				"Rating",
+				"Rank",
+				"Popularity",
+				"Members",
+				"Favorite",
+			],
+			ANIME_UNKNOWN: "Unkonwn",
+			ANIME_VOICE: "Voice:",
+			ANIME_STAFF_ROLE: (staff_role) => staff_role,
+			ANIME_ROLE: (role) => `${role}`,
+			ANIME_RATING: (rating) => `${rating}`,
+			ANIME_TRAILER: (trailer) => `[Click here](${trailer})`,
 			/* Fortnite */
 			FORTNITE_DESCRIPTION: "Watch your Fortnite stats to be competitive.",
 			FORTNITE_USAGE: (prefix) => `${prefix}fortnite [platforme] [username]`,
@@ -421,7 +443,8 @@ module.exports = class {
 			PURGE_DESCRIPTION: "Delete multiple messages at once.",
 			PURGE_USAGE: (prefix) => `${prefix}purge [NamebreDeMessage]`,
 			PURGE_EXAMPLES: (prefix) => `${prefix}purge 28`,
-			PURGE_SPECIFY_AMOUNT: "You must specify an amount to delete !",
+			PURGE_NEGATIVE_OR_NULL: "You can't purge a negative or null amout of messages!",
+			PURGE_SPECIFY_AMOUNT: "You must specify an amount of messages to delete!",
 			PURGE_TOO_MUCH_AMOUNT: "I cannot delete more than 100 messages at once.",
 			/* Ban */
 			BAN_DESCRIPTION: "Ban the mentioned user.",
@@ -619,14 +642,94 @@ module.exports = class {
 			REPORT_NAME: (member) => `${member.user.tag} has been reported for:`,
 			REPORT_ERRORARGS: "You must indicate a person to report!",
 			REPORT_SEND: "Your report has been sent!",
+			/* Global music*/
+			NOT_PLAYING: "No music playing.",
 			/* Play */
-			PLAY_DESCRIPTION: "Play the requested music.",
+			PLAY_DESCRIPTION: "Plays requested music. (Supporting song names, YouTube links & Playlists and Spotify links)",
 			PLAY_USAGE: ".play [Music/Link]",
-			PLAY_EXAMPLES: ".play Our Last Night - Younger Dreams",
+			PLAY_EXAMPLES: ".play Our Last Night - Younger Dreams\n.play https://www.youtube.com/watch?v=EM7CJcfZbpM\n.play https://open.spotify.com/track/3YU9WNqpBjG3uI59NEQUH5?si=MVwzgB8DSDye9abZ5gihCw",
 			PLAY_NO_VOICECHANNEL: "You must be in a voice channel to play music.",
-			PLAY_BOT_CANT_CONNECT: "I cannot connect to the channel, check that I have the required permission!",
-			PLAY_BOT_CANT_SPEAK: "I can not speak in this channel, check that I have the required permission!",
-			PLAY_NO_ARGS: "Please indicate a music to play.",
+			PLAY_NO_ARGS: "Please provide a music to play.",
+			PLAY_NO_TRACK_FOUND: "Sorry, I couldn't find anything corresponding to your research.",
+			PLAY_CHOICE: "Send the number of the track you want to play!",
+			PLAY_SONGS_ADDED: "songs added to the queue!",
+			PLAY_SONG_ADDED: "added to the queue!",
+			PLAY_END: "There is no more music in the queue",
+			PLAY_SKIPPED: (track) => `Skipped \`${track}\``,
+			PLAY_AGAIN: (track) => `Playing \`${track}\`... AGAIN!`,
+			PLAY_NEWPLAY: (track) => `Now playing \`${track}\`.`,
+			PLAY_CHANNEL_EMPTY: "Stop playing, there is no more member in the voice channel",
+			/* Now-Playing*/
+			NOWPLAYING_DESCRIPTION: "Shows currently played music",
+			NOWPLAYING_USAGE: (prefix) => `${prefix}now-playing`,
+			NOWPLAYING_EXAMPLES: (prefix) => `${prefix}now-playing`,
+			NOWPLAYING: "Now playing",
+			NOWPLAYING_MUSIC_NAME: "Music's name",
+			NOWPLAYING_ARTIST: "Artist",
+			NOWPLAYING_MUSIC_DURATION: "Music's duration",
+			NOWPLAYING_PROGRESS_BAR: "Progress bar",
+			/* Clearqueue*/
+			NOWPLAYING_DESCRIPTION: "Deleted server's queue",
+			NOWPLAYING_USAGE: (prefix) => `${prefix}clear-queue`,
+			NOWPLAYING_EXAMPLES: (prefix) => `${prefix}clear-queue`,
+			CLEARQUEUE_CLEARED: "Queue cleared!",
+			/* Filters */
+			FILTERS_DESCRIPTION: "Allows you to manage music filters.",
+			FILTERS_USAGE: (prefix) => `${prefix}filters [list/filter]`,
+			FILTERS_EXAMPLES: (prefix) => `${prefix}filters list\n ${prefix}filters bassboost`,
+			FILTERS_NO_ARGS: "You need to provide a filter to apply.\nHere's the list:",
+			FILTERS_FILTERS: "Server's filters",
+			FILTERS_NOT_EXISTS: "This filter doesn't exists!\nHere's the list:",
+			FILTERS_ADDING: "I'm adding the filter to the music, please wait... Note : the longer the music is, the longer the wait will be",
+			FILTERS_REMOVING: "I'm disabling the filter on the music, please wait... Note : the longer the music is playing, the longer the wait will be",
+			/* Stop */
+			STOP_DESCRIPTION: "Stops the music and disconnects the bot.",
+			STOP_USAGE: (prefix) => `${prefix}stop`,
+			STOP_EXAMPLES: (prefix) => `${prefix}stop`,
+			STOPPED: "Music stopped!",
+			/* Loop */
+			LOOP_DESCRIPTION: "Enables or diables repeat mode.",
+			LOOP_USAGE: (prefix) => `${prefix}loop`,
+			LOOP_EXAMPLES: (prefix) => `${prefix}loop\n${prefix}repeat`,
+			LOOP_UNLOOPING: "Mode boulce déactivé ! La musique actuelle ne sera plus jouée encore et encore...",
+			LOOP_LOOPING: "Repeat mode enabled! The current song will be played again and again until you run the command again!",
+			/* Pause */
+			PAUSE_DESCRIPTION: "Pauses current music.",
+			PAUSE_USAGE: (prefix) => `${prefix}pause`,
+			PAUSE_EXAMPLES: (prefix) => `${prefix}pause`,
+			PAUSED: "paused!",
+			/* Queue */
+			QUEUE_DESCRIPTION: "Shows server's queue.",
+			QUEUE_USAGE: (prefix) => `${prefix}queue`,
+			QUEUE_EXAMPLES: (prefix) => `${prefix}queue`,
+			QUEUE_ACTUAL: "Server's queue",
+			QUEUE_EMPTY: "There is no track in the queue",
+			/* Remove */
+			REMOVE_DESCRIPTION: "Removes a track from queue.",
+			REMOVE_USAGE: (prefix) => `${prefix}remove [Number]`,
+			REMOVE_EXAMPLES: (prefix) => `${prefix}remove 1`,
+			REMOVE_NO_ARGS: "Please provide the number of the music you want to remove ! You can get it with the `queue` command.",
+			REMOVE_REMOVED: "Removed track!",
+			/* Resume */
+			RESUME_DESCRIPTION: "Resumes paused track",
+			RESUME_USAGE: (prefix) => `${prefix}resume`,
+			RESUME_EXAMPLES: (prefix) => `${prefix}resume`,
+			RESUMED: "resumed.",
+			/* Shuffle */
+			SHUFFLE_DESCRIPTION: "Shuffles queue",
+			SHUFFLE_USAGE: (prefix) => `${prefix}shuffle`,
+			SHUFFLE_EXAMPLES: (prefix) => `${prefix}shuffle`,
+			SHUFFLED: "Queue shuffled!",
+			/* Skip */
+			SKIP_DESCRIPTION: "Skips current track",
+			SKIP_USAGE: (prefix) => `${prefix}skip`,
+			SKIP_EXAMPLES: (prefix) => `${prefix}skip`,
+			/* Volume */
+			VOLUME_DESCRIPTION: "Allows you tu changes bot's volume",
+			VOLUME_USAGE: (prefix) => `${prefix}volume [Volume]`,
+			VOLUME_EXAMPLES: (prefix) => `${prefix}volume 50`,
+			VOLUME_BETWEEN: "The volume must be between 1 and 100%.",
+			VOLUME_SETTED: "🔊 Volume has been set to",
 			/* Answer */
 			ANSWER_UNKNOWN_ID: (args) => `Support request with ID \`${args}\` is not found.`,
 			ANSWER_SENT: `Your response has been sent successfully.`,
@@ -641,11 +744,11 @@ module.exports = class {
 			MUTE_DESCRIPTION: "Mute the selected member.",
 			MUTE_USAGE: (prefix) => `${prefix}mute [@User or UserID] [Duration] [Reason]`,
 			MUTE_EXAMPLE: (prefix) => `${prefix}mute @Lycos 1[d/h/m/s] Spam emotes`,
-			MUTE_ERRORARGS: "Please indicate a user to muted!",
+			MUTE_ERRORARGS: "Please provide a user to mute!",
 			MUTE_NO_MUTETIME: "You did not specify a time!",
 			MUTE_USER_ALREADY_MUTED: "This user is already muted!",
 			MUTE_UNMUTABLE: "This user cannot be mute!",
-			MUTE_NOREASON: "You did not indicate a reason for the muted!",
+			MUTE_NOREASON: "You did not provide a reason for the muted!",
 			MUTE_ERROR: "I couldn't mute because:",
 			MUTE_INFO: (member, message) => `${member} was muted by ${message.author}`,
 			MUTE_USER_MESSAGE: (message, muteTime, reason) => `You are now muted on **${message.guild.name}** for **${reason}** while **${muteTime}**.`,
@@ -662,6 +765,7 @@ module.exports = class {
 			UNMUTE_DESCRIPTION: "Unmute the selected member.",
 			UNMUTE_USAGE: (prefix) => `${prefix}unmute [@User or UserID]`,
 			UNMUTE_EXAMPLE: (prefix) => `${prefix}unmute @Lycos`,
+			UNMUTE_ERRORARGS: "Please provide a user to unmute!",
 			UNMUTE_USER_NOT_MUTED: "This member is not muted!",
 			UNMUTE_SUCCESS: (member) => `${member} was successfully unmuted!`,
 			UNMUTE_USER_SUCCESS: (message) => `You were unmute of **${message.guild.name}**, sorry for inconvenience!`,
@@ -858,7 +962,7 @@ module.exports = class {
 			STREAMERINFO_USAGE: (prefix) => `${prefix}streamer-info [Channel]`,
 			STREAMERINFO_EXAMPLES: (prefix) => `${prefix}streamer-info LycosTV`,
 			STREAMERINFO_NO_REQUEST: "Please provide a streamer's name!",
-			STREAMERINFO_EMBED_TITLE: (name, type) => `${name}'s profile${type !== "" ? type === "affiliate" ? " (Twitch Affiliate)": " (Twitch Partner)" : ""}`,
+			STREAMERINFO_EMBED_TITLE: (name, type) => `${name}'s profile${type !== "" ? type === "affiliate" ? " (Twitch Affiliate)" : " (Twitch Partner)" : ""}`,
 			STREAMERINFO_EMBED_TITLES: [
 				"View count"
 			],
@@ -1016,7 +1120,7 @@ There are now **${m.guild.memberCount}** people on the server!`,
 **Bannable**: ${oldMember.bannable === true ? "Yes" : "No"}
 **Expulsable:** ${oldMember.kickable === true ? "Yes" : "No"}
 **Nickname:** ${oldMember.nickname ? `${oldMember.displayName}` : "No surName"}
-**Avatar:** ${oldMember.user.displayAvatarURL({ format: "png", dynamic: true})}
+**Avatar:** ${oldMember.user.displayAvatarURL({ format: "png", dynamic: true })}
 **Roles:** ${oldMember.roles.cache.size > 10 ? `${oldMember.roles.cache.map((r) => r).slice(0, 9).join(", ")} and ${oldMember.roles.cache.size - 10} other roles.` : (oldMember.roles.cache.size < 1) ? `No role` : `${oldMember.roles.cache.map((r) => r).join(", ")}`}
 
 **__After modifications of the ${moment(new Date()).format("LLLL")}:__**
@@ -1028,16 +1132,16 @@ There are now **${m.guild.memberCount}** people on the server!`,
 **Bannable:** ${newMember.bannable === true ? "Yes" : "No"}
 **Expulsable:** ${newMember.kickable === true ? "Yes" : "No"}
 **Nickname:** ${newMember.nickname ? `${newMember.displayName}` : "No surName"}
-**Avatar:** ${newMember.user.displayAvatarURL({ format: "png", dynamic: true})}
+**Avatar:** ${newMember.user.displayAvatarURL({ format: "png", dynamic: true })}
 **Roles:** ${newMember.roles.cache.size > 10 ? `${newMember.roles.cache.map((r) => r).slice(0, 9).join(", ")} and ${newMember.roles.cache.size - 10} other Roles.` : (newMember.roles.cache.size < 1) ? `No role` : `${newMember.roles.cache.map((r) => r).join(", ")}`}`,
 			LOGS_MESSAGE_DELETE_DELETED_BY: "**Deleted by:**",
-			LOGS_MESSAGE_DELETE_DELETED_BY_UNKNOWN: "I'm sorry, I didn't found who deleted the message...",			
+			LOGS_MESSAGE_DELETE_DELETED_BY_UNKNOWN: "I'm sorry, I didn't found who deleted the message...",
 			LOGS_MESSAGE_DELETE_TITLE: "A message has been deleted!",
 			LOGS_MESSAGE_DELETE_DESC: (message, deletedBy) => `**Message author :** ${message.author.tag} - ${message.author} - ${message.author.id}
 ${deletedBy}
 **Message deleted in:** ${message.channel.name} - ${message.channel} - ${message.channel.id}
 **Message deleted the:** ${moment(new Date()).format("LLLL")}
-**Content of the message:** \`\`${message.content.length > 150 ? message.content.substring(0, 150)+"..." : message.content }\`\``,
+**Content of the message:** \`\`${message.content.length > 150 ? message.content.substring(0, 150) + "..." : message.content}\`\``,
 			LOGS_MESSAGE_DELETE_BULK_TITLE: "Several messages have been deleted !",
 			LOGS_MESSAGE_DELETE_BULK_DESC: () => ``,
 			LOGS_MESSAGE_UPDATE_TITLE: "A message has been changed!",

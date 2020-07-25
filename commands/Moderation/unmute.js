@@ -22,7 +22,7 @@ class unmute extends Command {
         try {
             const searchArgs = args.join(" ");
             if (!searchArgs) {
-                return message.channel.send(`<:lycosX:631854509798326322> ${message.language.get("MUTE_ERRORARGS")}`)
+                return message.channel.send(`<:lycosX:631854509798326322> ${message.language.get("UNMUTE_ERRORARGS")}`)
             } else {
                 let member;
                 if (message.mentions.members.size > 0) {

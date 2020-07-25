@@ -1,17 +1,16 @@
 const Command = require("../../base/Command.js");
-const moment = require("moment");
 
 class NowPlaying extends Command {
 	constructor(client) {
 		super(client, {
 			name: "now-playing",
-			description: (language) => language.get("PLAY_DESCRIPTION"),
-			usage: (language, prefix) => language.get("PLAY_USAGE", prefix),
-			examples: (language, prefix) => language.get("PLAY_EXAMPLES", prefix),
+			description: (language) => language.get("NOWPLAYING_DESCRIPTION"),
+			usage: (language, prefix) => language.get("NOWPLAYING_USAGE", prefix),
+			examples: (language, prefix) => language.get("NOWPLAYING_EXAMPLES", prefix),
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["np"],
+			aliases: ["np", "nowplaying"],
 			permLevel: "User",
 			cooldown: 2000,
 		});
@@ -19,26 +18,37 @@ class NowPlaying extends Command {
 
 	async run(message) {
 		try {
-			const queue = message.bot.lavalink.getQueue(message.bot.config.lavalink.queues, message.guild.id);
-			if(!message.member.voice.channel) {
-				return message.channel.send("You need to be in a voice channel!");
+			let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+			if (!trackPlaying) {
+				return message.channel.send(message.language.get("NOT_PLAYING"));
 			}
-
-			if (!message.bot.player.get(message.guild.id)) {
-				return message.channel.send("I'm not playing a song.");
-			}
-			if (queue.length === 0) {
-				return message.channel.send("The queue is currently empty.");
-			}
-			const duration = moment.duration({ ms: queue[0].info.duration });
-			const currentDuration = moment.duration({ ms: message.bot.player.get(message.guild.id).state.position * 1000 });
+			let track = await message.bot.player.nowPlaying(message.guild.id);
 			return message.channel.send({
 				embed: {
-					author: {
-						name: "Now playing",
-						icon_url: message.guild.iconURL({ format: "png", dynamic: true })
+					title: message.language.get("NOWPLAYING"),
+					url: track.url,
+					thumbnail: {
+						url: track.thumbnail,
+
 					},
-					description: `[${queue[0].info.title}](${queue[0].info.url}) by${queue[0].info.author}\nDuration: [${moment(currentDuration / 1000).minutes()}:${moment(currentDuration / 1000).seconds()}] ----- [${duration.minutes()}:${duration.seconds()}]`,
+					fields: [
+						{
+							name: message.language.get("NOWPLAYING_MUSIC_NAME"),
+							value: track.name
+						},
+						{
+							name: message.language.get("NOWPLAYING_ARTIST"),
+							value: track.author
+						},
+						{
+							name: message.language.get("NOWPLAYING_MUSIC_DURATION"),
+							value: track.duration
+						},
+						{
+							name: message.language.get("NOWPLAYING_PROGRESS_BAR"),
+							value: message.bot.player.createProgressBar(message.guild.id)
+						}
+					],
 				},
 			});
 		}
