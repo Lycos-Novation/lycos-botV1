@@ -11,7 +11,7 @@ class Join extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "Server Admin",
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES"],
 			aliases: ["setjoin", "welcome", "setwelcome"],
 			nsfw: false,
 			adminOnly: true,

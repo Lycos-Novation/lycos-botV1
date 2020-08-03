@@ -11,7 +11,8 @@ class Loop extends Command {
             enabled: true,
             guildOnly: true,
             aliases: ["repeat"],
-            permLevel: "Server Moderator",
+            permLevel: "User",
+            botPermissions: ["SEND_MESSAGES"],
             cooldown: 2000,
         });
     }
@@ -21,7 +22,8 @@ class Loop extends Command {
             let trackPlaying = message.bot.player.isPlaying(message.guild.id);
 			if (!trackPlaying) {
 				return message.channel.send(message.language.get("NOT_PLAYING"));
-			}
+            }
+            if (!message.member.voice.channel) return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"));
             const repeatModeEnabled = message.bot.player.getQueue(message.guild.id).repeatMode;
             if (repeatModeEnabled) {
                 // if the repeat mode is currently enabled, disable it

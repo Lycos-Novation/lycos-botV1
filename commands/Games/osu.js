@@ -16,7 +16,7 @@ class Osu extends Command {
             enabled: true,
             guildOnly: false,
             permLevel: "User",
-            botPermissions: ["EMBED_LINKS"],
+            botPermissions: ["SEND_MESSAGES"],
             nsfw: false,
             aliases: ["osu!"],
             adminOnly: false,

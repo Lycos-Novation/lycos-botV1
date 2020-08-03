@@ -12,7 +12,7 @@ class Invite extends Command {
 			guildOnly: false,
 			aliases: [],
 			permLevel: "User",
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES"],
 			cooldown: 1000,
 		});
 	}

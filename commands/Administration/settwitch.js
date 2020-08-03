@@ -11,7 +11,7 @@ class SetTwitch extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "Server Admin",
-            botPermissions: ["EMBED_LINKS"],
+            botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
             aliases: ["set-twitch"],
 			nsfw: false,
 			adminOnly: true,

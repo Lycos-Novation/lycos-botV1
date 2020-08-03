@@ -12,7 +12,7 @@ class weatherInfo extends Command {
             guildOnly: false,
             permLevel: "User",
             aliases: ["weather-info", "weatherinfo", "meteo", "météo"],
-            botPermissions: ["EMBED_LINKS"],
+            botPermissions: ["SEND_MESSAGES", "MANAGE_MESSAGES"],
             nsfw: false,
             adminOnly: false,
             cooldown: 1000,

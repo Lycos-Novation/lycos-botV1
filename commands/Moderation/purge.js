@@ -11,7 +11,7 @@ class Purge extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "Server Moderator",
-			botPermissions: ["MANAGE_MESSAGES"],
+			botPermissions: ["SEND_MESSAGES", "MANAGE_MESSAGES"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 1000,

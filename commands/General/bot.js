@@ -15,7 +15,7 @@ class Bot extends Command {
 			guildOnly: false,
 			aliases: ["lycos", "botinfo", "bi"],
 			permLevel: "User",
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES"],
 			cooldown: 1000,
 		});
 	}

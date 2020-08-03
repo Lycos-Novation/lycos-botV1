@@ -52,6 +52,8 @@ module.exports = class {
 				"russia": lang.get("SERVERINFO_REGIONS")[13],
 				"southafrica": lang.get("SERVERINFO_REGIONS")[14],
 				"europe": lang.get("SERVERINFO_REGIONS")[15],
+				"india": lang.get("SERVERINFO_REGIONS")[16],
+				"japan": lang.get("SERVERINFO_REGIONS")[17]
 			};
 			const r = regions[guild.region];
 			var guilds = guild.client.shard ? await guild.client.shard.broadcastEval("this.guilds.cache.size") : guild.client.guilds.cache.size;

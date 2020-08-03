@@ -23,23 +23,25 @@ module.exports = class {
 		};
 		const vl = verificationLevels[guild.verificationLevel];
 		const regions = {
-			"brazil": lang.get("SERVERINFO_REGIONS")[0],
-			"eu-central": lang.get("SERVERINFO_REGIONS")[1],
-			"singapore": lang.get("SERVERINFO_REGIONS")[2],
-			"us-central": lang.get("SERVERINFO_REGIONS")[3],
-			"sydney": lang.get("SERVERINFO_REGIONS")[4],
-			"us-east": lang.get("SERVERINFO_REGIONS")[5],
-			"us-south": lang.get("SERVERINFO_REGIONS")[6],
-			"us-west": lang.get("SERVERINFO_REGIONS")[7],
-			"eu-west": lang.get("SERVERINFO_REGIONS")[8],
-			"vip-us-east": lang.get("SERVERINFO_REGIONS")[9],
-			"london": lang.get("SERVERINFO_REGIONS")[10],
-			"amsterdam": lang.get("SERVERINFO_REGIONS")[11],
-			"hongkong": lang.get("SERVERINFO_REGIONS")[12],
-			"russia": lang.get("SERVERINFO_REGIONS")[13],
-			"southafrica": lang.get("SERVERINFO_REGIONS")[14],
-			"europe": lang.get("SERVERINFO_REGIONS")[15],
-		};
+				"brazil": lang.get("SERVERINFO_REGIONS")[0],
+				"eu-central": lang.get("SERVERINFO_REGIONS")[1],
+				"singapore": lang.get("SERVERINFO_REGIONS")[2],
+				"us-central": lang.get("SERVERINFO_REGIONS")[3],
+				"sydney": lang.get("SERVERINFO_REGIONS")[4],
+				"us-east": lang.get("SERVERINFO_REGIONS")[5],
+				"us-south": lang.get("SERVERINFO_REGIONS")[6],
+				"us-west": lang.get("SERVERINFO_REGIONS")[7],
+				"eu-west": lang.get("SERVERINFO_REGIONS")[8],
+				"vip-us-east": lang.get("SERVERINFO_REGIONS")[9],
+				"london": lang.get("SERVERINFO_REGIONS")[10],
+				"amsterdam": lang.get("SERVERINFO_REGIONS")[11],
+				"hongkong": lang.get("SERVERINFO_REGIONS")[12],
+				"russia": lang.get("SERVERINFO_REGIONS")[13],
+				"southafrica": lang.get("SERVERINFO_REGIONS")[14],
+				"europe": lang.get("SERVERINFO_REGIONS")[15],
+				"india": lang.get("SERVERINFO_REGIONS")[16],
+				"japan": lang.get("SERVERINFO_REGIONS")[17]
+			};
 		const r = regions[guild.region];
 		var guilds = guild.client.shard ? await guild.client.shard.broadcastEval("this.guilds.cache.size") : guild.client.guilds.cache.size;
 			if (guilds instanceof Array) {

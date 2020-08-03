@@ -11,7 +11,7 @@ class RoleReaction extends Command {
             enabled: true,
             guildOnly: true,
             permLevel: "Server Admin",
-            botPermissions: ["EMBED_LINKS", "MANAGE_ROLES", "SEND_MESSAGES", "ADD_REACTIONS", "USE_EXTERNAL_EMOJIS"],
+            botPermissions: ["MANAGE_ROLES", "SEND_MESSAGES", "ADD_REACTIONS", "USE_EXTERNAL_EMOJIS"],
             aliases: ["rr", "reactionrole", "rreaction", "role-reaction", "reaction-role"],
             nsfw: false,
             adminOnly: true,

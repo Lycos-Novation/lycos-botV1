@@ -11,6 +11,7 @@ class Ping extends Command {
 			enabled: true,
 			guildOnly: false,
 			aliases: ["pong"],
+			botPermissions: ["SEND_MESSAGES"],
 			permLevel: "User",
 			botPermissions: ["EMBED_LINKS"],
 			cooldown: 1000,

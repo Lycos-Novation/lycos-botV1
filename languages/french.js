@@ -121,7 +121,7 @@ module.exports = class {
 			BOT_FIELDS_CONTENT_GENERALINFO: (message, version) => `**Créateur :** [\`${message.bot.users.cache.get("169146903462805504").tag}\`](https://dsc.bio/baptistegt)\n**Développeurs :** [\`${message.bot.users.cache.get("153163308801720321").tag}\`](https://dsc.bio/LePtitMetalleux) et [\`${message.bot.users.cache.get("169146903462805504").tag}\`](https://dsc.bio/baptistegt)\nCréé le \`22/05/2020\`, le bot tourne actuellement sur la version \`${version}\`.`,
 			BOT_FIELDS_CONTENT_GENERALSTATS: (guilds, users, channels) => `**Nombre de serveurs :** \`${guilds}\`.\n**Utilisateurs :** \`${users}\` en mémoire.\n**Nombre de salons :** \`${channels}\`.`,
 			BOT_FIELDS_CONTENT_OTHERINFO: (process, moment, message) => `**Machine :** \`${process.platform}\` - \`(${process.arch})\` \n**TAS :** \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}\`\n**Durée de connexion du bot :** \`${moment.duration(message.bot.uptime).format("M[m] W[w] D[d] H[h] m[m] s[s]")}\``,
-			BOT_FIELDS_CONTENT_LINKS: "[Invitation](https://discordapp.com/oauth2/authorize?client_id=628186022991233025&scope=bot&permissions=8) - [Serveur](https://discord.gg/64zRC73) - [Dons](https://utip.io/lycosnovation) - [Utip](https://utip.io/lycosnovation) - [Site](https://lycos-novation.fr/) - [Twitch](https://www.twitch.tv/lycostv) - [Instagram](https://www.instagram.com/lycosnovation/) - [Twitter](https://twitter.com/LycosNovation)",//[Vote](https://discordbots.org/bot/390231727554953216)
+			BOT_FIELDS_CONTENT_LINKS: "[Invitation](https://discordapp.com/oauth2/authorize?client_id=628186022991233025&scope=bot&permissions=8) - [Serveur](https://discord.gg/64zRC73) - [Dons](https://utip.io/lycosnovation) - [Utip](https://utip.io/lycosnovation) - [Site](https://lycos-novation.fr/) - [Twitch](https://www.twitch.tv/lycostv) - [Instagram](https://www.instagram.com/lycosnovation/) - [Twitter](https://twitter.com/LycosNovation)",
 			HELP_DESCRIPTION: "Affiche la liste des commandes",
 			HELP_USAGE: (prefix) => `${prefix}help (commande)`,
 			HELP_EXAMPLES: (prefix) => `${prefix}help\n${prefix}help ping`,
@@ -171,8 +171,11 @@ module.exports = class {
 			VOTE_USAGE: (prefix) => `${prefix}vote`,
 			VOTE_EXAMPLES: (prefix) => `${prefix}vote`,
 			VOTE_TITLE: "Menu de vote de Lycos",
-			VOTE_DESC: (bdb, dbl) => `<:botdatabase:728338548138442903> [Voter sur BotsDataBase](https://botsdatabase.com/bot/628186022991233025) (**${bdb}** votes)
-<:DiscordBotList:735786997569814579> [Voter sur Disord Bot List](https://top.gg/bot/628186022991233025) (**${dbl}** votes)`,
+			VOTE_DESC: (bdb, dbl, bls, bfd) => `<:botdatabase:728338548138442903> [Voter sur BotsDataBase](https://botsdatabase.com/bot/628186022991233025) (**${bdb}** votes - Votez toutes les 12H)
+<:DiscordBotList:735786997569814579> [Voter sur Disord Bot List](https://top.gg/bot/628186022991233025) (**${dbl}** votes - Votez toutes les 12H)
+<:botsfordiscord:739412747099570186> [Voter sur Bots For Discord](https://botsfordiscord.com/bot/628186022991233025) (**${bfd}** votes - Votez toutes les 12H)
+<:botlistspace:738454241110392853> [Voter sur botlist.space](https://botlist.space/bot/628186022991233025) (**${bls}** votes - Votez toutes les 24H)
+<:void_bots:738451886147108925> [Voter sur VoidBots](https://voidbots.net/bots/628186022991233025) (Votez toutes les 12H)`,
 			INVITE_USAGE: (prefix) => `${prefix}invite`,
 			INVITE_EXAMPLES: (prefix) => `${prefix}invite`,
 			INVITE_TITLE: "Menu d'invitation de Lycos",
@@ -221,7 +224,9 @@ module.exports = class {
 				":flag_hk: Hong Kong",
 				":flag_ru: Russie",
 				":flag_za: Afrique du Sud",
-				":flag_eu: Europe"
+				":flag_eu: Europe",
+				":flag_in: Inde",
+				":flag_jp: Japon"
 			],
 			SERVERINFO_TITLES: [
 				"Nom",
@@ -589,6 +594,20 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			PLAY_AGAIN: (track) => `Et zé partiiii pour jouer \`${track}\`... ENCORE ?!`,
 			PLAY_NEWPLAY: (track) => `Vous écoutez désormais \`${track}\`.`,
 			PLAY_CHANNEL_EMPTY: "Plus personne ne m'écoute, j'ai donc décidé de me déconnecter.",
+			/* Spotify */
+			SPOTIFY_DESCRIPTION: "Joue la musique, album ou playlist demandé (Seulement les liens Spotify)",
+			SPOTIFY_USAGE: (prefix) => `${prefix}spotify [Lien]`,
+			SPOTIFY_EXAMPLES: (prefix) => `${prefix}spotify https://open.spotify.com/track/5v6rYV1jE6xHY3yzpu0m1H?si=4bLL6cF8TK6MQJKNrl5oZQ\n${prefix}spotify https://open.spotify.com/album/50uuwku9CNQJBPE26OoaUL?si=PeooA4Q3SBCf9zNIwVJQxw\n${prefix}spotify https://open.spotify.com/playlist/2tBoC3sUhNdWK1hsGGoU9y?si=Y-yRSGBaR_yQXQtjv45NcA`,
+			SPOTIFY_NO_ARGS: "Vous devez indiquer le lien Spotify à lire ! (Musique, Album ou Playlist)",
+			SPOTIFY_ALBUM_ADDING: "Ajout de l'album en cours, cette opération peut prendre quelques minutes.",
+			SPOTIFY_PLAYLIST_ADDING: "Ajout de la playlist en cours, cette opération peut prendre quelques minutes.",
+			NOT_SPOTIFY: "Ce lien n'est pas un lien Spotify !",
+			/* Music-youtube */
+			MUSIC_YOUTUBE_DESCRIPTION: "Joue la musique ou playlist demandée (Seulement les liens YouTube)",
+			MUSIC_YOUTUBE_USAGE: (prefix) => `${prefix}musicyt [Lien]`,
+			MUSIC_YOUTUBE_EXAMPLES: (prefix) => `${prefix}musicyt https://www.youtube.com/watch?v=YIAlVDLZJ_k\n${prefix}musicyt https://www.youtube.com/playlist?list=PL179D9EEB47465C35`,
+			MUSIC_YOUTUBE_NO_ARGS: "Vous devez indiquer le lien YouTube à lire ! (Musique ou Playlist)",
+			NOT_MUSIC_YOUTUBE: "Ce lien n'est pas un lien YouTube !",
 			/* Now-Playing*/
 			NOWPLAYING_DESCRIPTION: "Affiche la musique en cours de lecture",
 			NOWPLAYING_USAGE: (prefix) => `${prefix}now-playing`,
@@ -668,6 +687,7 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			RELOAD_COMMAND_RELOADED: (commandName) => `The command \`${commandName}\` has been reloaded`,
 			RELOAD_COMMAND_DOESNT_EXIST: (args) => `The command \`${args[0]}\` doesn't seem to exist. Try again!`,
 			ERROR_CREATING_ROLE: "Je n'ai pas pu créer le rôle ``muted``. Vérifiez que j'aie la permission requise !",
+			/* Mute */
 			MUTE_DESCRIPTION: "Mute le membre choisi",
 			MUTE_USAGE: (prefix) => `${prefix}mute [@User ou UserID] [Durée] [Raison]`,
 			MUTE_EXAMPLE: (prefix) => `${prefix}mute @Lycos 1d Spam emotes`,
@@ -688,6 +708,7 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			MUTE_REMOVE_EMBED_DESC: (member, message) => `**Parole rendue à :** ${member.displayName} - ${member} - ${member.user.id}
 **Parole rendue par :** ${message.member.displayName} - ${message.author} - ${message.author.id}
 **Le :** ${moment(new Date()).format("LLLL")}`,
+			/* Unmute */
 			UNMUTE_DESCRIPTION: "Unmute le membre choisi",
 			UNMUTE_USAGE: (prefix) => `${prefix}unmute [@User ou UserID]`,
 			UNMUTE_EXAMPLE: (prefix) => `${prefix}unmute @Lycos`,
@@ -699,9 +720,31 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			UNMUTE_EMBED_TITLE: "Un membre s'est vu rendre la parole !",
 			UNMUTE_EMBED_DESC: (member) => `**Parole rendue à :** ${member.displayName} - ${member} - ${member.user.id}
 **Parole rendue automatiquement**`,
-			CLEAR_DESCRIPTION: "Supprime tous les message visibles dans le salon",
+			/* Voicemute */
+			VOICEMUTE_DESCRIPTION: "Mute vocalement le membre choisi",
+			VOICEMUTE_USAGE: (prefix) => `${prefix}voicemute [@User ou UserID] [Durée] [Raison]`,
+			VOICEMUTE_EXAMPLE: (prefix) => `${prefix}voicemute @Lycos 1d Spam emotes`,
+			/* Unvoicemute */
+			UNVOICEMUTE_DESCRIPTION: "Unmute vocalement le membre choisi",
+			UNVOICEMUTE_USAGE: (prefix) => `${prefix}unmute [@User ou UserID]`,
+			UNVOICEMUTE_EXAMPLE: (prefix) => `${prefix}unmute @Lycos`,
+			/* Clear */
+			CLEAR_DESCRIPTION: "Supprime tous les message du le salon",
 			CLEAR_USAGE: (prefix) => `${prefix}clear`,
 			CLEAR_EXAMPLE: (prefix) => `${prefix}clear`,
+			/* Lock */
+			LOCK_DESCRIPTION: "Verrouille le salon",
+			LOCK_USAGE: (prefix) => `${prefix}lock`,
+			LOCK_EXAMPLE: (prefix) => `${prefix}lock`,
+			ALREADY_LOCKED: "Le salon est déjà verouillé.",
+			LOCKED: "**⚠️ __ATTENTION__ | Le salon a été verouillé, il n'est plus possible d'y parler pour le moment.**",
+			/* Unlock */
+			UNLOCK_DESCRIPTION: "Dérverouille le salon",
+			UNLOCK_USAGE: (prefix) => `${prefix}lock`,
+			UNLOCK_EXAMPLE: (prefix) => `${prefix}lock`,
+			NOT_LOCKED: "Le salon n'est pas verouillé.",
+			UNLOCKED: "Le salon a été déverouillé, il est à nouveau possible d'y parler.",
+			/* Rolemention */
 			ROLEMENTION_DESCRIPTION: "Mentionne le rôle demandé",
 			ROLEMENTION_USAGE: (prefix) => `${prefix}rolemention [ID/Nom]`,
 			ROLEMENTION_EXAMPLES: (prefix) => `${prefix}rolemention 627956962008629279\n${prefix}rolemention Developers`,

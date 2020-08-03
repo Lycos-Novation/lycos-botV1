@@ -11,6 +11,7 @@ class CoinFlip extends Command {
 			enabled: true,
 			guildOnly: false,
 			aliases: ["flip", "coin", "coinflip", "flipcoin"],
+			botPermissions: ["SEND_MESSAGES"],
 			permLevel: "User",
 			cooldown: 1000,
 		});

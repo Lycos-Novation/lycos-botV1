@@ -11,7 +11,7 @@ class Cat extends Command {
 			enabled: true,
 			guildOnly: false,
 			permLevel: "User",
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			aliases: ["cats", "chat", "chats"],
 			nsfw: false,
 			adminOnly: false,
@@ -24,13 +24,13 @@ class Cat extends Command {
 			message.bot.pictURL.getImage("cat").then((image) => {
 				return message.channel.send({
 					embed: {
-						"author": {
-							"name": "Aww... Kitty!",
+						author: {
+							name: "Aww... Kitty!",
 						},
-						"image": {
-							"url": image.url,
+						image: {
+							url: image.url,
 						},
-						"color": message.config.embed.color,
+						color: message.config.embed.color,
 					},
 				});
 			});

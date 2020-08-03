@@ -11,7 +11,7 @@ class Report extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "User",
-            botPermissions: ["EMBED_LINKS", "SEND_MESSAGES", "MANAGE_MESSAGES"],
+            botPermissions: ["SEND_MESSAGES"],
             aliases: ["signal", "reports"],
 			nsfw: false,
 			adminOnly: false,

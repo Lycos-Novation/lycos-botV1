@@ -12,7 +12,7 @@ class Anime extends Command {
 			enabled: true,
 			guildOnly: false,
 			permLevel: "User",
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES", "MANAGE_MESSAGES"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 1000,
@@ -172,20 +172,14 @@ ${message.language.get("ANIME_STAFF_ROLE", data.role)}\n`);
 			}
 
 			malScraper.getInfoFromName(args.join(" ")).then((data) => {
-				console.log(data);
-
-				// edit: you can store the message author like this:
 				const author = message.author
 
-				// send the embed with the first 10 guilds
 				message.channel.send({ embed: generateEmbed(0, data) }).then(message => {
 					// react with the right arrow (so that the user can click it) (left arrow isn't needed because it is the start)
 					message.react('➡️')
 					const collector = message.createReactionCollector(
 						// only collect left and right arrow reactions from the message author
 						(reaction, user) => ['⬅️', '➡️'].includes(reaction.emoji.name) && user.id === author.id,
-						/*// time out after a minute
-						{ time: 60000 }*/
 					)
 
 					let index = 0;
@@ -207,59 +201,6 @@ ${message.language.get("ANIME_STAFF_ROLE", data.role)}\n`);
 						})
 					})
 				})
-
-
-
-				/*return message.channel.send({
-					embed: {
-						color: message.config.embed.color,
-						author: {
-							name: data.englishTitle + `${data.japaneseTitle}`,
-							url: data.url,
-							icon_url: data.picture,
-						},
-						thumbnail: {
-							url: data.picture,
-						},
-						fields: [
-							{
-								name: message.language.get("ANIME_TITLES")[0],
-								value: data.englishTitle,
-								inline: true,
-							},
-							{
-								name: message.language.get("ANIME_TITLES")[1],
-								value: data.japaneseTitle,
-								inline: true,
-							},
-							{
-								name: message.language.get("ANIME_TITLES")[2],
-								value: data.type,
-								inline: true,
-							},
-							{
-								name: message.language.get("ANIME_TITLES")[3],
-								value: data.episodes,
-								inline: true,
-							},
-							{
-								name: message.language.get("ANIME_TITLES")[4],
-								value: data.genres[0],
-								inline: true,
-							},		
-							{
-								name: message.language.get("ANIME_TITLES")[5],
-								value: data.popularity,
-								inline: true,
-							},
-							{
-								name: message.language.get("ANIME_TITLES")[6],
-								value: `${data.score}/10 (${data.scoreStats}.)`,
-								inline: true,
-							},
-						],
-					},
-				});*/
 			});
 		}
 		catch (error) {

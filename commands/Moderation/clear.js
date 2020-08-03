@@ -11,7 +11,7 @@ class clear extends Command {
             enabled: true,
             guildOnly: true,
             permLevel: "Server Moderator",
-            botPermissions: ["MANAGE_MESSAGES"],
+            botPermissions: ["MANAGE_CHANNELS"],
             nsfw: false,
             adminOnly: false,
             cooldown: 1000,
@@ -20,10 +20,10 @@ class clear extends Command {
 
     async run(message) {
         try {
-            message.channel.messages.fetch()
-                .then(function (list) {
-                    message.channel.bulkDelete(list)
-                })
+            const position = message.channel.position;
+			const newChannel = await message.channel.clone();
+			await message.channel.delete();
+			newChannel.setPosition(position);
         } catch (error) {
             console.error(error);
             return message.channel.send(message.language.get("ERROR", error));

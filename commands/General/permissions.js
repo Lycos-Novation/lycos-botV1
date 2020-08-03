@@ -11,7 +11,7 @@ class Permissions extends Command {
 			enabled: true,
 			guildOnly: true,
 			aliases: ["perms", "permission", "perm"],
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 1000,

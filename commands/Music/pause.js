@@ -10,7 +10,8 @@ class Pause extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			permLevel: "Server Moderator",
+			permLevel: "User",
+			botPermissions: ["SEND_MESSAGES"],
 			cooldown: 2000,
 		});
 	}
@@ -21,6 +22,7 @@ class Pause extends Command {
 			if (!trackPlaying) {
 				return message.channel.send(message.language.get("NOT_PLAYING"));
 			}
+			if (!message.member.voice.channel) return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"));
 			const track = await message.bot.player.pause(message.guild.id);
 			return message.channel.send(`\`${track.name}\` ${message.language.get("PAUSED")}`);
 		}

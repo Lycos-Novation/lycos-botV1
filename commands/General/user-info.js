@@ -13,7 +13,7 @@ class UserInformation extends Command {
 			guildOnly: false,
 			permLevel: "User",
 			aliases: ["userinfo", "ui"],
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 1000,
@@ -49,14 +49,14 @@ class UserInformation extends Command {
 				status = message.language.get("USERINFO_UNKNOWN_STATUS");
 			}
 			let clientName;
-			if ( member.presence.clientStatus === null || member.presence.clientStatus.length !== 1 ) {
+			if ( member.presence.clientStatus === null || (member.presence.clientStatus ? member.presence.clientStatus.length !== 1 : null) ) {
 				clientName = member.user.tag;
 			}
 			else if (member.presence.clientStatus.desktop) {
 				clientName = member.user.tag;
 			}
 			else if (member.presence.clientStatus.mobile) {
-				clientName = `${member.user.tag} <:lycosPhone:711637746480971867>`;
+				clientName = `${member.user.tag} <:lycosPhone:736611929694535711>`;
 			}
 			var activity = member.presence.activities;
 			console.log(activity);
@@ -111,6 +111,7 @@ ${message.language.get("USERINFO_CS_NAME", activity[index])}`
 							text = text + `\n${message.language.get("USERINFO_ACTIVITY_ASSETS", activity[index].assets)}`;
 						}
 					}
+					
 				}
 				activity = message.language.get("USERINFO_ACTIVITY_NUMBER", activity) + "\n" + text;
 			}
@@ -119,31 +120,31 @@ ${message.language.get("USERINFO_CS_NAME", activity[index])}`
 			const badges = member.user.flags ? member.user.flags.toArray() : [];
 			let badges_emotes = "";
 			if (badges.includes("DISCORD_EMPLOYEE")){
-				badges_emotes = badges_emotes + "<:Discord_Staff:731665320376533092>";
+				badges_emotes = badges_emotes + "<:Discord_Staff:731665320376533092> Discord Staff";
 			}
 			if (badges.includes("DISCORD_PARTNER")){
-				badges_emotes = badges_emotes + "<:Discord_partner:731665320368013422>";
+				badges_emotes === "" ? badges_emotes = badges_emotes + "<:Discord_partner:731665320368013422> Discord Partner" : badges_emotes = badges_emotes + "\n<:Discord_partner:731665320368013422> Discord Partner"
 			}
 			if (badges.includes("HYPESQUAD_EVENTS")){
-				badges_emotes = badges_emotes + "<:Discord_Hypesquad:731665320275869768>";
+				badges_emotes === "" ? badges_emotes = badges_emotes + "<:Discord_Hypesquad:731665320275869768> Discord HypeSquad Events" : badges_emotes = badges_emotes + "\n<:Discord_Hypesquad:731665320275869768> Discord HypeSquad Events";
 			}
 			if (badges.includes("BUGHUNTER_LEVEL_1") || badges.includes("BUGHUNTER_LEVEL_2")){
-				badges_emotes = badges_emotes + "<:Discord_bughunter:731667105984020510>";
+				badges_emotes === "" ? badges_emotes = badges_emotes + "<:Discord_bughunter:731667105984020510> Bug Hunter" : badges_emotes = badges_emotes + "\n<:Discord_bughunter:731667105984020510> Bug Hunter";
 			}
 			if (badges.includes("HOUSE_BRAVERY")){
-				badges_emotes = badges_emotes + "<:Discord_bravery:731665320342847639>";
+				badges_emotes === "" ? badges_emotes = badges_emotes + "<:Discord_bravery:731665320342847639> Discord HypeSquad Bravery" : badges_emotes = badges_emotes + "\n<:Discord_bravery:731665320342847639> Discord HypeSquad Bravery";
 			}
 			if (badges.includes("HOUSE_BRILLIANCE")){
-				badges_emotes = badges_emotes + "<:Discord_brilliance:731665320217018415>";
+				badges_emotes === "" ? badges_emotes = badges_emotes + "<:Discord_brilliance:731665320217018415> Discord HypeSquad Brilliance" : badges_emotes = badges_emotes + "\n<:Discord_brilliance:731665320217018415> Discord HypeSquad Brilliance";
 			}
 			if (badges.includes("HOUSE_BALANCE")){
-				badges_emotes = badges_emotes + "<:Discord_balance:731665320443379712>";
+				badges_emotes === "" ? badges_emotes = badges_emotes + "<:Discord_balance:731665320443379712> Discord HypeSquad Balance" : badges_emotes = badges_emotes + "\n<:Discord_balance:731665320443379712> Discord HypeSquad Balance";
 			}
 			if (badges.includes("EARLY_SUPPORTER")){
-				badges_emotes = badges_emotes + "<:Discord_early_supporter:731665320418213988>";
+				badges_emotes === "" ? badges_emotes = badges_emotes + "<:Discord_early_supporter:731665320418213988> Early Supporter" : badges_emotes = badges_emotes + "\n<:Discord_early_supporter:731665320418213988> Early Supporter";
 			}
 			if (badges.includes("VERIFIED_DEVELOPER")){
-				badges_emotes = badges_emotes + "<:Discord_verified_dev:731665320665939998>";
+				badges_emotes === "" ? badges_emotes = badges_emotes + "<:Discord_verified_dev:731665320665939998> Verified Developer" : badges_emotes = badges_emotes + "\n<:Discord_verified_dev:731665320665939998> Verified Developer";
 			}
 			if (badges.length === 0){
 				badges_emotes = message.language.get("USERINFO_NO_BADGES");
@@ -172,7 +173,7 @@ ${message.language.get("USERINFO_CS_NAME", activity[index])}`
 						{
 							name: message.language.get("USERINFO_TITLES")[2],
 							value: status,
-							inline: true,
+							inline: false,
 						},
 						{
 							name: message.language.get("USERINFO_TITLES_BADGE", badges),

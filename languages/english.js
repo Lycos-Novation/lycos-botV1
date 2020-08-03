@@ -130,7 +130,7 @@ module.exports = class {
 			BOT_FIELDS_CONTENT_GENERALINFO: (message, version) => `**Creator :** [\`${message.bot.users.cache.get("169146903462805504").tag}\`](https://dsc.bio/baptistegt)\n**Developers :** [\`${message.bot.users.cache.get("153163308801720321").tag}\`](https://dsc.bio/LePtitMetalleux) and [\`${message.bot.users.cache.get("169146903462805504").tag}\`](https://dsc.bio/baptistegt)\nCreated on the \`22/05/2020\`, the bot is currently running on the version \`${version}\`.`,
 			BOT_FIELDS_CONTENT_GENERALSTATS: (guilds, users, channels) => `**Number of servers :** \`${guilds}\`.\n**Users :** \`${users}\` in memory.\n**Number of channels :** \`${channels}\`.`,
 			BOT_FIELDS_CONTENT_OTHERINFO: (process, moment, message) => `**Machine :** \`${process.platform}\` - \`(${process.arch})\` \n**TAS :** \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}\`\n**Bot connection time :** \`${moment.duration(message.bot.uptime).format("M[m] W[w] D[d] H[h] m[m] s[s]")}\``,
-			BOT_FIELDS_CONTENT_LINKS: "[Invitation](https://discordapp.com/oauth2/authorize?client_id=628186022991233025&scope=bot&permissions=0) - [Server](https://discord.gg/64zRC73) - [Donations](https://utip.io/lycosnovation) - [Utip](https://utip.io/lycosnovation) - [Website](https://lycos-novation.fr/) - [Twitch](https://www.twitch.tv/lycostv) - [Instagram](https://www.instagram.com/lycosnovation/) - [Twitter](https://twitter.com/LycosNovation)",//[Vote](https://discordbots.org/bot/390231727554953216)
+			BOT_FIELDS_CONTENT_LINKS: "[Invitation](https://discordapp.com/oauth2/authorize?client_id=628186022991233025&scope=bot&permissions=0) - [Server](https://discord.gg/64zRC73) - [Donations](https://utip.io/lycosnovation) - [Utip](https://utip.io/lycosnovation) - [Website](https://lycos-novation.fr/) - [Twitch](https://www.twitch.tv/lycostv) - [Instagram](https://www.instagram.com/lycosnovation/) - [Twitter](https://twitter.com/LycosNovation)",
 			/* Help */
 			HELP_DESCRIPTION: "Displays the list of commands.",
 			HELP_USAGE: (prefix) => `${prefix}help (commande)`,
@@ -184,8 +184,11 @@ module.exports = class {
 			VOTE_USAGE: (prefix) => `${prefix}vote`,
 			VOTE_EXAMPLES: (prefix) => `${prefix}vote`,
 			VOTE_TITLE: "Lycos' vote links",
-			VOTE_DESC: (dbd, dbl) => `<:botdatabase:728338548138442903> [Vote on BotsDataBase](https://botsdatabase.com/bot/628186022991233025) (**${dbd}** votes)
-<:DiscordBotList:735786997569814579> [Vote on Disord Bot List](https://top.gg/bot/628186022991233025) (**${dbl}** votes)`,
+			VOTE_DESC: (bdb, dbl, bls, bfd) => `<:botdatabase:728338548138442903> [Vote on BotsDataBase](https://botsdatabase.com/bot/628186022991233025) (**${bdb}** votes - Vote every 12H)
+<:DiscordBotList:735786997569814579> [Vote on Disord Bot List](https://top.gg/bot/628186022991233025) (**${dbl}** votes - Vote every 12H)
+<:botsfordiscord:739412747099570186> [Vote on Bots For Discord](https://botsfordiscord.com/bot/628186022991233025) (**${bfd}** votes - Vote every 12H)
+<:botlistspace:738454241110392853> [Vote on botlist.space](https://botlist.space/bot/628186022991233025) (**${bls}** votes - Vote every 24H)
+<:void_bots:738451886147108925> [Vote on VoidBots](https://voidbots.net/bots/628186022991233025) (Vote every 12H)`,
 			/* Ping */
 			PING_DESCRIPTION: "Gives latency of the Discord API.",
 			PING_USAGE: (prefix) => `${prefix}ping`,
@@ -227,10 +230,12 @@ module.exports = class {
 				":flag_hk: Hong Kong",
 				":flag_ru: Russia",
 				":flag_za: South Africa",
-				":flag_eu: Europe"
+				":flag_eu: Europe",
+				":flag_in: India",
+				":flag_jp: Japan"
 			],
 			SERVERINFO_TITLES: [
-				"Last name",
+				"Name",
 				"Creation",
 				"Total | Humans | Bots",
 				"Channel",
@@ -659,6 +664,20 @@ module.exports = class {
 			PLAY_AGAIN: (track) => `Playing \`${track}\`... AGAIN!`,
 			PLAY_NEWPLAY: (track) => `Now playing \`${track}\`.`,
 			PLAY_CHANNEL_EMPTY: "Stop playing, there is no more member in the voice channel",
+			/* Spotify */
+			SPOTIFY_DESCRIPTION: "Plays requested music, album or playlist (Only Spotify links)",
+			SPOTIFY_USAGE: (prefix) => `${prefix}spotify [Link]`,
+			SPOTIFY_EXAMPLES: (prefix) => `${prefix}spotify https://open.spotify.com/track/5v6rYV1jE6xHY3yzpu0m1H?si=4bLL6cF8TK6MQJKNrl5oZQ\n${prefix}spotify https://open.spotify.com/album/50uuwku9CNQJBPE26OoaUL?si=PeooA4Q3SBCf9zNIwVJQxw\n${prefix}spotify https://open.spotify.com/playlist/2tBoC3sUhNdWK1hsGGoU9y?si=Y-yRSGBaR_yQXQtjv45NcA`,
+			SPOTIFY_NO_ARGS: "Please provide a Spotify link to play. (Music, Album or Playlist)",
+			SPOTIFY_ALBUM_ADDING: "Adding album... This operation might take a few minutes.",
+			SPOTIFY_PLAYLIST_ADDING: "Adding playlist... This operation might take a few minutes.",
+			NOT_SPOTIFY: "This isn't a Spotify link!",
+			/* Music-youtube */
+			MUSIC_YOUTUBE_DESCRIPTION: "Plays requested music or playlist (Only YouTube links)",
+			MUSIC_YOUTUBE_USAGE: (prefix) => `${prefix}musicyt [Link]`,
+			MUSIC_YOUTUBE_EXAMPLES: (prefix) => `${prefix}musicyt https://www.youtube.com/watch?v=YIAlVDLZJ_k\n${prefix}musicyt https://www.youtube.com/playlist?list=PL179D9EEB47465C35`,
+			MUSIC_YOUTUBE_NO_ARGS: "Please provide a YouTube link to play. (Music or Playlist)",
+			NOT_MUSIC_YOUTUBE: "This isn't a YouTube link!",
 			/* Now-Playing*/
 			NOWPLAYING_DESCRIPTION: "Shows currently played music",
 			NOWPLAYING_USAGE: (prefix) => `${prefix}now-playing`,
@@ -773,10 +792,30 @@ module.exports = class {
 			UNMUTE_EMBED_TITLE: "A member has been unmuted!",
 			UNMUTE_REMOVE_EMBED_DESC: (member) => `**Unmuted member:** ${member.displayName} - ${member} - ${member.user.id}
 **Unmuted automatically**`,
+			/* Voicemute */
+			MUTE_DESCRIPTION: "Voicemute the selected member.",
+			MUTE_USAGE: (prefix) => `${prefix}mute [@User or UserID] [Duration] [Reason]`,
+			MUTE_EXAMPLE: (prefix) => `${prefix}mute @Lycos 1[d/h/m/s] Spam emotes`,
+			/* Unvoicemute */
+			UNVOICEMUTE_DESCRIPTION: "Unvoicemute the selected member.",
+			UNVOICEMUTE_USAGE: (prefix) => `${prefix}unmute [@User or UserID]`,
+			UNVOICEMUTE_EXAMPLE: (prefix) => `${prefix}unmute @Lycos`,
 			/* Clear */
-			CLEAR_DESCRIPTION: "Delete all visible messages in the channel.",
+			CLEAR_DESCRIPTION: "Clears the channel.",
 			CLEAR_USAGE: (prefix) => `${prefix}clear`,
 			CLEAR_EXAMPLE: (prefix) => `${prefix}clear`,
+			/* Lock */
+			LOCK_DESCRIPTION: "Locks the channel",
+			LOCK_USAGE: (prefix) => `${prefix}lock`,
+			LOCK_EXAMPLE: (prefix) => `${prefix}lock`,
+			ALREADY_LOCKED: "This channel is already locked.",
+			LOCKED: "**⚠️ __WARNING__ | The channel is locked, you can't send messages in it for the moment.**",
+			/* Unlock */
+			UNLOCK_DESCRIPTION: "Dérverouille le salon",
+			UNLOCK_USAGE: (prefix) => `${prefix}lock`,
+			UNLOCK_EXAMPLE: (prefix) => `${prefix}lock`,
+			NOT_LOCKED: "The channel isn't locked.",
+			UNLOCKED: "The channel has been unlocked, you can now speak here.",
 			/* Rolemention */
 			ROLEMENTION_DESCRIPTION: "Mention the requested role.",
 			ROLEMENTION_USAGE: (prefix) => `${prefix}rolemention [ID/Name]`,

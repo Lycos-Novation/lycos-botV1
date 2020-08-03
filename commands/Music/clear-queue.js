@@ -11,18 +11,20 @@ class ClearQueue extends Command {
             enabled: true,
             guildOnly: true,
             permLevel: "Server Moderator",
+            botPermissions: ["SEND_MESSAGES"],
             aliases: ["clearqueue", "clear-music", "clear-musics"],
             cooldown: 2000,
         });
     }
 
-    async run(message, args) {
+    async run(message) {
         try {
             let trackPlaying = message.bot.player.isPlaying(message.guild.id);
             if (!trackPlaying) {
                 return message.channel.send(message.language.get("NOT_PLAYING"));
             }
-            message.bot.player.clearQueue(message.guild.id);
+            if (!message.member.voice.channel) return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"));
+			message.bot.player.clearQueue(message.guild.id);
             return message.channel.send(message.language.get("CLEARQUEUE_CLEARED"));
         }
         catch (error) {

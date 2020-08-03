@@ -11,7 +11,7 @@ class Setreports extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "Server Admin",
-            botPermissions: ["EMBED_LINKS"],
+            botPermissions: ["SEND_MESSAGES"],
             aliases: ["setreport"],
 			nsfw: false,
 			adminOnly: true,

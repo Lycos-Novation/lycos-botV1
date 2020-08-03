@@ -12,7 +12,7 @@ class emotes extends Command {
             guildOnly: true,
             permLevel: "User",
             aliases: ["emojis", "emotes-list", "emojis-list"],
-            botPermissions: [],
+            botPermissions: ["SEND_MESSAGES", "MANAGE_MESSAGES"],
             nsfw: false,
             adminOnly: false,
             cooldown: 1000,

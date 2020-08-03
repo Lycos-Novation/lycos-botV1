@@ -11,7 +11,8 @@ class Filters extends Command {
             enabled: true,
             guildOnly: true,
             aliases: ["filter"],
-            permLevel: "Server Moderator",
+            permLevel: "User",
+            botPermissions: ["SEND_MESSAGES"],
             cooldown: 10000,
         });
     }
@@ -22,7 +23,8 @@ class Filters extends Command {
             if (!trackPlaying) {
                 return message.channel.send(message.language.get("NOT_PLAYING"));
             }
-            const filters = {
+            if (!message.member.voice.channel) return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"));
+			const filters = {
                 "bassboost": "Bassboost",
                 "8D": "8D",
                 "vaporwave": "Vaporwave",
@@ -35,7 +37,6 @@ class Filters extends Command {
                 "normalizer": "Normalizer",
                 "surrounding": "Surrounding",
                 "pulsator": "Pulsator",
-                "subboost": "Subboost",
                 "karaoke": "Karaoke",
                 "flanger": "Flanger",
                 "gate": "Gate",
@@ -60,7 +61,6 @@ class Filters extends Command {
                         Normalizer ${message.bot.player.getQueue(message.guild.id).filters.normalizer ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
                         Surrounding ${message.bot.player.getQueue(message.guild.id).filters.surrounding ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
                         Pulsator ${message.bot.player.getQueue(message.guild.id).filters.pulsator ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Subboost ${message.bot.player.getQueue(message.guild.id).filters.subboost ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
                         Karaoke ${message.bot.player.getQueue(message.guild.id).filters.karaoke ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
                         Flanger ${message.bot.player.getQueue(message.guild.id).filters.flanger ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
                         Gate ${message.bot.player.getQueue(message.guild.id).filters.gate ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}

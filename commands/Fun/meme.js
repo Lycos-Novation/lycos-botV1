@@ -11,7 +11,7 @@ class Meme extends Command {
 			enabled: true,
 			guildOnly: false,
 			permLevel: "User",
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			aliases: [],
 			nsfw: false,
 			adminOnly: false,

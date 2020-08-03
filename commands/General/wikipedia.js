@@ -1,6 +1,6 @@
 const Command = require("../../base/Command.js");
 const wiki = require('wikijs').default;
-
+const fetch = require("node-fetch");
 class Wikipedia extends Command {
     constructor(client) {
         super(client, {
@@ -12,7 +12,7 @@ class Wikipedia extends Command {
             enabled: true,
             guildOnly: false,
             permLevel: "User",
-            botPermissions: ["EMBED_LINKS"],
+            botPermissions: ["SEND_MESSAGES"],
             aliases: ["wiki", "wikipédia"],
             nsfw: false,
             adminOnly: false,
@@ -30,25 +30,36 @@ class Wikipedia extends Command {
             var g;
             mysqlcon.query(sql, async function (err, result, fields) {
                 g = result[0];
-                wiki({ apiUrl: `http://${g.language === "english" ? "en" : "fr"}.wikipedia.org/w/api.php` })
-                    .page(search)
-                    .then(async (page) => {
-                        const info = page;
-                        const p = await page.rawContent();
-                        return message.channel.send({
-                            embed: {
-                                title: info.raw.title,
-                                url: info.raw.fullurl,
-                                description: (p.indexOf("=") || p.length) > 2047 ? p.substring(0, p.indexOf("=") > 2044 ? 2044 : p.indexOf("=")) + "..." : p.substring(0, p.indexOf("=")),
-                                footer: {
-                                    text: `ID : ${info.raw.pageid}`
-                                },
-                            }
-                        })
+                const lang = g.language === "english" ? "en" : "fr";
+                fetch(`https://${lang}.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=20&srsearch=${encodeURIComponent(search)}`, {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        wiki({ apiUrl: `http://${lang}.wikipedia.org/w/api.php` })
+                            .page(data.query.search[0].title)
+                            .then(async (page) => {
+                                const info = page;
+                                const p = await page.rawContent();
+                                return message.channel.send({
+                                    embed: {
+                                        title: info.raw.title,
+                                        url: info.raw.fullurl,
+                                        description: (p.indexOf("=") || p.length) > 2047 ? p.substring(0, p.indexOf("=") > 2044 ? 2044 : p.indexOf("=")) + "..." : p.substring(0, p.indexOf("=")),
+                                        footer: {
+                                            text: `ID : ${info.raw.pageid}`
+                                        },
+                                    }
+                                })
+                            })
+                            .catch(e => {
+                                return message.channel.send(message.language.get("WIKI_ERROR", e));
+                            });
                     })
-                    .catch(e => {
-                        return message.channel.send(message.language.get("WIKI_ERROR", e));
-                    });
+
+
             });
         } catch (error) {
             console.error(error);

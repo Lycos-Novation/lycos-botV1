@@ -11,7 +11,7 @@ class memberCount extends Command {
             enabled: true,
             guildonly: true,
             permLevel: "Server Admin",
-            botPermissions: ["MANAGE_CHANNELS"],
+            botPermissions: ["SEND_MESSAGES"],
             nsfw: false,
             adminOnly: true,
             cooldown: 1000,

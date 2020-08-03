@@ -11,7 +11,7 @@ class RoleInformation extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "User",
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES"],
 			aliases: ["rinfo", "r-info", "roleinfo", "ri"],
 			nsfw: false,
 			adminOnly: false,

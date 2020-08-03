@@ -12,7 +12,7 @@ class RPS extends Command {
 			guildOnly: false,
 			aliases: ["rps", "pierre-feuille-ciseaux", "pfc"],
 			permLevel: "User",
-			botPermissions: [],
+			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 1000,

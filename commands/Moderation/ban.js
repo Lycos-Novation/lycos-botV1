@@ -11,7 +11,7 @@ class Ban extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "Server Moderator",
-			botPermissions: ["EMBED_LINKS", "BAN_MEMBERS"],
+			botPermissions: ["SEND_MESSAGES", "BAN_MEMBERS"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 1000,

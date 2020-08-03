@@ -12,6 +12,7 @@ class Stop extends Command {
 			guildOnly: true,
 			aliases: ["disconnect"],
 			permLevel: "Server Moderator",
+			botPermissions: ["SEND_MESSAGES"],
 			cooldown: 2000,
 		});
 	}

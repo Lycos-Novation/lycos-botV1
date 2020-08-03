@@ -12,6 +12,7 @@ class Sponsors extends Command {
 			guildOnly: false,
 			permLevel: "User",
 			aliases: ["sponsor"],
+			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 1000,

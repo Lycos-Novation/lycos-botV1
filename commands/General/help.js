@@ -12,7 +12,7 @@ class Help extends Command {
 			guildOnly: false,
 			aliases: ["aide", "h"],
 			permLevel: "User",
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 5000,

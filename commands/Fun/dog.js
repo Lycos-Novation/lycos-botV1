@@ -11,7 +11,7 @@ class Dog extends Command {
 			enabled: true,
 			guildOnly: false,
 			permLevel: "User",
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 2000,
@@ -23,13 +23,13 @@ class Dog extends Command {
 			message.bot.pictURL.getImage("dog").then((image) => {
 				return message.channel.send({
 					embed: {
-						"author": {
-							"name": "Aww... Doggo!",
+						author: {
+							name: "Aww... Doggo!",
 						},
-						"image": {
-							"url": image.url,
+						image: {
+							url: image.url,
 						},
-						"color": message.config.embed.color,
+						color: message.config.embed.color,
 					},
 				});
 			});

@@ -11,7 +11,7 @@ class Kick extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "Server Moderator",
-			botPermissions: ["EMBED_LINKS", "KICK_MEMBERS"],
+			botPermissions: ["SEND_MESSAGES", "KICK_MEMBERS"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 1000,

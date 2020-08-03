@@ -10,8 +10,9 @@ class Shuffle extends Command {
             dirname: __dirname,
             enabled: true,
             guildOnly: true,
-            permLevel: "Server Moderator",
+            permLevel: "User",
             aliases: ["random"],
+            botPermissions: ["SEND_MESSAGES"],
             cooldown: 2000,
         });
     }
@@ -22,6 +23,7 @@ class Shuffle extends Command {
             if (!trackPlaying) {
                 return message.channel.send(message.language.get("NOT_PLAYING"));
             }
+            if (!message.member.voice.channel) return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"));
             message.bot.player.shuffle(message.guild.id).then(() => {
                 message.channel.send(message.language.get("SHUFFLED"));
            });

@@ -17,7 +17,7 @@ class QRCode extends Command {
 			enabled: true,
 			guildOnly: false,
 			permLevel: "User",
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES", "ATTACH_FILES"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 1000,

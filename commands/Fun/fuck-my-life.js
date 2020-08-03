@@ -15,6 +15,7 @@ class FuckMyLife extends Command {
 			enabled: true,
 			guildOnly: false,
 			aliases: ["fml", "vie-de-merde", "vdm"],
+			botPermissions: ["SEND_MESSAGES"],
 			permLevel: "User",
 			nsfw: false,
 			adminOnly: false,

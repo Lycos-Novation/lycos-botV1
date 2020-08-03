@@ -10,7 +10,7 @@ class ServerInformation extends Command {
 			enabled: true,
 			guildOnly: true,
 			aliases: ["serverinfo", "si", "servinfo"],
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,
 		});
 	}

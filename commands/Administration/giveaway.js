@@ -11,7 +11,7 @@ class Giveaway extends Command {
             enabled: true,
             guildOnly: true,
             permLevel: "Server Admin",
-            botPermissions: ["EMBED_LINKS"],
+            botPermissions: ["SEND_MESSAGES"],
             aliases: ["giveaways", "gift", "gifts"],
             nsfw: false,
             adminOnly: true,

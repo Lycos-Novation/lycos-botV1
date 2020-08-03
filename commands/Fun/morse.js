@@ -11,7 +11,7 @@ class Morse extends Command {
 			enabled: true,
 			guildOnly: false,
 			permLevel: "User",
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES"],
 			aliases: [],
 			nsfw: false,
 			adminOnly: false,

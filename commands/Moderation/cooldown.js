@@ -9,7 +9,7 @@ class Cooldown extends Command {
             examples: (language, prefix) => language.get("GIVEAWAY_EXAMPLES", prefix),
             dirname: __dirname,
             enabled: true,
-            guildOnly: false,
+            guildOnly: true,
             permLevel: "Server Moderator",
             botPermissions: ["MANAGE_MESSAGES"],
             nsfw: false,
@@ -18,13 +18,28 @@ class Cooldown extends Command {
         });
     }
 
-    async run(message, args) {
+    async run(message) {
         try {
-            const talkedRecently = new Set();
-            talkedRecently.add(message.author.id);
-            setTimeout(() => {
-                talkedRecently.delete(message.author.id)
-            },86400000)
+            let cooldown = new Collection();
+            if (!cooldown.has(cmd.help.name)){
+				cooldown.set(cmd.help.name, new Collection());
+            }
+            const now = Date.now();
+			const timestamps = client.cooldowns.get(cmd.help.name);
+			const cooldownAmount = cmd.conf.cooldown;
+
+            if (timestamps.has(message.author.id)){
+				const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+				if (now < expirationTime){
+					const timeLeft = (expirationTime - now) / 1000;
+					return client.errors.inCooldown(timeLeft, cmd.help.name, message);
+				}
+			}
+
+			if (permLevel < 4) {
+				timestamps.set(message.author.id, now);
+				setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+			}
         }
         catch (error) {
             console.error(error);

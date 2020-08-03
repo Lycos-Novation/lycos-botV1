@@ -11,6 +11,7 @@ class Queue extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "User",
+			botPermissions: ["SEND_MESSAGES"],
 			cooldown: 2000,
 		});
 	}
@@ -18,7 +19,8 @@ class Queue extends Command {
 	async run(message) {
 		try {
 			function generateEmbed(index, tracks, np) {
-				if (index + 10 > tracks.length) {
+		if (tracks !== message.language.get("NOT_PLAYING")){
+			if (index + 10 > tracks.length) {
                     var toShow = tracks.slice(index, tracks.length).map((track, i) => {
 						return `${`#${i+index}`} - [${track.name} | ${track.author}](${track.url})`;
 					}).join('\n');
@@ -27,6 +29,9 @@ class Queue extends Command {
 						return `${`#${i+index}`} - [${track.name} | ${track.author}](${track.url})`;
 					}).join('\n');
                 }
+			} else {
+			var toShow = message.language.get("QUEUE_EMPTY");
+			}
 				const embed = {
 					color: message.config.embed.color,
 						title: message.language.get("QUEUE_ACTUAL"),
@@ -64,23 +69,23 @@ ${toShow}`,
 
 			let np = await message.bot.player.nowPlaying(message.guild.id);
 			const author = message.author;
-			message.channel.send({ embed: generateEmbed(0, tracks, np) }).then(async (message) => {
-				if (tracks.length <= 10) return;
-				await message.react('➡️');
-				const collector = message.createReactionCollector(
+			message.channel.send({ embed: generateEmbed(0, tracks, np) }).then(async (answer) => {
+				if (tracks.length <= 10 || tracks === message.language.get("NOT_PLAYING")) return;
+				await answer.react('➡️');
+				const collector = answer.createReactionCollector(
 					(reaction, user) => ['⬅️', '➡️'].includes(reaction.emoji.name) && user.id === author.id,
 				)
 				let index = 0;
 				collector.on('collect', reaction => {
-					message.reactions.removeAll().then(async () => {
+					answer.reactions.removeAll().then(async () => {
 						if (reaction.emoji.name === '⬅️') {
 							index = (index - 10) < 0 ? index : index - 10;
 						} else if (reaction.emoji.name === '➡️') {
 							index = (index + 10) > tracks.length ? index : index + 10;
 						}
-						message.edit({ embed: generateEmbed(index, tracks, np) });
-						if (index !== 0) await message.react('⬅️');
-						if (index + 10 < tracks.length) await message.react('➡️');
+						answer.edit({ embed: generateEmbed(index, tracks, np) });
+						if (index !== 0) await answer.react('⬅️');
+						if (index + 10 < tracks.length) await answer.react('➡️');
 					})
 				})
 			})

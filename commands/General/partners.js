@@ -11,6 +11,7 @@ class Partners extends Command {
 			enabled: true,
 			guildOnly: false,
 			permLevel: "User",
+			botPermissions: ["SEND_MESSAGES"],
 			aliases: ["partenaires", "partner", "partenaire"],
 			nsfw: false,
 			adminOnly: false,

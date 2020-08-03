@@ -10,7 +10,8 @@ class Remove extends Command {
             dirname: __dirname,
             enabled: true,
             guildOnly: true,
-            permLevel: "Server Moderator",
+            permLevel: "User",
+            botPermissions: ["SEND_MESSAGES"],
             cooldown: 2000,
         });
     }
@@ -21,7 +22,8 @@ class Remove extends Command {
             if (!trackPlaying) {
                 return message.channel.send(message.language.get("NOT_PLAYING"));
             }
-            const toRemove = args[0];
+            if (!message.member.voice.channel) return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"));
+			const toRemove = args[0];
             if (!toRemove || isNaN(parseInt(toRemove))) return message.channel.send(message.language.get("REMOVE_NO_ARGS"))
             message.bot.player.remove(message.guild.id, parseInt(toRemove))
                 .then(() => {

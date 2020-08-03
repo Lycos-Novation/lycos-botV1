@@ -23,7 +23,7 @@ module.exports = class {
 
 			// Let's perform a sanity check here and make sure we got *something*
 			if (!deletionLog) {
-				var deletedBy = message.language.get("LOGS_MESSAGE_DELETE_DELETED_BY_UNKNOWN");
+				var deletedBy = lang.get("LOGS_MESSAGE_DELETE_DELETED_BY_UNKNOWN");
 			}
 
 			// We now grab the user object of the person who deleted the message
@@ -34,9 +34,9 @@ module.exports = class {
 			// And now we can update our output with a bit more information
 			// We will also run a check to make sure the log we got was for the same author's message
 			if (target.id === message.author.id) {
-				deletedBy = `${message.language.get("LOGS_MESSAGE_DELETE_DELETED_BY")} ${executor.tag} - ${executor} - ${executor.id}`;
+				deletedBy = `${lang.get("LOGS_MESSAGE_DELETE_DELETED_BY")} ${executor.tag} - ${executor} - ${executor.id}`;
 			} else {
-				deletedBy = message.language.get("LOGS_MESSAGE_DELETE_DELETED_BY_UNKNOWN");
+				deletedBy = lang.get("LOGS_MESSAGE_DELETE_DELETED_BY_UNKNOWN");
 			}
 			return message.guild.channels.cache.find(c => c.id === g.logs_channel).send({
 				embed: {

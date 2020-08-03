@@ -11,7 +11,7 @@ class Leave extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "Server Admin",
-            botPermissions: ["EMBED_LINKS"],
+            botPermissions: ["SEND_MESSAGES"],
             aliases: ["setleave"],
 			nsfw: false,
 			adminOnly: true,

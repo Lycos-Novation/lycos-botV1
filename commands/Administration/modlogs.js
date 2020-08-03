@@ -11,7 +11,7 @@ class Modlogs extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "Server Admin",
-            botPermissions: ["EMBED_LINKS"],
+            botPermissions: ["SEND_MESSAGES"],
             aliases: ["modlogs", "setmlogs"],
 			nsfw: false,
 			adminOnly: true,

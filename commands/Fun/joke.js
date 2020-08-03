@@ -11,7 +11,7 @@ class Number extends Command {
             enabled: true,
             guildOnly: false,
             permLevel: "User",
-            botPermissions: ["EMBED_LINKS"],
+            botPermissions: ["SEND_MESSAGES"],
             aliases: ["blague", "blagues", "jokes"],
             nsfw: false,
             adminOnly: false,

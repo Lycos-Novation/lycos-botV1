@@ -12,6 +12,7 @@ class NowPlaying extends Command {
 			guildOnly: true,
 			aliases: ["np", "nowplaying"],
 			permLevel: "User",
+			botPermissions: ["SEND_MESSAGES"],
 			cooldown: 2000,
 		});
 	}

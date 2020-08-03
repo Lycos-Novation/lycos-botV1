@@ -11,7 +11,7 @@ class Logs extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "Server Admin",
-            botPermissions: ["EMBED_LINKS"],
+            botPermissions: ["SEND_MESSAGES"],
             aliases: ["setlogs"],
 			nsfw: false,
 			adminOnly: true,

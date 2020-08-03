@@ -12,7 +12,7 @@ class Language extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "Server Admin",
-			botPermissions: ["EMBED_LINKS"],
+			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,
 			aliases: ["lang"],
 			adminOnly: true,

@@ -1,9 +1,9 @@
 const Command = require("../../base/Command.js");
 
-class Suggestion extends Command {
+class LycosSuggestion extends Command {
 	constructor(client) {
 		super(client, {
-			name: "suggestion",
+			name: "lycos-suggestion",
 			description: (language) => language.get("SUGGESTION_DESCRIPTION"),
 			usage: (language, prefix) => language.get("SUGGESTION_USAGE", prefix),
 			examples: (language, prefix) => language.get("SUGGESTION_EXAMPLES", prefix),
@@ -11,7 +11,7 @@ class Suggestion extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "User",
-            botPermissions: [],
+            botPermissions: ["SEND_MESSAGES"],
             aliases: ["suggestions", "suggest", "suggests"],
 			nsfw: false,
 			adminOnly: false,
@@ -25,7 +25,18 @@ class Suggestion extends Command {
 				message.channel.send(message.language.get("SUGGESTION_NO_ARGS"))
 			}
 			else {
-				const suggestion = args.join(" ");
+
+                const suggestion = args.join(" ");
+                var sql = `SELECT *
+		FROM Guilds
+		WHERE guild_id="${message.guild.id}"`;
+            var g;
+            mysqlcon.query(sql, async function (err, result, fields) {
+                if (err) throw err;
+                g = result[0];
+                if (!g.suggestions_channel){
+                    return message.channel.send(message.language.get("REPORT_NOT_SET"))
+                }
 				message.bot.shard.broadcastEval(`
 						const Discord = require('discord.js');
 						const channel = this.channels.cache.get("627955885582581790");
@@ -51,7 +62,8 @@ class Suggestion extends Command {
         			`);
 				return message.channel.send(message.language.get("SUGGESTION_QUESTION_SEND")).then(() => {
 					message.delete();
-				});
+                });
+            });
 			}
 		}
 		catch (error) {
@@ -61,4 +73,4 @@ class Suggestion extends Command {
 	}
 }
 
-module.exports = Suggestion;
+module.exports = LycosSuggestion;

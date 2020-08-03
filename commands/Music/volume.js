@@ -10,7 +10,8 @@ class Volume extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			permLevel: "Server Moderator",
+			permLevel: "User",
+			botPermissions: ["SEND_MESSAGES"],
 			cooldown: 2000,
 		});
 	}
@@ -21,7 +22,7 @@ class Volume extends Command {
 			if (!trackPlaying) {
 				return message.channel.send("No music playing.");
 			}
-
+			if (!message.member.voice.channel) return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"));
 			const volume = args.join(" ");
 			if (!volume || isNaN(volume) || volume <= 0 || volume > 100) {
 				return message.channel.send(message.language.get("VOLUME_BETWEEN"));

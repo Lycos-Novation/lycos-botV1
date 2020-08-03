@@ -11,7 +11,7 @@ class Support extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "User",
-			botPermissions: ["EMBED_LINKS", "CREATE_INSTANT_INVITE"],
+			botPermissions: ["SEND_MESSAGES", "CREATE_INSTANT_INVITE"],
 			nsfw: false,
 			adminOnly: false,
 			cooldown: 30000,

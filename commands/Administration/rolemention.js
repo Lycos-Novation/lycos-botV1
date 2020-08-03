@@ -11,7 +11,7 @@ class roleMention extends Command {
             enabled: true,
             guildOnly: true,
             permLevel: "Server Admin",
-            botPermissions: ["MANAGE_ROLES", "MENTION_EVERYONE"],
+            botPermissions: ["MANAGE_ROLES", "MENTION_EVERYONE", "SEND_MESSAGES"],
             nsfw: false,
             adminOnly: false,
             cooldown: 1000,
