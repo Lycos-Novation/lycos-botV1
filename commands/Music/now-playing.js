@@ -47,7 +47,7 @@ class NowPlaying extends Command {
 						},
 						{
 							name: message.language.get("NOWPLAYING_PROGRESS_BAR"),
-							value: message.bot.player.createProgressBar(message.guild.id)
+							value: message.bot.player.createProgressBar(message.guild.id, { durations: true})
 						}
 					],
 				},

@@ -1,9 +1,9 @@
 const Command = require("../../base/Command.js");
 
-class unmute extends Command {
+class unvoicemute extends Command {
     constructor(client) {
         super(client, {
-            name: "unmute",
+            name: "unvoicemute",
             description: (language) => language.get("UNVOICEMUTE_DESCRIPTION"),
             usage: (language, prefix) => language.get("UNVOICEMUTE_USAGE", prefix),
             examples: (language, prefix) => language.get("UNVOICEMUTE_EXAMPLE", prefix),
@@ -94,4 +94,4 @@ class unmute extends Command {
     }
 }
 
-module.exports = unmute;
+module.exports = unvoicemute;

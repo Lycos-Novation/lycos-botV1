@@ -37,7 +37,7 @@ class DevLog extends Command {
             if (!dlogs) {
                 return message.channel.send("T'as oublié quelque chose je crois c:")
             }
-            let chan = this.client.guilds.cache.find(g => g.id === "697368051405815860").channels.cache.find(c => c.id === '713736338863685683');
+            let chan = this.client.guilds.cache.find(g => g.id === "697368051405815860").channels.cache.find(c => c.id === '740500133921423440');
             if(!chan) {
                 return message.channel.send(`Salon d'annonce introuvable`)
             }
@@ -45,7 +45,7 @@ class DevLog extends Command {
                 embed: {
                     color: couleur,
                     footer: {
-                        text: message.config.embed.footer
+                        text: message.config.embed.footer + " - Do update command to see this in another language from everywhere the bot is."
                     },
                     title: `Notes de mise à jour | Version ${version}`,
                     description: dlogs,

@@ -1,90 +1,92 @@
-const config = require('../config');
 const { Collection } = require("discord.js");
 module.exports = {
 
 	async messageEvent(client, message, settings) {
-			message.settings = settings;
-			// Gets message level
-			const permLevel = await client.getLevel(message);
-			message.permLevel = permLevel;
+		message.settings = settings;
+		// Gets language
+		const language = new (require(`../languages/${settings.language}.js`));
+		message.language = language;
 
-			// Gets language
-			const language = new (require(`../languages/${settings.language}.js`));
-			message.language = language;
+		if (!message.guild && message.content.toLowerCase().indexOf("discord")) {
+			const cmd = client.commands.get("invite");
+			return cmd.run(message);
+		}
+		// Gets message level
+		const permLevel = await client.getLevel(message);
+		message.permLevel = permLevel;
+		// Check if the bot was mentioned
+		const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
+		if (message.content.match(prefixMention)) {
+			return await message.channel.send(language.get("BOT_MENTION", settings.prefix));
+		}
 
-			// Check if the bot was mentioned
-			const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
-			if (message.content.match(prefixMention)) {
-				return await message.channel.send(language.get("BOT_MENTION", settings.prefix));
+		// Gets prefix
+		const prefix = client.functions.getPrefix(message);
+		if (!prefix) return;
+		message.prefix = prefix;
+
+		const args = message.content.slice((typeof prefix === "string" ? prefix.length : 0)).trim().split(/ +/g);
+		const command = args.shift().toLowerCase();
+		const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
+		if (!cmd) return;
+
+		if (cmd && !message.guild && cmd.conf.guildOnly) {
+			return message.channel.send(language.get("ERROR_COMMAND_GUILDONLY"));
+		}
+
+		if (!client.cooldowns.has(cmd.help.name)) {
+			client.cooldowns.set(cmd.help.name, new Collection());
+		}
+
+		const now = Date.now();
+		const timestamps = client.cooldowns.get(cmd.help.name);
+		const cooldownAmount = cmd.conf.cooldown;
+
+		if (timestamps.has(message.author.id)) {
+			const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+			if (now < expirationTime) {
+				const timeLeft = (expirationTime - now) / 1000;
+				return client.errors.inCooldown(timeLeft, cmd.help.name, message);
 			}
+		}
 
-			// Gets prefix
-			const prefix = client.functions.getPrefix(message);
-			if (!prefix) return;
-			message.prefix = prefix;
+		if (permLevel < 4) {
+			timestamps.set(message.author.id, now);
+			setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+		}
 
-			const args = message.content.slice((typeof prefix === "string" ? prefix.length : 0)).trim().split(/ +/g);
-			const command = args.shift().toLowerCase();
-			const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
-			if (!cmd) return;
-
-			if (cmd && !message.guild && cmd.conf.guildOnly) {
-				return message.channel.send(language.get("ERROR_COMMAND_GUILDONLY"));
+		if (message.guild) {
+			const neededPermission = [];
+			if (!cmd.conf.botPermissions.includes("EMBED_LINKS")) {
+				cmd.conf.botPermissions.push("EMBED_LINKS");
 			}
-
-			if (!client.cooldowns.has(cmd.help.name)){
-				client.cooldowns.set(cmd.help.name, new Collection());
-			}
-
-			const now = Date.now();
-			const timestamps = client.cooldowns.get(cmd.help.name);
-			const cooldownAmount = cmd.conf.cooldown;
-
-			if (timestamps.has(message.author.id)){
-				const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-				if (now < expirationTime){
-					const timeLeft = (expirationTime - now) / 1000;
-					return client.errors.inCooldown(timeLeft, cmd.help.name, message);
+			cmd.conf.botPermissions.forEach((permission) => {
+				if (!message.channel.permissionsFor(message.guild.me).has(permission)) {
+					neededPermission.push(permission);
 				}
+			});
+			if (neededPermission.length > 0) {
+				return client.errors.botPermissions(neededPermission.map((p) => `\`${p}\``).join(", "), message);
 			}
+		}
 
-			if (permLevel < 4) {
-				timestamps.set(message.author.id, now);
-				setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-			}
+		if (message.guild && !message.member.hasPermission("MENTION_EVERYONE") && message.mentions.everyone) {
+			return client.errors.everyone(message);
+		}
 
-			if (message.guild) {
-				const neededPermission = [];
-				if (!cmd.conf.botPermissions.includes("EMBED_LINKS")) {
-					cmd.conf.botPermissions.push("EMBED_LINKS");
-				}
-				cmd.conf.botPermissions.forEach((permission) => {
-					if (!message.channel.permissionsFor(message.guild.me).has(permission)) {
-						neededPermission.push(permission);
-					}
-				});
-				if (neededPermission.length > 0) {
-					return client.errors.botPermissions(neededPermission.map((p) => `\`${p}\``).join(", "), message);
-				}
-			}
+		if (permLevel < client.levelCache[cmd.conf.permLevel]) {
+			return client.errors.perm(client.config.permLevels.find((l) => l.level === permLevel).name, cmd.conf.permLevel, message);
+		}
 
-			if (message.guild && !message.member.hasPermission("MENTION_EVERYONE") && message.mentions.everyone) {
-				return client.errors.everyone(message);
-			}
+		if (message.channel.type === "text" && !message.channel.nsfw && cmd.conf.nsfw) {
+			return client.errors.nsfw(message);
+		}
 
-			if (permLevel < client.levelCache[cmd.conf.permLevel]) {
-				return client.errors.perm(client.config.permLevels.find((l) => l.level === permLevel).name, cmd.conf.permLevel, message);
-			}
-
-			if (message.channel.type === "text" && !message.channel.nsfw && cmd.conf.nsfw) {
-				return client.errors.nsfw(message);
-			}
-
-			if (!cmd.conf.enabled && permLevel < 4) {
-				return client.errors.disabled(message);
-			}
-			client.logger.log(`[Permission: ${message.permLevel}] ${message.author.tag} (${message.author.id}) ran command ${cmd.help.name}`, "cmd");
-			cmd.run(message, args);
+		if (!cmd.conf.enabled && permLevel < 4) {
+			return client.errors.disabled(message);
+		}
+		client.logger.log(`[Permission: ${message.permLevel}] ${message.author.tag} (${message.author.id}) ran command ${cmd.help.name}`, "cmd");
+		cmd.run(message, args);
 	},
 
 	getPrefix(message) {

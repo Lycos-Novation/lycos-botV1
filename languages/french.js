@@ -1,5 +1,5 @@
 const e = require("../config.js").emotes;
-const moment = require("moment-timezone");
+const moment = require("moment");
 moment.locale('fr');
 
 module.exports = class {
@@ -31,7 +31,7 @@ module.exports = class {
 			ERROR_NSFW_DEACTIVATED: "Cette commande n'est pas disponible car le module ``NSFW`` n'est pas disponible sur ce serveur.\nDemandez à un administrateur du serveur de l'activer.",
 			ERROR_FORTNITE_PLATFORM: "S'il vous plaît entrer une plateforme valide (pc, xbox, psn).",
 			ERROR_FORTNITE_PLATFORM_USER_NOT_FOUND: "Cet utilisateur n'a pas été trouvé sur la plate-forme spécifiée.",
-			BOT_MENTION: (prefix) => `>>> Mon préfixe est \`\`${prefix}\`\` sur ce serveur.\nMes commandes sont visibles en faisant \`\`${prefix}help\`\`.\nEn casde  problème, rejoigez le serveur de Lycos (https://discord.gg/64zRC73) ou contactez LePtitMetalleux#1604 ou BaptisteGT#0123 en messages privés.`,
+			BOT_MENTION: (prefix) => `>>> Mon préfixe est \`\`${prefix}\`\` sur ce serveur.\nMes commandes sont visibles en faisant \`\`${prefix}help\`\`.\nEn cas de problème, rejoigez le serveur de Lycos (discord.gg/64zRC73) ou contactez LePtitMetalleux#1604 ou BaptisteGT#0123 en messages privés.`,
 			GIVEAWAY_DESCRIPTION: "Permet de gérer les giveaways facilement !",
 			GIVEAWAY_USAGE: (prefix) => `${prefix}giveaway [start/edit/reroll/end/delete]`,
 			GIVEAWAY_EXAMPLES: (prefix) => `${prefix}giveaway start 2[d/h/m/s] 5 Discord Nitro\n${prefix}giveaway edit 665556886732668949 1 -1h Discord Nitro\n${prefix}giveaway reroll 665556886732668949 2\n${prefix}giveaway end 665556886732668949\n${prefix}giveaway delete 665556886732668949`,
@@ -152,7 +152,7 @@ module.exports = class {
 			Erreur rencontrée : TypeError: role.createdTimestamp.toUTCString is not a function
 			Contexte : J'ai juste fait .role-info Blurple et j'ai eu cette erreur.`,
 			BUGREPORT_NO_ARGS: "Veuillez décrire le bug rencontré avec au moins 10 caractères et 1900 au maximum.",
-			BUGREPORT_REPORT_SEND: "Le bug a bien été envoyé, il sera traité le plus rapidement possible et sera résolu lors d'une prochaine mise à jour.\nPour être au courant des futures mises à jour, rejoignez le Discord de Lycos (https://discord.gg/64zRC73).",
+			BUGREPORT_REPORT_SEND: "Le bug a bien été envoyé, il sera traité le plus rapidement possible et sera résolu lors d'une prochaine mise à jour.\nPour être au courant des futures mises à jour, rejoignez le Discord de Lycos (discord.gg/64zRC73).",
 			INVITE_DESCRIPTION: "Donne l'invitation pour ajouter le bot sur un serveur",
 			INVITE_USAGE: (prefix) => `${prefix}invite`,
 			INVITE_EXAMPLES: (prefix) => `${prefix}invite`,
@@ -171,11 +171,11 @@ module.exports = class {
 			VOTE_USAGE: (prefix) => `${prefix}vote`,
 			VOTE_EXAMPLES: (prefix) => `${prefix}vote`,
 			VOTE_TITLE: "Menu de vote de Lycos",
-			VOTE_DESC: (bdb, dbl, bls, bfd) => `<:botdatabase:728338548138442903> [Voter sur BotsDataBase](https://botsdatabase.com/bot/628186022991233025) (**${bdb}** votes - Votez toutes les 12H)
+			VOTE_DESC: (bdb, dbl, bls, bfd, vb) => `<:botdatabase:728338548138442903> [Voter sur BotsDataBase](https://botsdatabase.com/bot/628186022991233025) (**${bdb}** votes - Votez toutes les 12H)
 <:DiscordBotList:735786997569814579> [Voter sur Disord Bot List](https://top.gg/bot/628186022991233025) (**${dbl}** votes - Votez toutes les 12H)
 <:botsfordiscord:739412747099570186> [Voter sur Bots For Discord](https://botsfordiscord.com/bot/628186022991233025) (**${bfd}** votes - Votez toutes les 12H)
 <:botlistspace:738454241110392853> [Voter sur botlist.space](https://botlist.space/bot/628186022991233025) (**${bls}** votes - Votez toutes les 24H)
-<:void_bots:738451886147108925> [Voter sur VoidBots](https://voidbots.net/bots/628186022991233025) (Votez toutes les 12H)`,
+<:void_bots:738451886147108925> [Voter sur VoidBots](https://voidbots.net/bots/628186022991233025) (**${vb}** votes - Votez toutes les 12H)`,
 			INVITE_USAGE: (prefix) => `${prefix}invite`,
 			INVITE_EXAMPLES: (prefix) => `${prefix}invite`,
 			INVITE_TITLE: "Menu d'invitation de Lycos",
@@ -194,9 +194,20 @@ module.exports = class {
 			PING_PONG: "Pong !",
 			PING_APILATENCY: "Latence API",
 			PING_CLIENTLATENCY: "Latence de Lycos",
+			/* Cat */
 			CAT_DESCRIPTION: "Amusez-vous en regardant des images de chat.",
 			CAT_USAGE: (prefix) => `${prefix}cat`,
 			CAT_EXAMPLES: (prefix) => `${prefix}cat`,
+			/* Chrono */
+			CHRONO_DESCRIPTION: "Creates a stopwatch",
+			CHRONO_USAGE: (prefix) => `${prefix}chrono [start/stop]`,
+			CHRONO_EXAMPLES: (prefix) => `${prefix}chrono start\n${prefix}chrono stop`,
+			CHRONO_METHODS: "Faites `chrono start` pour démarrer le chrono et le `chrono stop` pour l'arrêter.",
+			CHRONO_RUNNING: "Vous avez déjà lancé un chrono !",
+			CHRONO_STARTED: "Chronomètre démarré ! Faites `chrono stop` pour l'arrêter.",
+			CHRONO_NOT_RUNNING: "Vous n'avez pas lancé de chrono !",
+			CHRONO_STOPPED: (result) => `Chronomètre arrêté à ${result}`,
+			/* Dog */
 			DOG_DESCRIPTION: "Amusez-vous en regardant des images de chien.",
 			DOG_USAGE: (prefix) => `${prefix}dog`,
 			DOG_EXAMPLES: (prefix) => `${prefix}dog`,
@@ -399,10 +410,22 @@ module.exports = class {
 			OSU_SCORES: (user) => `Classé : ${user.scores.ranked} points - Total : ${user.scores.total} points`,
 			OSU_COUNTS: (user) => `50 : ${user.counts['50']} - 100 : ${user.counts['100']} - 300 : ${user.counts['300']}
 A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${user.counts.SS} - SSH :${user.counts.SSH}`,
+			/* Qrcode */
 			QRCODE_DESCRIPTION: "Génère un QRCode contenant le texte indiqué",
 			QRCODE_USAGE: (prefix) => `${prefix}qrcode [text]`,
 			QRCODE_EXAMPLES: (prefix) => `${prefix}qrcode Code secret`,
 			QRCODE_MESSAGE: "Vous devez inclure quelque chose à convertir en un QR Code.",
+			/* Reminder */
+			REMINDER_DESCRIPTION: "Créé un rappel",
+			REMINDER_USAGE: (prefix) => `${prefix}reminder [temps] [rappel]`,
+			REMINDER_EXAMPLES: (prefix) => `${prefix}reminder 12h Voter pour Lycos`,
+			REMINDER_NO_TIME: "Vous devez indiquer la durée dans laquelle je dois vous rappeller.",
+			REMINDER_NO_REMIND: "Vous devez indiquer ce que je dois vous rappeller.",
+			REMINDER_TOO_LONG: "Je ne vais jamais retenir tout ça... Veuillez me donner quelque chose à vous rapeller de plus court.",
+			REMINDER_TITLE: "Rappel",
+			REMINDER_STARTED: (toRemind, time) => `Parfait, je vous rappellerai de ${toRemind} dans ${time}.`,
+			REMINDER_ENDED: (toRemind) => `<@!${message.author.id}>, il est l'heure de ${toRemind} !`,
+			/* Roleinfo */
 			ROLE_INFO_DESCRIPTION: "Affiche les informations du rôle indiqué.",
 			ROLE_INFO_USAGE: (prefix) => `${prefix}role-info [@Role/ID]`,
 			ROLE_INFO_EXAMPLES: (prefix) => `${prefix}role-info @Membres\ ${prefix}role-info 699011821654507572`,
@@ -518,11 +541,26 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			RPS_ROCK: "pierre",
 			RPS_PAPER: "feuille",
 			RPS_SCISSORS: "ciseaux",
+			/* Support */
 			SUPPORT_DESCRIPTION: "Permet de contacter le support du bot en cas de problème",
 			SUPPORT_USAGE: (prefix) => `${prefix}support [Problème]`,
 			SUPPORT_EXAMPLES: (prefix) => `${prefix}support Bonjour, j'ai cru trouver un bug dans votre bot. `,
 			SUPPORT_NO_ARGS: "Veuillez décrire votre problème avec au moins 10 caractères et 1900 au maximum.",
 			SUPPORT_QUESTION_SEND: "Votre question a été envoyée au support. Veuillez attendre une réponse.",
+			/* Update */
+			UPDATE_DESCRIPTION: "Montre les dernières notes de mise à jour.",
+			UPDATE_USAGE: (prefix) => `${prefix}update`,
+			UPDATE_EXAMPLES: (prefix) => `${prefix}update`,
+			UPDATE_TITLE: (version) => `Notes de mise à jour | Version ${version}`,
+			UPDATE_ADD: `**•** Ajout de la commande \`chrono\`.
+			**•** Ajout de la commande \`reminder\`.
+			**•** Envoyez le lien d'un serveur en MP au bot, il vous dira comment l'ajouter dessus.`,
+			UPDATE_UPDATE: `**•** Modification de la barre de progression dans la commande \`now-playing\`.
+			**•** Correction de la commande \`play\` permettant de jouer des liens Spotify et Youtube.
+			**•** Correction des commandes en MP (Le bot ne réagissait pas).
+			**•** Correction de fautes dans les traductions.`,
+			UPDATE_REMOVE: "",
+			/* Suggestion */
 			SUGGESTION_DESCRIPTION: "Permet de faire une suggestion par rapport au bot",
 			SUGGESTION_USAGE: (prefix) => `${prefix}suggestion [Suggestion]`,
 			SUGGESTION_EXAMPLES: (prefix) => `${prefix}suggestion Bonjour, vous pourriez créer une commande de suggestion qui envoie la suggestion dans un salon du serveur Lycos Novation - Support. `,
@@ -663,7 +701,7 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			RESUME_DESCRIPTION: "Reprend la musique en pause",
 			RESUME_USAGE: (prefix) => `${prefix}resume`,
 			RESUME_EXAMPLES: (prefix) => `${prefix}resume`,
-			RESUMED: "a repri !.",
+			RESUMED: "a repri !",
 			/* Shuffle */
 			SHUFFLE_DESCRIPTION: "Mélange la file d'attente",
 			SHUFFLE_USAGE: (prefix) => `${prefix}shuffle`,

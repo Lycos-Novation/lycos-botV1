@@ -5,14 +5,15 @@ class Update extends Command {
     constructor(client) {
         super(client, {
             name: "update",
-            description: (language) => language.get("GIVEAWAY_DESCRIPTION"),
-            usage: (language, prefix) => language.get("GIVEAWAY_USAGE", prefix),
-            examples: (language, prefix) => language.get("GIVEAWAY_EXAMPLES", prefix),
+            description: (language) => language.get("UPDATE_DESCRIPTION"),
+            usage: (language, prefix) => language.get("UPDATE_USAGE", prefix),
+            examples: (language, prefix) => language.get("UPDATE_EXAMPLES", prefix),
             dirname: __dirname,
             enabled: true,
             guildOnly: true,
             permLevel: "User",
             botPermissions: ["SEND_MESSAGES"],
+            aliases: ["updates", "maj"],
             nsfw: false,
             adminOnly: true,
             cooldown: 1000,
@@ -28,13 +29,8 @@ class Update extends Command {
                         footer: {
                             text: message.config.embed.footer
                         },
-                        title: `Notes de mise à jour | Version ${version}`,
-                        description: `**•** Ajout de sites dans la commande \`vote\`.
-**•** Ajout de la compatibilité du système de musique avec les albums et playlists Spotify.
-**•** Ajout de la commande \`spotify\` et \`music-youtube\`.
-**•** Ajout de la commande \`update\`.
-**•** Ajout des commandes \`lock\` et \`unlock\`.
-**•** Ajout des commandes \`voicemute\` et \`unvoicemute\`.`,
+                        title: message.language.get("UPDATE_TITLE", version),
+                        description: message.language.get("UPDATE_ADD"),
                     }
             })
             return message.channel.send({
@@ -43,12 +39,8 @@ class Update extends Command {
                         footer: {
                             text: message.config.embed.footer
                         },
-                        title: `Notes de mise à jour | Version ${version}`,
-                        description: `**•** Modification des badges dans la commande \`user-info\`.
-                        **•** "Correction" du bug sur certains serveurs avec les commandes \`anime\`, \`emotes\` et \`weather\` (Le bot requiert la permission \`MANAGE_MESSAGES\` pour ces commandes).
-                        **•** Permissions requises pour chaque commande revues.
-                        **•** Amélioration de la précision des recherches de la commande \`wiki\`.
-                        **•** Correction des commandes de musique qui pouvaient être effectuées sans être dans le salon vocal où est le bot`,
+                        title: message.language.get("UPDATE_TITLE", version),
+                        description: message.language.get("UPDATE_UPDATE"),
                     }
             })
         }

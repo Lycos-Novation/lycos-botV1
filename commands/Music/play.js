@@ -24,16 +24,24 @@ class Play extends Command {
 			if (!song) {
 				return message.channel.send(message.language.get("PLAY_NO_ARGS"));
 			}
-			const matchSpotifyURL = song.match(/https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:track\/|\?uri=spotify:track:)((\w|-){22})/);
+			const matchSpotifyTrackURL = song.match(/https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:track\/|\?uri=spotify:track:)((\w|-){22})/)
+            const matchSpotifyAlbumURL = song.match(/https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:album\/|\?uri=spotify:album:)((\w|-){22})/);
+			const matchSpotifyPlaylistURL = song.match(/https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:playlist\/|\?uri=spotify:playlist:)((\w|-){22})/);
 			const matchYoutubeURL = song.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-			var track;
-			if (matchSpotifyURL) {
-				track = song;
-			} else if (matchYoutubeURL) {
-				track = song;
-			} else if (ytpl.validateURL(song)) {
-				track = song;
-				message.channel.send(message.language.get("SPOTIFY_PLAYLIST_ADDING"))
+            var track;
+            if (matchSpotifyTrackURL) {
+                track = song;
+            } else if (matchSpotifyAlbumURL) {
+                track = song;
+                message.channel.send(message.language.get("SPOTIFY_ALBUM_ADDING"))
+            } else if (matchSpotifyPlaylistURL) {
+                track = song;
+                message.channel.send(message.language.get("SPOTIFY_PLAYLIST_ADDING"))
+            } else if (matchYoutubeURL) {
+                track = song;
+            } else if (ytpl.validateURL(song)) {
+                track = song;
+                message.channel.send(message.language.get("SPOTIFY_PLAYLIST_ADDING"))
             } else {
 				// Search for tracks
 				let tracks = await message.bot.player.searchTracks(song, true);

@@ -1,6 +1,5 @@
 const e = require("../config.js").emotes;
-const moment = require("moment-timezone");
-const { staff } = require("../config.js");
+const moment = require("moment");
 moment.locale("en");
 
 module.exports = class {
@@ -33,7 +32,7 @@ module.exports = class {
 			ERROR_NSFW_DEACTIVATED: "This command is not available because the module ``NSFW`` is not available on this server.\nAsk a server administrator to activate it.",
 			ERROR_FORTNITE_PLATFORM: "Please enter a valid platform (pc, xbox, psn).",
 			ERROR_FORTNITE_PLATFORM_USER_NOT_FOUND: "This user was not found on the specified platform.",
-			BOT_MENTION: (prefix) => `>>> My prefix is \`\`${prefix}\`\` on this server.\nYou can see my commands with \`\`${prefix}help\`\`.\nIf you have any issue, please join the official Lycos' server (https://discord.gg/64zRC73) or contact LePtitMetalleux#1604 or BaptisteGT#0123 in direct messages.`,
+			BOT_MENTION: (prefix) => `>>> My prefix is \`\`${prefix}\`\` on this server.\nYou can see my commands with \`\`${prefix}help\`\`.\nIf you have any issue, please join the official Lycos' server (discord.gg/64zRC73) or contact LePtitMetalleux#1604 or BaptisteGT#0123 in direct messages.`,
 			/* Giveaway */
 			GIVEAWAY_DESCRIPTION: "Allows you to manage giveaways easily !",
 			GIVEAWAY_USAGE: (prefix) => `${prefix}giveaway [start/edit/reroll/end/delete]`,
@@ -150,7 +149,7 @@ module.exports = class {
 				"Administration",
 				"Moderation",
 				"General",
-				"Entertainment",
+				"Fun",
 				"Stream",
 				"Game statistics",
 				"Music",
@@ -163,7 +162,7 @@ module.exports = class {
 			Erorr: TypeError: role.createdTimestamp.toUTCString is not a function
 			Context: I just typed the .role-info Blurple command and I got this error.`,
 			BUGREPORT_NO_ARGS: "Please describe the issue with at least 10 characters and a maximum of 1900.",
-			BUGREPORT_REPORT_SEND: "The bug has been reported successfully, it will be processed as fast as possible et will be fixed in a future update.\nTo be aware of next updates, join Lycos' Discord (https://discord.gg/64zRC73)",
+			BUGREPORT_REPORT_SEND: "The bug has been reported successfully, it will be processed as fast as possible et will be fixed in a future update.\nTo be aware of next updates, join Lycos' Discord (discord.gg/64zRC73)",
 			/* Invitation */
 			INVITE_DESCRIPTION: "Give the invitation to add the bot on a server.",
 			INVITE_USAGE: (prefix) => `${prefix}invite`,
@@ -184,11 +183,11 @@ module.exports = class {
 			VOTE_USAGE: (prefix) => `${prefix}vote`,
 			VOTE_EXAMPLES: (prefix) => `${prefix}vote`,
 			VOTE_TITLE: "Lycos' vote links",
-			VOTE_DESC: (bdb, dbl, bls, bfd) => `<:botdatabase:728338548138442903> [Vote on BotsDataBase](https://botsdatabase.com/bot/628186022991233025) (**${bdb}** votes - Vote every 12H)
+			VOTE_DESC: (bdb, dbl, bls, bfd, vb) => `<:botdatabase:728338548138442903> [Vote on BotsDataBase](https://botsdatabase.com/bot/628186022991233025) (**${bdb}** votes - Vote every 12H)
 <:DiscordBotList:735786997569814579> [Vote on Disord Bot List](https://top.gg/bot/628186022991233025) (**${dbl}** votes - Vote every 12H)
 <:botsfordiscord:739412747099570186> [Vote on Bots For Discord](https://botsfordiscord.com/bot/628186022991233025) (**${bfd}** votes - Vote every 12H)
 <:botlistspace:738454241110392853> [Vote on botlist.space](https://botlist.space/bot/628186022991233025) (**${bls}** votes - Vote every 24H)
-<:void_bots:738451886147108925> [Vote on VoidBots](https://voidbots.net/bots/628186022991233025) (Vote every 12H)`,
+<:void_bots:738451886147108925> [Vote on VoidBots](https://voidbots.net/bots/628186022991233025) (**${vb}** votes - Vote every 12H)`,
 			/* Ping */
 			PING_DESCRIPTION: "Gives latency of the Discord API.",
 			PING_USAGE: (prefix) => `${prefix}ping`,
@@ -200,6 +199,15 @@ module.exports = class {
 			CAT_DESCRIPTION: "Have fun watching cat pictures.",
 			CAT_USAGE: (prefix) => `${prefix}cat`,
 			CAT_EXAMPLES: (prefix) => `${prefix}cat`,
+			/* Chrono */
+			CHRONO_DESCRIPTION: "Creates a stopwatch",
+			CHRONO_USAGE: (prefix) => `${prefix}chrono [start/stop]`,
+			CHRONO_EXAMPLES: (prefix) => `${prefix}chrono start\n${prefix}chrono stop`,
+			CHRONO_METHODS: "Do `chrono start` to start the stopwatch and `chrono stop` to stop it.",
+			CHRONO_RUNNING: "You have already started a stopwatch!",
+			CHRONO_STARTED: "Stopwatch started! Do `chrono stop` to stop it.",
+			CHRONO_NOT_RUNNING: "You didn't started any stopwatch!",
+			CHRONO_STOPPED: (result) => `Stopwatch stopped at ${result}`,
 			/* Dog */
 			DOG_DESCRIPTION: "Have fun watching dog pictures.",
 			DOG_USAGE: (prefix) => `${prefix}dog`,
@@ -418,6 +426,16 @@ module.exports = class {
 			QRCODE_USAGE: (prefix) => `${prefix}qrcode [text]`,
 			QRCODE_EXAMPLES: (prefix) => `${prefix}qrcode Secret code`,
 			QRCODE_MESSAGE: "You must include something to convert to a QR Code.",
+			/* Reminder */
+			REMINDER_DESCRIPTION: "Creates a reminder",
+			REMINDER_USAGE: (prefix) => `${prefix}reminder [time] [toRemind]`,
+			REMINDER_EXAMPLES: (prefix) => `${prefix}reminder 12h Upvote Lycos`,
+			REMINDER_NO_TIME: "You must provide how long I must remind you.",
+			REMINDER_NO_REMIND: "You must provide what I have to remind to you.",
+			REMINDER_TOO_LONG: "Wow... I'll never remember all that ! Please give me somethis shorter to remember.",
+			REMINDER_TITLE: "Reminder",
+			REMINDER_STARTED: (toRemind, time) => `Perfect, I'll remind you to ${toRemind} in ${time}.`,
+			REMINDER_ENDED: (toRemind) => `<@!${message.author.id}>, it's time to ${toRemind} !`,
 			/* Role */
 			ROLE_INFO_DESCRIPTION: "Displays information for the specified role.",
 			ROLE_INFO_USAGE: (prefix) => `${prefix}role-info [@Role/ID]`,
@@ -506,19 +524,19 @@ module.exports = class {
 			WEATHERINFO_EMBED_DESCRIPTION_YESTERDAY: (result) => `**Température Max/Min** : ${result[0].forecast[0].high}°C/${result[0].forecast[0].low}°C
 **Météo :** ${result[0].forecast[0].skytextday}
 **Précipitations :** ${result[0].forecast[0].precip !== "" ? `${result[0].forecast[0].precip}` : `0`}%`,
-			WEATHERINFO_EMBED_TITLE_TOMORROW: (result) => `Météo de ${result[0].location.name} le ${result[0].forecast[1].day} ${date(result[0].forecast[1].date)}.`,
+			WEATHERINFO_EMBED_TITLE_TOMORROW: (result) => `Météo de ${result[0].location.name} the ${result[0].forecast[1].day} ${date(result[0].forecast[1].date)}.`,
 			WEATHERINFO_EMBED_DESCRIPTION_TOMORROW: (result) => `**Temperature Max/Min:** ${result[0].forecast[1].high}°C/${result[0].forecast[1].low}°C
 **Weather:** ${result[0].forecast[1].skytextday}
 **Précipitations :** ${result[0].forecast[1].precip}%`,
-			WEATHERINFO_EMBED_TITLE_J2: (result) => `Météo de ${result[0].location.name} le ${result[0].forecast[2].day} ${date(result[0].forecast[2].date)}.`,
+			WEATHERINFO_EMBED_TITLE_J2: (result) => `Météo de ${result[0].location.name} the ${result[0].forecast[2].day} ${date(result[0].forecast[2].date)}.`,
 			WEATHERINFO_EMBED_DESCRIPTION_J2: (result) => `**Température Max/Min:** ${result[0].forecast[2].high}°C/${result[0].forecast[2].low}°C
 **Météo :** ${result[0].forecast[2].skytextday}
 **Précipitations :** ${result[0].forecast[2].precip}%`,
-			WEATHERINFO_EMBED_TITLE_J3: (result) => `Météo de ${result[0].location.name} le ${result[0].forecast[3].day} ${date(result[0].forecast[3].date)}.`,
+			WEATHERINFO_EMBED_TITLE_J3: (result) => `Météo de ${result[0].location.name} the ${result[0].forecast[3].day} ${date(result[0].forecast[3].date)}.`,
 			WEATHERINFO_EMBED_DESCRIPTION_J3: (result) => `**Température Max/Min** : ${result[0].forecast[3].high}°C/${result[0].forecast[3].low}°C
 **Météo :** ${result[0].forecast[3].skytextday}
 **Précipitations :** ${result[0].forecast[3].precip}%`,
-			WEATHERINFO_EMBED_TITLE_J4: (result) => `Météo de ${result[0].location.name} le ${result[0].forecast[4].day} ${date(result[0].forecast[4].date)}.`,
+			WEATHERINFO_EMBED_TITLE_J4: (result) => `Météo de ${result[0].location.name} the ${result[0].forecast[4].day} ${date(result[0].forecast[4].date)}.`,
 			WEATHERINFO_EMBED_DESCRIPTION_J4: (result) => `**Température Max/Min** : ${result[0].forecast[4].high}°C/${result[0].forecast[4].low}°C
 **Météo :** ${result[0].forecast[4].skytextday}
 **Précipitations :** ${result[0].forecast[4].precip}%`,
@@ -586,6 +604,19 @@ module.exports = class {
 			SUPPORT_EXAMPLES: (prefix) => `${prefix}support Hello, I thought I found a bug in your bot.`,
 			SUPPORT_NO_ARGS: "Please describe your problem with at least 10 characters and a maximum of 1900.",
 			SUPPORT_QUESTION_SEND: "Your question has been sent to support. Please wait for a response.",
+			/* Update */
+			UPDATE_DESCRIPTION: "Shows last dev logs.",
+			UPDATE_USAGE: (prefix) => `${prefix}update`,
+			UPDATE_EXAMPLES: (prefix) => `${prefix}update`,
+			UPDATE_TITLE: (version) => `Dev logs | Version ${version}`,
+			UPDATE_ADD: `**•** Added \`chrono\` command.
+			**•** Added \`reminder\` command.
+			**•** Send a sever's link in bot's DMs, he will tell you how to add him on it.`,
+			UPDATE_UPDATE: `**•** Modified progress bar in \`now-playing\` command.
+			**•** Corrected \`play\` command, allowing you to play Spotify and Youtube links.
+			**•** Corrected DMs commands (The bot wan't responding).
+			**•** Corrected translation errors.`,
+			UPDATE_REMOVE: "",
 			/* Suggestion */
 			SUGGESTION_DESCRIPTION: "Allows you to send a suggestion about the bot",
 			SUGGESTION_USAGE: (prefix) => `${prefix}suggestion [Suggestion]`,
@@ -1063,11 +1094,11 @@ You can find it here: https://clips.twitch.tv/${clip}`,
 **Position in the category :** ${c.position}
 **Position in the server :** ${c.rawPosition}`,
 			LOGS_GUILD_MEMBER_ADD_TITLE: "Arrival of a new member!",
-			LOGS_GUILD_MEMBER_ADD_DESC: (m) => `${m} - **${m.user.tag}** arrived on **__${m.guild.name}__**!
-There are now **${m.guild.memberCount}** people on the server!`,
+			LOGS_GUILD_MEMBER_ADD_DESC: (m) => `${m} - **${m.user.tag}** joined **__${m.guild.name}__**!
+There are now **${m.guild.memberCount}** members on the server!`,
 			LOGS_GUILD_MEMBER_REMOVE_TITLE: "Departure of member!",
-			LOGS_GUILD_MEMBER_REMOVE_DESC: (m) => `${m} - **${m.user.tag}** left from **__${m.guild.name}__**!
-There are now **${m.guild.memberCount}** people on the server!`,
+			LOGS_GUILD_MEMBER_REMOVE_DESC: (m) => `${m} - **${m.user.tag}** left **__${m.guild.name}__**!
+There are now **${m.guild.memberCount}** members on the server!`,
 			LOGS_CHANNEL_PINS_UPDATE_TITLE: "Modification of messages pinned in a channel!",
 			LOGS_CHANNEL_PINS_UPDATE_DESC: (channel, time) => `**Salon :** ${channel.name} - ${channel} - ${channel.id}
 **Modification to** ${moment(time).format("LLLL")}`,

@@ -8,7 +8,7 @@ const { Provider, Client: PictURLClient } = require("pict-url");
 const { GiveawaysManager } = require("discord-giveaways");
 const logs = require('discord-logs');
 const { Player } = require("discord-player");
-
+const connection_mysql = require('./utils/connectmysql');
 /**
  * @class Lycos
  * @extends {Client}
@@ -24,6 +24,8 @@ class Lycos extends Client {
 		this.aliases = new Collection();
 		// Cooldowns
 		this.cooldowns = new Collection();
+		// Chronos
+		this.chronos = new Collection();
 		// This is our image module.
 		this.pictURL = new PictURLClient(Provider.Imgur);
 		// Here we load all our functions stored in functions.js
@@ -57,7 +59,7 @@ class Lycos extends Client {
 		}
 
 		process.setMaxListeners(0);
-
+		connection_mysql.init();
 		this._loadEventsModules();
 		this._loadCommandsModules();
 		this.login(this.config.token);
@@ -152,6 +154,6 @@ class Lycos extends Client {
 module.exports.client = new Lycos({
 	sync: true,
 	autoReconnect: true,
-	fetchAllMembers: true,
+	//fetchAllMembers: true,
 	disableEveryone: true,
 });
