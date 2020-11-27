@@ -18,14 +18,14 @@ class Remove extends Command {
 
     async run(message, args) {
         try {
-            let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+            let trackPlaying = message.bot.player.isPlaying(message);
             if (!trackPlaying) {
                 return message.channel.send(message.language.get("NOT_PLAYING"));
             }
             if (!message.member.voice.channel) return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"));
 			const toRemove = args[0];
             if (!toRemove || isNaN(parseInt(toRemove))) return message.channel.send(message.language.get("REMOVE_NO_ARGS"))
-            message.bot.player.remove(message.guild.id, parseInt(toRemove))
+            message.bot.player.remove(message, parseInt(toRemove))
                 .then(() => {
                     return message.channel.send(message.language.get("REMOVE_REMOVED"))//'Removed track!'
                 })

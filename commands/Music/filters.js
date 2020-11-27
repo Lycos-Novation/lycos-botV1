@@ -19,7 +19,7 @@ class Filters extends Command {
 
     async run(message, args) {
         try {
-            let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+            let trackPlaying = message.bot.player.isPlaying(message);
             if (!trackPlaying) {
                 return message.channel.send(message.language.get("NOT_PLAYING"));
             }
@@ -49,23 +49,23 @@ class Filters extends Command {
                 return message.channel.send({
                     embed: {
                         title: message.language.get("FILTERS_FILTERS"),
-                        description: `Bassboost ${message.bot.player.getQueue(message.guild.id).filters.bassboost ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        8D ${message.bot.player.getQueue(message.guild.id).filters['8D'] ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Vaporwave ${message.bot.player.getQueue(message.guild.id).filters.vaporwave ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Nightcore ${message.bot.player.getQueue(message.guild.id).filters.nightcore ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Phaser ${message.bot.player.getQueue(message.guild.id).filters.phaser ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Tremolo ${message.bot.player.getQueue(message.guild.id).filters.tremolo ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Vibrato ${message.bot.player.getQueue(message.guild.id).filters.vibrato ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Reverse ${message.bot.player.getQueue(message.guild.id).filters.reverse ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Treble ${message.bot.player.getQueue(message.guild.id).filters.treble ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Normalizer ${message.bot.player.getQueue(message.guild.id).filters.normalizer ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Surrounding ${message.bot.player.getQueue(message.guild.id).filters.surrounding ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Pulsator ${message.bot.player.getQueue(message.guild.id).filters.pulsator ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Karaoke ${message.bot.player.getQueue(message.guild.id).filters.karaoke ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Flanger ${message.bot.player.getQueue(message.guild.id).filters.flanger ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Gate ${message.bot.player.getQueue(message.guild.id).filters.gate ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Haas ${message.bot.player.getQueue(message.guild.id).filters.haas ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
-                        Mcompand ${message.bot.player.getQueue(message.guild.id).filters.mcompand ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}`
+                        description: `Bassboost ${message.bot.player.getQueue(message).filters.bassboost ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        8D ${message.bot.player.getQueue(message).filters['8D'] ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Vaporwave ${message.bot.player.getQueue(message).filters.vaporwave ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Nightcore ${message.bot.player.getQueue(message).filters.nightcore ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Phaser ${message.bot.player.getQueue(message).filters.phaser ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Tremolo ${message.bot.player.getQueue(message).filters.tremolo ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Vibrato ${message.bot.player.getQueue(message).filters.vibrato ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Reverse ${message.bot.player.getQueue(message).filters.reverse ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Treble ${message.bot.player.getQueue(message).filters.treble ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Normalizer ${message.bot.player.getQueue(message).filters.normalizer ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Surrounding ${message.bot.player.getQueue(message).filters.surrounding ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Pulsator ${message.bot.player.getQueue(message).filters.pulsator ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Karaoke ${message.bot.player.getQueue(message).filters.karaoke ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Flanger ${message.bot.player.getQueue(message).filters.flanger ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Gate ${message.bot.player.getQueue(message).filters.gate ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Haas ${message.bot.player.getQueue(message).filters.haas ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}
+                        Mcompand ${message.bot.player.getQueue(message).filters.mcompand ? "<:lycosV:631854492173991947>" : "<:lycosX:631854509798326322>"}`
                     }
                 });
             }
@@ -75,10 +75,10 @@ class Filters extends Command {
             if (!filterToUpdate) return message.channel.send(`${message.language.get("FILTERS_NOT_EXISTS")} ${Object.values(filters).join(", ")}`);//This filter doesn't exist 
             const filterRealName = Object.keys(filters).find((f) => filters[f] === filterToUpdate);
 
-            const queueFilters = message.bot.player.getQueue(message.guild.id).filters
+            const queueFilters = message.bot.player.getQueue(message).filters
             const filtersUpdated = {};
             filtersUpdated[filterRealName] = queueFilters[filterRealName] ? false : true;
-            message.bot.player.setFilters(message.guild.id, filtersUpdated);
+            message.bot.player.setFilters(message, filtersUpdated);
 
             if (filtersUpdated[filterRealName]) {
 

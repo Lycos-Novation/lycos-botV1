@@ -1,4 +1,4 @@
-if (process.version.slice(1).split(".")[0] < 12) {throw new Error("Node 12.0.0 or higher is required. Update Node on your system.");}
+if (process.version.slice(1).split(".")[0] < 12) { throw new Error("Node 12.0.0 or higher is required. Update Node on your system."); }
 const { Client, Collection } = require("discord.js");
 const { promisify } = require("util"),
 	fs = require("fs"),
@@ -30,7 +30,55 @@ class Lycos extends Client {
 		this.pictURL = new PictURLClient(Provider.Imgur);
 		// Here we load all our functions stored in functions.js
 		this.functions = require("./utils/functions");
-		this.player = new Player(this);
+		this.player = new Player(this, {
+			leaveOnEnd: true,
+			leaveOnStop: true,
+			leaveOnEmpty: true,
+			leaveOnEmptyCooldown: 10000
+		});
+		this.player
+
+			// Send a message when a track starts
+			.on('trackStart', (message, track) => message.channel.send(message.language.get("PLAY_NEWPLAY", track.title)))
+
+			// Send a message when something is added to the queue
+			.on('trackAdd', (message, track) => message.channel.send(`${track.title} ${message.language.get("PLAY_SONG_ADDED")}`))
+			.on('playlistAdd', (message, playlist) => message.channel.send(`${playlist.title} ${message.language.get("PLAY_SONG_ADDED")} (${playlist.items.length} ${message.language.get("PLAY_SONGS_ADDED")}).`))
+
+			// Send messages to format search results
+			.on('searchResults', (message, query, tracks) => {
+				const embed = new Discord.MessageEmbed()
+					.setDescription(tracks.map((t, i) => `**${i + 1} -** ${t.title} | ${t.author}`).join("\n"))
+					.setTitle(message.language.get("PLAY_CHOICE"))
+					.setFooter(message.language.get("PLAY_CHOICE"))
+					.setThumbnail(tracks[0].thumbnail);
+				message.channel.send(embed);
+			})
+			.on('searchInvalidResponse', (message, query, tracks, content, collector) => message.channel.send(`${message.language.get("PLAY_INVALID_NUMBER")} ${tracks.length}!`))
+			.on('searchCancel', (message, query, tracks) => message.channel.send(message.language.get("PLAY_INVALID_ANSWER")))
+			.on('noResults', (message, query) => message.channel.send(`${message.language.get("PLAY_NO_TRACK_FOUND")} ${query}!`))
+
+			// Send a message when the music is stopped
+			.on('queueEnd', (message, queue) => message.channel.send(message.language.get("PLAY_END")))
+			.on('channelEmpty', (message, queue) => message.channel.send(message.language.get("PLAY_CHANNEL_EMPTY")))
+			.on('botDisconnect', (message, queue) => message.channel.send(message.language.get("STOPPED")))
+
+			// Error handling
+			.on('error', (error, message) => {
+				switch (error) {
+					case 'NotPlaying':
+						message.channel.send(message.language.get("NOT_PLAYING"))
+						break;
+					case 'NotConnected':
+						message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"))
+						break;
+					case 'UnableToJoin':
+						message.channel.send(message.language.get("PLAY_MISSING_PERMS"))
+						break;
+					default:
+						message.channel.send(message.language.get("ERROR", error))
+				}
+			})
 		this.gManager = new GiveawaysManager(this, {
 			storage: "./giveaways.json",
 			updateCountdownEvery: 15000,
@@ -71,10 +119,10 @@ class Lycos extends Client {
 		const permOrder = this.config.permLevels.slice(0).sort((p, c) => p.level < c.level ? 1 : -1);
 		while (permOrder.length) {
 			const currentLevel = permOrder.shift();
-			if(message.guild && currentLevel.guildOnly) {
+			if (message.guild && currentLevel.guildOnly) {
 				continue;
 			}
-			if(currentLevel.check(message)) {
+			if (currentLevel.check(message)) {
 				permissionLevel = currentLevel.level;
 				break;
 			}
@@ -104,16 +152,16 @@ class Lycos extends Client {
 	// Method used to unload a command (you'll need to load them again)
 	async _unloadCommand(commandPath, commandName) {
 		let command;
-		if(this.commands.has(commandName)) {
+		if (this.commands.has(commandName)) {
 			command = this.commands.get(commandName);
 		}
-		else if(this.aliases.has(commandName)) {
+		else if (this.aliases.has(commandName)) {
 			command = this.commands.get(this.aliases.get(commandName));
 		}
-		if(!command) {
+		if (!command) {
 			return `The command \`${commandName}\` doesn't seem to exist. Try again!`;
 		}
-		if(command.shutdown) {
+		if (command.shutdown) {
 			await command.shutdown(this);
 		}
 		delete require.cache[require.resolve(`${commandPath}${path.sep}${commandName}.js`)];
@@ -129,7 +177,7 @@ class Lycos extends Client {
 			const commands = await readdir(`./commands/${directory}/`);
 			commands.filter((command) => command.split(".").pop() === "js").forEach((command) => {
 				const response = this._loadCommand(`./commands/${directory}`, command);
-				if(response) {
+				if (response) {
 					this.logger.log(response, "error");
 				}
 			});

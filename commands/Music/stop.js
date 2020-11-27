@@ -19,12 +19,12 @@ class Stop extends Command {
 
 	async run(message) {
 		try {
-			let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+			let trackPlaying = message.bot.player.isPlaying(message);
 			if (!trackPlaying) {
 				return message.channel.send(message.language.get("NOT_PLAYING"));
 			}
-			message.bot.player.clearQueue(message.guild.id);
-			message.bot.player.stop(message.guild.id);
+			message.bot.player.clearQueue(message);
+			message.bot.player.stop(message);
 			return message.channel.send(message.language.get("STOPPED"));
 		}
 		catch (error) {

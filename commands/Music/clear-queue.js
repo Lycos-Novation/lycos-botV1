@@ -19,12 +19,12 @@ class ClearQueue extends Command {
 
     async run(message) {
         try {
-            let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+            let trackPlaying = message.bot.player.isPlaying(message);
             if (!trackPlaying) {
                 return message.channel.send(message.language.get("NOT_PLAYING"));
             }
             if (!message.member.voice.channel) return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"));
-			message.bot.player.clearQueue(message.guild.id);
+			message.bot.player.clearQueue(message);
             return message.channel.send(message.language.get("CLEARQUEUE_CLEARED"));
         }
         catch (error) {

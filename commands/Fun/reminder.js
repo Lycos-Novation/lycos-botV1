@@ -38,7 +38,7 @@ class Reminder extends Command {
                 message.channel.send({
                     embed: {
                         title: message.language.get("REMINDER_TITLE"),
-                        description: message.language.get("REMINDER_ENDED", toRemind),
+                        description: message.language.get("REMINDER_ENDED", message.author.id, toRemind),
                         color: 0xF40C0C
                     }
                 }).then(message.channel.send(`<@!${message.author.id}>`).then((m) => m.delete()))

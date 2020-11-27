@@ -13,7 +13,7 @@ module.exports = class {
 			if (err) throw err;
 			settings = result[0];
 		});
-		const lang = new (require(`../languages/french.js`));
+		const lang = new (require(`../languages/english^ù.js`));
 		const verificationLevels = {
 			"NONE": "None",
 			"LOW": "Low",

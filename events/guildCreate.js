@@ -26,7 +26,7 @@ module.exports = class {
 			} else {
 				settings = result[0];
 			}
-			const lang = new (require(`../languages/french.js`));
+			const lang = new (require(`../languages/english.js`));
 			const verificationLevels = {
 				"NONE": "None",
 				"LOW": "Low",

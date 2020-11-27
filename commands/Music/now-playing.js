@@ -19,11 +19,11 @@ class NowPlaying extends Command {
 
 	async run(message) {
 		try {
-			let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+			let trackPlaying = message.bot.player.isPlaying(message);
 			if (!trackPlaying) {
 				return message.channel.send(message.language.get("NOT_PLAYING"));
 			}
-			let track = await message.bot.player.nowPlaying(message.guild.id);
+			let track = await message.bot.player.nowPlaying(message);
 			return message.channel.send({
 				embed: {
 					title: message.language.get("NOWPLAYING"),
@@ -35,7 +35,7 @@ class NowPlaying extends Command {
 					fields: [
 						{
 							name: message.language.get("NOWPLAYING_MUSIC_NAME"),
-							value: track.name
+							value: track.title
 						},
 						{
 							name: message.language.get("NOWPLAYING_ARTIST"),
@@ -47,7 +47,7 @@ class NowPlaying extends Command {
 						},
 						{
 							name: message.language.get("NOWPLAYING_PROGRESS_BAR"),
-							value: message.bot.player.createProgressBar(message.guild.id, { durations: true})
+							value: message.bot.player.createProgressBar(message, { timecodes: true})
 						}
 					],
 				},

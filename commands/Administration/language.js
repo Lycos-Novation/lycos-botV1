@@ -24,7 +24,7 @@ class Language extends Command {
 		try {
 			var method = args[0];
 			if (!method) {
-				message.channel.send(message.language.get("LANGUAGE_INFO", message.settings.language)+"\n"+message.language.get("COMMAND_CANCEL"));
+				message.channel.send(message.language.get("LANGUAGE_INFO", message.settings.language.replace("french", "français"))+"\n"+message.language.get("COMMAND_CANCEL"));
 				method = await message.bot.functions.awaitResponse(message);
 			}
 			if (method.startsWith(message.prefix)) return;
@@ -77,11 +77,7 @@ class Language extends Command {
 						if (g.language === langToSet) {
 							return message.channel.send(message.language.get("LANGUAGE_ALREADY_SET", langToSet === "french" ? 'français' : langToSet));
 						} else {
-							sql = `UPDATE Guilds 
-								   SET language="${langToSet}"
-								   WHERE guild_id="${message.guild.id}";`;
-							mysqlcon.query(sql, async function (err, result, fields) {
-							});
+							mysqlcon.query(`UPDATE Guilds SET language="${langToSet}" WHERE guild_id="${message.guild.id}";`);
 							var sql = `SELECT language
 							   FROM Guilds
 							   WHERE guild_id="${message.guild.id}";`;

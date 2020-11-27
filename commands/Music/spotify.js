@@ -23,7 +23,7 @@ class Spotify extends Command {
             if (!song) {
                 return message.channel.send(message.language.get("SPOTIFY_NO_ARGS"));
             }
-            let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+            let trackPlaying = message.bot.player.isPlaying(message);
             const matchSpotifyTrackURL = song.match(/https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:track\/|\?uri=spotify:track:)((\w|-){22})/)
             const matchSpotifyAlbumURL = song.match(/https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:album\/|\?uri=spotify:album:)((\w|-){22})/);
             const matchSpotifyPlaylistURL = song.match(/https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:playlist\/|\?uri=spotify:playlist:)((\w|-){22})/);
@@ -42,17 +42,17 @@ class Spotify extends Command {
             
             // If there's already a track being played
             if (trackPlaying) {
-                const result = await message.bot.player.addToQueue(message.guild.id, song, message.author);
+                const result = await message.bot.player.addToQueue(message, song, message.author);
                 message.channel.send(`\`${result.name}\` ${message.language.get("PLAY_SONG_ADDED")}`);
             } else {
                 // Else, play the track
-                const result = await message.bot.player.play(message.member.voice.channel, song, message.author);
+                const result = await message.bot.player.play(message, song);
                 if (result.type === 'playlist') {
                     message.channel.send(`${result.tracks.length} ${message.language.get("PLAY_SONGS_ADDED")}.\n${message.language.get("NOWPLAYING")} **${result.tracks[0].name}**!`);
                 } else {
                     message.channel.send(`${message.language.get("NOWPLAYING")} \`${result.name}\``);
                 }
-                message.bot.player.getQueue(message.guild.id)
+                message.bot.player.getQueue(message)
 
                     //Events
                     .on('end', () => {

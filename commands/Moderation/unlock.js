@@ -21,15 +21,15 @@ class Unlock extends Command {
     async run(message) {
         try {
             let role = message.guild.roles.everyone;
-            let check = message.channel.permissionOverwrites.get(role);
-            if (check && check.SEND_MESSAGES === true) {
-                return message.channel.send("**Le salon n'est pas verouillé.**")
-            }  else {
+            let check = message.channel.permissionOverwrites.get(role.id);
+            if (check && check.allow.toArray().includes("SEND_MESSAGES")) {
+                return message.channel.send(message.language.get("NOT_LOCKED"));
+            } else {
                 message.channel.permissionOverwrites.get(role.id).update({
                     SEND_MESSAGES: true
                 })
             }
-            return message.channel.send("**⚠️ __ATTENTION__ | Le salon a été verouillé, il n'est plus possible d'y parler pour le moment.**")
+            return message.channel.send(message.language.get("UNLOCKED"));
         } catch (error) {
             console.error(error);
             return message.channel.send(message.language.get("ERROR", error));

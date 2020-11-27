@@ -21,8 +21,8 @@ class Lock extends Command {
     async run(message) {
         try {
             let role = message.guild.roles.everyone;
-            let check = message.channel.permissionOverwrites.get(role);
-            if (check && check.SEND_MESSAGES === false) {
+            let check = message.channel.permissionOverwrites.get(role.id);
+            if (check && check.deny.toArray().includes("SEND_MESSAGES")) {
                 return message.channel.send(message.language.get("ALREADY_LOCKED"))
             } else if (!check) {
                 message.channel.createOverwrite(role, {

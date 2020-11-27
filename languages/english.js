@@ -42,7 +42,9 @@ module.exports = class {
 			GIVEAWAY_NO_WINNERCOUNT: "Please indicate the number of winners !",
 			GIVEAWAY_NO_PRIZE: "Please indicate something to win !",
 			GIVEAWAY_ERR_NO_ID: "You must enter the giveaway message ID !",
-			GIVEAWAY_TIME_NOT_POSITIVE: "The giveaway's duration can't be netgative or equal to 0!",
+			GIVEAWAY_WINNERS_NOT_POSITIVE: "Winner's number can't be negative or equal to 0!",
+			GIVEAWAY_TOO_LONG: "Given duration is too long. You can't give a date after Tuesday, April 20th, 271,821.",
+			GIVEAWAY_TIME_NOT_POSITIVE: "The giveaway's duration can't be negative or equal to 0!",
 			GIVEAWAY_ERR_REROLL_MSG_ENDED: (messageID) => `No giveaway **ended** found with message ID \`${messageID}\`.`,
 			GIVEAWAY_ERR_MESSAGE_NOT_FOUND: (messageID) => `No giveaway found with message ID \`${messageID}\`.`,
 			GIVEAWAY_REROLL_NO_WINNERSCOUNT: "Please indicate the number of winners to be drawn !",
@@ -435,7 +437,7 @@ module.exports = class {
 			REMINDER_TOO_LONG: "Wow... I'll never remember all that ! Please give me somethis shorter to remember.",
 			REMINDER_TITLE: "Reminder",
 			REMINDER_STARTED: (toRemind, time) => `Perfect, I'll remind you to ${toRemind} in ${time}.`,
-			REMINDER_ENDED: (toRemind) => `<@!${message.author.id}>, it's time to ${toRemind} !`,
+			REMINDER_ENDED: (author, toRemind) => `<@!${author}>, it's time to ${toRemind} !`,
 			/* Role */
 			ROLE_INFO_DESCRIPTION: "Displays information for the specified role.",
 			ROLE_INFO_USAGE: (prefix) => `${prefix}role-info [@Role/ID]`,
@@ -609,13 +611,13 @@ module.exports = class {
 			UPDATE_USAGE: (prefix) => `${prefix}update`,
 			UPDATE_EXAMPLES: (prefix) => `${prefix}update`,
 			UPDATE_TITLE: (version) => `Dev logs | Version ${version}`,
-			UPDATE_ADD: `**•** Added \`chrono\` command.
-			**•** Added \`reminder\` command.
-			**•** Send a sever's link in bot's DMs, he will tell you how to add him on it.`,
-			UPDATE_UPDATE: `**•** Modified progress bar in \`now-playing\` command.
-			**•** Corrected \`play\` command, allowing you to play Spotify and Youtube links.
-			**•** Corrected DMs commands (The bot wan't responding).
-			**•** Corrected translation errors.`,
+			UPDATE_ADD: `**•** Added \`lycos-suggestion\` command.
+			**•** Added \`setsuggestions\` command.`,
+			UPDATE_UPDATE: `**•** Updated \`suggestion\` command : It send the suggestion in the suggestions channel of the server.
+			**•** Corrected translation and writing errors.
+			**•** Fixed a bug that allows a channel to be locked or unlocked when it already was.
+			**•** Fixed a bug in the \`giveaway\` command, which allows to set a negative amount of winners. 
+			**•** Fixed a bug in the \`giveaway\` command, where the bots didn't responds when setting anything as a duration or a too long duration.`,
 			UPDATE_REMOVE: "",
 			/* Suggestion */
 			SUGGESTION_DESCRIPTION: "Allows you to send a suggestion about the bot",
@@ -686,8 +688,10 @@ module.exports = class {
 			PLAY_EXAMPLES: ".play Our Last Night - Younger Dreams\n.play https://www.youtube.com/watch?v=EM7CJcfZbpM\n.play https://open.spotify.com/track/3YU9WNqpBjG3uI59NEQUH5?si=MVwzgB8DSDye9abZ5gihCw",
 			PLAY_NO_VOICECHANNEL: "You must be in a voice channel to play music.",
 			PLAY_NO_ARGS: "Please provide a music to play.",
-			PLAY_NO_TRACK_FOUND: "Sorry, I couldn't find anything corresponding to your research.",
+			PLAY_NO_TRACK_FOUND: "Sorry, I couldn't find anything ont YouTube corresponding to",
 			PLAY_CHOICE: "Send the number of the track you want to play!",
+			PLAY_INVALID_NUMBER: "You must send a valid number between 1 and",
+			PLAY_INVALID_ANSWER: 'You did not provide a valid response... Please send the command again!',
 			PLAY_SONGS_ADDED: "songs added to the queue!",
 			PLAY_SONG_ADDED: "added to the queue!",
 			PLAY_END: "There is no more music in the queue",
@@ -695,6 +699,7 @@ module.exports = class {
 			PLAY_AGAIN: (track) => `Playing \`${track}\`... AGAIN!`,
 			PLAY_NEWPLAY: (track) => `Now playing \`${track}\`.`,
 			PLAY_CHANNEL_EMPTY: "Stop playing, there is no more member in the voice channel",
+			PLAY_MISSING_PERMS: "I am not able to join your voice channel, please check my permissions!",
 			/* Spotify */
 			SPOTIFY_DESCRIPTION: "Plays requested music, album or playlist (Only Spotify links)",
 			SPOTIFY_USAGE: (prefix) => `${prefix}spotify [Link]`,
@@ -943,6 +948,15 @@ module.exports = class {
 			RR_ADD_USER: (g, r) => `> <:lycosV:631854492173991947> ${g.name} | Given role: ${r.name}`,
 			RR_REMOVE_USER: (g, r) => `> <:lycosX:631854509798326322> ${g.name} | Role removed: ${r.name}`,
 			RR_ROLE_BOT: "You can't use a bot's role in the rolereaction!",
+			/* Setsuggestion */
+			SETSUGGESTION_DESCRIPTION: "Allows the selection of the suggestion display channel.",
+			SETSUGGESTION_USAGE: (prefix) => `${prefix}setlogs [#channel/ID]`,
+			SETSUGGESTION_EXAMPLES: (prefix) => `${prefix}setlogs #suggestion`,
+			SETSUGGESTION_NO_ARGS: (g) => `${g.suggestions_channel === null || g.suggestions_channel === "" ? `There is currently no suggestion channel.` : `The suggestion channel is currently <#${g.suggestions_channel}>.`}\nAnswer by mentioning the channel or by indicating its ID in order to make it the channel for posting suggestions.`,
+			SETSUGGESTION_SAME: (c) => `<#${c}> is already the channel for posting suggestions.`,
+			SETSUGGESTION_SUCCESS: (c) => `Suggestions will now be displayed in the channel <#${c}>.`,
+			SETSUGGESTION_NOT_TEXT: "Supplied channel isn't a text channel!",
+			SUGGESTION_NOT_SET: "Suggestions channel isn't defined, I can't send you suggestion.",
 			/* Setlogs */
 			SETLOGS_DESCRIPTION: "Allows the selection of the log display channel.",
 			SETLOGS_USAGE: (prefix) => `${prefix}setlogs [#channel/ID]`,

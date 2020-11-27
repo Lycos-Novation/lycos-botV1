@@ -22,11 +22,11 @@ class Queue extends Command {
 		if (tracks !== message.language.get("NOT_PLAYING")){
 			if (index + 10 > tracks.length) {
                     var toShow = tracks.slice(index, tracks.length).map((track, i) => {
-						return `${`#${i+index}`} - [${track.name} | ${track.author}](${track.url})`;
+						return `${`#${i+index}`} - [${track.title} | ${track.author}](${track.url})`;
 					}).join('\n');
                 } else {
                     toShow = tracks.slice(index, index + 10).map((track, i) => {
-						return `${`#${i+index}`} - [${track.name} | ${track.author}](${track.url})`;
+						return `${`#${i+index}`} - [${track.title} | ${track.author}](${track.url})`;
 					}).join('\n');
                 }
 			} else {
@@ -39,7 +39,7 @@ class Queue extends Command {
 							url: np.thumbnail,
 						},
 						description: `**${message.language.get("NOWPLAYING")}**
-[${np.name}](${np.url})
+[${np.title}](${np.url})
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 **${message.language.get("QUEUE_ACTUAL")}**
 ${toShow}`,
@@ -53,11 +53,11 @@ ${toShow}`,
 			};
 
 
-			let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+			let trackPlaying = message.bot.player.isPlaying(message);
 			if (!trackPlaying) {
 				return message.channel.send(message.language.get("NOT_PLAYING"));
 			}
-			const queue = await message.bot.player.getQueue(message.guild.id);
+			const queue = await message.bot.player.getQueue(message);
 			var tracks;
 			if (queue.tracks.length === 0) {
 				tracks = message.language.get("NOT_PLAYING");
@@ -67,9 +67,9 @@ ${toShow}`,
 
 
 
-			let np = await message.bot.player.nowPlaying(message.guild.id);
+			let np = await message.bot.player.nowPlaying(message);
 			const author = message.author;
-			message.channel.send({ embed: generateEmbed(0, tracks, np) }).then(async (answer) => {
+			message.channel.send({ embed: generateEmbed(1, tracks, np) }).then(async (answer) => {
 				if (tracks.length <= 10 || tracks === message.language.get("NOT_PLAYING")) return;
 				await answer.react('➡️');
 				const collector = answer.createReactionCollector(
@@ -79,12 +79,12 @@ ${toShow}`,
 				collector.on('collect', reaction => {
 					answer.reactions.removeAll().then(async () => {
 						if (reaction.emoji.name === '⬅️') {
-							index = (index - 10) < 0 ? index : index - 10;
+							index = (index - 10) < 1 ? index : index - 10;
 						} else if (reaction.emoji.name === '➡️') {
 							index = (index + 10) > tracks.length ? index : index + 10;
 						}
 						answer.edit({ embed: generateEmbed(index, tracks, np) });
-						if (index !== 0) await answer.react('⬅️');
+						if (index !== 1) await answer.react('⬅️');
 						if (index + 10 < tracks.length) await answer.react('➡️');
 					})
 				})

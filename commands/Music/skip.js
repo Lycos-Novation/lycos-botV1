@@ -18,12 +18,12 @@ class Skip extends Command {
 
 	async run(message) {
 		try {
-			let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+			let trackPlaying = message.bot.player.isPlaying(message);
 			if (!trackPlaying) {
 				return message.channel.send(message.language.get("NOT_PLAYING"));
 			}
 			if (!message.member.voice.channel) return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"));// || (message.member.voice.channel !== message.bot.voice.channel)
-			return message.bot.player.skip(message.guild.id);
+			return message.bot.player.skip(message);
 		}
 		catch (error) {
 			console.error(error);

@@ -18,13 +18,14 @@ class Resume extends Command {
 
 	async run(message) {
 		try {
-			let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+			let trackPlaying = message.bot.player.isPlaying(message);
 			if (!trackPlaying) {
 				return message.channel.send(message.language.get("NOT_PLAYING"));
 			}
 			if (!message.member.voice.channel) return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"));
-			const track = await message.bot.player.resume(message.guild.id);
-			return message.channel.send(`\`${track.name}\` ${message.language.get("RESUMED")}`);
+			await message.bot.player.resume(message);
+			const track = await message.bot.player.nowPlaying(message);
+			return message.channel.send(`\`${track.title}\` ${message.language.get("RESUMED")}`);
 		}
 		catch (error) {
 			console.error(error);

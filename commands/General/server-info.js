@@ -1,4 +1,5 @@
 const Command = require("../../base/Command.js");
+
 class ServerInformation extends Command {
 	constructor(client) {
 		super(client, {

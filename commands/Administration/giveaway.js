@@ -26,9 +26,11 @@ class Giveaway extends Command {
             method = method.toLowerCase();
             if (method === "start"){
                 let time = args[1];
-                if (!time) return message.channel.send(message.language.get("GIVEAWAY_NO_TIME"));
-                if (time.startsWith("-") || ms(time) === 0) return message.channel.send(message.language.get("GIVEAWAY_TIME_NOT_POSITIVE"));
+                if (!time || (ms(time) === undefined)) return message.channel.send(message.language.get("GIVEAWAY_NO_TIME"));
+                if (ms(time) >= 8640000000000000) return message.channel.send(message.language.get("GIVEAWAY_TOO_LONG"))
+                if (ms(time) <= 0) return message.channel.send(message.language.get("GIVEAWAY_TIME_NOT_POSITIVE"));
                 let winnersCount = parseInt(args[2]);
+                if (winnersCount <= 0) return message.channel.send(message.language.get("GIVEAWAY_WINNERS_NOT_POSITIVE"))
                 if (!winnersCount) return message.channel.send(message.language.get("GIVEAWAY_NO_WINNERCOUNT"));
                 let prize = args.slice(3).join(" ");
                 if (!prize) return message.channel.send(message.language.get("GIVEAWAY_NO_PRIZE"));

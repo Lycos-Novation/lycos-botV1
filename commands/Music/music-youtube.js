@@ -25,7 +25,7 @@ class Spotify extends Command {
             if (!song) {
                 return message.channel.send(message.language.get("MUSIC_YOUTUBE_NO_ARGS"));
             }
-            let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+            let trackPlaying = message.bot.player.isPlaying(message);
             const matchYoutubeURL = song.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
             var track;
             if (matchYoutubeURL) {
@@ -38,7 +38,7 @@ class Spotify extends Command {
             }
             // If there's already a track being played
             if (trackPlaying) {
-                const result = await message.bot.player.addToQueue(message.guild.id, song, message.author);
+                const result = await message.bot.player.addToQueue(message, song, message.author);
                 message.channel.send(`\`${result.name}\` ${message.language.get("PLAY_SONG_ADDED")}`);
             } else {
                 // Else, play the track
@@ -48,7 +48,7 @@ class Spotify extends Command {
                 } else {
                     message.channel.send(`${message.language.get("NOWPLAYING")} \`${result.name}\``);
                 }
-                message.bot.player.getQueue(message.guild.id)
+                /*message.bot.player.getQueue(message)
 
                     //Events
                     .on('end', () => {
@@ -64,7 +64,7 @@ class Spotify extends Command {
                     })
                     .on('channelEmpty', () => {
                         message.channel.send(message.language.get("PLAY_CHANNEL_EMPTY"));
-                    });
+                    });*/
             }
         } catch (error) {
             console.error(error);

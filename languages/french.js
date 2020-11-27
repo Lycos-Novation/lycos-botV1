@@ -31,7 +31,7 @@ module.exports = class {
 			ERROR_NSFW_DEACTIVATED: "Cette commande n'est pas disponible car le module ``NSFW`` n'est pas disponible sur ce serveur.\nDemandez à un administrateur du serveur de l'activer.",
 			ERROR_FORTNITE_PLATFORM: "S'il vous plaît entrer une plateforme valide (pc, xbox, psn).",
 			ERROR_FORTNITE_PLATFORM_USER_NOT_FOUND: "Cet utilisateur n'a pas été trouvé sur la plate-forme spécifiée.",
-			BOT_MENTION: (prefix) => `>>> Mon préfixe est \`\`${prefix}\`\` sur ce serveur.\nMes commandes sont visibles en faisant \`\`${prefix}help\`\`.\nEn cas de problème, rejoigez le serveur de Lycos (discord.gg/64zRC73) ou contactez LePtitMetalleux#1604 ou BaptisteGT#0123 en messages privés.`,
+			BOT_MENTION: (prefix) => `>>> Mon préfixe est \`\`${prefix}\`\` sur ce serveur.\nMes commandes sont visibles en faisant \`\`${prefix}help\`\`.\nEn cas de problème, rejoignez le serveur de Lycos (discord.gg/64zRC73) ou contactez LePtitMetalleux#1604 ou BaptisteGT#0123 en messages privés.`,
 			GIVEAWAY_DESCRIPTION: "Permet de gérer les giveaways facilement !",
 			GIVEAWAY_USAGE: (prefix) => `${prefix}giveaway [start/edit/reroll/end/delete]`,
 			GIVEAWAY_EXAMPLES: (prefix) => `${prefix}giveaway start 2[d/h/m/s] 5 Discord Nitro\n${prefix}giveaway edit 665556886732668949 1 -1h Discord Nitro\n${prefix}giveaway reroll 665556886732668949 2\n${prefix}giveaway end 665556886732668949\n${prefix}giveaway delete 665556886732668949`,
@@ -39,6 +39,8 @@ module.exports = class {
 			GIVEAWAY_NO_TIME: "Merci d'indiquer une durée !",
 			GIVEAWAY_NO_WINNERCOUNT: "Merci d'indiquer le nombre de gagnants !",
 			GIVEAWAY_NO_PRIZE: "Merci d'indiquer quelque chose à gagner !",
+			GIVEAWAY_WINNERS_NOT_POSITIVE: "Le nombre de gagnants ne peut pas être négatif ou nul !",
+			GIVEAWAY_TOO_LONG: "La durée indiquée est trop grande. Vous ne pouvez pas donner une date postérieure au jeudi 20 avril 271 821.",
 			GIVEAWAY_TIME_NOT_POSITIVE: "La durée du giveaway ne peut être ni nulle ni négative !",
 			GIVEAWAY_ERR_NO_ID: "Vous devez entrer l'ID du message du giveaway !",
 			GIVEAWAY_ERR_REROLL_MSG_ENDED: (messageID) => `Aucun giveaway **terminé** trouvé avec l'ID de message \`${messageID}\`.`,
@@ -199,7 +201,7 @@ module.exports = class {
 			CAT_USAGE: (prefix) => `${prefix}cat`,
 			CAT_EXAMPLES: (prefix) => `${prefix}cat`,
 			/* Chrono */
-			CHRONO_DESCRIPTION: "Creates a stopwatch",
+			CHRONO_DESCRIPTION: "Crée un chronomètre",
 			CHRONO_USAGE: (prefix) => `${prefix}chrono [start/stop]`,
 			CHRONO_EXAMPLES: (prefix) => `${prefix}chrono start\n${prefix}chrono stop`,
 			CHRONO_METHODS: "Faites `chrono start` pour démarrer le chrono et le `chrono stop` pour l'arrêter.",
@@ -424,7 +426,7 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			REMINDER_TOO_LONG: "Je ne vais jamais retenir tout ça... Veuillez me donner quelque chose à vous rapeller de plus court.",
 			REMINDER_TITLE: "Rappel",
 			REMINDER_STARTED: (toRemind, time) => `Parfait, je vous rappellerai de ${toRemind} dans ${time}.`,
-			REMINDER_ENDED: (toRemind) => `<@!${message.author.id}>, il est l'heure de ${toRemind} !`,
+			REMINDER_ENDED: (author, toRemind) => `<@!${author}>, il est l'heure de ${toRemind} !`,
 			/* Roleinfo */
 			ROLE_INFO_DESCRIPTION: "Affiche les informations du rôle indiqué.",
 			ROLE_INFO_USAGE: (prefix) => `${prefix}role-info [@Role/ID]`,
@@ -552,13 +554,13 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			UPDATE_USAGE: (prefix) => `${prefix}update`,
 			UPDATE_EXAMPLES: (prefix) => `${prefix}update`,
 			UPDATE_TITLE: (version) => `Notes de mise à jour | Version ${version}`,
-			UPDATE_ADD: `**•** Ajout de la commande \`chrono\`.
-			**•** Ajout de la commande \`reminder\`.
-			**•** Envoyez le lien d'un serveur en MP au bot, il vous dira comment l'ajouter dessus.`,
-			UPDATE_UPDATE: `**•** Modification de la barre de progression dans la commande \`now-playing\`.
-			**•** Correction de la commande \`play\` permettant de jouer des liens Spotify et Youtube.
-			**•** Correction des commandes en MP (Le bot ne réagissait pas).
-			**•** Correction de fautes dans les traductions.`,
+			UPDATE_ADD: `**•** Ajout de la commande \`lycos-suggestion\`.
+			**•** Ajout de la commande \`setsuggestions\`.`,
+			UPDATE_UPDATE: `**•** Modification de la commande \`suggestion\` : Elle envoie la suggestion dans le salon de suggestion du serveur où elle a été tapée.
+			**•** Corrections de fautes de langage.
+			**•** Correction du bug qui permettait de verrouiller ou de déverrouiler un salon plusieurs fois alors que celui-ci l'était déjà
+			**•** Correction du bug dans la commande \`giveaway\`, qui permettait de mettre un nombre négatif de gagnants. 
+			**•** Correction du bug dans la commande \`giveaway\`, où le bot ne réagissait pas lorsque l'on mettait n'importe quoi comme durée ou une durée trop grande.`,
 			UPDATE_REMOVE: "",
 			/* Suggestion */
 			SUGGESTION_DESCRIPTION: "Permet de faire une suggestion par rapport au bot",
@@ -623,15 +625,18 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			PLAY_EXAMPLES: (prefix) => `${prefix}play Our Last Night - Younger Dreams\n${prefix}play https://www.youtube.com/watch?v=EM7CJcfZbpM\n${prefix}play https://open.spotify.com/track/3YU9WNqpBjG3uI59NEQUH5?si=MVwzgB8DSDye9abZ5gihCw`,
 			PLAY_NO_VOICECHANNEL: "Vous devez être dans un salon vocal pour jouer de la musique",
 			PLAY_NO_ARGS: "Veuillez indiquer une musique à jouer",
-			PLAY_NO_TRACK_FOUND: "Désolé, je n'ai rien trouvé correspondant à votre recherche.",
+			PLAY_NO_TRACK_FOUND: "Désolé, je n'ai rien trouvé sur YouTube correspondant à",
 			PLAY_CHOICE: "Envoyez le numéro de la musique que vous voulez jouer",
-			PLAY_SONGS_ADDED: "musiques ajoutées à la queue",
+			PLAY_INVALID_NUMBER: "Vous devez envoyer un nombre compris entre 1 et",
+			PLAY_INVALID_ANSWER: "Je n'ai pas compris votre réponse... veuillez renvoyer la commande !",
+			PLAY_SONGS_ADDED: "musiques ajoutées",
 			PLAY_SONG_ADDED: "a été ajouté à la queue !",
 			PLAY_END: "Il n'y a plus de musique dans la queue !",
 			PLAY_SKIPPED: (track) => `\`${track}\` a été passéé !`,
 			PLAY_AGAIN: (track) => `Et zé partiiii pour jouer \`${track}\`... ENCORE ?!`,
 			PLAY_NEWPLAY: (track) => `Vous écoutez désormais \`${track}\`.`,
 			PLAY_CHANNEL_EMPTY: "Plus personne ne m'écoute, j'ai donc décidé de me déconnecter.",
+			PLAY_MISSING_PERMS: "Je n'ai pas pu rejoindre votre salon vocal, veuillez vérifier mes permissions.",
 			/* Spotify */
 			SPOTIFY_DESCRIPTION: "Joue la musique, album ou playlist demandé (Seulement les liens Spotify)",
 			SPOTIFY_USAGE: (prefix) => `${prefix}spotify [Lien]`,
@@ -873,6 +878,16 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			RR_ADD_USER: (g, r) => `> <:lycosV:631854492173991947> **${g}** | Rôle donné : ${r.name}`,
 			RR_REMOVE_USER: (g, r) => `> <:lycosX:631854509798326322> **${g}** | Rôle enlevé : ${r.name}`,
 			RR_ROLE_BOT: "Vous ne pouvez pas utiliser le rôle d'un bot dans le rôle réaction !",
+			/* Setsuggestion */
+			SETSUGGESTION_DESCRIPTION: "Permet la sélection du salon d'affichage des suggestions.",
+			SETSUGGESTION_USAGE: (prefix) => `${prefix}setlogs [#channel/ID]`,
+			SETSUGGESTION_EXAMPLES: (prefix) => `${prefix}setlogs #suggestion`,
+			SETSUGGESTION_NO_ARGS: (g) => `${g.suggestions_channel === null || g.suggestions_channel === "" ? `Il n'y a actuellement aucun salon d'affichage des suggestions.` : `Le salon d'affichage des suggestions est actuellement <#${g.suggestions_channel}>.`}\nRépondez en mentionnant le salon ou en indiquant son ID afin d'en faire le salon d'affichage des suggestions.`,
+			SETSUGGESTION_SAME: (c) => `<#${c}> est déjà le salon d'affichage des suggestions.`,
+			SETSUGGESTION_SUCCESS: (c) => `Les suggestions seront désormais affichées dans le salon <#${c}>.`,
+			SETSUGGESTION_NOT_TEXT: "Le salon demandé n'est pas un salon textuel !",
+			SUGGESTION_NOT_SET: "Le salon des suggestion n'est pas défini, je ne peux pas envoyer votre suggestion.",
+			/* Setlogs */
 			SETLOGS_DESCRIPTION: "Permet la sélection du salon d'affichage des logs.",
 			SETLOGS_USAGE: (prefix) => `${prefix}setlogs [#channel/ID]`,
 			SETLOGS_EXAMPLES: (prefix) => `${prefix}setlogs #logs`,
@@ -1084,7 +1099,7 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Membres :** ${guild.members.cache.filter(m => !m.user.bot).size}
 **Propriétaire :** ${guild.owner.user.tag} - ${guild.ownerID}
 **Créé le :** ${moment(guild.createdAt.toUTCString()).format("LLLL")}
-**Niveau de vérification :** : ${vl}
+**Niveau de vérification :** ${vl}
 **Localisation du serveur :** ${r}`,
 			LOGS_GUILD_CREATE_FOOTER: (guilds) => ` - Actuellement sur ${guilds} serveurs`,
 			LOGS_GUILD_DELETE_TITLE: (guild) => `Lycos a été enlevé de ${guild.name} !`,
@@ -1092,7 +1107,7 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
 **Membres :** ${guild.members.cache.filter(m => !m.user.bot).size}
 **Propriétaire :** ${guild.owner.user.tag} - ${guild.ownerID}
 **Créé le :** ${moment(guild.createdAt.toUTCString()).format("LLLL")}
-**Niveau de vérification :** : ${vl}
+**Niveau de vérification :** ${vl}
 **Localisation du serveur :** ${r}`,
 			LOGS_GUILD_DELETE_FOOTER: (guilds) => ` - Actuellement sur ${guilds} serveurs`,
 			LOGS_GUILD_MEMBER_CHUNK_TITLE: "Tout un régiment de membres viennent d'arriver d'un même serveur !",

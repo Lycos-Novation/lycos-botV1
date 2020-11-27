@@ -18,7 +18,7 @@ class Volume extends Command {
 
 	async run(message, args) {
 		try {
-			let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+			let trackPlaying = message.bot.player.isPlaying(message);
 			if (!trackPlaying) {
 				return message.channel.send("No music playing.");
 			}
@@ -27,7 +27,7 @@ class Volume extends Command {
 			if (!volume || isNaN(volume) || volume <= 0 || volume > 100) {
 				return message.channel.send(message.language.get("VOLUME_BETWEEN"));
 			}
-			await message.bot.player.setVolume(message.guild.id, parseInt(volume));
+			await message.bot.player.setVolume(message, parseInt(volume));
 			return message.channel.send(`${message.language.get("VOLUME_SETTED")} \`${volume}%\`.`);
 		}
 		catch (error) {

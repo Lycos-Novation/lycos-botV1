@@ -19,19 +19,19 @@ class Loop extends Command {
 
     async run(message) {
         try {
-            let trackPlaying = message.bot.player.isPlaying(message.guild.id);
+            let trackPlaying = message.bot.player.isPlaying(message);
 			if (!trackPlaying) {
 				return message.channel.send(message.language.get("NOT_PLAYING"));
             }
             if (!message.member.voice.channel) return message.channel.send(message.language.get("PLAY_NO_VOICECHANNEL"));
-            const repeatModeEnabled = message.bot.player.getQueue(message.guild.id).repeatMode;
+            const repeatModeEnabled = message.bot.player.getQueue(message).repeatMode;
             if (repeatModeEnabled) {
                 // if the repeat mode is currently enabled, disable it
-                message.bot.player.setRepeatMode(message.guild.id, false);
+                message.bot.player.setRepeatMode(message, false);
                 message.channel.send(message.language.get("LOOP_UNLOOPING"));
             } else {
                 // if the repeat mode is currently disabled, enable it
-                message.bot.player.setRepeatMode(message.guild.id, true);
+                message.bot.player.setRepeatMode(message, true);
                 message.channel.send(message.language.get("LOOP_LOOPING"));
             }
         }
