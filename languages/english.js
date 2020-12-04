@@ -433,6 +433,7 @@ module.exports = class {
 			REMINDER_USAGE: (prefix) => `${prefix}reminder [time] [toRemind]`,
 			REMINDER_EXAMPLES: (prefix) => `${prefix}reminder 12h Upvote Lycos`,
 			REMINDER_NO_TIME: "You must provide how long I must remind you.",
+			REMINDER_TIME_LIMIT: "You cant set a reminder superior to 24 days.",
 			REMINDER_NO_REMIND: "You must provide what I have to remind to you.",
 			REMINDER_TOO_LONG: "Wow... I'll never remember all that ! Please give me somethis shorter to remember.",
 			REMINDER_TITLE: "Reminder",

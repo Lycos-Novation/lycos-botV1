@@ -24,6 +24,7 @@ class Reminder extends Command {
         try {
             const time = args[0];
             if (!time) return message.channel.send(message.language.get("REMINDER_NO_TIME"))
+            if (ms(time) > 2147483647) return message.channel.send(message.language.get("REMINDER_TIME_LIMIT"))
             const toRemind = args.slice(1).join(" ")
             if (!toRemind) return message.channel.send(message.language.get("REMINDER_NO_REMIND"))
             if (toRemind.lenght > 1900) return message.channel.send(message.language.get("REMINDER_TOO_LONG"))

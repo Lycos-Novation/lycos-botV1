@@ -422,6 +422,7 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
 			REMINDER_USAGE: (prefix) => `${prefix}reminder [temps] [rappel]`,
 			REMINDER_EXAMPLES: (prefix) => `${prefix}reminder 12h Voter pour Lycos`,
 			REMINDER_NO_TIME: "Vous devez indiquer la durée dans laquelle je dois vous rappeller.",
+			REMINDER_TIME_LIMIT: "Vous ne pouvez pas mettre un rappel de plus de 24 jours.",
 			REMINDER_NO_REMIND: "Vous devez indiquer ce que je dois vous rappeller.",
 			REMINDER_TOO_LONG: "Je ne vais jamais retenir tout ça... Veuillez me donner quelque chose à vous rapeller de plus court.",
 			REMINDER_TITLE: "Rappel",
