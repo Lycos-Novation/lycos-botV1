@@ -1,5 +1,4 @@
-const Command = require("../../base/Command.js"),
-	ytpl = require("ytpl");
+const Command = require("../../base/Command.js");
 
 class Play extends Command {
 	constructor(client) {

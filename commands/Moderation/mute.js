@@ -74,7 +74,7 @@ class mute extends Command {
                             if (err) throw err;
                             g = result[0];
                             if (g.modlogs_channel) {
-                                return message.guild.channels.chache.get(g.modlogs_channel).send({
+                                return message.guild.channels.cache.get(g.modlogs_channel).send({
                                     embed: {
                                         title: lang.get(`UNMUTE_EMBED_TITLE`),
                                         description: lang.get('MUTE_REMOVE_EMBED_DESC', member, message),
@@ -127,7 +127,7 @@ class mute extends Command {
                     if (err) throw err;
                     g = result[0];
                     if (g.modlogs_channel) {
-                        return message.guild.channels.chache.get(g.modlogs_channel).send({
+                        return message.guild.channels.cache.get(g.modlogs_channel).send({
                             embed: {
                                 title: lang.get(`MUTE_EMBED_TITLE`),
                                 description: lang.get('MUTE_EMBED_DESC', member, message, muteTime, reason),
