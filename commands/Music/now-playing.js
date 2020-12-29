@@ -1,63 +1,70 @@
-const Command = require("../../base/Command.js");
+const Command = require('../../base/Command.js')
 
 class NowPlaying extends Command {
-	constructor(client) {
-		super(client, {
-			name: "now-playing",
-			description: (language) => language.get("NOWPLAYING_DESCRIPTION"),
-			usage: (language, prefix) => language.get("NOWPLAYING_USAGE", prefix),
-			examples: (language, prefix) => language.get("NOWPLAYING_EXAMPLES", prefix),
-			dirname: __dirname,
-			enabled: true,
-			guildOnly: true,
-			aliases: ["np", "nowplaying"],
-			permLevel: "User",
-			botPermissions: ["SEND_MESSAGES"],
-			cooldown: 2000,
-		});
-	}
+  constructor (client) {
+    super(client, {
+      name: 'now-playing',
+      description: (language) => language.get('NOWPLAYING_DESCRIPTION'),
+      usage: (language, prefix) => language.get('NOWPLAYING_USAGE', prefix),
+      examples: (language, prefix) => language.get('NOWPLAYING_EXAMPLES', prefix),
+      dirname: __dirname,
+      enabled: true,
+      guildOnly: true,
+      aliases: ['np', 'nowplaying'],
+      permLevel: 'User',
+      botPermissions: ['SEND_MESSAGES'],
+      cooldown: 2000
+    })
+  }
 
-	async run(message) {
-		try {
-			let trackPlaying = message.bot.player.isPlaying(message);
-			if (!trackPlaying) {
-				return message.channel.send(message.language.get("NOT_PLAYING"));
-			}
-			let track = await message.bot.player.nowPlaying(message);
-			return message.channel.send({
-				embed: {
-					title: message.language.get("NOWPLAYING"),
-					url: track.url,
-					thumbnail: {
-						url: track.thumbnail,
-
-					},
-					fields: [
-						{
-							name: message.language.get("NOWPLAYING_MUSIC_NAME"),
-							value: track.title
-						},
-						{
-							name: message.language.get("NOWPLAYING_ARTIST"),
-							value: track.author
-						},
-						{
-							name: message.language.get("NOWPLAYING_MUSIC_DURATION"),
-							value: track.duration
-						},
-						{
-							name: message.language.get("NOWPLAYING_PROGRESS_BAR"),
-							value: message.bot.player.createProgressBar(message, { timecodes: true})
-						}
-					],
-				},
-			});
-		}
-		catch (error) {
-			console.error(error);
-			return message.channel.send(message.language.get("ERROR", error));
-		}
-	}
+  async run (message) {
+    try {
+      const trackPlaying = message.bot.player.isPlaying(message)
+      if (!trackPlaying) {
+        return message.channel.send(message.language.get('NOT_PLAYING'))
+      }
+      const track = await message.bot.player.nowPlaying(message)
+      if (track.requestedBy.avatar.slice(0, 2) === 'a_') {
+        var avatarType = 'gif'
+      } else {
+        avatarType = 'png'
+      }
+      return message.channel.send({
+        embed: {
+          title: message.language.get('NOWPLAYING'),
+          url: track.url,
+          thumbnail: {
+            url: track.thumbnail
+          },
+          fields: [
+            {
+              name: message.language.get('NOWPLAYING_MUSIC_NAME'),
+              value: track.title
+            },
+            {
+              name: message.language.get('NOWPLAYING_ARTIST'),
+              value: track.author
+            },
+            {
+              name: message.language.get('NOWPLAYING_MUSIC_DURATION'),
+              value: track.duration
+            },
+            {
+              name: message.language.get('NOWPLAYING_PROGRESS_BAR'),
+              value: message.bot.player.createProgressBar(message, { timecodes: true })
+            }
+          ],
+          footer: {
+            text: `${message.language.get('NOWPLAYING_REQUESTED_BY')} ${track.requestedBy.username}#${track.requestedBy.discriminator}`,
+            icon_url: `https://cdn.discordapp.com/avatars/153163308801720321/${track.requestedBy.avatar}.${avatarType}?size=2048`
+          }
+        }
+      })
+    } catch (error) {
+      console.error(error)
+      return message.channel.send(message.language.get('ERROR', error))
+    }
+  }
 }
 
-module.exports = NowPlaying;
+module.exports = NowPlaying
