@@ -31,6 +31,7 @@ module.exports = class {
       ERROR_FORTNITE_PLATFORM: "S'il vous plaît entrer une plateforme valide (pc, xbox, psn).",
       ERROR_FORTNITE_PLATFORM_USER_NOT_FOUND: "Cet utilisateur n'a pas été trouvé sur la plate-forme spécifiée.",
       BOT_MENTION: (prefix) => `>>> Mon préfixe est \`\`${prefix}\`\` sur ce serveur.\nMes commandes sont visibles en faisant \`\`${prefix}help\`\`.\nEn cas de problème, rejoignez le serveur de Lycos (discord.gg/64zRC73) ou contactez LePtitMetalleux#1604 ou BaptisteGT#0123 en messages privés.`,
+      /* Giveaway */
       GIVEAWAY_DESCRIPTION: 'Permet de gérer les giveaways facilement !',
       GIVEAWAY_USAGE: (prefix) => `${prefix}giveaway [start/edit/reroll/end/delete]`,
       GIVEAWAY_EXAMPLES: (prefix) => `${prefix}giveaway start 2[d/h/m/s] 5 Discord Nitro\n${prefix}giveaway edit 665556886732668949 1 -1h Discord Nitro\n${prefix}giveaway reroll 665556886732668949 2\n${prefix}giveaway end 665556886732668949\n${prefix}giveaway delete 665556886732668949`,
@@ -47,13 +48,16 @@ module.exports = class {
       GIVEAWAY_REROLL_NO_WINNERSCOUNT: 'Veuillez indiquer le nombre de gagants à tirer !',
       GIVEAWAY_NO_NEWTIME: 'Veuillez indiquer la modification de temps.',
       GIVEAWAY_CREATE_MESSAGES: {
+        giveaway: '**Nouveau giveaway !**',
+        giveawayEnded: '**Giveaway terminé !**',
         timeRemaining: 'Temps restant : **{duration}** !',
         inviteToParticipate: 'Réagis avec 🎉 pour participer !',
         winMessage: 'Bravo {winners} ! Vous avez gagné **{prize}** !',
-        embedFooter: 'Giveaways',
+        embedFooter: 'Powered by Lycos Novation & discord-giveaways',
         noWinner: 'Giveaway annulé, aucune participation valide.',
         winners: 'gagnant(s)',
         endedAt: 'Se termine à',
+        hostedBy: 'Créé par {user}',
         units: {
           seconds: 'secondes',
           minutes: 'minutes',
@@ -542,14 +546,14 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
       UPDATE_USAGE: (prefix) => `${prefix}update`,
       UPDATE_EXAMPLES: (prefix) => `${prefix}update`,
       UPDATE_TITLE: (version) => `Notes de mise à jour | Version ${version}`,
-      UPDATE_ADD: `**•** Ajout de la commande \`lycos-suggestion\`.
-**•** Ajout de la commande \`setsuggestions\`.`,
-      UPDATE_UPDATE: `**•** Modification de la commande \`suggestion\` : Elle envoie la suggestion dans le salon de suggestion du serveur où elle a été tapée.
-**•** Corrections de fautes de langage.
-**•** Correction du bug qui permettait de verrouiller ou de déverrouiler un salon plusieurs fois alors que celui-ci l'était déjà
-**•** Correction du bug dans la commande \`giveaway\`, qui permettait de mettre un nombre négatif de gagnants. 
-**•** Correction du bug dans la commande \`giveaway\`, où le bot ne réagissait pas lorsque l'on mettait n'importe quoi comme durée ou une durée trop grande.`,
-      UPDATE_REMOVE: '',
+      UPDATE_ADD: `**•** Ajout de la commande \`repeat\` : Elle répète la musique en cours de lecture.
+**•** Ajout de fonctionnalités pour les giveaways. Le bot envoie désormais un message lors de l'entrée ou la sortie dans un giveaway et montre qui a lancé le giveaway (Utilisation de \`discord-giveaways v4.1.1\`)`,
+      UPDATE_UPDATE: `**•** Correction du module de musique (Utilisation de \`discord-player v3.2.0\`)
+**•** Modifcation de la commande \`loop\` : Elle répète désormais la queue entière`,
+      UPDATE_REMOVE: `**•** Suppression de la commande \`spotify\` : utilisez désormais la commande \`play\`
+**•** Suppression de la commande \`youtube-music\` :  utilisez désormais la commande \`play\`
+      
+**__We are sorry for the lack of updates, our developers don't have the time they would like to have to take care of Lycos in the best possible way__**`,
       /* Suggestion */
       SUGGESTION_DESCRIPTION: 'Permet de faire une suggestion par rapport au bot',
       SUGGESTION_USAGE: (prefix) => `${prefix}suggestion [Suggestion]`,

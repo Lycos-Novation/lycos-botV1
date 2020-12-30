@@ -79,9 +79,20 @@ class Lycos extends Client {
             message.channel.send(message.language.get('ERROR', error))
         }
       })
+
+    /* const GiveawayManagerWithShardSupport = class extends GiveawaysManager {
+      // Refresh storage method is called when the database is updated on one of the shards
+      async refreshStorage () {
+        // This should make all shard refreshing their cache with the updated database
+        return this.shard.broadcastEval(() => this.giveawaysManager.getAllGiveaways())
+      }
+    } */
+
     this.gManager = new GiveawaysManager(this, {
       storage: './giveaways.json',
       updateCountdownEvery: 15000,
+      endedGiveawaysLifetime: 604800000,
+      hasGuildMembersIntent: false,
       default: {
         botsCanWin: false,
         exemptPermissions: [],
@@ -90,6 +101,68 @@ class Lycos extends Client {
         reaction: '🎉'
       }
     })
+
+    this.gManager
+
+      .on('endedGiveawayReactionAdded', (giveaway, member, reaction) => {
+        member.send(`You can't enter this giveaway: ${giveaway.prize} because it has ended!`)
+        return reaction.users.remove(member.user)
+      })
+
+      .on('giveawayEnded', (giveaway, winners) => {
+        winners.forEach((member) => {
+          member.send(`Congratulations! You won: ${giveaway.prize}`)
+        })
+      })
+
+      .on('giveawayReactionAdded', (giveaway, member, reaction) => {
+        member.send({
+          embed: {
+            title: 'Giveaway',
+            fields: [
+              {
+                name: 'Status',
+                value: 'Entered',
+                inline: true
+              },
+              {
+                name: 'You succesfully entered',
+                value: `[this giveaway](${reaction.message.url})`,
+                inline: true
+              }
+            ],
+            color: 0x21E61B
+          }
+        })
+      })
+
+      .on('giveawayReactionRemoved', (giveaway, member, reaction) => {
+        member.send({
+          embed: {
+            title: 'Giveaway',
+            fields: [
+              {
+                name: 'Status',
+                value: 'Leaved',
+                inline: true
+              },
+              {
+                name: 'You succesfully leaved',
+                value: `[this giveaway](${reaction.message.url})`,
+                inline: true
+              }
+            ],
+            color: 0x21E61B
+          }
+        })
+      })
+
+      .on('giveawayRerolled', (giveaway, winners) => {
+        winners.forEach((member) => {
+          member.send(`Congratulations! You won: ${giveaway.prize}`)
+        })
+      })
+
     logs(this)
 
     // This will load our custom Logger class.

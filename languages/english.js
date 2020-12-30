@@ -49,6 +49,8 @@ module.exports = class {
       GIVEAWAY_REROLL_NO_WINNERSCOUNT: 'Please indicate the number of winners to be drawn !',
       GIVEAWAY_NO_NEWTIME: 'Please indicate time modification.',
       GIVEAWAY_CREATE_MESSAGES: {
+        giveaway: '**New giveaway!**',
+        giveawayEnded: '**Giveaway ended!**',
         timeRemaining: 'Remaining time : **{duration}** !',
         inviteToParticipate: 'React with 🎉 to participate !',
         winMessage: 'Well done {winners} ! You have won **{prize}** !',
@@ -56,6 +58,7 @@ module.exports = class {
         noWinner: 'Giveaway canceled, no valid participation.',
         winners: 'Winner(s)',
         endedAt: 'Finishes at',
+        hostedby: 'Hosted by {user}',
         units: {
           seconds: 'seconds',
           minutes: 'minutes',
@@ -611,14 +614,14 @@ module.exports = class {
       UPDATE_USAGE: (prefix) => `${prefix}update`,
       UPDATE_EXAMPLES: (prefix) => `${prefix}update`,
       UPDATE_TITLE: (version) => `Dev logs | Version ${version}`,
-      UPDATE_ADD: `**•** Added \`lycos-suggestion\` command.
-            **•** Added \`setsuggestions\` command.`,
-      UPDATE_UPDATE: `**•** Updated \`suggestion\` command : It send the suggestion in the suggestions channel of the server.
-            **•** Corrected translation and writing errors.
-            **•** Fixed a bug that allows a channel to be locked or unlocked when it already was.
-            **•** Fixed a bug in the \`giveaway\` command, which allows to set a negative amount of winners. 
-            **•** Fixed a bug in the \`giveaway\` command, where the bots didn't responds when setting anything as a duration or a too long duration.`,
-      UPDATE_REMOVE: '',
+      UPDATE_ADD: `**•** Added \`repeat\` command: That repeats the current song.
+**•** Added giveaway features. The bot now send a message when entering or leaving a giveaway and shows who started the giveaway (Now using \`discord-giveaways v4.1.1\`)`,
+      UPDATE_UPDATE: `**•** Fixed music module (Now using \`discord-player v3.2.0\`)
+**•** Updated \`loop\` command: That now loops the entire queue`,
+      UPDATE_REMOVE: `**•** Removed \`spotify\` command: Now use \`play\` command
+**•** Removed \`youtube-music\` command: Now use \`play\` command
+      
+**__We are sorry for the lack of updates, our developers don't have the time they would like to have to take care of Lycos in the best possible way__**`,
       /* Suggestion */
       SUGGESTION_DESCRIPTION: 'Allows you to send a suggestion about the bot',
       SUGGESTION_USAGE: (prefix) => `${prefix}suggestion [Suggestion]`,
