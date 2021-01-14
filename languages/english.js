@@ -1175,7 +1175,7 @@ There are now **${m.guild.memberCount}** members on the server!`,
       LOGS_GUILD_CREATE_TITLE: (guild) => `Lycos has been added to ${guild.name}!`,
       LOGS_GUILD_CREATE_DESC: (guild, vl, r) => `**ID:** ${guild.id}
 **Members:** ${guild.members.cache.filter(m => !m.user.bot).size}
-**Owner:** ${guild.owner.user.tag} - ${guild.ownerID}
+**Owner:** ${guild.members.cache.get(guild.ownerID).user.tag} - ${guild.ownerID}
 **Created the:** ${moment(guild.createdAt.toUTCString()).format('LLLL')}
 **Verification level:** ${vl}
 **Server location:** ${r}`,
@@ -1183,7 +1183,7 @@ There are now **${m.guild.memberCount}** members on the server!`,
       LOGS_GUILD_DELETE_TITLE: (guild) => `Lycos has been removed from ${guild.name}!`,
       LOGS_GUILD_DELETE_DESC: (guild, vl, r) => `**ID:** ${guild.id}
 **Members:** ${guild.members.cache.filter(m => !m.user.bot).size}
-**Owner:** ${guild.owner.user.tag} - ${guild.ownerID}
+**Owner:** ${guild.members.cache.get(guild.ownerID).user.tag} - ${guild.ownerID}
 **Created the:** ${moment(guild.createdAt.toUTCString()).format('LLLL')}
 **Verification level:** ${vl}
 **Server location:** ${r}`,

@@ -16,11 +16,10 @@ module.exports = class {
 
             const { d: data } = event;
             const lycos_id = this.client.user.id;
-            const user = this.client.users.cache.get(data.user_id);
             const channel = this.client.channels.cache.get(data.channel_id);
 
             const message = await channel.messages.fetch(data.message_id);
-            const member = message.guild.members.cache.get(user.id);
+            const member = message.channel.guild.members.cache.get(data.user_id);
 
             var sql = `SELECT *
         FROM Guilds
@@ -29,7 +28,7 @@ module.exports = class {
             mysqlcon.query(sql, async function (err, result, fields) {
                 g = result[0];
                 const lang = new (require(`../languages/${g.language}.js`));
-                if (member.id !== lycos_id) {
+                if ( member.id && (member.id !== lycos_id)) {
                     var rre = `${g.rolereaction_emotes}`;
                     if (event.t === 'MESSAGE_REACTION_ADD') {
                         if (channel.id !== g.rolereaction_channel) return;

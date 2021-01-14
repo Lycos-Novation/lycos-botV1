@@ -1083,7 +1083,7 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
       LOGS_GUILD_CREATE_TITLE: (guild) => `Lycos a été ajouté sur ${guild.name} !`,
       LOGS_GUILD_CREATE_DESC: (guild, vl, r) => `**ID :** ${guild.id}
 **Membres :** ${guild.members.cache.filter(m => !m.user.bot).size}
-**Propriétaire :** ${guild.owner.user.tag} - ${guild.ownerID}
+**Propriétaire :** ${guild.members.cache.get(guild.ownerID).user.tag} - ${guild.ownerID}
 **Créé le :** ${moment(guild.createdAt.toUTCString()).format('LLLL')}
 **Niveau de vérification :** ${vl}
 **Localisation du serveur :** ${r}`,
@@ -1091,7 +1091,7 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
       LOGS_GUILD_DELETE_TITLE: (guild) => `Lycos a été enlevé de ${guild.name} !`,
       LOGS_GUILD_DELETE_DESC: (guild, vl, r) => `**ID :** ${guild.id}
 **Membres :** ${guild.members.cache.filter(m => !m.user.bot).size}
-**Propriétaire :** ${guild.owner.user.tag} - ${guild.ownerID}
+**Propriétaire :** ${guild.members.cache.get(guild.ownerID).user.tag} - ${guild.ownerID}
 **Créé le :** ${moment(guild.createdAt.toUTCString()).format('LLLL')}
 **Niveau de vérification :** ${vl}
 **Localisation du serveur :** ${r}`,

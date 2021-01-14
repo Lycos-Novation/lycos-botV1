@@ -14,7 +14,7 @@ const connectionMysql = require('./utils/connectmysql')
  * @extends {Client}
 **/
 class Lycos extends Client {
-  constructor (options) {
+  constructor(options) {
     super(options)
     // This will load the config.js file that contains our basic setup.
     this.config = require('./config.js')
@@ -172,7 +172,7 @@ class Lycos extends Client {
     this._launch()
   }
 
-  async _launch () {
+  async _launch() {
     this.levelCache = {}
     for (let i = 0; i < this.config.permLevels.length; i++) {
       const thisLevel = this.config.permLevels[parseInt(i, 10)]
@@ -187,24 +187,28 @@ class Lycos extends Client {
   }
 
   // Method used to get an user permission level on the bot
-  getLevel (message) {
-    let permissionLevel = 0
-    const permOrder = this.config.permLevels.slice(0).sort((p, c) => p.level < c.level ? 1 : -1)
-    while (permOrder.length) {
-      const currentLevel = permOrder.shift()
-      if (message.guild && currentLevel.guildOnly) {
-        continue
+  getLevel(message) {
+    try {
+      let permissionLevel = 0
+      const permOrder = this.config.permLevels.slice(0).sort((p, c) => p.level < c.level ? 1 : -1)
+      while (permOrder.length) {
+        const currentLevel = permOrder.shift()
+        if (message.guild && currentLevel.guildOnly) {
+          continue
+        }
+        if (currentLevel.check(message)) {
+          permissionLevel = currentLevel.level
+          break
+        }
       }
-      if (currentLevel.check(message)) {
-        permissionLevel = currentLevel.level
-        break
-      }
+      return permissionLevel
+    } catch (error) {
+      return `Unable to load command ${commandName}: ${error}`
     }
-    return permissionLevel
   }
 
   // Method used to load a command and add it to the commands Collection
-  _loadCommand (commandPath, commandName) {
+  _loadCommand(commandPath, commandName) {
     try {
       const props = new (require(`${commandPath}${path.sep}${commandName}`))(this)
       props.conf.location = commandPath
@@ -222,52 +226,64 @@ class Lycos extends Client {
   }
 
   // Method used to unload a command (you'll need to load them again)
-  async _unloadCommand (commandPath, commandName) {
-    let command
-    if (this.commands.has(commandName)) {
-      command = this.commands.get(commandName)
-    } else if (this.aliases.has(commandName)) {
-      command = this.commands.get(this.aliases.get(commandName))
+  async _unloadCommand(commandPath, commandName) {
+    try {
+      let command
+      if (this.commands.has(commandName)) {
+        command = this.commands.get(commandName)
+      } else if (this.aliases.has(commandName)) {
+        command = this.commands.get(this.aliases.get(commandName))
+      }
+      if (!command) {
+        return `The command \`${commandName}\` doesn't seem to exist. Try again!`
+      }
+      if (command.shutdown) {
+        await command.shutdown(this)
+      }
+      delete require.cache[require.resolve(`${commandPath}${path.sep}${commandName}.js`)]
+      return false
+    } catch (error) {
+      return `Unable to unload command ${commandName}: ${error}`
     }
-    if (!command) {
-      return `The command \`${commandName}\` doesn't seem to exist. Try again!`
-    }
-    if (command.shutdown) {
-      await command.shutdown(this)
-    }
-    delete require.cache[require.resolve(`${commandPath}${path.sep}${commandName}.js`)]
-    return false
   }
 
   // Method used to load all the commands modules
-  async _loadCommandsModules () {
-    const directories = await readdir('./commands/')
-    let totalDirectories = 0
-    for (const directory of directories) {
-      totalDirectories++
-      const commands = await readdir(`./commands/${directory}/`)
-      commands.filter((command) => command.split('.').pop() === 'js').forEach((command) => {
-        const response = this._loadCommand(`./commands/${directory}`, command)
-        if (response) {
-          this.logger.log(response, 'error')
-        }
-      })
+  async _loadCommandsModules() {
+    try {
+      const directories = await readdir('./commands/')
+      let totalDirectories = 0
+      for (const directory of directories) {
+        totalDirectories++
+        const commands = await readdir(`./commands/${directory}/`)
+        commands.filter((command) => command.split('.').pop() === 'js').forEach((command) => {
+          const response = this._loadCommand(`./commands/${directory}`, command)
+          if (response) {
+            this.logger.log(response, 'error')
+          }
+        })
+      }
+      console.log(`[Categories] - Loading ${totalDirectories}/${directories.length} categories.`)
+    } catch (error) {
+      return `ERROR | loadCommandsModule: ${error}`
     }
-    console.log(`[Categories] - Loading ${totalDirectories}/${directories.length} categories.`)
   }
 
   // Method used to load all the events modules
-  async _loadEventsModules () {
-    const eventFiles = await readdir('./events/')
-    let totalEvents = 0
-    eventFiles.forEach((file) => {
-      totalEvents++
-      const eventName = file.split('.')[0]
-      const event = new (require(`./events/${file}`))(this)
-      this.on(eventName, (...args) => event.run(...args))
-      delete require.cache[require.resolve(`./events/${file}`)]
-    })
-    console.log(`[Events] - Loading ${totalEvents}/${eventFiles.length} event(s).`)
+  async _loadEventsModules() {
+    try {
+      const eventFiles = await readdir('./events/')
+      let totalEvents = 0
+      eventFiles.forEach((file) => {
+        totalEvents++
+        const eventName = file.split('.')[0]
+        const event = new (require(`./events/${file}`))(this)
+        this.on(eventName, (...args) => event.run(...args))
+        delete require.cache[require.resolve(`./events/${file}`)]
+      })
+      console.log(`[Events] - Loading ${totalEvents}/${eventFiles.length} event(s).`)
+    } catch (error) {
+      return `ERROR | loadEventsModule: ${error}`
+    }
   }
 }
 module.exports.client = new Lycos({

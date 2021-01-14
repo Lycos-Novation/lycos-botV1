@@ -4,7 +4,9 @@ module.exports = class {
 	}
 
 	async run(oldGuild, newGuild) {
-		if (oldGuild.id !== newGuild.id || oldGuild.name !== newGuild.name || oldGuild.owner.user.tag !== newGuild.owner.user.tag){
+		const oldOwner = oldGuild.members.cache.get(oldGuild.ownerID)
+		const newOwner = newGuild.members.cache.get(newGuild.ownerID)
+		if (oldGuild.id !== newGuild.id || oldGuild.name !== newGuild.name || oldOwner !== newOwner){
 			return mysqlcon.query("UPDATE Guilds SET guild_id = ?, guild_name = ?, guild_owner = ? WHERE guild_id = ?", [newGuild.id, newGuild.name, newGuild.ownerID, oldGuild.id]);
 		}
 	}
