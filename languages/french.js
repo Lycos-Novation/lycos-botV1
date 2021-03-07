@@ -1,5 +1,6 @@
 const e = require('../config.js').emotes
 const moment = require('moment')
+moment.locale('fr')
 
 module.exports = class {
   constructor (...args) {
@@ -30,7 +31,42 @@ module.exports = class {
       ERROR_NSFW_DEACTIVATED: "Cette commande n'est pas disponible car le module ``NSFW`` n'est pas disponible sur ce serveur.\nDemandez à un administrateur du serveur de l'activer.",
       ERROR_FORTNITE_PLATFORM: "S'il vous plaît entrer une plateforme valide (pc, xbox, psn).",
       ERROR_FORTNITE_PLATFORM_USER_NOT_FOUND: "Cet utilisateur n'a pas été trouvé sur la plate-forme spécifiée.",
+      ERROR_DOG: "Une erreur est survenue, veuillez réessayer.",
       BOT_MENTION: (prefix) => `>>> Mon préfixe est \`\`${prefix}\`\` sur ce serveur.\nMes commandes sont visibles en faisant \`\`${prefix}help\`\`.\nEn cas de problème, rejoignez le serveur de Lycos (discord.gg/64zRC73) ou contactez LePtitMetalleux#1604 ou BaptisteGT#0123 en messages privés.`,
+      BLOCK_DESCRIPTION: "Permet de bloquer une commande sur le serveur.",
+      BLOCK_USAGE: (prefix) => `${prefix}block [command_name]`,
+      BLOCK_EXAMPLES: (prefix) => `${prefix}block avatar`,
+      BLOCK_WHERE: "Veuillez indiquer où bloquer la commande (server ou #Channel).",
+      BLOCK_NAME: `Veuillez indiquer le nom d'une commande.`,
+      BLOCK_COMMAND_NOT_FOUND: `La commande n'a pas été trouvée.`,
+      BLOCK_ALREADY_BLOCKED: "Cette commande est déjà bloquée sur le serveur.",
+      BLOCK_AVERT: "Cette commande est bloquée sur le serveur.",
+      BLOCK_BLOCKED: "La commande a été bloquée.",
+      UNBLOCK_DESCRIPTION: "Permet de débloquer une commande sur le serveur.",
+      UNBLOCK_USAGE: (prefix) => `${prefix}unblock [command_name]`,
+      UNBLOCK_EXAMPLES: (prefix) => `${prefix}unblock avatar`,
+      UNBLOCK_NOT_BLOCKED: "Cette commande n'est pas bloquée.",
+      UNBLOCK_UNBLOCKED: "La commande a été débloquée.",
+      IGNORECHAN_DESCRIPTION: "Permet de bloquer toutes les commandes dans un channel du serveur.",
+      IGNORECHAN_USAGE: (prefix) => `${prefix}ignoreChannel [channelID/channelMention]`,
+      IGNORECHAN_EXAMPLES: (prefix) => `${prefix}ignoreChannel #general`,
+      IGNORECHAN_ALREADY_BLOCKED: "Les commandes sont déjà bloquées dans le channel.",
+      IGNORECHAN_BLOCKED: "Les commandes ont été bloquées dans le channel.",
+      IGNORECHANR_DESCRIPTION: "Permet de débloquer toutes les commandes dans un channel du serveur.",
+      IGNORECHANR_USAGE: (prefix) => `${prefix}ignoreChannelRemove [channelID/channelMention]`,
+      IGNORECHANR_EXAMPLES: (prefix) => `${prefix}ignoreChannelRemove #general`,
+      IGNORECHANR_NOT_BLOCKED: "Les commandes ne sont pas bloquées dans le channel.",
+      IGNORECHANR_UNBLOCKED: "Les commandes ont été débloquées dans le channel.",
+      /* PollEmbed */
+      POLLEMBED_CHANNEL_INACCESSSIBLE: "Le channel est inaccessible.",
+      POLLEMBED_TITLE_NOT_GIVEN: "Le titre du sondage n'est pas donné.",
+      POLLEMBED_OPTIONS_NOT_GIVEN: "Les options de sondage ne sont pas données.",
+      POLLEMBED_CHOICE: "Veuillez fournir plus d'un choix.",
+      POLLEMBED_PROVIDE: "Veuillez fournir",
+      POLLEMBED_CHOICE_EMOJIL: "ou moins de choix.",
+      POLLEMBED_CHANNEL_INACCESSSIBLE: (timeout, forceEndPollEmoji) => `*Pour voter, réagissez en utilisant l'émoji correspondant.\nLe vote se terminera dans **${timeout} secondes**.\nLe créateur du sondage peut terminer le sondage **forcement** en réagissant à l'émoji ${forceEndPollEmoji}.*`,
+      POLLEMBED_RESULTS: "*Ding ! Ding ! Ding ! C'est l'heure !\n Les résultats sont arrivés,*\n\n",
+      POLLEMBED_CREATED_BY: "Sondage créé par",
       /* Giveaway */
       GIVEAWAY_DESCRIPTION: 'Permet de gérer les giveaways facilement !',
       GIVEAWAY_USAGE: (prefix) => `${prefix}giveaway [start/edit/reroll/end/delete]`,
@@ -40,6 +76,7 @@ module.exports = class {
       GIVEAWAY_NO_WINNERCOUNT: "Merci d'indiquer le nombre de gagnants !",
       GIVEAWAY_NO_PRIZE: "Merci d'indiquer quelque chose à gagner !",
       GIVEAWAY_WINNERS_NOT_POSITIVE: 'Le nombre de gagnants ne peut pas être négatif ou nul !',
+      GIVEAWAY_WINNERS_TOO_LONG: 'Le nombre de gagnants ne peut pas être supérieur à 100 !',
       GIVEAWAY_TOO_LONG: 'La durée indiquée est trop grande. Vous ne pouvez pas donner une date postérieure au jeudi 20 avril 271 821.',
       GIVEAWAY_TIME_NOT_POSITIVE: 'La durée du giveaway ne peut être ni nulle ni négative !',
       GIVEAWAY_ERR_NO_ID: "Vous devez entrer l'ID du message du giveaway !",
@@ -114,6 +151,8 @@ module.exports = class {
       ROLE_NOUSER_FOUND: "Aucun utilisateur n'a été trouvé.",
       ROLE_GIVE: (member, role) => `${member.user.username} a maintenant le rôle <@&${role}>.`,
       ROLE_REMOVE: (member, role) => `${member.user.username} n'a plus le rôle <@&${role}>.`,
+      ROLE_ALREADY_GIVEN: "L'utilisateur possède déjà le rôle.",
+      ROLE_NOT_ENTER: "Veuillez spécifier un rôle.",
       BOT_DESCRIPTION: 'Afficher des informations sur Lycos.',
       BOT_USAGE: (prefix) => `${prefix}bot`,
       BOT_EXAMPLES: (prefix) => `${prefix}bot`,
@@ -123,7 +162,7 @@ module.exports = class {
         'Autres renseignements',
         '\u200B'
       ],
-      BOT_FIELDS_CONTENT_GENERALINFO: (message, version) => `**Créateur :** [\`${message.bot.users.cache.get('169146903462805504').tag}\`](https://dsc.bio/baptistegt)\n**Développeurs :** [\`${message.bot.users.cache.get('153163308801720321').tag}\`](https://dsc.bio/LePtitMetalleux) et [\`${message.bot.users.cache.get('169146903462805504').tag}\`](https://dsc.bio/baptistegt)\nCréé le \`22/05/2020\`, le bot tourne actuellement sur la version \`${version}\`.`,
+      BOT_FIELDS_CONTENT_GENERALINFO: (message, version) => `**Créateur :** [\`${message.bot.users.cache.get('169146903462805504').tag}\`](https://dsc.bio/baptistegt)\n**Développeurs :** [\`${message.bot.users.cache.get('153163308801720321').tag}\`](https://dsc.bio/LePtitMetalleux), [\`${message.bot.users.cache.get('169146903462805504').tag}\`](https://dsc.bio/baptistegt) et [\`${message.bot.users.cache.get('307919815547551745').tag}\`](https://dsc.bio/3079198155475517)\nCréé le \`22/05/2020\`, le bot tourne actuellement sur la version \`${version}\`.`,
       BOT_FIELDS_CONTENT_GENERALSTATS: (guilds, users, channels) => `**Nombre de serveurs :** \`${guilds}\`.\n**Utilisateurs :** \`${users}\` en mémoire.\n**Nombre de salons :** \`${channels}\`.`,
       BOT_FIELDS_CONTENT_OTHERINFO: (process, moment, message) => `**Machine :** \`${process.platform}\` - \`(${process.arch})\` \n**TAS :** \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}\`\n**Durée de connexion du bot :** \`${moment.duration(message.bot.uptime).format('M[m] W[w] D[d] H[h] m[m] s[s]')}\``,
       BOT_FIELDS_CONTENT_LINKS: '[Invitation](https://discordapp.com/oauth2/authorize?client_id=628186022991233025&scope=bot&permissions=8) - [Serveur](https://discord.gg/64zRC73) - [Dons](https://utip.io/lycosnovation) - [Utip](https://utip.io/lycosnovation) - [Site](https://lycos-novation.fr/) - [Twitch](https://www.twitch.tv/lycostv) - [Instagram](https://www.instagram.com/lycosnovation/) - [Twitter](https://twitter.com/LycosNovation)',
@@ -180,7 +219,7 @@ Pour être au courant de cela, il vous est recommandé de rejoindre le [serveur 
 <:DiscordBotList:735786997569814579> [Voter sur Disord Bot List](https://top.gg/bot/628186022991233025) (**${dbl}** votes - Votez toutes les 12H)
 <:botsfordiscord:739412747099570186> [Voter sur Bots For Discord](https://botsfordiscord.com/bot/628186022991233025) (**${bfd}** votes - Votez toutes les 12H)
 <:botlistspace:738454241110392853> [Voter sur botlist.space](https://botlist.space/bot/628186022991233025) (**${bls}** votes - Votez toutes les 24H)
-<:void_bots:738451886147108925> [Voter sur VoidBots](https://voidbots.net/bots/628186022991233025) (**${vb}** votes - Votez toutes les 12H)`,
+<:void_bots:738451886147108925> [Voter sur VoidBots](https://voidbots.net/bot/628186022991233025) (**${vb}** votes - Votez toutes les 12H)`,
       PING_DESCRIPTION: "Donne la latence de l'API Discord",
       PING_USAGE: (prefix) => `${prefix}ping`,
       PING_EXAMPLES: (prefix) => `${prefix}ping`,
@@ -523,6 +562,7 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
       WIKIPEDIA_EXAMPLES: (prefix) => `${prefix}wikipedia Batman`,
       WIKI_NO_SEARCH: 'Vous devez indiquer le nom de la page à chercher !',
       WIKI_ERROR: (e) => `Erreur : ${e.toString().includes('Error: No article found') ? 'Page non trouvée' : e}`,
+      WIKI_NOT_FOUND: "La page n'a pas été trouvée.",
       RPS_DESCRIPTION: 'Jeu de pierre, feuille, ciseaux',
       RPS_USAGE: (prefix) => `${prefix}rps [pierre/feuille/ciseaux]`,
       RPS_EXAMPLES: (prefix) => `${prefix}rps pierre`,
@@ -546,10 +586,28 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
       UPDATE_USAGE: (prefix) => `${prefix}update`,
       UPDATE_EXAMPLES: (prefix) => `${prefix}update`,
       UPDATE_TITLE: (version) => `Notes de mise à jour | Version ${version}`,
-      UPDATE_ADD: `**•** Ajout de la commande \`repeat\` : Elle répète la musique en cours de lecture.
-**•** Ajout de fonctionnalités pour les giveaways. Le bot envoie désormais un message lors de l'entrée ou la sortie dans un giveaway et montre qui a lancé le giveaway (Utilisation de \`discord-giveaways v4.1.1\`)`,
-      UPDATE_UPDATE: `**•** Correction du module de musique (Utilisation de \`discord-player v3.2.0\`)
-**•** Modifcation de la commande \`loop\` : Elle répète désormais la queue entière`,
+      UPDATE_ADD: `**•** Ajout de fonctionnalités sur la commande \`clear\`. Affichage d'un message de confirmation avant de clone le channel, possibilité d'arrêter le processus et également 30 secondes pour valider/invalider le message de confirmation (si les 30 secondes sont dépassées, arrêt automatique du processus)
+**•** Ajout de fonctionnalités pour les giveaways (WinnerCount). La limite a été fixée à 100 gagnants`,
+      UPDATE_UPDATE: `**•** Correction du démarrage des évents
+**•** Modification de la couleur de l'embed des commandes \`suggestion\` et \`bugreport\` : couleur invisible
+**•** Modification de la commande \`autorole\` : il est désormais impossible d'ajouter le rôle @everyone à l'autorole
+**•** Modification de la commande \`volume\` : il est désormais impossible de mettre un nombre décimal (et le problème de langage a également été résolu)
+**•** Modification de la commande \`leave\` : les problèmes de langages ont été résolus
+**•** Modification de la commande \`lycos-suggestion\` : les problèmes de langages ont été résolus
+**•** Modification de la commande \`informations\` : il est désormais possible d'exécuter cette commande
+**•** Modification de la commande \`dog\` : les .mp4 ne sont pas lus quand ils sont dans un embed, dès maintenant ils seront donc envoyés comme un simple message
+**•** Modification de la commande \`server-info\` : Total | Humains | Bots, les stats ne seront désormais plus faussées
+**•** Modification de la commande \`clear\` : les problèmes de langages ont été résolus
+**•** Modification du module \`PollEmbed\` : les problèmes de langages ont été résolus`,
+      UPDATE_UPDATE2: `**•** Modification de la commande \`wikipedia\` : il est désormais impossible de mettre des mots au hasard dans les recherches. Également, si une page n'est pas trouvée, le bot renvoie une erreur
+      **•** Modification de la commande \`role\` : si l'utilisateur possède déjà le rôle, un message d'erreur est renvoyé
+      **•** Modification de la commande \`role\` : un message d'erreur est envoyé si aucun rôle n'est spécifié
+      **•** Modification de la commande \`rolemention\` : un message d'erreur est envoyé si aucun rôle n'est spécifié
+      **•** Modification de la commande \`autorole\` : un message d'erreur est envoyé si le nom du rôle entré est invalide
+      **•** Modification de la commande \`fortnite\` : les problèmes de langages ont été résolus
+      **•** Modification de la commande \`number\` : le bot ne renverra plus le nombre trouvé (cela ne servait à rien)
+      **•** Modification de la commande \`number\` : dès à présent, il est impossible de mettre autre chose qu'un nombre dans la configuration de la durée
+      **•** Modification de la commande \`rolereaction\` : désormais, il est impossible de mettre le rôle @everyone en ReactionRole`,
       UPDATE_REMOVE: `**•** Suppression de la commande \`spotify\` : utilisez désormais la commande \`play\`
 **•** Suppression de la commande \`youtube-music\` :  utilisez désormais la commande \`play\`
       
@@ -557,9 +615,46 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
       /* Suggestion */
       SUGGESTION_DESCRIPTION: 'Permet de faire une suggestion par rapport au bot',
       SUGGESTION_USAGE: (prefix) => `${prefix}suggestion [Suggestion]`,
-      SUGGESTION_EXAMPLES: (prefix) => `${prefix}suggestion Bonjour, vous pourriez créer une commande de suggestion qui envoie la suggestion dans un salon du serveur Lycos Novation - Support. `,
+      SUGGESTION_EXAMPLES: (prefix) => `${prefix}suggestion Bonjour, vous pourriez créer une commande de suggestion qui envoie la suggestion dans un salon du serveur Lycos Novation - Support.`,
       SUGGESTION_NO_ARGS: 'Veuillez décrire votre suggestion avec au moins 10 caractères et 1900 au maximum.',
       SUGGESTION_QUESTION_SEND: 'Votre suggestion a été envoyée ! Merci pour votre contribution !',
+      LYCOSSUGGESTION_DESCRIPTION: 'Permet de faire une suggestion par rapport au bot',
+      LYCOSSUGGESTION_USAGE: (prefix) => `${prefix}lycos-suggestion [Suggestion]`,
+      LYCOSSUGGESTION_EXAMPLES: (prefix) => `${prefix}lycos-suggestion Bonjour, vous pourriez créer une commande de suggestion qui envoie la suggestion dans un salon du serveur Lycos Novation - Support.`,
+      LYCOSSUGGESTION_NO_ARGS: 'Veuillez décrire votre suggestion avec au moins 10 caractères et 1900 au maximum.',
+      LYCOSSUGGESTION_QUESTION_SEND: 'Votre suggestion a été envoyée ! Merci pour votre contribution !',
+      /* Emojis */
+      FINDEMOJI_DESCRIPTION: "Permet de trouver un emoji avec son nom",
+      FINDEMOJI_USAGE: (prefix) => `${prefix}findemoji [name]`,
+      FINDEMOJI_EXAMPLES: (prefix) => `${prefix}findemoji hello`,
+      FINDEMOJI_NAME: `Veuillez entrer le nom d'un emoji.`,
+      FINDEMOJI_CHARACTERS: `Vous ne pouvez entrer que 32 caractères !`,
+      FINDEMOJI_FOUND: `Emoji trouvé`,
+      FINDEMOJI_NOT_FOUND: `L'emoji n'a pas été trouvé.`,
+      ADDEMOJI_URL: `Veuillez entrer l'URL de l'image.`,
+      ADDEMOJI_CREATED: `Emoji créé`,
+      ADDEMOJI_NOT_CREATED: `L'emoji n'a pas pu être créé. Regardez si votre serveur a la place pour ajouter d'autres emojis !`,
+      /* Informations Discord */
+      INFO_DESCRIPTION: 'Vous informe des actualités dans la programmation sur Discord.',
+      INFO_USAGE: (prefix) => `${prefix}informations`,
+      INFO_EXAMPLES: (prefix) => `${prefix}informations`,
+      INFO_TITLE: '**Discord Informations**',
+      INFO_DESC: ":warning: __**ATTENTION**__\n\n" +
+
+      "Discord a récemment apporté des modifications à la manière dont certaines données utilisateur sensibles à la confidentialité sont envoyées. Les données de présence et d'activité (<GuildMember> .presence) ainsi que les événements basés sur les membres de la guilde (guildMemberAdd, guildMemberRemove, guildMemberUpdate, presenceUpdate) sont désormais explicitement activés en basculant dans le tableau de bord du développeur (si votre bot n'a pas besoin d'être vérifié) ou en les demandant pendant ou après le processus de vérification.\n" +
+      "**▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬**\n" +
+      ":hammer_pick: __**Impact(s)**__\n\n" +
+      
+      "**❯ Symptômes que vous pourriez rencontrer en ce moment :**\n\n" +
+      
+      "• Les caches des membres sont vides (ou n'ont que très peu d'entrées)\n" +
+      "• le cache utilisateur est vide (ou ne contient que très peu d’entrées)\n" +
+      "• la récupération des membres expire\n" +
+      "• tous les membres semblent être hors ligne\n" +
+      "• la connexion expire si vous essayez de récupérer tous les membres au démarrage\n" +
+      `• Les événements client "guildMemberAdd", "guildMemberRemove", "guildMemberUpdate" n'émettent pas\n` +
+      "• Guild#memberCount renvoie le compte à partir de prêt",
+      /* Number */
       NUMBER_DESCRIPTION: 'Tire un nombre aléatoire dans un intervalle donné (Min et max inclus : [min;max])',
       NUMBER_USAGE: (prefix) => `${prefix}number [min] [max] [temps]`,
       NUMBER_EXAMPLES: (prefix) => `${prefix}number 1 50 1[d/m/h/s]`,
@@ -836,10 +931,48 @@ A : ${user.counts.A} - S : ${user.counts.S} - SH : ${user.counts.SH} - SS : ${us
       AUTOROLE_ALREADY_IN: "Ce rôle fait déjà parti de l'autorole !",
       AUTOROLE_NOT_IN: "Ce rôle ne fait pas parti de l'autorole !",
       AUTOROLE_ROLE_NOT_FOUND: "Je n'ai pas trouvé le rôle que vous avez demandé.",
+      AUTOROLE_ROLE_EVERYONE: "Vous ne pouvez pas ajouter le rôle everyone à autorole.",
       AUTOROLE_ROLE_ADDED: (r) => `Le rôle <@&${r}> a été ajouté à l'autorole !`,
       AUTOROLE_ROLE_REMOVED: (r) => `Le rôle <@&${r}> a été retiré de l'autorole !`,
       AUTOROLE_LIMIT: "Vous avez atteint la limite de rôles attribuables dans l'autorôle. Veuillez en retirer si vous voulez en mettre de nouveaux.',//Ajouter 'Vous pouvez augmentez cette limite en passant sur la version premium du bot",
       AUTOROLE_ROLE_BOT: "Vous ne pouvez pas utiliser le rôle d'un bot dans l'autorôle !",
+      WARN_DESCRIPTION: "Permet d'avertir un membre.",
+      WARN_USAGE: (prefix) => `${prefix}warn [@User] [Raison]`,
+      WARN_EXAMPLES: (prefix) => `${prefix}warn @User insultes`,
+      WARN_NO_ARGS: `Veuillez entrer une raison`,
+      WARN_SUPPLY_USER: "Veuillez mentionner un utilisateur.",
+      WARN_USER_NOT_FOUND: "Je n'ai pas trouvé l'utilisateur que vous avez demandé.",
+      WARN_AUTHOR: "Vous ne pouvez pas vous warn.",
+      WARN_ADDED: ` a bien été warn.`,
+      WARN_ADDED_C3: ` a bien été warn. Il a été kick par la même occasion car c'est son 3ème warn`,
+      WARN_ADDED_C6: ` a bien été warn. Il a été ban par la même occasion car c'est son 6ème warn`,
+      WARN_REMOVED: ` n'a désormais plus de warn.`,
+      WARN_ADDED_DM: `:warning: Vous avez été warn sur le serveur `,
+      WARN_REMOVED_SERVER: `Tous vos warns ont été retirés sur le serveur `,
+      WARN_CANNOT_WARN_USER: `Je ne peux pas warn cet utilisateur.`,
+      WARNS_DESCRIPTION: "Permet de voir les warns d'un utilisateur.",
+      WARNS_USAGE: (prefix) => `${prefix}warns [@User]`,
+      WARNS_EXAMPLES: (prefix) => `${prefix}warns @Frog`,
+      WARNS_HAVE: `a`,
+      WARNS_NO_WARNS: `n'a aucun warn`,
+      WARNS_WARNED_BY_NAME: `warn donné par`,
+      WARNS_TIME: `le`,
+      WARNS_USERNAME: `Warns de`,
+      CLEARWARN_AUTHOR: "Vous ne pouvez pas supprimer vos warns.",
+      CLEARWARN_DESCRIPTION: "Permet de supprimer les warns d'un utilisateur ou d'un serveur entier.",
+      CLEARWARN_USAGE: (prefix) => `${prefix}clearwarns [@User/all]`,
+      CLEARWARN_EXAMPLES: (prefix) => `${prefix}clearwarns @User\n${prefix}cw all`,
+      CLEARWARN_SUPPLY_USER: "Veuillez mentionner un utilisateur ou mettre 'all' (afin de supprimer tous les warns du serveur).",
+      CLEARWARN_CONFIRM_TIME_REQUIRED: "vous avez 30 secondes",
+      CLEARWARN_CONFIRM_CLEAR_SERVER_AND_TIME_REQUIRED: "Êtes-vous sûrs de vouloir supprimer tous les warns du serveur ? (vous avez 30 secondes)",
+      CLEARWARN_CONFIRM_CLEAR_USER: "Êtes-vous sûrs de vouloir supprimer tous les warns de",
+      CLEARWARN_SERVER: "Tous les warns du serveur ont été supprimés.",
+      CLEARWARN_USER: "ont été supprimés.",
+      CLEARWARN_SERVER_FALSE: "Le serveur ne contient aucun warn.",
+      CLEARWARN_USER_FALSE: "n'a aucun warn",
+      CLEARWARN_OF: "Tous les warns de",
+      CANCEL_X: "⭕ Action annulée",
+      CANCEL_30_SECONDS: "⭕ Action annulée (30 secondes dépassées)",
       RR_DESCRIPTION: 'Permet de configurer le rolereaction',
       RR_USAGE: (prefix) => `${prefix}rolereaction [launch/add/remove] [emote] [Role]`,
       RR_EXAMPLES: (prefix) => `${prefix}rolereaction add :lycos: @LycosRole\n ${prefix}rolereaction remove :lycos: @LycosRole\n ${prefix}rolereaction launch`,
@@ -1083,7 +1216,7 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
       LOGS_GUILD_CREATE_TITLE: (guild) => `Lycos a été ajouté sur ${guild.name} !`,
       LOGS_GUILD_CREATE_DESC: (guild, vl, r) => `**ID :** ${guild.id}
 **Membres :** ${guild.members.cache.filter(m => !m.user.bot).size}
-**Propriétaire :** ${guild.members.cache.get(guild.ownerID).user.tag} - ${guild.ownerID}
+**Propriétaire :** ${guild.owner.user.tag} - ${guild.ownerID}
 **Créé le :** ${moment(guild.createdAt.toUTCString()).format('LLLL')}
 **Niveau de vérification :** ${vl}
 **Localisation du serveur :** ${r}`,
@@ -1091,7 +1224,7 @@ Il y a désormais **${m.guild.memberCount}** personnes sur le serveur !`,
       LOGS_GUILD_DELETE_TITLE: (guild) => `Lycos a été enlevé de ${guild.name} !`,
       LOGS_GUILD_DELETE_DESC: (guild, vl, r) => `**ID :** ${guild.id}
 **Membres :** ${guild.members.cache.filter(m => !m.user.bot).size}
-**Propriétaire :** ${guild.members.cache.get(guild.ownerID).user.tag} - ${guild.ownerID}
+**Propriétaire :** ${guild.owner.user.tag} - ${guild.ownerID}
 **Créé le :** ${moment(guild.createdAt.toUTCString()).format('LLLL')}
 **Niveau de vérification :** ${vl}
 **Localisation du serveur :** ${r}`,

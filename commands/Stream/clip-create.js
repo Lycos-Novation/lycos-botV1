@@ -1,8 +1,7 @@
 const Command = require('../../base/Command');
+const config = require('../../config')
 const TwitchClient = require('twitch').default;
-const clientId = 'TwitchClientId';
-const accessToken = 'TwitchAccessToken';
-const twitchClient = TwitchClient.withCredentials(clientId, accessToken);
+const twitchClient = TwitchClient.withCredentials(config.twitch.clientID, config.twitch.client_token);
 class clipCreate extends Command {
     constructor(client) {
         super(client, {

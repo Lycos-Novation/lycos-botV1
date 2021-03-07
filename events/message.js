@@ -46,7 +46,7 @@ module.exports = class {
 			});
 		} else {
 			settings = {
-				prefix: "!",
+				prefix: ".",
 				language: "english",
 			};
 			return client.functions.messageEvent(client, message, settings);

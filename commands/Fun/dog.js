@@ -21,17 +21,20 @@ class Dog extends Command {
 	run(message) {
 		try {
 			message.bot.pictURL.getImage("dog").then((image) => {
-				return message.channel.send({
-					embed: {
-						author: {
-							name: "Aww... Doggo!",
+					if(image.url.includes(".mp4")) {
+						return message.channel.send(image.url)
+					}
+					return message.channel.send({
+						embed: {
+							author: {
+								name: "Aww... Doggo!",
+							},
+							image: {
+								url: image.url,
+							},
+							color: message.config.embed.color,
 						},
-						image: {
-							url: image.url,
-						},
-						color: message.config.embed.color,
-					},
-				});
+					});
 			});
 		}
 		catch (error) {

@@ -24,13 +24,7 @@ class Wikipedia extends Command {
         try {
             let search = args.slice(0).join(" ");//!wiki La langue française => args = [La,langue,française] => search = La langue française
             if (!search) return message.channel.send(message.language.get("WIKI_NO_SEARCH"));
-            var sql = ` SELECT language
-					    FROM Guilds
-						WHERE guild_id="${message.guild.id}";`;
-            var g;
-            mysqlcon.query(sql, async function (err, result, fields) {
-                g = result[0];
-                const lang = g.language === "english" ? "en" : "fr";
+            const lang = message.settings.language === "english" ? "en" : "fr";
                 fetch(`https://${lang}.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=20&srsearch=${encodeURIComponent(search)}`, {
                     headers: {
                         "Content-Type": "application/json"
@@ -38,6 +32,7 @@ class Wikipedia extends Command {
                 })
                     .then(res => res.json())
                     .then(data => {
+                        if(data.query.search[0] === undefined) return message.channel.send(message.language.get('WIKI_NOT_FOUND'));
                         wiki({ apiUrl: `http://${lang}.wikipedia.org/w/api.php` })
                             .page(data.query.search[0].title)
                             .then(async (page) => {
@@ -58,9 +53,6 @@ class Wikipedia extends Command {
                                 return message.channel.send(message.language.get("WIKI_ERROR", e));
                             });
                     })
-
-
-            });
         } catch (error) {
             console.error(error);
             return message.channel.send(message.language.get("ERROR", error));

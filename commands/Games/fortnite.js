@@ -34,7 +34,7 @@ class FortniteStats extends Command {
 			platform = platform.toLowerCase().replace("xbl", "none").replace("xbox", "xbl");
 
 			if (platform !== "xbl" && platform !== "psn" && platform !== "pc") {return message.channel.send(message.language.get("ERROR_FORTNITE_PLATFORM"));}
-			if (!user[0]) {return message.channel.send((message.language.get("FORTNITE_USERNAME_NULL")));}
+			if (!user[0] || user[0] === undefined) {return message.channel.send((message.language.get("FORTNITE_USERNAME_NULL")));}
 
 			let image = await stat
 				.setToken("3efefe34-9d59-4d49-8775-e4efc752cd1c")
@@ -42,8 +42,8 @@ class FortniteStats extends Command {
 				.setPlatform(platform)
 				.toAttachment();
 
-			if (platform !== "pc" && platform !== "xbl" && platform !== "psn") return message.channel.send("Please enter a valid platform")
-			if (!image) return message.channel.send("User not found")
+			if (platform !== "pc" && platform !== "xbl" && platform !== "psn") return message.channel.send(message.language.get("ERROR_FORTNITE_PLATFORM"))
+			if (!image || image === undefined) return message.channel.send(message.language.get("FORTNITE_USERNAME_NULL"))
 
 			let attachment = new Discord.MessageAttachment(image.toBuffer(), "FortniteStat.png");
 

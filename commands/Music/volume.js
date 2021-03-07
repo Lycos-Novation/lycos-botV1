@@ -20,11 +20,11 @@ class Volume extends Command {
     try {
       const trackPlaying = message.bot.player.isPlaying(message)
       if (!trackPlaying) {
-        return message.channel.send('No music playing.')
+        return message.channel.send(message.language.get('NOT_PLAYING'))
       }
       if (!message.member.voice.channel) return message.channel.send(message.language.get('PLAY_NO_VOICECHANNEL'))
       const volume = args.join(' ')
-      if (!volume || isNaN(volume) || volume <= 0 || volume > 100) {
+      if (!volume || isNaN(volume) || volume <= 0 || volume > 100 || volume.includes(".") || volume.includes(",")) {
         return message.channel.send(message.language.get('VOLUME_BETWEEN'))
       }
       await message.bot.player.setVolume(message, parseInt(volume))

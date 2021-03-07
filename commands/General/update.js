@@ -45,6 +45,16 @@ class Update extends Command {
       })
       return message.channel.send({
         embed: {
+          color: 0xF5870A,
+          footer: {
+            text: message.config.embed.footer
+          },
+          title: message.language.get('UPDATE_TITLE', version),
+          description: message.language.get('UPDATE_UPDATE2')
+        }
+      })
+      /*return message.channel.send({
+        embed: {
           color: 0xF40C0C,
           footer: {
             text: message.config.embed.footer
@@ -52,7 +62,7 @@ class Update extends Command {
           title: message.language.get('UPDATE_TITLE', version),
           description: message.language.get('UPDATE_REMOVE')
         }
-      })
+      })*/
     } catch (error) {
       console.error(error)
       return message.channel.send(message.language.get('ERROR', error))

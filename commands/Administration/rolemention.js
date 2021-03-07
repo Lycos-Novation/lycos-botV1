@@ -36,6 +36,8 @@ class roleMention extends Command {
                     toMention = message.guild.roles.cache.find(r => r.name === toMention);
                 }
                 let r = message.guild.roles.resolve(toMention) || message.guild.roles.resolveID(toMention);
+                if(r === undefined) return message.channel.send(message.language.get("ROLEMENTION_ROLE_NOT_FOUND"))
+                if (!r) return message.channel.send(message.language.get("ROLE_NOT_ENTER"));
                 let rid = r.toString().slice(3, r.toString().length - 1) || r.id;
                 if (!rid || isNaN(rid)) return message.channel.send(message.language.get("ROLEMENTION_ROLE_NOT_FOUND"));
                 return message.channel.send(`<@&${rid}>`);

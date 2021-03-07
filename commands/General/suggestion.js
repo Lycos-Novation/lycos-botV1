@@ -43,7 +43,7 @@ class LycosSuggestion extends Command {
 
 						const embed = new Discord.MessageEmbed()
 							.setTitle("Suggestion")
-							.setColor("#36393F")
+							.setColor(0xffcc00&&0x2f3136)
 							.setAuthor(\`${message.author.username} | ${message.author.id}\`, \`${message.author.avatarURL({animated: true})}\`)
 							.setDescription(\`${suggestion.replace(/`/g, "\\`")}\`)
 							.setFooter("Lycos")

@@ -1,6 +1,6 @@
 const Command = require('../../base/Command');
 const fetch = require("node-fetch");
-const clientId = 'TwitchClientID';
+const config = require('../../config')
 class topGames extends Command {
     constructor(client) {
         super(client, {
@@ -26,7 +26,7 @@ class topGames extends Command {
             const options = {
                 headers: {
                     "Accept": "application/vnd.twitchtv.v5+json",
-                    "Client-ID": clientId
+                    "Client-ID": config.twitch.clientID
                 }
             };
             fetch(url, options)

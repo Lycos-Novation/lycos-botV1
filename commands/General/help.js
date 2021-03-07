@@ -97,8 +97,13 @@ class Help extends Command {
 					},
 					
 					{
-						name: `🎧 ${message.config.emotes.music} ${message.language.get("HELPGLOBAL_FIELDS")[6]} (${message.bot.commands.filter((filters) => filters.help.category === "Music").size})`,
+						name: `🎧 ${message.language.get("HELPGLOBAL_FIELDS")[6]} (${message.bot.commands.filter((filters) => filters.help.category === "Music").size})`,
 						value: message.bot.commands.filter((filters) => filters.help.category === "Music").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
+					},
+
+					{
+						name: `<:discord:771802071112220682> Discord (${message.bot.commands.filter((filters) => filters.help.category === "Discord").size})`,
+						value: message.bot.commands.filter((filters) => filters.help.category === "Discord").map((name) => name.help.name).map((name) => `\`${name}\``).join(", "),
 					},
 				);
 

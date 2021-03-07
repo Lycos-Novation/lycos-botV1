@@ -30,7 +30,7 @@ class bugReport extends Command {
 
 						const embed = new Discord.MessageEmbed()
 							.setTitle("Bug report")
-							.setColor("#36393F")
+							.setColor(0xffcc00&&0x2f3136)
 							.setAuthor(\`${message.author.username} | ${message.author.id}\`, \`${message.author.avatarURL({ animated: true })}\`)
 							.setDescription(\`${report.replace(/`/g, "\\`")}\`)
 							.setFooter("Lycos")

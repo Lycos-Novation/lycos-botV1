@@ -1,9 +1,8 @@
 const Command = require('../../base/Command');
 const fetch = require("node-fetch");
 const TwitchClient = require('twitch').default;
-const clientId = 'TwitchClientId';
-const clientSecret = 'TwitchClientSecret';
-const twitchClient = TwitchClient.withClientCredentials(clientId, clientSecret);
+const config = require('../../config')
+const twitchClient = TwitchClient.withClientCredentials(config.twitch.clientID, config.twitch.secret);
 class stream extends Command {
     constructor(client) {
         super(client, {

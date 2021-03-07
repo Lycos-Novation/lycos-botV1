@@ -11,7 +11,7 @@ class Prefix extends Command {
 			enabled: true,
 			guildOnly: true,
 			permLevel: "Server Admin",
-			botPermissions: ["SEND_MESSAGES"],
+			botPermissions: ["EMBED_LINKS"],
 			nsfw: false,
 			adminOnly: true,
 			cooldown: 1000,
@@ -42,6 +42,7 @@ class Prefix extends Command {
 				if (pref.startsWith(message.prefix)) return;
 				if (pref.toLowerCase() === "stop" || pref.toLowerCase() === "cancel") return message.channel.send(message.language.get("COMMAND_CANCELLED"));
 				if (pref.length > 15) return message.channel.send(message.language.get("PREFIX_TOO_LONG", pref));
+				if (pref.startsWith(":") && pref.endsWith(":")) return message.channel.send(message.language.get("PREFIX_ERROR_EMOTE"));
 				mysqlcon.query("UPDATE Guilds SET prefix = ? WHERE guild_id = ?", [pref, message.guild.id]);
 				return message.channel.send(message.language.get("PREFIX_CHANGE", pref));
 			}

@@ -1,5 +1,4 @@
 const Command = require("../../base/Command.js");
-
 class ServerInformation extends Command {
 	constructor(client) {
 		super(client, {
@@ -65,7 +64,7 @@ class ServerInformation extends Command {
 					},
 					{
 						name: message.language.get("SERVERINFO_TITLES")[2],
-						value: `${message.guild.members.cache.size} | ${message.guild.members.cache.filter((member) => !member.user.bot).size} | ${message.guild.members.cache.filter((member) => member.user.bot).size}`,
+						value: `${message.guild.memberCount} | ${message.guild.members.cache.filter(member => !member.user.bot).size} | ${message.guild.members.cache.filter(member => member.user.bot).size}`,
 						inline: true,
 					},
 					{

@@ -129,6 +129,8 @@ class RoleReaction extends Command {
                 let rid = r.id || r.toString().slice(3, r.toString().length - 1);
                 let test = message.guild.roles.cache.get(rid);
                 if (test === undefined) return message.channel.send(message.language.get("AUTOROLE_ROLE_NOT_FOUND"));
+                if (test.name === undefined) return message.channel.send(message.language.get("AUTOROLE_ROLE_NOT_FOUND"));
+                if (test.name === "@everyone") return message.channel.send(message.language.get("AUTOROLE_ROLE_EVERYONE"));
                 if (test.managed) return message.channel.send(message.language.get("RR_ROLE_BOT"));
                 var rr = result[0].rolereaction_roles, ids = [];
                 var re = result[0].rolereaction_emotes;

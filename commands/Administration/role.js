@@ -44,6 +44,7 @@ class Role extends Command {
 					}
 
 					let r = message.guild.roles.resolve(args[2]) || message.guild.roles.resolveID(args[2]);
+					if (!r) return message.channel.send(message.language.get("ROLE_NOT_ENTER"));
 					let rid = r.id || r.toString().slice(3, r.toString().length - 1);
                 	let test = message.guild.roles.cache.get(rid);
 					if (test === undefined) return message.channel.send(message.language.get("AUTOROLE_ROLE_NOT_FOUND"));
@@ -53,6 +54,7 @@ class Role extends Command {
 					if (!r) {
 						return message.channel.send(message.language.get("ERROR_ROLE_INVALID"));
 					} else {
+						if(member.roles.cache.has(rid)) return message.channel.send(message.language.get('ROLE_ALREADY_GIVEN'))
 						return member.roles.add(rid)
 							.then(message.channel.send(message.language.get("ROLE_GIVE", member, rid)))
 							.catch((error) => {

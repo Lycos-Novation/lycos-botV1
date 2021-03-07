@@ -32,6 +32,7 @@ class Giveaway extends Command {
         if (ms(time) <= 0) return message.channel.send(message.language.get('GIVEAWAY_TIME_NOT_POSITIVE'))
         const winnersCount = parseInt(args[2])
         if (winnersCount <= 0) return message.channel.send(message.language.get('GIVEAWAY_WINNERS_NOT_POSITIVE'))
+        if (winnersCount > 100) return message.channel.send(message.language.get('GIVEAWAY_WINNERS_TOO_LONG'))
         if (!winnersCount) return message.channel.send(message.language.get('GIVEAWAY_NO_WINNERCOUNT'))
         const prize = args.slice(3).join(' ')
         if (!prize) return message.channel.send(message.language.get('GIVEAWAY_NO_PRIZE'))

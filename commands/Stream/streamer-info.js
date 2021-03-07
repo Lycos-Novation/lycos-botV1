@@ -1,9 +1,7 @@
 const Command = require('../../base/Command');
-
+const config = require('../../config')
 const TwitchClient = require('twitch').default;
-const clientId = 'TwitchClientId';
-const clientSecret = 'TwitchClientSecret';
-const twitchClient = TwitchClient.withClientCredentials(clientId, clientSecret);
+const twitchClient = TwitchClient.withClientCredentials(config.twitch.clientID, config.twitch.secret);
 class streamerInfo extends Command {
     constructor(client) {
         super(client, {

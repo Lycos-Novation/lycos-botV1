@@ -14,7 +14,7 @@ const connectionMysql = require('./utils/connectmysql')
  * @extends {Client}
 **/
 class Lycos extends Client {
-  constructor(options) {
+  constructor (options) {
     super(options)
     // This will load the config.js file that contains our basic setup.
     this.config = require('./config.js')
@@ -172,7 +172,7 @@ class Lycos extends Client {
     this._launch()
   }
 
-  async _launch() {
+  async _launch () {
     this.levelCache = {}
     for (let i = 0; i < this.config.permLevels.length; i++) {
       const thisLevel = this.config.permLevels[parseInt(i, 10)]
@@ -187,7 +187,7 @@ class Lycos extends Client {
   }
 
   // Method used to get an user permission level on the bot
-  getLevel(message) {
+  getLevel (message) {
     try {
       let permissionLevel = 0
       const permOrder = this.config.permLevels.slice(0).sort((p, c) => p.level < c.level ? 1 : -1)
@@ -208,7 +208,7 @@ class Lycos extends Client {
   }
 
   // Method used to load a command and add it to the commands Collection
-  _loadCommand(commandPath, commandName) {
+  _loadCommand (commandPath, commandName) {
     try {
       const props = new (require(`${commandPath}${path.sep}${commandName}`))(this)
       props.conf.location = commandPath
@@ -226,7 +226,7 @@ class Lycos extends Client {
   }
 
   // Method used to unload a command (you'll need to load them again)
-  async _unloadCommand(commandPath, commandName) {
+  async _unloadCommand (commandPath, commandName) {
     try {
       let command
       if (this.commands.has(commandName)) {
@@ -248,7 +248,7 @@ class Lycos extends Client {
   }
 
   // Method used to load all the commands modules
-  async _loadCommandsModules() {
+  async _loadCommandsModules () {
     try {
       const directories = await readdir('./commands/')
       let totalDirectories = 0
@@ -269,7 +269,7 @@ class Lycos extends Client {
   }
 
   // Method used to load all the events modules
-  async _loadEventsModules() {
+  async _loadEventsModules () {
     try {
       const eventFiles = await readdir('./events/')
       let totalEvents = 0
@@ -289,6 +289,5 @@ class Lycos extends Client {
 module.exports.client = new Lycos({
   sync: true,
   autoReconnect: true,
-  // fetchAllMembers: true,
   disableEveryone: true
 })
